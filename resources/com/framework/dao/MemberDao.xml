@@ -7,7 +7,11 @@
 	</select>
 	
 	<select id="queryList" resultType="com.framework.entity.Member">
-		select * from t_member order by id desc
+		select * from t_member where 1=1
+		 <if test="mobile != null and mobile.trim() != ''">
+			and mobile like concat('%', #{mobile}, '%') 
+		</if>
+		 order by id desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -41,25 +45,25 @@
 		insert into t_member
 		(
 			`mobile`, 
-			`userpwd`, 
-			`name`, 
-			`nick_name`, 
+			`moneys`, 
+			`sex`, 
+			`nick_name`
 		)
 		values
 		(
 			#{mobile}, 
-			#{userPwd}, 
-			#{name}, 
-			#{nickName}, 
+			#{moneys}, 
+			#{sex}, 
+			#{nickName}
 		)
 	</insert>
 	 
 	<update id="update" parameterType="com.framework.entity.Member">
 		update t_member 
 		<set> 
-			<if test="userpwd != null">`userpwd` = #{userPwd}, </if>
 			<if test="name != null">`name` = #{name}, </if>
 			<if test="nickName != null">`nick_name` = #{nickName}, </if>
+			<if test="moneys != null">`moneys` = #{moneys}, </if>
 		</set>
 		where id = #{id}
 	</update>

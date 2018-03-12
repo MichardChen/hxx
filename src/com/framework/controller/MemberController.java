@@ -29,7 +29,7 @@ import com.framework.utils.RRException;
  * @date 2016年10月27日 下午9:58:15
  */
 @RestController
-@RequestMapping("/rest/member")
+@RequestMapping("/basic/member")
 public class MemberController extends AbstractController {
 	
 	@Autowired
@@ -42,12 +42,13 @@ public class MemberController extends AbstractController {
 	private SysMenuService sysMenuService;
 	
 	/**
-	 * 所有菜单列表
+	 * 所有用户列表
 	 */
 	@RequestMapping("/list")
-	@RequiresPermissions("sys:menu:list")
-	public R list(Integer page, Integer limit) {
+	@RequiresPermissions("basic:member:list")
+	public R list(Integer page, Integer limit,String mobile) {
 		Map<String, Object> map = new HashMap<>();
+		map.put("mobile", mobile);
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
 
@@ -93,26 +94,22 @@ public class MemberController extends AbstractController {
 	}
 
 	/**
-	 * 菜单信息
+	 * 用户信息
 	 */
-	@RequestMapping("/info/{menuId}")
-	@RequiresPermissions("sys:menu:info")
-	public R info(@PathVariable("menuId") Long menuId) {
-		SysMenuEntity menu = sysMenuService.queryObject(menuId);
-		return R.ok().put("menu", menu);
+	@RequestMapping("/info/{memberId}")
+	@RequiresPermissions("basic:member:info")
+	public R info(@PathVariable("memberId") Long memberId) {
+		Member member = memberService.queryObject(memberId);
+		return R.ok().put("member", member);
 	}
 
 	/**
 	 * 保存
 	 */
 	@RequestMapping("/save")
-	@RequiresPermissions("sys:menu:save")
-	public R save(@RequestBody SysMenuEntity menu) {
-		// 数据校验
-		verifyForm(menu);
-
-		sysMenuService.save(menu);
-
+	@RequiresPermissions("basic:member:save")
+	public R save(@RequestBody Member member) {
+		memberService.save(member);
 		return R.ok();
 	}
 
@@ -120,13 +117,9 @@ public class MemberController extends AbstractController {
 	 * 修改
 	 */
 	@RequestMapping("/update")
-	@RequiresPermissions("sys:menu:update")
-	public R update(@RequestBody SysMenuEntity menu) {
-		// 数据校验
-		verifyForm(menu);
-
-		sysMenuService.update(menu);
-
+	@RequiresPermissions("basic:member:update")
+	public R update(@RequestBody Member member) {
+		memberService.update(member);
 		return R.ok();
 	}
 
@@ -134,14 +127,14 @@ public class MemberController extends AbstractController {
 	 * 删除
 	 */
 	@RequestMapping("/delete")
-	@RequiresPermissions("sys:menu:delete")
-	public R delete(@RequestBody Long[] menuIds) {
-		for (Long menuId : menuIds) {
-			if (menuId.longValue() <= 28) {
+	@RequiresPermissions("basic:member:delete")
+	public R delete(@RequestBody Long[] memberIds) {
+		for (Long memberId : memberIds) {
+			if (memberId.longValue() <= 28) {
 				return R.error("系统菜单，不能删除");
 			}
 		}
-		sysMenuService.deleteBatch(menuIds);
+		memberService.deleteBatch(memberIds);
 
 		return R.ok();
 	}
