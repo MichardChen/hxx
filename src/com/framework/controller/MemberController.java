@@ -46,11 +46,12 @@ public class MemberController extends AbstractController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("basic:member:list")
-	public R list(Integer page, Integer limit,String mobile) {
+	public R list(Integer page, Integer limit,String mobile,String userTypeCd) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("mobile", mobile);
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
+		map.put("userTypeCd", userTypeCd);
 
 		// 查询列表数据
 		List<Member> menuList = memberService.queryList(map);

@@ -39,7 +39,8 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
-		mobile:null
+		mobile:null,
+		userTypeCd:"350002"
 	},
 	methods: {
 		update: function (event) {
@@ -73,7 +74,7 @@ var vm = new Vue({
 		},
 		query:function(){
 			$("#jqGrid").jqGrid('setGridParam',{
-                postData:{'mobile': vm.mobile},
+                postData:{'mobile': vm.mobile,'userTypeCd':vm.userTypeCd},
                 page:1 
             }).trigger("reloadGrid");
 		}
