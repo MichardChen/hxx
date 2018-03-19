@@ -85,9 +85,17 @@
 			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
 			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
 		</div>
+		<div class="form-group">
+				<textarea id="container" name="container" style="width: 800px;height: 400px;margin: 0 auto;"></textarea>
+		</div>
 	</form>
 </div>
-
-<script src="${rc.contextPath}/js/tnews/tnews_add.js?_${date.systemTime}"></script>
+<script type="text/javascript" charset="utf-8">
+	window.UEDITOR_HOME_URL = "/framework/statics/UE/"; 
+	//UEDITOR_HOME_URL、config、all这三个顺序不能改变
+</script>
+<script type="text/javascript" src="${rc.contextPath}/statics/UE/ueditor.config.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/statics/UE/ueditor.all.js"></script>
+<script src="${rc.contextPath}/js/sys/tnews_add.js?_${date.systemTime}"></script>
 </body>
 </html>

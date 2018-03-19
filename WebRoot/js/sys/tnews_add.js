@@ -1,4 +1,5 @@
 var id = T.p("id");
+var ue = UE.getEditor("container");
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
@@ -39,3 +40,4 @@ var vm = new Vue({
 		}
 	}
 });
+
