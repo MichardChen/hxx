@@ -67,7 +67,7 @@ public class MemberController extends AbstractController {
 	 */
 	@RequestMapping("/select")
 	@RequiresPermissions("sys:menu:select")
-	public R select() {
+	public R select(){
 		// 查询列表数据
 		List<SysMenuEntity> menuList = sysMenuService.queryNotButtonList();
 
