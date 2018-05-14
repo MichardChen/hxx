@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TStoryDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TStoryEntity">
+		select * from t_story where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TStoryEntity">
+		select * from t_story 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_story 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TStoryEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_story
+		(
+			`story_icon`, 
+			`story_title`, 
+			`create_time`, 
+			`desc_url`, 
+			`create_by`, 
+			`update_by`, 
+			`update_time`
+		)
+		values
+		(
+			#{storyIcon}, 
+			#{storyTitle}, 
+			#{createTime}, 
+			#{descUrl}, 
+			#{createBy}, 
+			#{updateBy}, 
+			#{updateTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TStoryEntity">
+		update t_story 
+		<set>
+			<if test="storyIcon != null">`story_icon` = #{storyIcon}, </if>
+			<if test="storyTitle != null">`story_title` = #{storyTitle}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="descUrl != null">`desc_url` = #{descUrl}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_story where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_story where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
