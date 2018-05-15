@@ -4,16 +4,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.framework.entity.TStoryEntity;
+import com.framework.model.StoreAddUpdateModel;
 import com.framework.service.TStoryService;
+import com.framework.utils.DateUtil;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
 
@@ -70,8 +78,12 @@ public class TStoryController extends AbstractController{
 	@RequiresPermissions("tstory:info")
 	public R info(@PathVariable("id") Integer id){
 		TStoryEntity tStory = tStoryService.queryObject(id);
-		
-		return R.ok().put("tStory", tStory);
+		StoreAddUpdateModel model = new StoreAddUpdateModel();
+		model.setContent(tStory.getDescUrl());
+		model.setIcon(tStory.getStoryIcon());
+		model.setTitle(tStory.getStoryTitle());
+		model.setUrl(tStory.getDescUrl());
+		return R.ok().put("tStory", model);
 	}
 	
 	/**
@@ -80,9 +92,19 @@ public class TStoryController extends AbstractController{
 	@ResponseBody
 	@RequestMapping("/save")
 	@RequiresPermissions("tstory:save")
-	public R save(@RequestBody TStoryEntity tStory){
+	public R save(@RequestBody StoreAddUpdateModel model){
+		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+		TStoryEntity tStory = new TStoryEntity();
+		/*HttpSession session = request.getSession();
+		int userid = (Integer)session.getAttribute("userId");*/
+		tStory.setCreateBy((Integer)request.getAttribute("userId"));
+		tStory.setCreateTime(DateUtil.getNowTimestamp());
+		tStory.setUpdateBy((Integer)request.getAttribute("userId"));
+		tStory.setUpdateTime(DateUtil.getNowTimestamp());
+		tStory.setDescUrl(model.getContent());
+		tStory.setStoryIcon(model.getIcon());
+		tStory.setStoryTitle(model.getTitle());
 		tStoryService.save(tStory);
-		
 		return R.ok();
 	}
 	

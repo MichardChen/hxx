@@ -1,4 +1,5 @@
 var id = T.p("id");
+var ue = UE.getEditor("container");
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
@@ -18,6 +19,7 @@ var vm = new Vue({
             });
 		},
 		saveOrUpdate: function (event) {
+			alert(JSON.stringify(vm.tStory));
 			var url = vm.tStory.id == null ? "../tstory/save" : "../tstory/update";
 			$.ajax({
 				type: "POST",
