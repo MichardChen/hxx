@@ -32,6 +32,10 @@ public class TStoryEntity implements Serializable {
 	private Integer updateBy;
 	//车主故事
 	private Timestamp updateTime;
+	
+	private String content;
+	
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -82,5 +86,11 @@ public class TStoryEntity implements Serializable {
 	}
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 }

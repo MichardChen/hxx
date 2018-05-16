@@ -27,7 +27,8 @@
 			`desc_url`, 
 			`create_by`, 
 			`update_by`, 
-			`update_time`
+			`update_time`,
+			`content`
 		)
 		values
 		(
@@ -37,7 +38,8 @@
 			#{descUrl}, 
 			#{createBy}, 
 			#{updateBy}, 
-			#{updateTime}
+			#{updateTime},
+			#{content}
 		)
 	</insert>
 	 
@@ -46,7 +48,7 @@
 		<set>
 			<if test="storyIcon != null">`story_icon` = #{storyIcon}, </if>
 			<if test="storyTitle != null">`story_title` = #{storyTitle}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="content != null">`create_time` = #{content}, </if>
 			<if test="descUrl != null">`desc_url` = #{descUrl}, </if>
 			<if test="createBy != null">`create_by` = #{createBy}, </if>
 			<if test="updateBy != null">`update_by` = #{updateBy}, </if>

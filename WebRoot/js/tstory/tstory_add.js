@@ -19,7 +19,7 @@ var vm = new Vue({
             });
 		},
 		saveOrUpdate: function (event) {
-			alert(JSON.stringify(vm.tStory));
+			vm.tStory.content=ue.getContent();
 			var url = vm.tStory.id == null ? "../tstory/save" : "../tstory/update";
 			$.ajax({
 				type: "POST",

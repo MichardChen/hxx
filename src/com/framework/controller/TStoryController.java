@@ -1,11 +1,15 @@
 package com.framework.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +18,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.framework.constants.Constants;
 import com.framework.entity.TStoryEntity;
 import com.framework.model.StoreAddUpdateModel;
+import com.framework.service.FileService;
 import com.framework.service.TStoryService;
 import com.framework.utils.DateUtil;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
-
+import com.framework.utils.StringUtil;
 
 /**
  * 
@@ -80,7 +85,7 @@ public class TStoryController extends AbstractController{
 		TStoryEntity tStory = tStoryService.queryObject(id);
 		StoreAddUpdateModel model = new StoreAddUpdateModel();
 		model.setContent(tStory.getDescUrl());
-		model.setIcon(tStory.getStoryIcon());
+		//model.setIcon(tStory.getStoryIcon());
 		model.setTitle(tStory.getStoryTitle());
 		model.setUrl(tStory.getDescUrl());
 		return R.ok().put("tStory", model);
@@ -101,10 +106,26 @@ public class TStoryController extends AbstractController{
 		tStory.setCreateTime(DateUtil.getNowTimestamp());
 		tStory.setUpdateBy((Integer)request.getAttribute("userId"));
 		tStory.setUpdateTime(DateUtil.getNowTimestamp());
-		tStory.setDescUrl(model.getContent());
-		tStory.setStoryIcon(model.getIcon());
+		File file = model.getIcon();
+		tStory.setStoryIcon("");
 		tStory.setStoryTitle(model.getTitle());
+		String htmlContent = StringUtil.formatHTML(model.getTitle(), model.getContent());
+		tStory.setContent(htmlContent);
+		//生成html
+		FileService fs=new FileService();
+		String uuid = UUID.randomUUID().toString();
+		//生成html文件
+		try {
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
+			pw.println(htmlContent);
+			pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String contentUrl = Constants.HOST.DOCUMENT+uuid+".html";
+		tStory.setDescUrl(contentUrl);
 		tStoryService.save(tStory);
+		
 		return R.ok();
 	}
 	
