@@ -1,16 +1,18 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../tstory/list',
+        url: '../tcarousel/list',
         datatype: "json",
         colModel: [			
-			{ label: '故事ID', name: 'id', width: 50, key: true },
-			{ label: '故事封面图片', name: 'storyIcon', width: 80 }, 			
-			{ label: '故事标题', name: 'storyTitle', width: 80 }, 			
-			{ label: '故事链接', name: 'descUrl', width: 80 }, 			
-			{ label: '创建者', name: 'createBy', width: 80 }, 	
-			{ label: '创建时间', name: 'createTime', width: 80 },
-			{ label: '更新者', name: 'updateBy', width: 80 }, 	
-			{ label: '更新时间', name: 'updateTime', width: 80 }			
+			{ label: 'id', name: 'id', width: 50, key: true },
+			{ label: '', name: 'imgUrl', width: 80 }, 			
+			{ label: '', name: 'realUrl', width: 80 }, 			
+			{ label: '', name: 'mark', width: 80 }, 			
+			{ label: '', name: 'createTime', width: 80 }, 			
+			{ label: '', name: 'updateTime', width: 80 }, 			
+			{ label: '', name: 'flg', width: 80 }, 			
+			{ label: '', name: 'createBy', width: 80 }, 			
+			{ label: '', name: 'updateBy', width: 80 }, 			
+			{ label: '', name: 'typeCd', width: 80 }			
         ],
 		viewrecords: true,
         height: 400,
@@ -51,7 +53,7 @@ var vm = new Vue({
 				return ;
 			}
 			
-			location.href = "tstory_add.html?id="+id;
+			location.href = "tcarousel_add.html?id="+id;
 		},
 		del: function (event) {
 			var ids = getSelectedRows();
@@ -62,7 +64,7 @@ var vm = new Vue({
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: "../tstory/delete",
+				    url: "../tcarousel/delete",
 				    data: JSON.stringify(ids),
 				    success: function(r){
 						if(r.code == 0){

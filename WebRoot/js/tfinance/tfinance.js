@@ -1,16 +1,22 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../tstory/list',
+        url: '../tfinance/list',
         datatype: "json",
         colModel: [			
-			{ label: '故事ID', name: 'id', width: 50, key: true },
-			{ label: '故事封面图片', name: 'storyIcon', width: 80 }, 			
-			{ label: '故事标题', name: 'storyTitle', width: 80 }, 			
-			{ label: '故事链接', name: 'descUrl', width: 80 }, 			
-			{ label: '创建者', name: 'createBy', width: 80 }, 	
-			{ label: '创建时间', name: 'createTime', width: 80 },
-			{ label: '更新者', name: 'updateBy', width: 80 }, 	
-			{ label: '更新时间', name: 'updateTime', width: 80 }			
+			{ label: 'id', name: 'id', width: 50, key: true },
+			{ label: '', name: 'icon', width: 80 }, 			
+			{ label: '', name: 'name', width: 80 }, 			
+			{ label: '', name: 'lowRate', width: 80 }, 			
+			{ label: '', name: 'lowRefund', width: 80 }, 			
+			{ label: '', name: 'timeDistance', width: 80 }, 			
+			{ label: '', name: 'standard', width: 80 }, 			
+			{ label: '', name: 'createBy', width: 80 }, 			
+			{ label: '', name: 'createTime', width: 80 }, 			
+			{ label: '', name: 'updateBy', width: 80 }, 			
+			{ label: '', name: 'updateTime', width: 80 }, 			
+			{ label: '', name: 'descUrl', width: 80 }, 			
+			{ label: '', name: 'status', width: 80 }, 			
+			{ label: '', name: 'title', width: 80 }			
         ],
 		viewrecords: true,
         height: 400,
@@ -51,7 +57,7 @@ var vm = new Vue({
 				return ;
 			}
 			
-			location.href = "tstory_add.html?id="+id;
+			location.href = "tfinance_add.html?id="+id;
 		},
 		del: function (event) {
 			var ids = getSelectedRows();
@@ -62,7 +68,7 @@ var vm = new Vue({
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: "../tstory/delete",
+				    url: "../tfinance/delete",
 				    data: JSON.stringify(ids),
 				    success: function(r){
 						if(r.code == 0){

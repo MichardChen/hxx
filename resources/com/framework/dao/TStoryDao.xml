@@ -28,7 +28,8 @@
 			`create_by`, 
 			`update_by`, 
 			`update_time`,
-			`content`
+			`content`,
+			`flg`
 		)
 		values
 		(
@@ -39,7 +40,8 @@
 			#{createBy}, 
 			#{updateBy}, 
 			#{updateTime},
-			#{content}
+			#{content},
+			#{flg}
 		)
 	</insert>
 	 
@@ -53,6 +55,7 @@
 			<if test="createBy != null">`create_by` = #{createBy}, </if>
 			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+			<if test="flg != null">`flg` = #{flg}</if>
 		</set>
 		where id = #{id}
 	</update>

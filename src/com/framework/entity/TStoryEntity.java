@@ -35,7 +35,14 @@ public class TStoryEntity implements Serializable {
 	
 	private String content;
 	
+	private int flg;
 	
+	public int getFlg() {
+		return flg;
+	}
+	public void setFlg(int flg) {
+		this.flg = flg;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

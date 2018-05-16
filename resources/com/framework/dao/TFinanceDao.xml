@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TFinanceDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TFinanceEntity">
+		select * from t_finance where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TFinanceEntity">
+		select * from t_finance 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_finance 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TFinanceEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_finance
+		(
+			`icon`, 
+			`name`, 
+			`low_rate`, 
+			`low_refund`, 
+			`time_distance`, 
+			`standard`, 
+			`create_by`, 
+			`create_time`, 
+			`update_by`, 
+			`update_time`, 
+			`desc_url`, 
+			`status`, 
+			`title`
+		)
+		values
+		(
+			#{icon}, 
+			#{name}, 
+			#{lowRate}, 
+			#{lowRefund}, 
+			#{timeDistance}, 
+			#{standard}, 
+			#{createBy}, 
+			#{createTime}, 
+			#{updateBy}, 
+			#{updateTime}, 
+			#{descUrl}, 
+			#{status}, 
+			#{title}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TFinanceEntity">
+		update t_finance 
+		<set>
+			<if test="icon != null">`icon` = #{icon}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="lowRate != null">`low_rate` = #{lowRate}, </if>
+			<if test="lowRefund != null">`low_refund` = #{lowRefund}, </if>
+			<if test="timeDistance != null">`time_distance` = #{timeDistance}, </if>
+			<if test="standard != null">`standard` = #{standard}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="descUrl != null">`desc_url` = #{descUrl}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="title != null">`title` = #{title}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_finance where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_finance where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

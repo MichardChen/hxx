@@ -26,7 +26,7 @@ public class TNewsEntity implements Serializable {
 	//
 	private Integer hotFlg;
 	//
-	private Integer createUser;
+	private Integer createBy;
 	//
 	private Date createTime;
 	//
@@ -38,164 +38,90 @@ public class TNewsEntity implements Serializable {
 	//
 	private String contentUrl;
 	//
-	private Integer updateUserId;
+	private Integer updateBy;
 	//
 	private Integer topFlg;
-
-	/**
-	 * 设置：
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	/**
-	 * 获取：
-	 */
 	public Integer getId() {
 		return id;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setNewsLogo(String newsLogo) {
-		this.newsLogo = newsLogo;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	/**
-	 * 获取：
-	 */
 	public String getNewsLogo() {
 		return newsLogo;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setNewsTitle(String newsTitle) {
-		this.newsTitle = newsTitle;
+	public void setNewsLogo(String newsLogo) {
+		this.newsLogo = newsLogo;
 	}
-	/**
-	 * 获取：
-	 */
 	public String getNewsTitle() {
 		return newsTitle;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setNewsTypeCd(String newsTypeCd) {
-		this.newsTypeCd = newsTypeCd;
+	public void setNewsTitle(String newsTitle) {
+		this.newsTitle = newsTitle;
 	}
-	/**
-	 * 获取：
-	 */
 	public String getNewsTypeCd() {
 		return newsTypeCd;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setHotFlg(Integer hotFlg) {
-		this.hotFlg = hotFlg;
+	public void setNewsTypeCd(String newsTypeCd) {
+		this.newsTypeCd = newsTypeCd;
 	}
-	/**
-	 * 获取：
-	 */
 	public Integer getHotFlg() {
 		return hotFlg;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setCreateUser(Integer createUser) {
-		this.createUser = createUser;
+	public void setHotFlg(Integer hotFlg) {
+		this.hotFlg = hotFlg;
 	}
-	/**
-	 * 获取：
-	 */
-	public Integer getCreateUser() {
-		return createUser;
+	public Integer getCreateBy() {
+		return createBy;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setCreateBy(Integer createBy) {
+		this.createBy = createBy;
 	}
-	/**
-	 * 获取：
-	 */
 	public Date getCreateTime() {
 		return createTime;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
-	/**
-	 * 获取：
-	 */
 	public Date getUpdateTime() {
 		return updateTime;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setFlg(Integer flg) {
-		this.flg = flg;
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
-	/**
-	 * 获取：
-	 */
 	public Integer getFlg() {
 		return flg;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setContent(String content) {
-		this.content = content;
+	public void setFlg(Integer flg) {
+		this.flg = flg;
 	}
-	/**
-	 * 获取：
-	 */
 	public String getContent() {
 		return content;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setContentUrl(String contentUrl) {
-		this.contentUrl = contentUrl;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	/**
-	 * 获取：
-	 */
 	public String getContentUrl() {
 		return contentUrl;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setUpdateUserId(Integer updateUserId) {
-		this.updateUserId = updateUserId;
+	public void setContentUrl(String contentUrl) {
+		this.contentUrl = contentUrl;
 	}
-	/**
-	 * 获取：
-	 */
-	public Integer getUpdateUserId() {
-		return updateUserId;
+	public Integer getUpdateBy() {
+		return updateBy;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setTopFlg(Integer topFlg) {
-		this.topFlg = topFlg;
+	public void setUpdateBy(Integer updateBy) {
+		this.updateBy = updateBy;
 	}
-	/**
-	 * 获取：
-	 */
 	public Integer getTopFlg() {
 		return topFlg;
 	}
+	public void setTopFlg(Integer topFlg) {
+		this.topFlg = topFlg;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 }

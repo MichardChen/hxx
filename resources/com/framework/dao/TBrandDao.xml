@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TBrandDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TBrandEntity">
+		select * from t_brand where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TBrandEntity">
+		select * from t_brand 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_brand 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TBrandEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_brand
+		(
+			`brand`, 
+			`brand_icon`, 
+			`create_by`, 
+			`update_by`, 
+			`create_time`, 
+			`update_time`
+		)
+		values
+		(
+			#{brand}, 
+			#{brandIcon}, 
+			#{createBy}, 
+			#{updateBy}, 
+			#{createTime}, 
+			#{updateTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TBrandEntity">
+		update t_brand 
+		<set>
+			<if test="brand != null">`brand` = #{brand}, </if>
+			<if test="brandIcon != null">`brand_icon` = #{brandIcon}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_brand where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_brand where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
