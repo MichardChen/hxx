@@ -2,6 +2,7 @@ package com.framework.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -27,9 +28,12 @@ import com.framework.model.StoreAddUpdateModel;
 import com.framework.service.FileService;
 import com.framework.service.TStoryService;
 import com.framework.utils.DateUtil;
+import com.framework.utils.ImageCompressZipUtil;
+import com.framework.utils.ImageTools;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
 import com.framework.utils.StringUtil;
+
 
 /**
  * 
@@ -106,7 +110,7 @@ public class TStoryController extends AbstractController{
 		tStory.setCreateTime(DateUtil.getNowTimestamp());
 		tStory.setUpdateBy((Integer)request.getAttribute("userId"));
 		tStory.setUpdateTime(DateUtil.getNowTimestamp());
-		File file = model.getIcon();
+		File uploadFile = model.getIcon();
 		tStory.setStoryIcon("");
 		tStory.setStoryTitle(model.getTitle());
 		String htmlContent = StringUtil.formatHTML(model.getTitle(), model.getContent());
@@ -122,6 +126,26 @@ public class TStoryController extends AbstractController{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		//上传图片
+		String logo = "";
+		//上传文件
+		if(uploadFile != null){
+			String fileName = uploadFile.getName();
+			String[] names = fileName.split("\\.");
+		    File t=new File(Constants.FILE_HOST.IMG+uuid+"."+names[1]);
+		    logo = Constants.HOST.IMG+uuid+"."+names[1];
+		    try{
+		        t.createNewFile();
+		    }catch(IOException e){
+		        e.printStackTrace();
+		    }
+		    
+		    fs.fileChannelCopy(uploadFile, t);
+		    ImageCompressZipUtil.zipWidthHeightImageFile(uploadFile, t, ImageTools.getImgWidth(uploadFile), ImageTools.getImgHeight(uploadFile), 0.5f);
+		    uploadFile.delete();
+		}
+		
 		String contentUrl = Constants.HOST.DOCUMENT+uuid+".html";
 		tStory.setDescUrl(contentUrl);
 		tStoryService.save(tStory);

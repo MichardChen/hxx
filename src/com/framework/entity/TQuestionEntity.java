@@ -1,6 +1,7 @@
 package com.framework.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 
@@ -32,142 +33,80 @@ public class TQuestionEntity implements Serializable {
 	//
 	private Integer createBy;
 	//
-	private Date createTime;
+	private Timestamp createTime;
 	//
 	private Integer updateBy;
 	//
-	private Date updateTime;
-
-	/**
-	 * 设置：
-	 */
-	public void setId(Integer id) {
-		this.id = id;
+	private Timestamp updateTime;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-	/**
-	 * 获取：
-	 */
 	public Integer getId() {
 		return id;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-	/**
-	 * 获取：
-	 */
 	public String getMobile() {
 		return mobile;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setLinkMan(String linkMan) {
-		this.linkMan = linkMan;
-	}
-	/**
-	 * 获取：
-	 */
 	public String getLinkMan() {
 		return linkMan;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setQuestion(String question) {
-		this.question = question;
-	}
-	/**
-	 * 获取：
-	 */
 	public String getQuestion() {
 		return question;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setCartId(Integer cartId) {
-		this.cartId = cartId;
-	}
-	/**
-	 * 获取：
-	 */
 	public Integer getCartId() {
 		return cartId;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setEmployeeId(Integer employeeId) {
-		this.employeeId = employeeId;
-	}
-	/**
-	 * 获取：
-	 */
 	public Integer getEmployeeId() {
 		return employeeId;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	/**
-	 * 获取：
-	 */
 	public String getStatus() {
 		return status;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setCreateBy(Integer createBy) {
-		this.createBy = createBy;
-	}
-	/**
-	 * 获取：
-	 */
 	public Integer getCreateBy() {
 		return createBy;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	/**
-	 * 获取：
-	 */
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setUpdateBy(Integer updateBy) {
-		this.updateBy = updateBy;
-	}
-	/**
-	 * 获取：
-	 */
 	public Integer getUpdateBy() {
 		return updateBy;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-	/**
-	 * 获取：
-	 */
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public void setLinkMan(String linkMan) {
+		this.linkMan = linkMan;
+	}
+	public void setQuestion(String question) {
+		this.question = question;
+	}
+	public void setCartId(Integer cartId) {
+		this.cartId = cartId;
+	}
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public void setCreateBy(Integer createBy) {
+		this.createBy = createBy;
+	}
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+	public void setUpdateBy(Integer updateBy) {
+		this.updateBy = updateBy;
+	}
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	
 }

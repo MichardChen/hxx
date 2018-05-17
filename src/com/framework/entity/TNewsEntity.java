@@ -1,6 +1,7 @@
 package com.framework.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 
@@ -28,9 +29,9 @@ public class TNewsEntity implements Serializable {
 	//
 	private Integer createBy;
 	//
-	private Date createTime;
+	private Timestamp createTime;
 	//
-	private Date updateTime;
+	private Timestamp updateTime;
 	//
 	private Integer flg;
 	//
@@ -41,87 +42,87 @@ public class TNewsEntity implements Serializable {
 	private Integer updateBy;
 	//
 	private Integer topFlg;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	public Integer getId() {
 		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
 	}
 	public String getNewsLogo() {
 		return newsLogo;
 	}
-	public void setNewsLogo(String newsLogo) {
-		this.newsLogo = newsLogo;
-	}
 	public String getNewsTitle() {
 		return newsTitle;
-	}
-	public void setNewsTitle(String newsTitle) {
-		this.newsTitle = newsTitle;
 	}
 	public String getNewsTypeCd() {
 		return newsTypeCd;
 	}
-	public void setNewsTypeCd(String newsTypeCd) {
-		this.newsTypeCd = newsTypeCd;
-	}
 	public Integer getHotFlg() {
 		return hotFlg;
-	}
-	public void setHotFlg(Integer hotFlg) {
-		this.hotFlg = hotFlg;
 	}
 	public Integer getCreateBy() {
 		return createBy;
 	}
-	public void setCreateBy(Integer createBy) {
-		this.createBy = createBy;
-	}
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
-	}
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
 	}
 	public Integer getFlg() {
 		return flg;
 	}
-	public void setFlg(Integer flg) {
-		this.flg = flg;
-	}
 	public String getContent() {
 		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
 	}
 	public String getContentUrl() {
 		return contentUrl;
 	}
-	public void setContentUrl(String contentUrl) {
-		this.contentUrl = contentUrl;
-	}
 	public Integer getUpdateBy() {
 		return updateBy;
-	}
-	public void setUpdateBy(Integer updateBy) {
-		this.updateBy = updateBy;
 	}
 	public Integer getTopFlg() {
 		return topFlg;
 	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public void setNewsLogo(String newsLogo) {
+		this.newsLogo = newsLogo;
+	}
+	public void setNewsTitle(String newsTitle) {
+		this.newsTitle = newsTitle;
+	}
+	public void setNewsTypeCd(String newsTypeCd) {
+		this.newsTypeCd = newsTypeCd;
+	}
+	public void setHotFlg(Integer hotFlg) {
+		this.hotFlg = hotFlg;
+	}
+	public void setCreateBy(Integer createBy) {
+		this.createBy = createBy;
+	}
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
+	public void setFlg(Integer flg) {
+		this.flg = flg;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public void setContentUrl(String contentUrl) {
+		this.contentUrl = contentUrl;
+	}
+	public void setUpdateBy(Integer updateBy) {
+		this.updateBy = updateBy;
+	}
 	public void setTopFlg(Integer topFlg) {
 		this.topFlg = topFlg;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+	
 	
 }

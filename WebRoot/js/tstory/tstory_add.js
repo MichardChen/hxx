@@ -1,5 +1,19 @@
 var id = T.p("id");
 var ue = UE.getEditor("container");
+function getPath(obj) {
+	 if (obj) {
+	  if (window.navigator.userAgent.indexOf("MSIE") >= 1) {
+	   obj.select();
+	   return document.selection.createRange().text;
+	  } else if (window.navigator.userAgent.indexOf("Firefox") >= 1) {
+	   if (obj.files) {
+	    return obj.files.item(0).getAsDataURL();
+	   }
+	   return obj.value;
+	  }
+	  return obj.value;
+	 }
+}
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
@@ -19,6 +33,8 @@ var vm = new Vue({
             });
 		},
 		saveOrUpdate: function (event) {
+			var url = document.getElementById("icon").value;
+			vm.tStory.icon=url;
 			vm.tStory.content=ue.getContent();
 			var url = vm.tStory.id == null ? "../tstory/save" : "../tstory/update";
 			$.ajax({

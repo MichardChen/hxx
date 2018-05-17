@@ -1,6 +1,7 @@
 package com.framework.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 
@@ -32,184 +33,104 @@ public class TFinanceEntity implements Serializable {
 	//
 	private Integer createBy;
 	//
-	private Date createTime;
+	private Timestamp createTime;
 	//
 	private Integer updateBy;
 	//
-	private Date updateTime;
+	private Timestamp updateTime;
 	//
 	private String descUrl;
 	//
 	private String status;
 	//
 	private String title;
-
-	/**
-	 * 设置：
-	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-	/**
-	 * 获取：
-	 */
 	public Integer getId() {
 		return id;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
-	/**
-	 * 获取：
-	 */
 	public String getIcon() {
 		return icon;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-	/**
-	 * 获取：
-	 */
 	public String getName() {
 		return name;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setLowRate(String lowRate) {
-		this.lowRate = lowRate;
-	}
-	/**
-	 * 获取：
-	 */
 	public String getLowRate() {
 		return lowRate;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setLowRefund(String lowRefund) {
-		this.lowRefund = lowRefund;
-	}
-	/**
-	 * 获取：
-	 */
 	public String getLowRefund() {
 		return lowRefund;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setTimeDistance(String timeDistance) {
-		this.timeDistance = timeDistance;
-	}
-	/**
-	 * 获取：
-	 */
 	public String getTimeDistance() {
 		return timeDistance;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setStandard(String standard) {
-		this.standard = standard;
-	}
-	/**
-	 * 获取：
-	 */
 	public String getStandard() {
 		return standard;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setCreateBy(Integer createBy) {
-		this.createBy = createBy;
-	}
-	/**
-	 * 获取：
-	 */
 	public Integer getCreateBy() {
 		return createBy;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	/**
-	 * 获取：
-	 */
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setUpdateBy(Integer updateBy) {
-		this.updateBy = updateBy;
-	}
-	/**
-	 * 获取：
-	 */
 	public Integer getUpdateBy() {
 		return updateBy;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-	/**
-	 * 获取：
-	 */
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setDescUrl(String descUrl) {
-		this.descUrl = descUrl;
-	}
-	/**
-	 * 获取：
-	 */
 	public String getDescUrl() {
 		return descUrl;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	/**
-	 * 获取：
-	 */
 	public String getStatus() {
 		return status;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	/**
-	 * 获取：
-	 */
 	public String getTitle() {
 		return title;
 	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setLowRate(String lowRate) {
+		this.lowRate = lowRate;
+	}
+	public void setLowRefund(String lowRefund) {
+		this.lowRefund = lowRefund;
+	}
+	public void setTimeDistance(String timeDistance) {
+		this.timeDistance = timeDistance;
+	}
+	public void setStandard(String standard) {
+		this.standard = standard;
+	}
+	public void setCreateBy(Integer createBy) {
+		this.createBy = createBy;
+	}
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+	public void setUpdateBy(Integer updateBy) {
+		this.updateBy = updateBy;
+	}
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
+	public void setDescUrl(String descUrl) {
+		this.descUrl = descUrl;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	
 }
