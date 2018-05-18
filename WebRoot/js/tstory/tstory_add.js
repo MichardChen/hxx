@@ -33,6 +33,10 @@ var vm = new Vue({
             });
 		},
 		saveOrUpdate: function (event) {
+			var html = ue.getContent();
+			var txt = ue.getContentTxt();
+			alert(html);
+			return;
 			var url = document.getElementById("icon").value;
 			vm.tStory.icon=url;
 			vm.tStory.content=ue.getContent();

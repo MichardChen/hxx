@@ -23,7 +23,8 @@
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">故事内容</div>
 		   	<div class="col-sm-10">
-		   			 <textarea id="container" name="container" v-model="tStory.content" style="width: 800px;height: 400px;margin: 0 auto;"></textarea>
+		   	<script id="container" name="content" type="text/plain"></script>
+		   			 <!-- <textarea id="container" name="container" v-model="tStory.content" style="width: 800px;height: 400px;margin: 0 auto;"></textarea> -->
 		    </div>
 		</div>
 		<div class="form-group">
@@ -34,11 +35,11 @@
 	</form>
 </div>
 <script type="text/javascript" charset="utf-8">
-	window.UEDITOR_HOME_URL = "/framework/statics/UE/"; 
+	//window.UEDITOR_HOME_URL = "/framework/statics/UE/"; 
 	//UEDITOR_HOME_URL、config、all这三个顺序不能改变
 </script>
 <script type="text/javascript" src="${rc.contextPath}/statics/UE/ueditor.config.js"></script>
-<script type="text/javascript" src="${rc.contextPath}/statics/UE/ueditor.all.js"></script>
+<script type="text/javascript" src="${rc.contextPath}/statics/UE/ueditor.all.min.js"></script>
 <script src="${rc.contextPath}/js/tstory/tstory_add.js?_${date.systemTime}"></script>
 </body>
 </html>
