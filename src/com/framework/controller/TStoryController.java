@@ -18,9 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.framework.constants.Constants;
 import com.framework.entity.TStoryEntity;
@@ -101,20 +103,21 @@ public class TStoryController extends AbstractController{
 	@ResponseBody
 	@RequestMapping("/save")
 	@RequiresPermissions("tstory:save")
-	public R save(@RequestBody StoreAddUpdateModel model){
+	public R save(@RequestBody StoreAddUpdateModel tStory,@RequestParam("uFile")MultipartFile uFile){
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-		TStoryEntity tStory = new TStoryEntity();
+		TStoryEntity story = new TStoryEntity();
 		/*HttpSession session = request.getSession();
 		int userid = (Integer)session.getAttribute("userId");*/
-		tStory.setCreateBy((Integer)request.getAttribute("userId"));
-		tStory.setCreateTime(DateUtil.getNowTimestamp());
-		tStory.setUpdateBy((Integer)request.getAttribute("userId"));
-		tStory.setUpdateTime(DateUtil.getNowTimestamp());
-		File uploadFile = model.getIcon();
-		tStory.setStoryIcon("");
-		tStory.setStoryTitle(model.getTitle());
-		String htmlContent = StringUtil.formatHTML(model.getTitle(), model.getContent());
-		tStory.setContent(htmlContent);
+		story.setCreateBy((Integer)request.getAttribute("userId"));
+		story.setCreateTime(DateUtil.getNowTimestamp());
+		story.setUpdateBy((Integer)request.getAttribute("userId"));
+		story.setUpdateTime(DateUtil.getNowTimestamp());
+		File uploadFile = tStory.getIcon();
+		story.setStoryIcon("");
+		story.setStoryTitle(tStory.getTitle());
+		story.setFlg(1);
+		String htmlContent = StringUtil.formatHTML(tStory.getTitle(), tStory.getContent());
+		story.setContent(htmlContent);
 		//生成html
 		FileService fs=new FileService();
 		String uuid = UUID.randomUUID().toString();
@@ -147,8 +150,8 @@ public class TStoryController extends AbstractController{
 		}
 		
 		String contentUrl = Constants.HOST.DOCUMENT+uuid+".html";
-		tStory.setDescUrl(contentUrl);
-		tStoryService.save(tStory);
+		story.setDescUrl(contentUrl);
+		tStoryService.save(story);
 		
 		return R.ok();
 	}

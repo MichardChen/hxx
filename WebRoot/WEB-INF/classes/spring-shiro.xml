@@ -45,6 +45,9 @@
 	    <property name="filterChainDefinitions">  
 	        <value>
 	        	/statics/**=anon
+	        	/wxrest/**=anon
+	        	/hrest/**=anon
+	        	/pcrest/**=anon
 	        	/common/**=anon
 	        	/login.html=anon
 	        	/sys/login=anon
