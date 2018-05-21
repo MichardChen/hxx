@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TCarouselDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TCarouselEntity">
+		select * from t_carousel where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TCarouselEntity">
+		select * from t_carousel 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_carousel 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TCarouselEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_carousel
+		(
+			`img_url`, 
+			`real_url`, 
+			`mark`, 
+			`create_time`, 
+			`update_time`, 
+			`flg`, 
+			`create_by`, 
+			`update_by`, 
+			`type_cd`
+		)
+		values
+		(
+			#{imgUrl}, 
+			#{realUrl}, 
+			#{mark}, 
+			#{createTime}, 
+			#{updateTime}, 
+			#{flg}, 
+			#{createBy}, 
+			#{updateBy}, 
+			#{typeCd}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TCarouselEntity">
+		update t_carousel 
+		<set>
+			<if test="imgUrl != null">`img_url` = #{imgUrl}, </if>
+			<if test="realUrl != null">`real_url` = #{realUrl}, </if>
+			<if test="mark != null">`mark` = #{mark}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="flg != null">`flg` = #{flg}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="typeCd != null">`type_cd` = #{typeCd}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_carousel where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_carousel where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

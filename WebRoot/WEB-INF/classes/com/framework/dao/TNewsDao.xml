@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TNewsDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TNewsEntity">
+		select * from t_news where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TNewsEntity">
+		select * from t_news 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_news 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TNewsEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_news
+		(
+			`news_logo`, 
+			`news_title`, 
+			`news_type_cd`, 
+			`hot_flg`, 
+			`create_by`, 
+			`create_time`, 
+			`update_time`, 
+			`flg`, 
+			`content`, 
+			`content_url`, 
+			`update_by`, 
+			`top_flg`
+		)
+		values
+		(
+			#{newsLogo}, 
+			#{newsTitle}, 
+			#{newsTypeCd}, 
+			#{hotFlg}, 
+			#{createBy}, 
+			#{createTime}, 
+			#{updateTime}, 
+			#{flg}, 
+			#{content}, 
+			#{contentUrl}, 
+			#{updateBy}, 
+			#{topFlg}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TNewsEntity">
+		update t_news 
+		<set>
+			<if test="newsLogo != null">`news_logo` = #{newsLogo}, </if>
+			<if test="newsTitle != null">`news_title` = #{newsTitle}, </if>
+			<if test="newsTypeCd != null">`news_type_cd` = #{newsTypeCd}, </if>
+			<if test="hotFlg != null">`hot_flg` = #{hotFlg}, </if>
+			<if test="createUser != null">`create_by` = #{createBy}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="flg != null">`flg` = #{flg}, </if>
+			<if test="content != null">`content` = #{content}, </if>
+			<if test="contentUrl != null">`content_url` = #{contentUrl}, </if>
+			<if test="updateUserId != null">`update_by` = #{updateBy}, </if>
+			<if test="topFlg != null">`top_flg` = #{topFlg}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_news where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_news where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

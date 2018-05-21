@@ -23,42 +23,81 @@ var vm = new Vue({
             });
 		},
 		saveOrUpdate: function (event) {
-			 var fileObj = document.getElementById("uFile").files[0];
-			vm.tStory.content = $("#content").summernote('code');
-			var formFile = new FormData();
-			if(vm.tStory.title == null){
-				alert("请输入故事标题");
-				return;
-			}
-			if(fileObj == null){
-				alert("请选择封面图片");
-				return;
-			}
-			if($("#content").val() == ""){
-				alert("请输入故事内容");
-				return;
-			}
-			formFile.append("uFile", fileObj); 
-			formFile.append("tStory", JSON.stringify(vm.tStory));
-			var url = vm.tStory.id == null ? "../tstory/save" : "../tstory/update";
-			$.ajax({
-				type: "POST",
-			    url: url,
-			    data: formFile,
-			    contentType: "application/json",
-			    processData: false,
-			    contentType: false,
-			    success: function(r){
-			    	var rr = eval('('+r+')');
-			    	if(rr.code === 0){
-						alert('操作成功', function(index){
-							vm.back();
-						});
-					}else{
-						alert(rr.msg);
-					}
+			var storyId = $("#storyId").val();
+			if(storyId == null){
+				//新增
+				var fileObj = document.getElementById("uFile").files[0];
+				vm.tStory.content = $("#content").summernote('code');
+				var formFile = new FormData();
+				if(vm.tStory.title == null){
+					alert("请输入故事标题");
+					return;
 				}
-			});
+				if(fileObj == null){
+					alert("请选择封面图片");
+					return;
+				}
+				if($("#content").val() == ""){
+					alert("请输入故事内容");
+					return;
+				}
+				formFile.append("uFile", fileObj); 
+				formFile.append("tStory", JSON.stringify(vm.tStory));
+				var url = "../tstory/save";
+				$.ajax({
+					type: "POST",
+				    url: url,
+				    data: formFile,
+				    contentType: "application/json",
+				    processData: false,
+				    contentType: false,
+				    success: function(r){
+				    	var rr = eval('('+r+')');
+				    	if(rr.code === 0){
+							alert('操作成功', function(index){
+								vm.back();
+							});
+						}else{
+							alert(rr.msg);
+						}
+					}
+				});
+			}else{
+				//更新
+				var fileObj = document.getElementById("uFile").files[0];
+				vm.tStory.content = $("#content").summernote('code');
+				vm.tStory.id=storyId;
+				var formFile = new FormData();
+				if(vm.tStory.title == null){
+					alert("请输入故事标题");
+					return;
+				}
+				if($("#content").val() == ""){
+					alert("请输入故事内容");
+					return;
+				}
+				formFile.append("uFile", fileObj); 
+				formFile.append("tStory", JSON.stringify(vm.tStory));
+				var url = "../tstory/update";
+				$.ajax({
+					type: "POST",
+				    url: url,
+				    data: formFile,
+				    contentType: "application/json",
+				    processData: false,
+				    contentType: false,
+				    success: function(r){
+				    	var rr = eval('('+r+')');
+				    	if(rr.code === 0){
+							alert('操作成功', function(index){
+								vm.back();
+							});
+						}else{
+							alert(rr.msg);
+						}
+					}
+				});
+			}
 		},
 		back: function (event) {
 			history.go(-1);

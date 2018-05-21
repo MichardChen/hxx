@@ -100,21 +100,6 @@ public class TStoryController extends AbstractController{
 		return R.ok().put("tStory", model);
 	}
 	
-	private File multipartToFile(MultipartFile multfile) throws IOException { 
-	    CommonsMultipartFile cf = (CommonsMultipartFile)multfile;  
-	    //这个myfile是MultipartFile的 
-	    DiskFileItem fi = (DiskFileItem) cf.getFileItem(); 
-	    File file = fi.getStoreLocation(); 
-	    //手动创建临时文件 
-	    if(file.length() < 100000){ 
-	        File tmpFile = new File(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") +  
-	                file.getName()); 
-	        multfile.transferTo(tmpFile); 
-	        return tmpFile; 
-	    } 
-	    return file; 
-	}
-	
 	/**
 	 * 保存
 	 */
@@ -162,7 +147,7 @@ public class TStoryController extends AbstractController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("tstory:update")
-	public R update(@RequestParam("tStory")String tStory,@RequestParam("uFile")MultipartFile uploadFile) throws Exception{
+	public R update(@RequestParam("tStory")String tStory,@RequestParam(value="uFile",required=false)MultipartFile uploadFile) throws Exception{
 		TStoryEntity story = new TStoryEntity();
 		JSONObject viewModel = JSONObject.parseObject(tStory);
 		int userid = ShiroUtils.getUserId().intValue();
@@ -172,6 +157,7 @@ public class TStoryController extends AbstractController{
 		story.setStoryTitle(viewModel.getString("title"));
 		story.setUpdateTime(DateUtil.getNowTimestamp());
 		story.setFlg(1);
+		story.setId(viewModel.getInteger("id"));
 		String htmlContent = StringUtil.formatHTML(viewModel.getString("title"), viewModel.getString("content"));
 		story.setContent(htmlContent);
 		//生成html
@@ -192,7 +178,7 @@ public class TStoryController extends AbstractController{
 		}
 		String contentUrl = Constants.HOST.DOCUMENT+uuid+".html";
 		story.setDescUrl(contentUrl);
-		tStoryService.save(story);
+		tStoryService.update(story);
 		return R.ok();
 	}
 	
