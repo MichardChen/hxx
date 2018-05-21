@@ -135,4 +135,9 @@ public class SysUserServiceImpl implements SysUserService {
 		map.put("newPassword", newPassword);
 		return sysUserDao.updatePassword(map);
 	}
+
+	@Override
+	public SysUserEntity queryByUserNamePwd(String username, String pwd) {
+		return sysUserDao.queryByUserNamePwd(username, pwd);
+	}
 }

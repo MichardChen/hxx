@@ -37,6 +37,10 @@
 		select * from sys_user where username = #{username}
 	</select>
 	
+	<select id="queryByUserNamePwd" resultType="com.framework.entity.SysUserEntity">
+		select * from sys_user where username = #{username} and password = #{password}
+	</select>
+	
 	<insert id="save" parameterType="com.framework.entity.SysUserEntity" useGeneratedKeys="true" keyProperty="userId">
 		insert into sys_user
 		(

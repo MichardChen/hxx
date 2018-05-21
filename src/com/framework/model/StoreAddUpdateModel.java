@@ -1,19 +1,23 @@
 package com.framework.model;
 
-import java.io.File;
 import java.io.Serializable;
 
 public class StoreAddUpdateModel implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private int id;
-	private File icon;
+	private String icon;
 	private String title;
 	private String content;
 	private String url;
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	public int getId() {
 		return id;
 	}
-	public File getIcon() {
+	public String getIcon() {
 		return icon;
 	}
 	public String getTitle() {
@@ -28,7 +32,7 @@ public class StoreAddUpdateModel implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public void setIcon(File icon) {
+	public void setIcon(String icon) {
 		this.icon = icon;
 	}
 	public void setTitle(String title) {
@@ -40,6 +44,4 @@ public class StoreAddUpdateModel implements Serializable{
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
-	
 }

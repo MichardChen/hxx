@@ -231,6 +231,14 @@ public class StringUtil extends StringUtils {
 		return new StringBuffer().append(formatDate).append(random).toString();
 	}
 	
+	public static String getRandomString(){
+		String[] data = new String[]{"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+		int r1 = new Random().nextInt(26);
+		int r2 = new Random().nextInt(26);
+		String d = "ycst";
+		return d+data[r1]+data[r2];
+	}
+	
 	public static BigDecimal toBigDecimal(String str){
 		if(StringUtil.isBlank(str) || str == null){
 			return new BigDecimal("0");

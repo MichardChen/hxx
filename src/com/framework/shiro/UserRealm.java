@@ -103,9 +103,6 @@ public class UserRealm extends AuthorizingRealm {
 		if (user.getStatus() == 0) {
 			throw new LockedAccountException("账号已被锁定,请联系管理员");
 		}
-		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-    	request.setAttribute("userId", user.getUserId());
-    	request.getSession().setAttribute("userId", user.getUserId());
 		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
 		return info;
 	}

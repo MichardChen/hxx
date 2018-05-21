@@ -11,7 +11,9 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,17 +25,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
 import com.framework.entity.TStoryEntity;
 import com.framework.model.StoreAddUpdateModel;
 import com.framework.service.FileService;
 import com.framework.service.TStoryService;
 import com.framework.utils.DateUtil;
-import com.framework.utils.ImageCompressZipUtil;
-import com.framework.utils.ImageTools;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
+import com.framework.utils.ShiroUtils;
 import com.framework.utils.StringUtil;
 
 
@@ -90,11 +93,26 @@ public class TStoryController extends AbstractController{
 	public R info(@PathVariable("id") Integer id){
 		TStoryEntity tStory = tStoryService.queryObject(id);
 		StoreAddUpdateModel model = new StoreAddUpdateModel();
-		model.setContent(tStory.getDescUrl());
-		//model.setIcon(tStory.getStoryIcon());
+		model.setContent(tStory.getContent());
+		model.setIcon(tStory.getStoryIcon());
 		model.setTitle(tStory.getStoryTitle());
-		model.setUrl(tStory.getDescUrl());
+		model.setId(id);
 		return R.ok().put("tStory", model);
+	}
+	
+	private File multipartToFile(MultipartFile multfile) throws IOException { 
+	    CommonsMultipartFile cf = (CommonsMultipartFile)multfile;  
+	    //这个myfile是MultipartFile的 
+	    DiskFileItem fi = (DiskFileItem) cf.getFileItem(); 
+	    File file = fi.getStoreLocation(); 
+	    //手动创建临时文件 
+	    if(file.length() < 100000){ 
+	        File tmpFile = new File(System.getProperty("java.io.tmpdir") + System.getProperty("file.separator") +  
+	                file.getName()); 
+	        multfile.transferTo(tmpFile); 
+	        return tmpFile; 
+	    } 
+	    return file; 
 	}
 	
 	/**
@@ -103,20 +121,18 @@ public class TStoryController extends AbstractController{
 	@ResponseBody
 	@RequestMapping("/save")
 	@RequiresPermissions("tstory:save")
-	public R save(@RequestBody StoreAddUpdateModel tStory,@RequestParam("uFile")MultipartFile uFile){
-		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+	public R save(@RequestParam("tStory")String tStory,@RequestParam("uFile")MultipartFile uploadFile) throws Exception{
+
 		TStoryEntity story = new TStoryEntity();
-		/*HttpSession session = request.getSession();
-		int userid = (Integer)session.getAttribute("userId");*/
-		story.setCreateBy((Integer)request.getAttribute("userId"));
+		JSONObject viewModel = JSONObject.parseObject(tStory);
+		int userid = ShiroUtils.getUserId().intValue();
+		story.setCreateBy(userid);
 		story.setCreateTime(DateUtil.getNowTimestamp());
-		story.setUpdateBy((Integer)request.getAttribute("userId"));
+		story.setUpdateBy(userid);
+		story.setStoryTitle(viewModel.getString("title"));
 		story.setUpdateTime(DateUtil.getNowTimestamp());
-		File uploadFile = tStory.getIcon();
-		story.setStoryIcon("");
-		story.setStoryTitle(tStory.getTitle());
 		story.setFlg(1);
-		String htmlContent = StringUtil.formatHTML(tStory.getTitle(), tStory.getContent());
+		String htmlContent = StringUtil.formatHTML(viewModel.getString("title"), viewModel.getString("content"));
 		story.setContent(htmlContent);
 		//生成html
 		FileService fs=new FileService();
@@ -129,30 +145,14 @@ public class TStoryController extends AbstractController{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		//上传图片
-		String logo = "";
-		//上传文件
-		if(uploadFile != null){
-			String fileName = uploadFile.getName();
-			String[] names = fileName.split("\\.");
-		    File t=new File(Constants.FILE_HOST.IMG+uuid+"."+names[1]);
-		    logo = Constants.HOST.IMG+uuid+"."+names[1];
-		    try{
-		        t.createNewFile();
-		    }catch(IOException e){
-		        e.printStackTrace();
-		    }
-		    
-		    fs.fileChannelCopy(uploadFile, t);
-		    ImageCompressZipUtil.zipWidthHeightImageFile(uploadFile, t, ImageTools.getImgWidth(uploadFile), ImageTools.getImgHeight(uploadFile), 0.5f);
-		    uploadFile.delete();
+		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if(StringUtil.isNoneBlank(logo)){
+			story.setStoryIcon(logo);
 		}
-		
 		String contentUrl = Constants.HOST.DOCUMENT+uuid+".html";
 		story.setDescUrl(contentUrl);
 		tStoryService.save(story);
-		
 		return R.ok();
 	}
 	
@@ -162,9 +162,37 @@ public class TStoryController extends AbstractController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("tstory:update")
-	public R update(@RequestBody TStoryEntity tStory){
-		tStoryService.update(tStory);
-		
+	public R update(@RequestParam("tStory")String tStory,@RequestParam("uFile")MultipartFile uploadFile) throws Exception{
+		TStoryEntity story = new TStoryEntity();
+		JSONObject viewModel = JSONObject.parseObject(tStory);
+		int userid = ShiroUtils.getUserId().intValue();
+		story.setCreateBy(userid);
+		story.setCreateTime(DateUtil.getNowTimestamp());
+		story.setUpdateBy(userid);
+		story.setStoryTitle(viewModel.getString("title"));
+		story.setUpdateTime(DateUtil.getNowTimestamp());
+		story.setFlg(1);
+		String htmlContent = StringUtil.formatHTML(viewModel.getString("title"), viewModel.getString("content"));
+		story.setContent(htmlContent);
+		//生成html
+		FileService fs=new FileService();
+		String uuid = UUID.randomUUID().toString();
+		//生成html文件
+		try {
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
+			pw.println(htmlContent);
+			pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//上传图片
+		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if(StringUtil.isNoneBlank(logo)){
+			story.setStoryIcon(logo);
+		}
+		String contentUrl = Constants.HOST.DOCUMENT+uuid+".html";
+		story.setDescUrl(contentUrl);
+		tStoryService.save(story);
 		return R.ok();
 	}
 	

@@ -105,14 +105,14 @@ public interface Constants {
 	/**
 	 * 本地*/
 	public static interface HOST{
-		public static final String LOCALHOST = "http://192.168.2.164:82/newsimages/";
-		public static final String TEA = "http://192.168.2.164:82/tea/";
-		public static final String DOCUMENT = "http://192.168.2.164:82/document/";
-		public static final String FILE = "http://192.168.2.164:82/file/";
-		public static final String ICON = "http://192.168.2.164:82/icon/";
-		public static final String IMG = "http://192.168.2.164:82/img/";
-		public static final String STORE = "http://192.168.2.164:82/store/";
-		public static final String COMMON = "http://192.168.2.164:82/common/";
+		public static final String LOCALHOST = "http://192.168.1.91:82/newsimages/";
+		public static final String TEA = "http://192.168.1.91:82/tea/";
+		public static final String DOCUMENT = "http://192.168.1.91:82/document/";
+		public static final String FILE = "http://192.168.1.91:82/file/";
+		public static final String ICON = "http://192.168.1.91:82/icon/";
+		public static final String IMG = "http://192.168.1.91:82/img/";
+		public static final String STORE = "http://192.168.1.91:82/store/";
+		public static final String COMMON = "http://192.168.1.91:82/common/";
 	}
 	
 	public static interface FILE_HOST{

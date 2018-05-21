@@ -27,6 +27,8 @@ public interface SysUserService {
 	 * 根据用户名，查询系统用户
 	 */
 	SysUserEntity queryByUserName(String username);
+	
+	SysUserEntity queryByUserNamePwd(String username,String pwd);
 
 	/**
 	 * 根据用户ID，查询用户

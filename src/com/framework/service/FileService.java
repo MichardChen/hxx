@@ -6,6 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.framework.utils.StringUtil;
+
 public class FileService {
 
 	public void fileChannelCopy(File s, File t) {
@@ -54,5 +58,31 @@ public class FileService {
 
 		}
 
+	}
+
+	public String upload(MultipartFile file, String localPath,String netPath){
+
+		if (file != null) {
+			// 取得当前上传文件的文件名称
+			String realFileName = file.getOriginalFilename();
+			// 如果名称不为“”,说明该文件存在，否则说明该文件不存在
+			if (realFileName.trim() != "") {
+				// 重命名上传后的文件名
+				String prefix = "." + realFileName.substring(realFileName.lastIndexOf(".") + 1);
+				String fileName = StringUtil.getRandomName() + StringUtil.getRandomString() + prefix;
+				// 定义上传路径
+				String path = localPath + fileName;
+				String networkPath = netPath + fileName;
+				File localFile = new File(path);
+				try {
+					file.transferTo(localFile);
+					return networkPath;
+				} catch (Exception e) {
+					e.printStackTrace();
+					return "";
+				}
+			}
+		}
+		return "";
 	}
 }

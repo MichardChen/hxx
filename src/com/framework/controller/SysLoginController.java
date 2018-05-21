@@ -14,6 +14,7 @@ import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.framework.dao.ScheduleJobLogDao;
+import com.framework.dao.SysUserDao;
+import com.framework.entity.SysUserEntity;
+import com.framework.service.SysUserService;
 import com.framework.utils.R;
 import com.framework.utils.ShiroUtils;
 import com.google.code.kaptcha.Constants;
@@ -36,6 +41,8 @@ import com.google.code.kaptcha.Producer;
 public class SysLoginController {
 	@Autowired
 	private Producer producer;
+	@Autowired
+	private SysUserService userService;
 
 	/**
 	 * 处理验证码
@@ -73,6 +80,12 @@ public class SysLoginController {
 			password = new Sha256Hash(password).toHex();
 			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 			subject.login(token);
+			SysUserEntity admin = userService.queryByUserName(username);
+			if(admin != null){
+				Session session = subject.getSession();
+				session.setAttribute("userId", admin.getUserId().intValue());
+			}
+			
 		} catch (UnknownAccountException e) {
 			return R.error(e.getMessage());
 		} catch (IncorrectCredentialsException e) {

@@ -84,6 +84,7 @@ public class CommonController extends AbstractController {
 			data.setCode(Constants.STATUS_CODE.FAIL);
 			data.setMessage("上传失败");
 		    try {
+		    	response.addHeader("Access-Control-Allow-Origin", "*");
 				response.getWriter().print(data.toString());
 			} catch (IOException e) {
 				e.printStackTrace();

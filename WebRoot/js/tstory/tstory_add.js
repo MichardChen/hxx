@@ -14,25 +14,48 @@ var vm = new Vue({
 	methods: {
 		getInfo: function(id){
 			$.get("../tstory/info/"+id, function(r){
-                vm.tStory = r.tStory;
+				var json = eval('('+r+')');
+				$("#title").val(json.tStory.title);
+				$("#storyId").val(json.tStory.id);
+				$("#content").summernote('code', json.tStory.content);
+				$("#icon").attr("href",json.tStory.icon);
+				$("#icon").show();
             });
 		},
 		saveOrUpdate: function (event) {
-			alert($("#uFile").val());
-			vm.tStory.content = $("#content").val();
+			 var fileObj = document.getElementById("uFile").files[0];
+			vm.tStory.content = $("#content").summernote('code');
+			var formFile = new FormData();
+			if(vm.tStory.title == null){
+				alert("请输入故事标题");
+				return;
+			}
+			if(fileObj == null){
+				alert("请选择封面图片");
+				return;
+			}
+			if($("#content").val() == ""){
+				alert("请输入故事内容");
+				return;
+			}
+			formFile.append("uFile", fileObj); 
+			formFile.append("tStory", JSON.stringify(vm.tStory));
 			var url = vm.tStory.id == null ? "../tstory/save" : "../tstory/update";
 			$.ajax({
 				type: "POST",
 			    url: url,
-			    data: JSON.stringify(vm.tStory),
+			    data: formFile,
 			    contentType: "application/json",
+			    processData: false,
+			    contentType: false,
 			    success: function(r){
-			    	if(r.code === 0){
+			    	var rr = eval('('+r+')');
+			    	if(rr.code === 0){
 						alert('操作成功', function(index){
 							vm.back();
 						});
 					}else{
-						alert(r.msg);
+						alert(rr.msg);
 					}
 				}
 			});
@@ -52,6 +75,7 @@ function sendFile(files, editor, $editable) {
         var data = new FormData();
         // 将文件加入到file中，后端可获得到参数名为“file”
         data.append("uploadFile", file);
+        console.log(URL);
         // ajax上传
         $.ajax({
             async: false, // 设置同步
