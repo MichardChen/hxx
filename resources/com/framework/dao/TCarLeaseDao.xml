@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TCarLeaseDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TCarLeaseEntity">
+		select * from t_car_lease where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TCarLeaseEntity">
+		select * from t_car_lease 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_car_lease 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TCarLeaseEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_car_lease
+		(
+			`icon`, 
+			`brand`, 
+			`car_name`, 
+			`year`, 
+			`car_type_info`, 
+			`first_payment`, 
+			`month_payment`, 
+			`title_label`, 
+			`car_series_id`, 
+			`car_cost`, 
+			`car_color`, 
+			`firm_cost`, 
+			`periods`, 
+			`label_id`, 
+			`real_first_payment`, 
+			`service_fee`, 
+			`final_payment`, 
+			`cart_params_id`, 
+			`create_by`, 
+			`create_time`, 
+			`update_time`, 
+			`update_by`, 
+			`desc_url`, 
+			`cart_param2_id`
+		)
+		values
+		(
+			#{icon}, 
+			#{brand}, 
+			#{carName}, 
+			#{year}, 
+			#{carTypeInfo}, 
+			#{firstPayment}, 
+			#{monthPayment}, 
+			#{titleLabel}, 
+			#{carSeriesId}, 
+			#{carCost}, 
+			#{carColor}, 
+			#{firmCost}, 
+			#{periods}, 
+			#{labelId}, 
+			#{realFirstPayment}, 
+			#{serviceFee}, 
+			#{finalPayment}, 
+			#{cartParamsId}, 
+			#{createBy}, 
+			#{createTime}, 
+			#{updateTime}, 
+			#{updateBy}, 
+			#{descUrl}, 
+			#{cartParam2Id}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TCarLeaseEntity">
+		update t_car_lease 
+		<set>
+			<if test="icon != null">`icon` = #{icon}, </if>
+			<if test="brand != null">`brand` = #{brand}, </if>
+			<if test="carName != null">`car_name` = #{carName}, </if>
+			<if test="year != null">`year` = #{year}, </if>
+			<if test="carTypeInfo != null">`car_type_info` = #{carTypeInfo}, </if>
+			<if test="firstPayment != null">`first_payment` = #{firstPayment}, </if>
+			<if test="monthPayment != null">`month_payment` = #{monthPayment}, </if>
+			<if test="titleLabel != null">`title_label` = #{titleLabel}, </if>
+			<if test="carSeriesId != null">`car_series_id` = #{carSeriesId}, </if>
+			<if test="carCost != null">`car_cost` = #{carCost}, </if>
+			<if test="carColor != null">`car_color` = #{carColor}, </if>
+			<if test="firmCost != null">`firm_cost` = #{firmCost}, </if>
+			<if test="periods != null">`periods` = #{periods}, </if>
+			<if test="labelId != null">`label_id` = #{labelId}, </if>
+			<if test="realFirstPayment != null">`real_first_payment` = #{realFirstPayment}, </if>
+			<if test="serviceFee != null">`service_fee` = #{serviceFee}, </if>
+			<if test="finalPayment != null">`final_payment` = #{finalPayment}, </if>
+			<if test="cartParamsId != null">`cart_params_id` = #{cartParamsId}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="descUrl != null">`desc_url` = #{descUrl}, </if>
+			<if test="cartParam2Id != null">`cart_param2_id` = #{cartParam2Id}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_car_lease where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_car_lease where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

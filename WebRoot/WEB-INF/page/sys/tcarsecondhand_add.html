@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+#parse("sys/header.html")
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+	<div class="panel-heading">{{title}}</div>
+	<form class="form-horizontal">
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">图片</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.icon" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">封面标签</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.titleLabel" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">品牌</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.brand" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">车名</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.carName" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">省</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.provinceId" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">市</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.cityId" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">公里数 </div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.kilomiters" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">汽车款式</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.year" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">首付</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.firstPayment" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">月供</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.monthPayment" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">车龄</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.age" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">车型</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.carLevelCd" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">车身颜色</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.carColor" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">车价</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.carCost" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">车系</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.carSeriesId" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">新车含税价</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.carTaxCost" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">先用年数</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.periods" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">标签</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.labelId" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">尾款</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.finalPayment" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">汽车参数</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.cartParamsId" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">汽车参数</div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.cartParam2Id" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCarSecondhand.descUrl" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-2 control-label"></div> 
+			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
+		</div>
+	</form>
+</div>
+
+<script src="${rc.contextPath}/js/tcarsecondhand/tcarsecondhand_add.js?_${date.systemTime}"></script>
+</body>
+</html>

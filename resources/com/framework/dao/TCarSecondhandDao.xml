@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TCarSecondhandDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TCarSecondhandEntity">
+		select * from t_car_secondhand where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TCarSecondhandEntity">
+		select * from t_car_secondhand 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_car_secondhand 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TCarSecondhandEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_car_secondhand
+		(
+			`icon`, 
+			`title_label`, 
+			`brand`, 
+			`car_name`, 
+			`province_id`, 
+			`city_id`, 
+			`kilomiters`, 
+			`year`, 
+			`first_payment`, 
+			`month_payment`, 
+			`age`, 
+			`car_level_cd`, 
+			`car_color`, 
+			`car_cost`, 
+			`car_series_id`, 
+			`car_tax_cost`, 
+			`periods`, 
+			`label_id`, 
+			`final_payment`, 
+			`cart_params_id`, 
+			`cart_param2_id`, 
+			`create_by`, 
+			`update_by`, 
+			`update_time`, 
+			`create_time`, 
+			`desc_url`
+		)
+		values
+		(
+			#{icon}, 
+			#{titleLabel}, 
+			#{brand}, 
+			#{carName}, 
+			#{provinceId}, 
+			#{cityId}, 
+			#{kilomiters}, 
+			#{year}, 
+			#{firstPayment}, 
+			#{monthPayment}, 
+			#{age}, 
+			#{carLevelCd}, 
+			#{carColor}, 
+			#{carCost}, 
+			#{carSeriesId}, 
+			#{carTaxCost}, 
+			#{periods}, 
+			#{labelId}, 
+			#{finalPayment}, 
+			#{cartParamsId}, 
+			#{cartParam2Id}, 
+			#{createBy}, 
+			#{updateBy}, 
+			#{updateTime}, 
+			#{createTime}, 
+			#{descUrl}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TCarSecondhandEntity">
+		update t_car_secondhand 
+		<set>
+			<if test="icon != null">`icon` = #{icon}, </if>
+			<if test="titleLabel != null">`title_label` = #{titleLabel}, </if>
+			<if test="brand != null">`brand` = #{brand}, </if>
+			<if test="carName != null">`car_name` = #{carName}, </if>
+			<if test="provinceId != null">`province_id` = #{provinceId}, </if>
+			<if test="cityId != null">`city_id` = #{cityId}, </if>
+			<if test="kilomiters != null">`kilomiters` = #{kilomiters}, </if>
+			<if test="year != null">`year` = #{year}, </if>
+			<if test="firstPayment != null">`first_payment` = #{firstPayment}, </if>
+			<if test="monthPayment != null">`month_payment` = #{monthPayment}, </if>
+			<if test="age != null">`age` = #{age}, </if>
+			<if test="carLevelCd != null">`car_level_cd` = #{carLevelCd}, </if>
+			<if test="carColor != null">`car_color` = #{carColor}, </if>
+			<if test="carCost != null">`car_cost` = #{carCost}, </if>
+			<if test="carSeriesId != null">`car_series_id` = #{carSeriesId}, </if>
+			<if test="carTaxCost != null">`car_tax_cost` = #{carTaxCost}, </if>
+			<if test="periods != null">`periods` = #{periods}, </if>
+			<if test="labelId != null">`label_id` = #{labelId}, </if>
+			<if test="finalPayment != null">`final_payment` = #{finalPayment}, </if>
+			<if test="cartParamsId != null">`cart_params_id` = #{cartParamsId}, </if>
+			<if test="cartParam2Id != null">`cart_param2_id` = #{cartParam2Id}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="descUrl != null">`desc_url` = #{descUrl}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_car_secondhand where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_car_secondhand where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
