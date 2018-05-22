@@ -64,11 +64,11 @@
 		delete from t_story where id = #{value}
 	</delete>
 	
-	<delete id="deleteBatch">
-		delete from t_story where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
+	<update id="deleteBatchs">
+		update t_story set `flg`=0,`update_time`=#{updateTime},`update_by`= #{updateBy}  where id in 
+		<foreach item="id" collection="ids" open="(" separator="," close=")">
 			#{id}
 		</foreach>
-	</delete>
+	</update>
 
 </mapper>

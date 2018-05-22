@@ -1,0 +1,30 @@
+package com.framework.service;
+
+import com.framework.entity.TQuestionAnswerEntity;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 
+ * 
+ * @author R & D
+ * @email 908350381@qq.com
+ * @date 2018-05-22 14:40:17
+ */
+public interface TQuestionAnswerService {
+	
+	TQuestionAnswerEntity queryObject(Integer id);
+	
+	List<TQuestionAnswerEntity> queryList(Map<String, Object> map);
+	
+	int queryTotal(Map<String, Object> map);
+	
+	void save(TQuestionAnswerEntity tQuestionAnswer);
+	
+	void update(TQuestionAnswerEntity tQuestionAnswer);
+	
+	void delete(Integer id);
+	
+	void deleteBatch(Integer[] ids);
+}

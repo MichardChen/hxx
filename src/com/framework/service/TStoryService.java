@@ -3,6 +3,7 @@ package com.framework.service;
 import com.framework.entity.TStoryEntity;
 import com.framework.model.StoreAddUpdateModel;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -27,5 +28,5 @@ public interface TStoryService {
 	
 	void delete(Integer id);
 	
-	void deleteBatch(Integer[] ids);
+	void deleteBatch(Integer[] ids,Timestamp updateTime,int updateBy);
 }

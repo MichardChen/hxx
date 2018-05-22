@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +30,11 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
+import com.framework.dao.SysUserDao;
+import com.framework.entity.SysUserEntity;
 import com.framework.entity.TStoryEntity;
 import com.framework.model.StoreAddUpdateModel;
+import com.framework.model.StoryListModel;
 import com.framework.service.FileService;
 import com.framework.service.TStoryService;
 import com.framework.utils.DateUtil;
@@ -52,6 +56,8 @@ import com.framework.utils.StringUtil;
 public class TStoryController extends AbstractController{
 	@Autowired
 	private TStoryService tStoryService;
+	@Autowired
+	private SysUserDao userDao;
 	
 	@RequestMapping("/tstorylist")
 	public String list(){
@@ -77,8 +83,35 @@ public class TStoryController extends AbstractController{
 		//查询列表数据
 		List<TStoryEntity> tStoryList = tStoryService.queryList(map);
 		int total = tStoryService.queryTotal(map);
+		List<StoryListModel> models = new ArrayList<>();
+		StoryListModel model = null;
+		for(TStoryEntity story : tStoryList){
+			model = new StoryListModel();
+			model.setUpdateTime(StringUtil.toString(story.getUpdateTime()));
+			model.setCreateTime(StringUtil.toString(story.getCreateTime()));
+			model.setDescUrl(story.getDescUrl());
+			model.setFlg(story.getFlg()==1?"正常":"删除");
+			model.setId(story.getId());
+			model.setStoryIcon(story.getStoryIcon());
+			model.setStoryTitle(story.getStoryTitle());
+			SysUserEntity admin = userDao.queryObject(story.getCreateBy());
+			if(admin != null){
+				model.setCreateBy(admin.getUsername());
+			}else{
+				model.setCreateBy(StringUtil.STRING_BLANK);
+			}
+			
+			SysUserEntity update = userDao.queryObject(story.getUpdateBy());
+			if(update != null){
+				model.setUpdateBy(update.getUsername());
+			}else{
+				model.setUpdateBy(StringUtil.STRING_BLANK);
+			}
+			
+			models.add(model);
+		}
 		
-		PageUtils pageUtil = new PageUtils(tStoryList, total, limit, page);
+		PageUtils pageUtil = new PageUtils(models, total, limit, page);
 		
 		return R.ok().put("page", pageUtil);
 	}
@@ -151,12 +184,9 @@ public class TStoryController extends AbstractController{
 		TStoryEntity story = new TStoryEntity();
 		JSONObject viewModel = JSONObject.parseObject(tStory);
 		int userid = ShiroUtils.getUserId().intValue();
-		story.setCreateBy(userid);
-		story.setCreateTime(DateUtil.getNowTimestamp());
 		story.setUpdateBy(userid);
 		story.setStoryTitle(viewModel.getString("title"));
 		story.setUpdateTime(DateUtil.getNowTimestamp());
-		story.setFlg(1);
 		story.setId(viewModel.getInteger("id"));
 		String htmlContent = StringUtil.formatHTML(viewModel.getString("title"), viewModel.getString("content"));
 		story.setContent(htmlContent);
@@ -189,8 +219,8 @@ public class TStoryController extends AbstractController{
 	@RequestMapping("/delete")
 	@RequiresPermissions("tstory:delete")
 	public R delete(@RequestBody Integer[] ids){
-		tStoryService.deleteBatch(ids);
-		
+		int userid = ShiroUtils.getUserId().intValue();
+		tStoryService.deleteBatch(ids,DateUtil.getNowTimestamp(),userid);
 		return R.ok();
 	}
 	

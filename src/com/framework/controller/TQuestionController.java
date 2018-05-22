@@ -1,5 +1,6 @@
 package com.framework.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
 
+import com.framework.constants.Constants;
+import com.framework.dao.SysUserDao;
+import com.framework.entity.SysUserEntity;
+import com.framework.entity.TQuestionAnswerEntity;
 import com.framework.entity.TQuestionEntity;
+import com.framework.model.QuestionAnswerListModel;
+import com.framework.model.QuestionListModel;
 import com.framework.service.TQuestionService;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
+import com.framework.utils.StringUtil;
 
 
 /**
@@ -30,6 +38,8 @@ import com.framework.utils.R;
 public class TQuestionController {
 	@Autowired
 	private TQuestionService tQuestionService;
+	@Autowired
+	private SysUserDao userDao;
 	
 	@RequestMapping("/tquestion.html")
 	public String list(){
@@ -56,7 +66,34 @@ public class TQuestionController {
 		List<TQuestionEntity> tQuestionList = tQuestionService.queryList(map);
 		int total = tQuestionService.queryTotal(map);
 		
-		PageUtils pageUtil = new PageUtils(tQuestionList, total, limit, page);
+		List<QuestionListModel> models = new ArrayList<>();
+		QuestionListModel model = null;
+		for(TQuestionEntity data : tQuestionList){
+			model = new QuestionListModel();
+			model.setCreateTime(StringUtil.toString(data.getCreateTime()));
+			if(StringUtil.equals(data.getStatus(), Constants.FEEDBACK_STATUS.HANDLE)){
+				model.setStatus("已处理");
+			}
+			if(StringUtil.equals(data.getStatus(), Constants.FEEDBACK_STATUS.STAY_HANDLE)){
+				model.setStatus("待处理");
+			}
+			
+			model.setId(data.getId());
+			SysUserEntity admin = userDao.queryObject(data.getEmployeeId());
+			if(admin != null){
+				model.setEmployeeId(admin.getUsername());
+			}else{
+				model.setEmployeeId(StringUtil.STRING_BLANK);
+			}
+			
+			model.setLinkMan(data.getLinkMan());
+			model.setMobile(data.getMobile());
+			model.setQuestion(data.getQuestion());
+			
+			models.add(model);
+		}
+		
+		PageUtils pageUtil = new PageUtils(models, total, limit, page);
 		
 		return R.ok().put("page", pageUtil);
 	}

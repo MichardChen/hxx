@@ -3,6 +3,8 @@ package com.framework.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,8 +50,12 @@ public class TStoryServiceImpl implements TStoryService {
 	}
 	
 	@Override
-	public void deleteBatch(Integer[] ids){
-		tStoryDao.deleteBatch(ids);
+	public void deleteBatch(Integer[] ids,Timestamp updateTime,int updateBy){
+		Map<String, Object> map = new HashMap<>();
+		map.put("updateTime", updateTime);
+		map.put("updateBy", updateBy);
+		map.put("ids", ids);
+		tStoryDao.deleteBatchs(map);
 	}
 	
 }

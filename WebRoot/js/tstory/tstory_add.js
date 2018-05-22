@@ -68,7 +68,7 @@ var vm = new Vue({
 				vm.tStory.content = $("#content").summernote('code');
 				vm.tStory.id=storyId;
 				var formFile = new FormData();
-				if(vm.tStory.title == null){
+				if($("#title").val() == null){
 					alert("请输入故事标题");
 					return;
 				}
