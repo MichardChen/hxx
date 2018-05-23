@@ -80,11 +80,18 @@ var vm = new Vue({
 				}
 			},
 		saveOrUpdate: function (event) {
+			var fileObj = document.getElementById("uFile").files[0];
+			var formFile = new FormData();
 			var url = vm.tCarSecondhand.id == null ? "../tcarsecondhand/save" : "../tcarsecondhand/update";
+			formFile.append("uFile", fileObj); 
+			formFile.append("tCarSecondhand", JSON.stringify(vm.tCarLease));
 			$.ajax({
 				type: "POST",
 			    url: url,
-			    data: JSON.stringify(vm.tCarSecondhand),
+			    data: formFile,
+			    contentType: "application/json",
+			    processData: false,
+			    contentType: false,
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('操作成功', function(index){

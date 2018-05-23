@@ -38,7 +38,7 @@
 			`car_series_id`, 
 			`car_tax_cost`, 
 			`periods`, 
-			`label_id`, 
+			`labels`, 
 			`final_payment`, 
 			`cart_params_id`, 
 			`cart_param2_id`, 
@@ -67,7 +67,7 @@
 			#{carSeriesId}, 
 			#{carTaxCost}, 
 			#{periods}, 
-			#{labelId}, 
+			#{labels}, 
 			#{finalPayment}, 
 			#{cartParamsId}, 
 			#{cartParam2Id}, 
@@ -99,7 +99,7 @@
 			<if test="carSeriesId != null">`car_series_id` = #{carSeriesId}, </if>
 			<if test="carTaxCost != null">`car_tax_cost` = #{carTaxCost}, </if>
 			<if test="periods != null">`periods` = #{periods}, </if>
-			<if test="labelId != null">`label_id` = #{labelId}, </if>
+			<if test="labels != null">`labels` = #{labels}, </if>
 			<if test="finalPayment != null">`final_payment` = #{finalPayment}, </if>
 			<if test="cartParamsId != null">`cart_params_id` = #{cartParamsId}, </if>
 			<if test="cartParam2Id != null">`cart_param2_id` = #{cartParam2Id}, </if>

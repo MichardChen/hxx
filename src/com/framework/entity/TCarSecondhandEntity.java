@@ -23,7 +23,7 @@ public class TCarSecondhandEntity implements Serializable {
 	//
 	private String titleLabel;
 	//
-	private String brand;
+	private Integer brand;
 	//
 	private String carName;
 	//
@@ -53,7 +53,7 @@ public class TCarSecondhandEntity implements Serializable {
 	//
 	private Integer periods;
 	//
-	private Integer labelId;
+	private String labels;
 	//
 	private BigDecimal finalPayment;
 	//
@@ -88,10 +88,10 @@ public class TCarSecondhandEntity implements Serializable {
 	public void setTitleLabel(String titleLabel) {
 		this.titleLabel = titleLabel;
 	}
-	public String getBrand() {
+	public Integer getBrand() {
 		return brand;
 	}
-	public void setBrand(String brand) {
+	public void setBrand(Integer brand) {
 		this.brand = brand;
 	}
 	public String getCarName() {
@@ -178,11 +178,11 @@ public class TCarSecondhandEntity implements Serializable {
 	public void setPeriods(Integer periods) {
 		this.periods = periods;
 	}
-	public Integer getLabelId() {
-		return labelId;
+	public String getLabels() {
+		return labels;
 	}
-	public void setLabelId(Integer labelId) {
-		this.labelId = labelId;
+	public void setLabels(String labels) {
+		this.labels = labels;
 	}
 	public BigDecimal getFinalPayment() {
 		return finalPayment;
@@ -235,8 +235,4 @@ public class TCarSecondhandEntity implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
-
-	
 }

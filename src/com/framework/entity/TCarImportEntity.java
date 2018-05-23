@@ -22,7 +22,7 @@ public class TCarImportEntity implements Serializable {
 	//
 	private String icon;
 	//
-	private String brand;
+	private Integer brand;
 	//
 	private String carName;
 	//
@@ -46,7 +46,7 @@ public class TCarImportEntity implements Serializable {
 	//
 	private Integer cartParam2Id;
 	//
-	private Integer labelId;
+	private String labels;
 	//
 	private Integer createBy;
 	//
@@ -75,10 +75,10 @@ public class TCarImportEntity implements Serializable {
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}
-	public String getBrand() {
+	public Integer getBrand() {
 		return brand;
 	}
-	public void setBrand(String brand) {
+	public void setBrand(Integer brand) {
 		this.brand = brand;
 	}
 	public String getCarName() {
@@ -147,11 +147,11 @@ public class TCarImportEntity implements Serializable {
 	public void setCartParam2Id(Integer cartParam2Id) {
 		this.cartParam2Id = cartParam2Id;
 	}
-	public Integer getLabelId() {
-		return labelId;
+	public String getLabels() {
+		return labels;
 	}
-	public void setLabelId(Integer labelId) {
-		this.labelId = labelId;
+	public void setLabels(String labels) {
+		this.labels = labels;
 	}
 	public Integer getCreateBy() {
 		return createBy;
@@ -204,6 +204,4 @@ public class TCarImportEntity implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-	
 }

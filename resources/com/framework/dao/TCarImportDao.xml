@@ -34,7 +34,7 @@
 			`hot`, 
 			`cart_params_id`, 
 			`cart_param2_id`, 
-			`label_id`, 
+			`labels`, 
 			`create_by`, 
 			`update_by`, 
 			`create_time`, 
@@ -59,7 +59,7 @@
 			#{hot}, 
 			#{cartParamsId}, 
 			#{cartParam2Id}, 
-			#{labelId}, 
+			#{labels}, 
 			#{createBy}, 
 			#{updateBy}, 
 			#{createTime}, 
@@ -87,7 +87,7 @@
 			<if test="hot != null">`hot` = #{hot}, </if>
 			<if test="cartParamsId != null">`cart_params_id` = #{cartParamsId}, </if>
 			<if test="cartParam2Id != null">`cart_param2_id` = #{cartParam2Id}, </if>
-			<if test="labelId != null">`label_id` = #{labelId}, </if>
+			<if test="labels != null">`labels` = #{labels}, </if>
 			<if test="createBy != null">`create_by` = #{createBy}, </if>
 			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
