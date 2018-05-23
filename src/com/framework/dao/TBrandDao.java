@@ -1,5 +1,7 @@
 package com.framework.dao;
 
+import java.util.List;
+
 import com.framework.entity.TBrandEntity;
 
 /**
@@ -11,4 +13,5 @@ import com.framework.entity.TBrandEntity;
  */
 public interface TBrandDao extends BaseDao<TBrandEntity> {
 	
+	List<TBrandEntity> queryAllList();
 }

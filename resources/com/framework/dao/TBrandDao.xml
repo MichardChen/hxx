@@ -13,7 +13,9 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+	<select id="queryAllList" resultType="com.framework.entity.TBrandEntity">
+		select * from t_brand 
+	</select>
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_brand 
 	</select>

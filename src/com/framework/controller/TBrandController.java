@@ -6,16 +6,18 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.stereotype.Controller;
 
 import com.framework.entity.TBrandEntity;
 import com.framework.service.TBrandService;
+import com.framework.utils.DateUtil;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
+import com.framework.utils.ShiroUtils;
 
 
 /**
@@ -61,6 +63,14 @@ public class TBrandController {
 		return R.ok().put("page", pageUtil);
 	}
 	
+	@ResponseBody
+	@RequestMapping("/queryAllBrand")
+	@RequiresPermissions("tbrand:list")
+	public R queryAllBrand(){
+		//查询列表数据
+		List<TBrandEntity> tBrandList = tBrandService.queryAllList();
+		return R.ok().put("tBrandList", tBrandList);
+	}
 	
 	/**
 	 * 信息
@@ -81,6 +91,12 @@ public class TBrandController {
 	@RequestMapping("/save")
 	@RequiresPermissions("tbrand:save")
 	public R save(@RequestBody TBrandEntity tBrand){
+		
+		int userid = ShiroUtils.getUserId().intValue();
+		tBrand.setCreateBy(userid);
+		tBrand.setCreateTime(DateUtil.getNowTimestamp());
+		tBrand.setUpdateBy(userid);
+		tBrand.setUpdateTime(DateUtil.getNowTimestamp());
 		tBrandService.save(tBrand);
 		
 		return R.ok();

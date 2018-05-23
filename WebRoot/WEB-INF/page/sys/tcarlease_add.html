@@ -7,119 +7,89 @@
 <body>
 <div class="panel panel-default" id="rrapp" v-cloak>
 	<div class="panel-heading">{{title}}</div>
-	<form class="form-horizontal">
+	<form class="form-horizontal" style="width:850px;" enctype="multipart/form-data">
+		<div class="form-group">
+			<div class="col-sm-2 control-label">车名</div>
+		   	<div class="col-sm-2">
+		      <input type="text" class="form-control" v-model="tCarLease.carName" placeholder="请输入车名"/>
+		    </div>
+		    <div class="col-sm-2 control-label">品牌</div>
+		   	<div class="col-sm-2">
+		   		<select  class="form-control" v-model="tCarLease.brand" id="brand" @change="selectBrand">
+		   			<option value="0">请选择汽车品牌</option>
+		   		</select>
+		    </div>
+		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">图标</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.icon" placeholder=""/>
+		   	<div class="col-sm-2">
+		   		<input type="file" v-model="tCarLease.icon" id="uFile" name="uFile" placeholder="请选择车标"/>
 		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label">品牌</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.brand" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label">车名</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.carName" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label">先用年数</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.year" placeholder=""/>
+		    <div class="col-sm-2 control-label">先用年数</div>
+		   	<div class="col-sm-2">
+		      <input type="text" class="form-control" v-model="tCarLease.year" placeholder="请输入先用年数"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">车辆信息</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.carTypeInfo" placeholder=""/>
+		   	<div class="col-sm-2">
+		      <input type="text" class="form-control" v-model="tCarLease.carTypeInfo" placeholder="请输入车辆信息"/>
 		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label">首付</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.firstPayment" placeholder=""/>
+		    <div class="col-sm-2 control-label">首付</div>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control" v-model="tCarLease.firstPayment" placeholder="请输入首付"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">月供</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.monthPayment" placeholder=""/>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control" v-model="tCarLease.monthPayment" placeholder="请输入月供"/>
 		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label">列表图片标签</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.titleLabel" placeholder=""/>
+		    	<div class="col-sm-2 control-label">列表图片标签</div>
+		   	<div class="col-sm-2">
+		      <input type="text" class="form-control" v-model="tCarLease.titleLabel" placeholder="请输入标签,用','隔开"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">车系</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.carSeriesId" placeholder=""/>
+		   	<div class="col-sm-2">
+		   		<select  class="form-control" v-model="tCarLease.carSeriesId" id="series">
+		   			<option value="0">请选择车系</option>
+		   		</select>
 		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label">车价</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.carCost" placeholder=""/>
+		    	<div class="col-sm-2 control-label">车价</div>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control" v-model="tCarLease.carCost" placeholder="请输入车价"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">车身颜色</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.carColor" placeholder=""/>
+		   	<div class="col-sm-2">
+		      <input type="text" class="form-control" v-model="tCarLease.carColor" placeholder="请选择车身颜色"/>
+		    </div>
+		    <div class="col-sm-2 control-label">厂商指导价</div>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control" v-model="tCarLease.firmCost" placeholder="请输入厂商指导价"/>
 		    </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label">厂商指导价</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.firmCost" placeholder=""/>
+		  	<div class="col-sm-2 control-label">尾款</div>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control" v-model="tCarLease.finalPayment" placeholder="请输入尾款"/>
 		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label">先用年数</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.periods" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label">标签</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.labelId" placeholder=""/>
+		    <div class="col-sm-2 control-label">标签</div>
+		   	<div class="col-sm-2">
+		      <input type="text" class="form-control" v-model="tCarLease.labels" placeholder=""/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">购车支付首付</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.realFirstPayment" placeholder=""/>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control" v-model="tCarLease.realFirstPayment" placeholder="请输入购车支付首付"/>
 		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label">交车服务费用</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.serviceFee" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label">尾款</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.finalPayment" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label">汽车参数</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.cartParamsId" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label">汽车参数</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarLease.cartParam2Id" placeholder=""/>
+		    <div class="col-sm-2 control-label">交车服务费用</div>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control" v-model="tCarLease.serviceFee" placeholder="请输入交车服务费用"/>
 		    </div>
 		</div>
 		<div class="form-group">
@@ -129,7 +99,6 @@
 		</div>
 	</form>
 </div>
-
 <script src="${rc.contextPath}/js/tcarlease/tcarlease_add.js?_${date.systemTime}"></script>
 </body>
 </html>

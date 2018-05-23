@@ -34,7 +34,7 @@
 			`car_color`, 
 			`firm_cost`, 
 			`periods`, 
-			`label_id`, 
+			`labels`, 
 			`real_first_payment`, 
 			`service_fee`, 
 			`final_payment`, 
@@ -61,7 +61,7 @@
 			#{carColor}, 
 			#{firmCost}, 
 			#{periods}, 
-			#{labelId}, 
+			#{labels}, 
 			#{realFirstPayment}, 
 			#{serviceFee}, 
 			#{finalPayment}, 
@@ -91,7 +91,7 @@
 			<if test="carColor != null">`car_color` = #{carColor}, </if>
 			<if test="firmCost != null">`firm_cost` = #{firmCost}, </if>
 			<if test="periods != null">`periods` = #{periods}, </if>
-			<if test="labelId != null">`label_id` = #{labelId}, </if>
+			<if test="labels != null">`labels` = #{labels}, </if>
 			<if test="realFirstPayment != null">`real_first_payment` = #{realFirstPayment}, </if>
 			<if test="serviceFee != null">`service_fee` = #{serviceFee}, </if>
 			<if test="finalPayment != null">`final_payment` = #{finalPayment}, </if>

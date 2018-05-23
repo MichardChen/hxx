@@ -27,4 +27,6 @@ public interface TBrandService {
 	void delete(Integer id);
 	
 	void deleteBatch(Integer[] ids);
+	
+	List<TBrandEntity> queryAllList();
 }

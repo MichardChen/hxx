@@ -51,5 +51,10 @@ public class TBrandServiceImpl implements TBrandService {
 	public void deleteBatch(Integer[] ids){
 		tBrandDao.deleteBatch(ids);
 	}
+
+	@Override
+	public List<TBrandEntity> queryAllList() {
+		return tBrandDao.queryAllList();
+	}
 	
 }
