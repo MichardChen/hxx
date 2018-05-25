@@ -3,6 +3,7 @@ package com.framework.controller;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +21,16 @@ import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
+import com.framework.dao.SysUserDao;
+import com.framework.entity.SysUserEntity;
+import com.framework.entity.TBrandEntity;
+import com.framework.entity.TBrandSeriesEntity;
 import com.framework.entity.TCarLeaseEntity;
 import com.framework.entity.TStoryEntity;
+import com.framework.model.TCarLeaseListModel;
 import com.framework.service.FileService;
+import com.framework.service.TBrandSeriesService;
+import com.framework.service.TBrandService;
 import com.framework.service.TCarLeaseService;
 import com.framework.utils.DateUtil;
 import com.framework.utils.PageUtils;
@@ -43,6 +51,12 @@ import com.framework.utils.StringUtil;
 public class TCarLeaseController {
 	@Autowired
 	private TCarLeaseService tCarLeaseService;
+	@Autowired
+	private TBrandService brandService;
+	@Autowired
+	private TBrandSeriesService seriesService;
+	@Autowired
+	private SysUserDao userDao;
 	
 	@RequestMapping("/tcarlease.html")
 	public String list(){
@@ -69,7 +83,43 @@ public class TCarLeaseController {
 		List<TCarLeaseEntity> tCarLeaseList = tCarLeaseService.queryList(map);
 		int total = tCarLeaseService.queryTotal(map);
 		
-		PageUtils pageUtil = new PageUtils(tCarLeaseList, total, limit, page);
+		List<TCarLeaseListModel> list = new ArrayList<>();
+		TCarLeaseListModel model = null;
+		for(TCarLeaseEntity entity : tCarLeaseList){
+			model = new TCarLeaseListModel();
+			model.setId(entity.getId());
+			TBrandEntity brandEntity = brandService.queryObject(entity.getBrand());
+			if(brandEntity != null){
+				model.setBrand(brandEntity.getBrand());
+				model.setCarName(entity.getCarName());
+			}
+			TBrandSeriesEntity seriesEntity = seriesService.queryObject(entity.getCarSeriesId());
+			if(seriesEntity != null){
+				model.setCarSeriesId(seriesEntity.getCarSerial());
+			}
+			model.setUpdateTime(StringUtil.toString(entity.getUpdateTime()));
+			model.setCreateTime(StringUtil.toString(entity.getCreateTime()));
+			SysUserEntity admin = userDao.queryObject(entity.getCreateBy());
+			if(admin != null){
+				model.setCreateBy(admin.getUsername());
+			}else{
+				model.setCreateBy(StringUtil.STRING_BLANK);
+			}
+			
+			SysUserEntity update = userDao.queryObject(entity.getUpdateBy());
+			if(update != null){
+				model.setUpdateBy(update.getUsername());
+			}else{
+				model.setUpdateBy(StringUtil.STRING_BLANK);
+			}
+			
+			model.setMonthPayment(entity.getMonthPayment());
+			model.setFirstPayment(entity.getFinalPayment());
+			model.setDescUrl(entity.getDescUrl());
+			list.add(model);
+		}
+		
+		PageUtils pageUtil = new PageUtils(list, total, limit, page);
 		
 		return R.ok().put("page", pageUtil);
 	}

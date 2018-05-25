@@ -84,7 +84,7 @@ var vm = new Vue({
 			var formFile = new FormData();
 			var url = vm.tCarSecondhand.id == null ? "../tcarsecondhand/save" : "../tcarsecondhand/update";
 			formFile.append("uFile", fileObj); 
-			formFile.append("tCarSecondhand", JSON.stringify(vm.tCarLease));
+			formFile.append("tCarSecondhand", JSON.stringify(vm.tCarSecondhand));
 			$.ajax({
 				type: "POST",
 			    url: url,

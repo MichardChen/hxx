@@ -1,29 +1,33 @@
 package com.framework.controller;
 
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
-import com.framework.entity.TCarLeaseEntity;
+import com.framework.dao.LocationCityDao;
+import com.framework.dao.LocationProvinceDao;
+import com.framework.dao.SysUserDao;
+import com.framework.entity.LocationCityEntity;
+import com.framework.entity.LocationProvinceEntity;
+import com.framework.entity.SysUserEntity;
+import com.framework.entity.TBrandEntity;
 import com.framework.entity.TCarSecondhandEntity;
-import com.framework.entity.TStoryEntity;
+import com.framework.model.CarSecondhandListModel;
 import com.framework.service.FileService;
+import com.framework.service.TBrandService;
 import com.framework.service.TCarSecondhandService;
 import com.framework.utils.DateUtil;
 import com.framework.utils.PageUtils;
@@ -44,6 +48,14 @@ import com.framework.utils.StringUtil;
 public class TCarSecondhandController {
 	@Autowired
 	private TCarSecondhandService tCarSecondhandService;
+	@Autowired
+	private SysUserDao userDao;
+	@Autowired
+	private TBrandService brandService;
+	@Autowired
+	private LocationProvinceDao provinceDao;
+	@Autowired
+	private LocationCityDao cityDao;
 	
 	@RequestMapping("/tcarsecondhand.html")
 	public String list(){
@@ -69,9 +81,51 @@ public class TCarSecondhandController {
 		//查询列表数据
 		List<TCarSecondhandEntity> tCarSecondhandList = tCarSecondhandService.queryList(map);
 		int total = tCarSecondhandService.queryTotal(map);
+		List<CarSecondhandListModel> list = new ArrayList<>();
+		CarSecondhandListModel model = null;
+		for(TCarSecondhandEntity entity : tCarSecondhandList){
+			model = new CarSecondhandListModel();
+			model.setId(entity.getId());
+			TBrandEntity brandEntity = brandService.queryObject(entity.getBrand());
+			if(brandEntity != null){
+				model.setBrand(brandEntity.getBrand());
+				model.setCarName(entity.getCarName());
+			}
+			
+			model.setUpdateTime(StringUtil.toString(entity.getUpdateTime()));
+			model.setCreateTime(StringUtil.toString(entity.getCreateTime()));
+			SysUserEntity admin = userDao.queryObject(entity.getCreateBy());
+			if(admin != null){
+				model.setCreateBy(admin.getUsername());
+			}else{
+				model.setCreateBy(StringUtil.STRING_BLANK);
+			}
+			
+			SysUserEntity update = userDao.queryObject(entity.getUpdateBy());
+			if(update != null){
+				model.setUpdateBy(update.getUsername());
+			}else{
+				model.setUpdateBy(StringUtil.STRING_BLANK);
+			}
+			
+			model.setCarName(entity.getCarName());
+			model.setDescUrl(entity.getDescUrl());
+			model.setFirstPayment(entity.getFirstPayment());
+			model.setMonthPayment(entity.getMonthPayment());
+			model.setKilomiters(entity.getKilomiters());
+			model.setYear(entity.getYear());
+			LocationProvinceEntity pEntity = provinceDao.queryObject(entity.getProvinceId());
+			if(pEntity != null){
+				model.setProvinceId(pEntity.getName());
+			}
+			LocationCityEntity cEntity = cityDao.queryObject(entity.getCityId());
+			if(cEntity != null){
+				model.setCityId(cEntity.getName());
+			}
+			list.add(model);
+		}
 		
-		PageUtils pageUtil = new PageUtils(tCarSecondhandList, total, limit, page);
-		
+		PageUtils pageUtil = new PageUtils(list, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
 	
