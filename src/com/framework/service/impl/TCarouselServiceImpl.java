@@ -51,5 +51,15 @@ public class TCarouselServiceImpl implements TCarouselService {
 	public void deleteBatch(Integer[] ids){
 		tCarouselDao.deleteBatch(ids);
 	}
+
+	@Override
+	public List<TCarouselEntity> queryListByTypeCd(String typeCd) {
+		return tCarouselDao.queryListByTypeCd(typeCd);
+	}
+
+	@Override
+	public TCarouselEntity queryByTypeCd(String typeCd) {
+		return tCarouselDao.queryCarouselByTypeCd(typeCd);
+	}
 	
 }

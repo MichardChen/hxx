@@ -18,11 +18,18 @@ var vm = new Vue({
             });
 		},
 		saveOrUpdate: function (event) {
+			var fileObj = document.getElementById("uFile").files[0];
+			var formFile = new FormData();
 			var url = vm.tCarousel.id == null ? "../tcarousel/save" : "../tcarousel/update";
+			formFile.append("uFile", fileObj); 
+			formFile.append("tCarousel", JSON.stringify(vm.tCarousel));
 			$.ajax({
 				type: "POST",
 			    url: url,
-			    data: JSON.stringify(vm.tCarousel),
+			    data: formFile,
+			    contentType: "application/json",
+			    processData: false,
+			    contentType: false,
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('操作成功', function(index){

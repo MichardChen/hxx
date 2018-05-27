@@ -27,4 +27,8 @@ public interface TCarouselService {
 	void delete(Integer id);
 	
 	void deleteBatch(Integer[] ids);
+	
+	List<TCarouselEntity> queryListByTypeCd(String typeCd);
+	
+	TCarouselEntity queryByTypeCd(String typeCd);
 }

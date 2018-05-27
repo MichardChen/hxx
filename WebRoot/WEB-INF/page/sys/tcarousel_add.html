@@ -7,59 +7,34 @@
 <body>
 <div class="panel panel-default" id="rrapp" v-cloak>
 	<div class="panel-heading">{{title}}</div>
-	<form class="form-horizontal">
+	<form class="form-horizontal" style="width:850px;" enctype="multipart/form-data">
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-2 control-label">上传图片</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarousel.imgUrl" placeholder=""/>
+		   		<input type="file" v-model="tCarousel.imgUrl" id="uFile" name="uFile" placeholder="请选择轮播图"/>
 		    </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-2 control-label">跳转地址</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarousel.realUrl" placeholder=""/>
+		   		<input type="text" class="form-control" v-model="tCarousel.realUrl" placeholder="若无跳转地址，请输入#"/>
 		    </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-2 control-label">图片类型</div>
+		   	<div class="col-sm-10">
+		   		<select  class="form-control" v-model="tCarousel.typeCd">
+		   			<option value="040001" selected="selected">店招</option>
+		   			<option value="040002">PC版首页轮播图</option>
+		   			<option value="040003">微信轮播图</option>
+		   			<option value="040004">小程序轮播图</option>
+		   		</select>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">备注</div>
 		   	<div class="col-sm-10">
 		      <input type="text" class="form-control" v-model="tCarousel.mark" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarousel.createTime" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarousel.updateTime" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarousel.flg" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarousel.createBy" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarousel.updateBy" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tCarousel.typeCd" placeholder=""/>
 		    </div>
 		</div>
 		<div class="form-group">

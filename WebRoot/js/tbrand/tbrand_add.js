@@ -18,11 +18,18 @@ var vm = new Vue({
             });
 		},
 		saveOrUpdate: function (event) {
+			var fileObj = document.getElementById("uFile").files[0];
+			var formFile = new FormData();
 			var url = vm.tBrand.id == null ? "../tbrand/save" : "../tbrand/update";
+			formFile.append("uFile", fileObj); 
+			formFile.append("tBrand", JSON.stringify(vm.tBrand));
 			$.ajax({
 				type: "POST",
 			    url: url,
-			    data: JSON.stringify(vm.tBrand),
+			    data: formFile,
+			    contentType: "application/json",
+			    processData: false,
+			    contentType: false,
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('操作成功', function(index){
