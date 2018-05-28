@@ -11,91 +11,54 @@
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label"></div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tNews.newsLogo" placeholder=""/>
+		   		 <a style="text-decoration: none;display: none;" target="_blank" id="icon">查看封面</a><input type="file" v-model="tNews.newsLogo" id="uFile" name="uFile" placeholder="请输入封面图片"/>
 		    </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-2 control-label">资讯标题</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tNews.newsTitle" placeholder=""/>
+		      <input type="text" class="form-control" v-model="tNews.newsTitle" id="newsTitle" placeholder=""/>
 		    </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-2 control-label">资讯类型</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tNews.newsTypeCd" placeholder=""/>
+		      <input type="text" class="form-control" v-model="tNews.newsTypeCd" id="newsTypeCd" placeholder=""/>
 		    </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-2 control-label">是否热门</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tNews.hotFlg" placeholder=""/>
+		      <input type="text" class="form-control" v-model="tNews.hotFlg" id="hotFlg" placeholder=""/>
 		    </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-2 control-label">是否置顶</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tNews.createUser" placeholder=""/>
+		      <input type="text" class="form-control" v-model="tNews.topFlg" id="topFlg" placeholder=""/>
 		    </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tNews.createTime" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tNews.updateTime" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tNews.flg" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tNews.content" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tNews.contentUrl" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tNews.updateUserId" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tNews.topFlg" placeholder=""/>
-		    </div>
+				<div class="col-sm-2 control-label">资讯内容</div> 
+				<div class="col-sm-10">
+					<textarea id="content" name="content" id="content" v-model="tNews.content" class="summernote">
+					</textarea>
+				</div>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-2 control-label"></div> 
 			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
 			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
 		</div>
-		<div class="form-group">
-				<textarea id="container" name="container" style="width: 800px;height: 400px;margin: 0 auto;"></textarea>
-		</div>
+		<input type="hidden" id="newsId">
 	</form>
 </div>
-<script type="text/javascript" charset="utf-8">
-	window.UEDITOR_HOME_URL = "/framework/statics/UE/"; 
-	//UEDITOR_HOME_URL、config、all这三个顺序不能改变
-</script>
-<script type="text/javascript" src="${rc.contextPath}/statics/UE/ueditor.config.js"></script>
-<script type="text/javascript" src="${rc.contextPath}/statics/UE/ueditor.all.js"></script>
+<link rel="stylesheet" type="text/css" href="${rc.contextPath}/summernote/css/bootstrap.css">
+<link href="${rc.contextPath}/summernote/dist/summernote.css" rel="stylesheet"/>
+<script src="${rc.contextPath}/summernote/js/jquery.min.js"></script>
+<script src="${rc.contextPath}/summernote/js/bootstrap.min.js"></script>
+<script src="${rc.contextPath}/summernote/dist/summernote.js"></script>
+<script src="${rc.contextPath}/summernote/dist/lang/summernote-zh-CN.js"></script>    <!-- 中文-->
 <script src="${rc.contextPath}/js/sys/tnews_add.js?_${date.systemTime}"></script>
 </body>
 </html>

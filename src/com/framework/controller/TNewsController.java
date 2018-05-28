@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
 
 import com.framework.entity.TNewsEntity;
+import com.framework.model.TNewsAddUpdateModel;
 import com.framework.service.TNewsService;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
@@ -70,8 +71,15 @@ public class TNewsController {
 	@RequiresPermissions("tnews:info")
 	public R info(@PathVariable("id") Integer id){
 		TNewsEntity tNews = tNewsService.queryObject(id);
-		
-		return R.ok().put("tNews", tNews);
+		TNewsAddUpdateModel model = new TNewsAddUpdateModel();
+		model.setContent(tNews.getContent());
+		model.setHotFlg(tNews.getHotFlg());
+		model.setId(tNews.getId());
+		model.setNewsLogo(tNews.getNewsLogo());
+		model.setNewsTitle(tNews.getNewsTitle());
+		model.setNewsTypeCd(tNews.getNewsTypeCd());
+		model.setTopFlg(tNews.getTopFlg());
+		return R.ok().put("tNews", model);
 	}
 	
 	/**
