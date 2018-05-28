@@ -1,5 +1,6 @@
 package com.framework.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
+import com.framework.dao.SysUserDao;
+import com.framework.dao.TCodemstDao;
+import com.framework.entity.SysUserEntity;
 import com.framework.entity.TBrandEntity;
+import com.framework.model.BrandListModel;
 import com.framework.service.FileService;
 import com.framework.service.TBrandService;
 import com.framework.utils.DateUtil;
@@ -37,6 +42,10 @@ import com.framework.utils.StringUtil;
 public class TBrandController {
 	@Autowired
 	private TBrandService tBrandService;
+	@Autowired
+	private TCodemstDao codeMstDao;
+	@Autowired
+	private SysUserDao userDao;
 
 	@RequestMapping("/tbrand.html")
 	public String list() {
@@ -63,7 +72,32 @@ public class TBrandController {
 		List<TBrandEntity> tBrandList = tBrandService.queryList(map);
 		int total = tBrandService.queryTotal(map);
 
-		PageUtils pageUtil = new PageUtils(tBrandList, total, limit, page);
+		List<BrandListModel> models = new ArrayList<>();
+		BrandListModel model = null;
+		for(TBrandEntity m : tBrandList) {
+			model = new BrandListModel();
+			
+			SysUserEntity admin = userDao.queryObject(m.getCreateBy());
+			if(admin != null){
+				model.setCreateBy(admin.getUsername());
+			}else{
+				model.setCreateBy(StringUtil.STRING_BLANK);
+			}
+			
+			SysUserEntity update = userDao.queryObject(m.getUpdateBy());
+			if(update != null){
+				model.setUpdateBy(update.getUsername());
+			}else{
+				model.setUpdateBy(StringUtil.STRING_BLANK);
+			}
+			model.setUpdateTime(StringUtil.toString(m.getUpdateTime()));
+			model.setCreateTime(StringUtil.toString(m.getCreateTime()));
+			model.setBrand(m.getBrand());
+			model.setId(m.getId());
+			models.add(model);
+		}
+				
+		PageUtils pageUtil = new PageUtils(models, total, limit, page);
 
 		return R.ok().put("page", pageUtil);
 	}

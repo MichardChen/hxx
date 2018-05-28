@@ -3,13 +3,11 @@ $(function () {
         url: '../tbrand/list',
         datatype: "json",
         colModel: [			
-			{ label: 'id', name: 'id', width: 50, key: true },
-			{ label: '', name: 'brand', width: 80 }, 			
-			{ label: '', name: 'brandIcon', width: 80 }, 			
-			{ label: '', name: 'createBy', width: 80 }, 			
-			{ label: '', name: 'updateBy', width: 80 }, 			
-			{ label: '', name: 'createTime', width: 80 }, 			
-			{ label: '', name: 'updateTime', width: 80 }			
+			{ label: '汽车品牌', name: 'brand', width: 80 }, 			
+			{ label: '创建者', name: 'createBy', width: 80 }, 			
+			{ label: '创建时间', name: 'createTime', width: 80 }, 	
+			{ label: '更新者', name: 'updateBy', width: 80 },
+			{ label: '更新时间', name: 'updateTime', width: 80 }			
         ],
 		viewrecords: true,
         height: 400,

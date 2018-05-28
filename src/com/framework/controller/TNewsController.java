@@ -1,5 +1,6 @@
 package com.framework.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
 
+import com.framework.dao.SysUserDao;
+import com.framework.dao.TCodemstDao;
+import com.framework.entity.SysUserEntity;
+import com.framework.entity.TCodemstEntity;
 import com.framework.entity.TNewsEntity;
+import com.framework.model.NewsListModel;
 import com.framework.model.TNewsAddUpdateModel;
 import com.framework.service.TNewsService;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
+import com.framework.utils.StringUtil;
 
 
 /**
@@ -31,6 +38,10 @@ import com.framework.utils.R;
 public class TNewsController {
 	@Autowired
 	private TNewsService tNewsService;
+	@Autowired
+	private TCodemstDao codeMstDao;
+	@Autowired
+	private SysUserDao userDao;
 	
 	@RequestMapping("/tnews.html")
 	public String list(){
@@ -56,8 +67,41 @@ public class TNewsController {
 		//查询列表数据
 		List<TNewsEntity> tNewsList = tNewsService.queryList(map);
 		int total = tNewsService.queryTotal(map);
+		List<NewsListModel> models = new ArrayList<>();
+		NewsListModel model = null;
+		for(TNewsEntity m : tNewsList) {
+			model = new NewsListModel();
+			model.setContentUrl(m.getContentUrl());
+			model.setFlg(m.getFlg() == 0 ? "是":"否");
+			model.setHotFlg(m.getHotFlg() == 0 ? "否" : "是");
+			model.setId(m.getId());
+			model.setNewsTitle(m.getNewsTitle());
+			model.setTopFlg(m.getTopFlg() == 1 ? "是":"否");
+			TCodemstEntity mst = codeMstDao.queryByCode(m.getNewsTypeCd());
+			if(mst != null) {
+				model.setNewsTypeCd(mst.getName());
+			}else {
+				model.setNewsTypeCd("");
+			}
+			SysUserEntity admin = userDao.queryObject(m.getCreateBy());
+			if(admin != null){
+				model.setCreateBy(admin.getUsername());
+			}else{
+				model.setCreateBy(StringUtil.STRING_BLANK);
+			}
+			
+			SysUserEntity update = userDao.queryObject(m.getUpdateBy());
+			if(update != null){
+				model.setUpdateBy(update.getUsername());
+			}else{
+				model.setUpdateBy(StringUtil.STRING_BLANK);
+			}
+			model.setUpdateTime(StringUtil.toString(m.getUpdateTime()));
+			model.setCreateTime(StringUtil.toString(m.getCreateTime()));
+			models.add(model);
+		}
 		
-		PageUtils pageUtil = new PageUtils(tNewsList, total, limit, page);
+		PageUtils pageUtil = new PageUtils(models, total, limit, page);
 		
 		return R.ok().put("page", pageUtil);
 	}
