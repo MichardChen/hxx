@@ -47,6 +47,8 @@ public class TCarImportEntity implements Serializable {
 	private Integer cartParam2Id;
 	//
 	private String labels;
+	
+	private String titleLabel;
 	//
 	private Integer createBy;
 	//
@@ -63,6 +65,13 @@ public class TCarImportEntity implements Serializable {
 	private String carLevelCd;
 	//
 	private String carClassCd;
+	
+	public String getTitleLabel() {
+		return titleLabel;
+	}
+	public void setTitleLabel(String titleLabel) {
+		this.titleLabel = titleLabel;
+	}
 	public Integer getId() {
 		return id;
 	}

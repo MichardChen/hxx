@@ -22,6 +22,7 @@ import com.framework.dao.TCodemstDao;
 import com.framework.entity.SysUserEntity;
 import com.framework.entity.TBrandEntity;
 import com.framework.model.BrandListModel;
+import com.framework.model.BrandModel;
 import com.framework.service.FileService;
 import com.framework.service.TBrandService;
 import com.framework.utils.DateUtil;
@@ -107,7 +108,7 @@ public class TBrandController {
 	@RequiresPermissions("tbrand:list")
 	public R queryAllBrand() {
 		// 查询列表数据
-		List<TBrandEntity> tBrandList = tBrandService.queryAllList();
+		List<TBrandEntity> tBrandList = tBrandService.queryAllList(null);
 		return R.ok().put("tBrandList", tBrandList);
 	}
 
@@ -119,8 +120,14 @@ public class TBrandController {
 	@RequiresPermissions("tbrand:info")
 	public R info(@PathVariable("id") Integer id) {
 		TBrandEntity tBrand = tBrandService.queryObject(id);
-
-		return R.ok().put("tBrand", tBrand);
+		BrandModel model = new BrandModel();
+		if(tBrand != null){
+			model.setId(tBrand.getId());
+			model.setBrand(tBrand.getBrand());
+			model.setBrandIcon(tBrand.getBrandIcon());
+			model.setWord(tBrand.getWord());
+		}
+		return R.ok().put("tBrand", model);
 	}
 
 	/**
@@ -140,6 +147,8 @@ public class TBrandController {
 		tBrand.setUpdateBy(userid);
 		tBrand.setUpdateTime(DateUtil.getNowTimestamp());
 		tBrand.setBrand(viewModel.getString("brand"));
+		tBrand.setWord(viewModel.getString("word"));
+		tBrand.setFlg(1);
 
 		// 生成html
 		FileService fs = new FileService();

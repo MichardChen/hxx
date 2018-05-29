@@ -151,6 +151,7 @@ public class TCarImportController {
 		entity.setFavour(viewModel.getString("favour"));
 		entity.setLabels(viewModel.getString("labels"));
 		entity.setCarLevelCd(viewModel.getString("carLevelCd"));
+		entity.setTitleLabel(viewModel.getString("titleLabel"));
 		//先使用年数
 		entity.setCarSeriesId(viewModel.getInteger("carSeriesId"));
 		entity.setCarColor(viewModel.getString("carColor"));

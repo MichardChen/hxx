@@ -42,7 +42,8 @@
 			`desc_url`, 
 			`car_series_id`, 
 			`car_level_cd`, 
-			`car_class_cd`
+			`car_class_cd`,
+			`title_label`
 		)
 		values
 		(
@@ -67,7 +68,8 @@
 			#{descUrl}, 
 			#{carSeriesId}, 
 			#{carLevelCd}, 
-			#{carClassCd}
+			#{carClassCd},
+			#{titleLabel}
 		)
 	</insert>
 	 
@@ -96,6 +98,7 @@
 			<if test="carSeriesId != null">`car_series_id` = #{carSeriesId}, </if>
 			<if test="carLevelCd != null">`car_level_cd` = #{carLevelCd}, </if>
 			<if test="carClassCd != null">`car_class_cd` = #{carClassCd}</if>
+			<if test="titleLabel != null">`title_label` = #{titleLabel}</if>
 		</set>
 		where id = #{id}
 	</update>

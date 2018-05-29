@@ -29,6 +29,23 @@ public class TBrandEntity implements Serializable {
 	private Timestamp createTime;
 	//
 	private Timestamp updateTime;
+	
+	private String word;
+	
+	private int flg;
+	
+	public int getFlg() {
+		return flg;
+	}
+	public void setFlg(int flg) {
+		this.flg = flg;
+	}
+	public String getWord() {
+		return word;
+	}
+	public void setWord(String word) {
+		this.word = word;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

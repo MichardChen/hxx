@@ -1,5 +1,6 @@
 package com.framework.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,11 @@ import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
+import com.framework.dao.TCodemstDao;
 import com.framework.entity.TCarSecondhandEntity;
 import com.framework.entity.TCarouselEntity;
+import com.framework.entity.TCodemstEntity;
+import com.framework.model.CarouselListModel;
 import com.framework.service.FileService;
 import com.framework.service.TCarouselService;
 import com.framework.utils.DateUtil;
@@ -38,6 +42,8 @@ import com.framework.utils.StringUtil;
 public class TCarouselController {
 	@Autowired
 	private TCarouselService tCarouselService;
+	@Autowired
+	private TCodemstDao codeMstDao;
 
 	@RequestMapping("/tcarousel.html")
 	public String list() {
@@ -63,8 +69,25 @@ public class TCarouselController {
 		// 查询列表数据
 		List<TCarouselEntity> tCarouselList = tCarouselService.queryList(map);
 		int total = tCarouselService.queryTotal(map);
+		List<CarouselListModel> lists = new ArrayList<>();
+		CarouselListModel model = null;
+		for(TCarouselEntity e : tCarouselList){
+			model = new CarouselListModel();
+			model.setFlg(e.getFlg() == 1 ? "正常" : "删除");
+			model.setId(e.getId());
+			model.setImgUrl(e.getImgUrl());
+			model.setMark(e.getMark());
+			model.setRealUrl(e.getRealUrl());
+			TCodemstEntity mst = codeMstDao.queryByCode(e.getTypeCd());
+			if(mst != null){
+				model.setTypeCd(mst.getName());
+			}else{
+				model.setTypeCd("");
+			}
+			lists.add(model);
+		}
 
-		PageUtils pageUtil = new PageUtils(tCarouselList, total, limit, page);
+		PageUtils pageUtil = new PageUtils(lists, total, limit, page);
 
 		return R.ok().put("page", pageUtil);
 	}

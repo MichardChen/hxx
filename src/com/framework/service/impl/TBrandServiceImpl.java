@@ -53,8 +53,8 @@ public class TBrandServiceImpl implements TBrandService {
 	}
 
 	@Override
-	public List<TBrandEntity> queryAllList() {
-		return tBrandDao.queryAllList();
+	public List<TBrandEntity> queryAllList(Integer flg) {
+		return tBrandDao.queryAllList(flg);
 	}
 	
 }

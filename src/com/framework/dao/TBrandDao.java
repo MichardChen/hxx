@@ -2,6 +2,8 @@ package com.framework.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.framework.entity.TBrandEntity;
 
 /**
@@ -13,5 +15,5 @@ import com.framework.entity.TBrandEntity;
  */
 public interface TBrandDao extends BaseDao<TBrandEntity> {
 	
-	List<TBrandEntity> queryAllList();
+	List<TBrandEntity> queryAllList(@Param("flg")Integer flg);
 }

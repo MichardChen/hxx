@@ -143,6 +143,17 @@ public interface Constants {
 		public static final String STORE = "D:\\upload\\store\\";
 		public static final String COMMON = "D:\\upload\\common\\";
 	}
+	
+	/*public static interface FILE_HOST {
+		public static final String LOCALHOST = "F:\\upload\\newsimages\\";
+		public static final String TEA = "F:\\upload\\tea\\";
+		public static final String DOCUMENT = "F:\\upload\\document\\";
+		public static final String FILE = "F:\\upload\\file\\";
+		public static final String ICON = "F:\\upload\\icon\\";
+		public static final String IMG = "F:\\upload\\img\\";
+		public static final String STORE = "F:\\upload\\store\\";
+		public static final String COMMON = "F:\\upload\\common\\";
+	}*/
 
 	/**
 	 * centos服务器 public static interface HOST{ public static final String LOCALHOST
@@ -186,5 +197,12 @@ public interface Constants {
 		public static final String CAR_SECONDHAND_IMAGE = "040006";
 		// 平行进口横幅
 		public static final String CAR_IMPORT_IMAGE = "040007";
+		
+		//pc以租代购横幅
+		public static final String PC_CAR_LEASE_IMAGE = "040008";
+		//pc二手车横幅
+		public static final String PC_CAR_SECONDHAND_IMAGE = "040009";
+		//pc平行进口横幅
+		public static final String PC_CAR_IMPORT_IMAGE = "040010";
 	}
 }

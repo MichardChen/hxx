@@ -71,11 +71,9 @@
 		   	<div class="col-sm-2">
 		      <input type="text" class="form-control" v-model="tCarImport.labelId" placeholder="请输入标签,以','隔开"/>
 		    </div>
-		   	<div class="col-sm-2 control-label">车系</div>
+		   	<div class="col-sm-2 control-label">主标签</div>
 		   	<div class="col-sm-2">
-		      <select  class="form-control" v-model="tCarImport.carSeriesId" id="series">
-		   			<option value="0">请选择车系</option>
-		   		</select>
+		      	<input type="text" class="form-control" v-model="tCarImport.titleLabel" placeholder="请输入主标签"/>
 		    </div>
 		</div>
 		<div class="form-group">
@@ -86,6 +84,14 @@
 		   	<div class="col-sm-2 control-label">车辆品类</div>
 		   	<div class="col-sm-2">
 		      <input type="text" class="form-control" v-model="tCarImport.carClassCd" placeholder="请选择车辆品类"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">车系</div>
+		   	<div class="col-sm-2">
+		      <select  class="form-control" v-model="tCarImport.carSeriesId" id="series">
+		   			<option value="0">请选择车系</option>
+		   		</select>
 		    </div>
 		</div>
 		<div class="form-group">

@@ -14,7 +14,12 @@ var vm = new Vue({
 	methods: {
 		getInfo: function(id){
 			$.get("../tbrand/info/"+id, function(r){
-                vm.tBrand = r.tBrand;
+                var json = eval('('+r+')');
+				$("#brand").val(json.tBrand.brand);
+				$("#brandId").val(json.tBrand.id);
+				$("#word").val(json.tBrand.word);
+                $("#icon").attr("href",json.tBrand.brandIcon);
+				$("#icon").show();
             });
 		},
 		saveOrUpdate: function (event) {

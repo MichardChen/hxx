@@ -220,4 +220,37 @@ public class WXController extends RestfulController{
 		data.setMessage("查询成功");
 		renderJson(data, response);
 	}
+	
+	//查询所有品牌
+	@RequestMapping("/queryAllBrand")
+	public void queryAllBrand(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		List<TBrandEntity> list = brandService.queryAllList(1);
+		Map<String, List<BrandModel>> map = new HashMap<>();
+		for(TBrandEntity e : list){
+			String word = e.getWord();
+			BrandModel bm = new BrandModel();
+			bm.setBrand(e.getBrand());
+			bm.setId(e.getId());
+			bm.setBrandIcon(e.getBrandIcon());
+			if(map.containsKey(word)){
+				//包含
+				List<BrandModel> value = map.get(word);
+				value.add(bm);
+				map.put(word, value);
+			}else{
+				//不包含
+				List<BrandModel> value = new ArrayList<>();
+				value.add(bm);
+				map.put(word, value);
+			}
+		}
+		json.put("brandList", map);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
 }
