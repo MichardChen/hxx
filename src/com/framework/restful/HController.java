@@ -9,11 +9,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.aspectj.apache.bcel.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.request.NativeWebRequest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
@@ -27,22 +25,29 @@ import com.framework.entity.TCarLeaseEntity;
 import com.framework.entity.TCarSecondhandEntity;
 import com.framework.entity.TCarouselEntity;
 import com.framework.entity.TCodemstEntity;
+import com.framework.entity.TFinanceEntity;
 import com.framework.entity.TNewsEntity;
+import com.framework.entity.TQuestionEntity;
+import com.framework.entity.TSalecartEntity;
 import com.framework.entity.TStoryEntity;
+import com.framework.model.FinanceListModel;
 import com.framework.restmodel.BrandModel;
 import com.framework.restmodel.CarouselModel;
 import com.framework.restmodel.ImportCarListModel;
 import com.framework.restmodel.LeaseCarListModel;
 import com.framework.restmodel.NewsListModel;
 import com.framework.restmodel.SecondHandCarListModel;
-import com.framework.service.TBrandSeriesService;
 import com.framework.service.TBrandService;
 import com.framework.service.TCarImportService;
 import com.framework.service.TCarLeaseService;
 import com.framework.service.TCarSecondhandService;
 import com.framework.service.TCarouselService;
+import com.framework.service.TFinanceService;
 import com.framework.service.TNewsService;
+import com.framework.service.TQuestionService;
+import com.framework.service.TSalecartService;
 import com.framework.service.TStoryService;
+import com.framework.utils.DateUtil;
 import com.framework.utils.ReturnData;
 import com.framework.utils.StringUtil;
 
@@ -68,6 +73,12 @@ public class HController extends RestfulController{
 	private TNewsService newsService;
 	@Autowired
 	private TCodemstDao codeMstDao;
+	@Autowired
+	private TFinanceService financeService;
+	@Autowired
+	private TSalecartService saleCartService;
+	@Autowired
+	private TQuestionService questionService;
 	
 
 	@RequestMapping("/index")
@@ -258,14 +269,136 @@ public class HController extends RestfulController{
 		renderJson(data, response);
 	}
 	
-	@RequestMapping("/test")
-	public void test(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	//资讯列表
+	@RequestMapping("/queryNewsList")
+	public void queryNewsList(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		ParamsDTO dto = ParamsDTO.getInstance(request);
 		ReturnData data = new ReturnData();
 		JSONObject json = new JSONObject();
+		Map<String, Object> carListMap = new HashMap<>();
+		carListMap.put("offset", dto.getPageSize()*(dto.getPageNum()-1));
+		carListMap.put("limit", dto.getPageSize());
+		List<TNewsEntity> snList = newsService.queryList(carListMap);
+		List<NewsListModel> newList = new ArrayList<>();
+		NewsListModel nlm = null;
+		for(TNewsEntity e : snList) {
+			nlm = new NewsListModel();
+			nlm.setIcon(e.getNewsLogo());
+			nlm.setId(e.getId());
+			nlm.setTitle(e.getNewsTitle());
+			nlm.setUrl(e.getContentUrl());
+			TCodemstEntity mst = codeMstDao.queryByCode(e.getNewsTypeCd());
+			if(mst != null) {
+				nlm.setType(mst.getName());
+			}else {
+				nlm.setType("");
+			}
+			newList.add(nlm);
+		}
+		json.put("newList", newList);
+		
 		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	//故事列表
+	@RequestMapping("/queryStoryList")
+	public void queryStoryList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		Map<String, Object> carListMap = new HashMap<>();
+		carListMap.put("offset", dto.getPageSize()*(dto.getPageNum()-1));
+		carListMap.put("limit", dto.getPageSize());
+		
+		List<TStoryEntity> stList = storyService.queryList(carListMap);
+		List<NewsListModel> storyList = new ArrayList<>();
+		NewsListModel slm = null;
+		for(TStoryEntity e : stList) {
+			slm = new NewsListModel();
+			slm.setIcon(e.getStoryIcon());
+			slm.setId(e.getId());
+			slm.setTitle(e.getStoryTitle());
+			slm.setType("");
+			slm.setUrl(e.getDescUrl());
+			storyList.add(slm);
+		}
+		json.put("storyList", storyList);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	@RequestMapping("/queryFinanceList")
+	public void queryFinanceList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		Map<String, Object> map = new HashMap<>();
+		map.put("offset", dto.getPageSize()*(dto.getPageNum()-1));
+		map.put("limit", dto.getPageSize());
+		
+		List<TFinanceEntity> stList = financeService.queryList(map);
+		List<FinanceListModel> models = new ArrayList<>();
+		FinanceListModel slm = null;
+		for(TFinanceEntity e : stList) {
+			slm = new FinanceListModel();
+			slm.setId(e.getId());
+			slm.setFinanceName(e.getName());
+			slm.setMoneys(e.getLowRefund());
+			slm.setPeriod(e.getLowRate());
+			slm.setRate(e.getLowRate());
+			slm.setStandard(e.getStandard());
+			models.add(slm);
+		}
+		json.put("financeList", models);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	@RequestMapping("/saveSaleCart")
+	public void saveSaleCart(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		TSalecartEntity entity = new TSalecartEntity();
+		entity.setCreateTime(DateUtil.getNowTimestamp());
+		entity.setUpdateTime(DateUtil.getNowTimestamp());
+		entity.setMark(dto.getMark());
+		entity.setMobile(dto.getMobile());
+		entity.setName(dto.getName());
+		saleCartService.save(entity);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("提交成功");
+		renderJson(data, response);
+	}
+	
+	@RequestMapping("/saveQuestion")
+	public void saveQuestion(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		TQuestionEntity entity = new TQuestionEntity();
+		entity.setCreateTime(DateUtil.getNowTimestamp());
+		entity.setUpdateTime(DateUtil.getNowTimestamp());
+		entity.setCartId(dto.getCartId());
+		entity.setEmployeeId(dto.getEmployeeId());
+		entity.setLinkMan(dto.getName());
+		entity.setQuestion(dto.getQuestion());
+		entity.setMobile(dto.getMobile());
+		//判断验证码
+		String code = dto.getCode();
+		questionService.save(entity);
+		
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("提交成功");
 		renderJson(data, response);
 	}
 }
