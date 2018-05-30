@@ -20,7 +20,7 @@ public interface TQuestionService {
 	
 	int queryTotal(Map<String, Object> map);
 	
-	void save(TQuestionEntity tQuestion);
+	int save(TQuestionEntity tQuestion);
 	
 	void update(TQuestionEntity tQuestion);
 	

@@ -48,7 +48,6 @@ var vm = new Vue({
 					type: "POST",
 				    url: url,
 				    data: formFile,
-				    contentType: "application/json",
 				    processData: false,
 				    contentType: false,
 				    success: function(r){

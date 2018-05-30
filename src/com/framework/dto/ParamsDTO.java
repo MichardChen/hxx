@@ -22,8 +22,8 @@ public class ParamsDTO implements Serializable{
 	
 	public static ParamsDTO getInstance(HttpServletRequest request){
 		dto = new ParamsDTO();
-		dto.setPageNum(StringUtil.toInteger(request.getParameter("pageSize")));
-		dto.setPageSize(StringUtil.toInteger(request.getParameter("pageNum")));
+		dto.setPageNum(StringUtil.toInteger(request.getParameter("pageNum")));
+		dto.setPageSize(StringUtil.toInteger(request.getParameter("pageSize")));
 		dto.setMark(request.getParameter("mark"));
 		dto.setMobile(request.getParameter("mobile"));
 		dto.setName(request.getParameter("name"));

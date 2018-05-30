@@ -33,8 +33,8 @@ public class TQuestionServiceImpl implements TQuestionService {
 	}
 	
 	@Override
-	public void save(TQuestionEntity tQuestion){
-		tQuestionDao.save(tQuestion);
+	public int save(TQuestionEntity tQuestion){
+		return tQuestionDao.save(tQuestion);
 	}
 	
 	@Override

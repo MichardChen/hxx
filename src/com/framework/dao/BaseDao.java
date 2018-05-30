@@ -13,7 +13,7 @@ public interface BaseDao<T> {
 	/**
 	 * 保存实体对象
 	 */
-	void save(T t);
+	int save(T t);
 
 	/**
 	 * 保存Map对象

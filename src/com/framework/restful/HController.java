@@ -1,6 +1,7 @@
 package com.framework.restful;
 
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,7 @@ import com.framework.entity.TNewsEntity;
 import com.framework.entity.TQuestionEntity;
 import com.framework.entity.TSalecartEntity;
 import com.framework.entity.TStoryEntity;
+import com.framework.entity.TVertifyCodeEntity;
 import com.framework.model.FinanceListModel;
 import com.framework.restmodel.BrandModel;
 import com.framework.restmodel.CarouselModel;
@@ -47,9 +49,12 @@ import com.framework.service.TNewsService;
 import com.framework.service.TQuestionService;
 import com.framework.service.TSalecartService;
 import com.framework.service.TStoryService;
+import com.framework.service.TVertifyCodeService;
 import com.framework.utils.DateUtil;
 import com.framework.utils.ReturnData;
+import com.framework.utils.ShortMessageUtil;
 import com.framework.utils.StringUtil;
+import com.framework.utils.VertifyUtil;
 
 @Controller
 @RequestMapping("hrest")
@@ -79,6 +84,8 @@ public class HController extends RestfulController{
 	private TSalecartService saleCartService;
 	@Autowired
 	private TQuestionService questionService;
+	@Autowired
+	private TVertifyCodeService vertifyCodeService;
 	
 
 	@RequestMapping("/index")
@@ -367,11 +374,14 @@ public class HController extends RestfulController{
 		ReturnData data = new ReturnData();
 		JSONObject json = new JSONObject();
 		TSalecartEntity entity = new TSalecartEntity();
+		entity.setCreateBy(0);
+		entity.setUpdateBy(0);
 		entity.setCreateTime(DateUtil.getNowTimestamp());
 		entity.setUpdateTime(DateUtil.getNowTimestamp());
 		entity.setMark(dto.getMark());
 		entity.setMobile(dto.getMobile());
 		entity.setName(dto.getName());
+		entity.setStatus(Constants.FEEDBACK_STATUS.STAY_HANDLE);
 		saleCartService.save(entity);
 		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
@@ -379,26 +389,140 @@ public class HController extends RestfulController{
 		renderJson(data, response);
 	}
 	
+	@RequestMapping("/sendVertifyCode")
+	public void sendVertifyCode(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		TVertifyCodeEntity vertifyCodeEntity = vertifyCodeService.queryObjectByMobile(dto.getMobile()
+																					 ,Constants.SHORT_MESSAGE_TYPE.SUMBIT_QUESTION);
+		String code = VertifyUtil.getVertifyCode();
+		if(vertifyCodeEntity != null){
+			
+			vertifyCodeEntity.setCode(code);
+			vertifyCodeEntity.setUpdateTime(DateUtil.getNowTimestamp());
+			vertifyCodeEntity.setCodeTypeCd(Constants.SHORT_MESSAGE_TYPE.SUMBIT_QUESTION);
+			vertifyCodeEntity.setExpireTime(DateUtil.getVertifyCodeExpireTime());
+			int updateFlg = vertifyCodeService.update(vertifyCodeEntity);
+			if(updateFlg != 0){
+				data.setCode(Constants.STATUS_CODE.SUCCESS);
+				data.setMessage("验证码已发送，请接收");
+				String shortMsg = "您的验证码是：" + code + "，10分钟内有效，请不要把验证码泄露给其他人。";
+				ShortMessageUtil.sendsms(dto.getMobile(), shortMsg);
+				renderJson(data, response);
+				return;
+				
+			}else{
+				data.setCode(Constants.STATUS_CODE.FAIL);
+				data.setMessage("获取验证码失败，请重试");
+				renderJson(data, response);
+				return;
+			}
+		}else{
+			TVertifyCodeEntity e = new TVertifyCodeEntity();
+			e.setCode(code);
+			e.setCodeTypeCd(Constants.SHORT_MESSAGE_TYPE.SUMBIT_QUESTION);
+			e.setCreateTime(DateUtil.getNowTimestamp());
+			e.setUpdateTime(DateUtil.getNowTimestamp());
+			e.setExpireTime(DateUtil.getVertifyCodeExpireTime());
+			e.setMobile(dto.getMobile());
+			e.setUserTypeCd(Constants.USER_TYPE.USER_TYPE_CLIENT);
+			int ret = vertifyCodeService.save(e);
+			if(ret != 0){
+				data.setCode(Constants.STATUS_CODE.SUCCESS);
+				data.setMessage("验证码已发送，请接收");
+				String shortMsg = "您的验证码是：" + code + "，10分钟内有效，请不要把验证码泄露给其他人。";
+				ShortMessageUtil.sendsms(dto.getMobile(), shortMsg);
+				renderJson(data, response);
+				return;
+			}else{
+				data.setCode(Constants.STATUS_CODE.FAIL);
+				data.setMessage("获取验证码失败，请重试");
+				renderJson(data, response);
+				return;
+			}
+		}
+	}
+	
 	@RequestMapping("/saveQuestion")
 	public void saveQuestion(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		ParamsDTO dto = ParamsDTO.getInstance(request);
 		ReturnData data = new ReturnData();
-		JSONObject json = new JSONObject();
 		TQuestionEntity entity = new TQuestionEntity();
 		entity.setCreateTime(DateUtil.getNowTimestamp());
 		entity.setUpdateTime(DateUtil.getNowTimestamp());
+		entity.setCreateBy(0);
+		entity.setUpdateBy(0);
 		entity.setCartId(dto.getCartId());
 		entity.setEmployeeId(dto.getEmployeeId());
 		entity.setLinkMan(dto.getName());
 		entity.setQuestion(dto.getQuestion());
 		entity.setMobile(dto.getMobile());
+		entity.setStatus(Constants.FEEDBACK_STATUS.STAY_HANDLE);
 		//判断验证码
 		String code = dto.getCode();
-		questionService.save(entity);
-		
-		data.setData(json);
-		data.setCode(Constants.STATUS_CODE.SUCCESS);
-		data.setMessage("提交成功");
-		renderJson(data, response);
+		if(StringUtil.isBlank(code)){
+			data.setCode(Constants.STATUS_CODE.FAIL);
+			data.setMessage("提交失败，验证码不能为空");
+			renderJson(data, response);
+			return;
+		}
+		TVertifyCodeEntity vertifyCodeEntity = vertifyCodeService.queryObjectByMobile(dto.getMobile(), Constants.SHORT_MESSAGE_TYPE.SUMBIT_QUESTION);
+		if(vertifyCodeEntity != null){
+			Timestamp now = DateUtil.getNowTimestamp();
+			Timestamp expireTime = vertifyCodeEntity.getExpireTime();
+			if(expireTime == null){
+				data.setCode(Constants.STATUS_CODE.FAIL);
+				data.setMessage("对不起，您还没有获取验证码");
+				renderJson(data, response);
+				return;
+			}
+			
+			if((expireTime != null)&&(now.after(expireTime))){
+				//true，就是过期了
+				data.setCode(Constants.STATUS_CODE.FAIL);
+				data.setMessage("验证码过期了，请重新获取");
+				renderJson(data, response);
+				return;
+			}
+			
+			if((expireTime != null) && (expireTime.after(now))){
+				//没有过期，获取数据库验证码
+				String dcode = vertifyCodeEntity.getCode();
+				if(!StringUtil.equals(code, dcode)){
+					//验证码错误
+					data.setCode(Constants.STATUS_CODE.FAIL);
+					data.setMessage("请输入正确的验证码");
+					renderJson(data, response);
+					return;
+				}
+			}
+			
+			//保存问题
+			int ret = questionService.save(entity);
+			if(ret != 0){
+				//保存成功
+				int updateRet = vertifyCodeService.updateExpireCode(vertifyCodeEntity.getId(), DateUtil.getNowTimestamp());
+				if(updateRet != 0){
+					data.setCode(Constants.STATUS_CODE.SUCCESS);
+					data.setMessage("提交成功");
+					renderJson(data, response);
+				}else{
+					data.setCode(Constants.STATUS_CODE.FAIL);
+					data.setMessage("提交失败");
+					renderJson(data, response);
+				}
+			}else{
+				data.setCode(Constants.STATUS_CODE.FAIL);
+				data.setMessage("提交失败");
+				renderJson(data, response);
+			}
+			return;
+		}else{
+			data.setCode(Constants.STATUS_CODE.FAIL);
+			data.setMessage("对不起，您还没有获取验证码");
+			renderJson(data, response);
+			return;
+		}
 	}
 }

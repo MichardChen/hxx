@@ -83,14 +83,14 @@ public class CommonController extends AbstractController {
 			// MultipartFile to File
 			final File file = File.createTempFile(UUID.randomUUID().toString(), prefix);
 			uploadFile.transferTo(file);
-
+			response.addHeader("Access-Control-Allow-Origin", "*");
 			// 上传文件
 			if (file != null) {
 				String fileName = file.getName();
 				String[] names = fileName.split("\\.");
 				String uuid = UUID.randomUUID().toString();
 				File t = new File(Constants.FILE_HOST.DOCUMENT + uuid + "." + names[1]);
-				String url = Constants.HOST.DOCUMENT + uuid + "." + names[1];
+				String url = Constants.HTTP_HOST.DOCUMENT + uuid + "." + names[1];
 				t.createNewFile();
 
 				fs.fileChannelCopy(file, t);

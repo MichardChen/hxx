@@ -123,6 +123,17 @@ public interface Constants {
 	 */
 
 	public static interface HOST {
+		public static final String LOCALHOST = "https://www.yibuwangluo.cn:88/newsimages/";
+		public static final String TEA = "https://www.yibuwangluo.cn:88/tea/";
+		public static final String DOCUMENT = "https://www.yibuwangluo.cn:88/document/";
+		public static final String FILE = "https://www.yibuwangluo.cn:88/file/";
+		public static final String ICON = "https://www.yibuwangluo.cn:88/icon/";
+		public static final String IMG = "https://www.yibuwangluo.cn:88/img/";
+		public static final String STORE = "https://www.yibuwangluo.cn:88/store/";
+		public static final String COMMON = "https://www.yibuwangluo.cn:88/common/";
+	}
+	
+	public static interface HTTP_HOST {
 		public static final String LOCALHOST = "http://www.yibuwangluo.cn:88/newsimages/";
 		public static final String TEA = "http://www.yibuwangluo.cn:88/tea/";
 		public static final String DOCUMENT = "http://www.yibuwangluo.cn:88/document/";
@@ -178,8 +189,8 @@ public interface Constants {
 	 */
 
 	public static interface FEEDBACK_STATUS {
-		public static final String HANDLE = "030002";
-		public static final String STAY_HANDLE = "030001";
+		public static final String HANDLE = "050002";
+		public static final String STAY_HANDLE = "050001";
 	}
 
 	public static interface CAROUSEL_TYPE {
@@ -204,5 +215,12 @@ public interface Constants {
 		public static final String PC_CAR_SECONDHAND_IMAGE = "040009";
 		//pc平行进口横幅
 		public static final String PC_CAR_IMPORT_IMAGE = "040010";
+	}
+	
+	public static interface SHORT_MESSAGE_TYPE{
+		public static final String REGISTER = "200001";
+		public static final String FORGET_REGISTER_PWD = "200002";
+		public static final String FORGET_PAY_PWD = "200003";
+		public static final String SUMBIT_QUESTION = "200004";
 	}
 }
