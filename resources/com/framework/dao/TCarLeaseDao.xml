@@ -13,7 +13,36 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+	<select id="queryMobileTerminalList" resultType="com.framework.entity.TCarLeaseEntity">
+		select * from t_car_lease where 1=1
+		<if test="brandId != null and brandId != 0">
+			and brand=#{brandId}
+		</if>
+		<if test="fromFirstPayment != null">
+			and first_payment&gt;=#{fromFirstPayment}
+		</if>
+		<if test="toFirstPayment != null">
+			and first_payment&lt;=#{toFirstPayment}
+		</if>
+		<if test="fromMonthPayment != null">
+			and month_payment&gt;=#{fromMonthPayment}
+		</if>
+		<if test="toMonthPayment != null">
+			and month_payment&lt;=#{toMonthPayment}
+		</if>
+		<if test="fromCarCost != null">
+			and car_cost&gt;=#{fromCarCost}
+		</if>
+		<if test="toCarCost != null">
+			and car_cost&lt;=#{toCarCost}
+		</if>
+		<if test="carLevelCd != null and carLevelCd != ''">
+			and car_level_cd=#{carLevelCd}
+		</if>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_car_lease 
 	</select>
@@ -44,7 +73,8 @@
 			`update_time`, 
 			`update_by`, 
 			`desc_url`, 
-			`cart_param2_id`
+			`cart_param2_id`,
+			`car_level_cd`
 		)
 		values
 		(
@@ -71,7 +101,8 @@
 			#{updateTime}, 
 			#{updateBy}, 
 			#{descUrl}, 
-			#{cartParam2Id}
+			#{cartParam2Id},
+			#{carLevelCd}
 		)
 	</insert>
 	 
@@ -102,6 +133,7 @@
 			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
 			<if test="descUrl != null">`desc_url` = #{descUrl}, </if>
 			<if test="cartParam2Id != null">`cart_param2_id` = #{cartParam2Id}</if>
+			<if test="carLevelCd != null">`car_level_cd` = #{carLevelCd}</if>
 		</set>
 		where id = #{id}
 	</update>

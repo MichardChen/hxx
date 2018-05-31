@@ -14,7 +14,11 @@ var vm = new Vue({
 	methods: {
 		getInfo: function(id){
 			$.get("../tsalecart/info/"+id, function(r){
-                vm.tSalecart = r.tSalecart;
+                var json = eval('('+r+')');
+                $("#status").val(json.tSalecart.status);
+                $("#mobile").val(json.tSalecart.mobile);
+                $("#name").val(json.tSalecart.name);
+                $("#mark").val(json.tSalecart.mark);
             });
 		},
 		saveOrUpdate: function (event) {

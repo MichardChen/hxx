@@ -1,5 +1,8 @@
 package com.framework.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.framework.entity.TCarImportEntity;
 
 /**
@@ -11,4 +14,5 @@ import com.framework.entity.TCarImportEntity;
  */
 public interface TCarImportDao extends BaseDao<TCarImportEntity> {
 	
+	List<TCarImportEntity> queryImportCartList(Map<String, Object> map);
 }

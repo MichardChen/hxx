@@ -1,5 +1,8 @@
 package com.framework.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.framework.entity.TCarSecondhandEntity;
 
 /**
@@ -11,4 +14,5 @@ import com.framework.entity.TCarSecondhandEntity;
  */
 public interface TCarSecondhandDao extends BaseDao<TCarSecondhandEntity> {
 	
+	List<TCarSecondhandEntity> queryMobileTerminalList(Map<String, Object> map);
 }

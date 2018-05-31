@@ -51,5 +51,9 @@ public class TCarSecondhandServiceImpl implements TCarSecondhandService {
 	public void deleteBatch(Integer[] ids){
 		tCarSecondhandDao.deleteBatch(ids);
 	}
-	
+
+	@Override
+	public List<TCarSecondhandEntity> queryMobileTerminalList(Map<String, Object> map) {
+		return tCarSecondhandDao.queryMobileTerminalList(map);
+	}
 }

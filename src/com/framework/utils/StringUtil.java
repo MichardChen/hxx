@@ -173,6 +173,28 @@ public class StringUtil extends StringUtils {
 		return num.toString();
 	}
 	
+	public static String formatCarPrice(BigDecimal num,int flg){
+		if(num == null){
+			return "0元";
+		}
+		if(flg == 0){
+			if(num.compareTo(new BigDecimal("0.00"))>0){
+				return StringUtil.toString(num)+"万";
+			}else{
+				return StringUtil.toString(num)+"元";
+			}
+		}
+		
+		if(flg == 1){
+			if(num.compareTo(new BigDecimal("0.00"))>0){
+				return StringUtil.toString(num)+"元";
+			}else{
+				return StringUtil.toString(num)+"元";
+			}
+		}
+		return "0元";
+	}
+	
 	/**
 	 * Pad left
 	 * @param s
@@ -242,6 +264,16 @@ public class StringUtil extends StringUtils {
 	public static BigDecimal toBigDecimal(String str){
 		if(StringUtil.isBlank(str) || str == null){
 			return new BigDecimal("0");
+		}else{
+			BigDecimal bd = new BigDecimal(str);
+			bd.setScale(2,BigDecimal.ROUND_UP);
+			return bd;
+		}
+	}
+	
+	public static BigDecimal toQueryCarBigDecimal(String str){
+		if(StringUtil.isBlank(str) || str == null){
+			return null;
 		}else{
 			BigDecimal bd = new BigDecimal(str);
 			bd.setScale(2,BigDecimal.ROUND_UP);

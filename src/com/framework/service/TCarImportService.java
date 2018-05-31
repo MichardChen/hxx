@@ -18,6 +18,8 @@ public interface TCarImportService {
 	
 	List<TCarImportEntity> queryList(Map<String, Object> map);
 	
+	List<TCarImportEntity> queryImportCartList(Map<String, Object> map);
+	
 	int queryTotal(Map<String, Object> map);
 	
 	void save(TCarImportEntity tCarImport);

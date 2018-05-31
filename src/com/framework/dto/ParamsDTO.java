@@ -1,6 +1,7 @@
 package com.framework.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,9 +20,28 @@ public class ParamsDTO implements Serializable{
 	private String question;
 	private String code;
 	
+	private int brandId;
+	private BigDecimal fromFirstPayment;
+	private BigDecimal toFirstPayment;
+	private BigDecimal fromMonthPayment;
+	private BigDecimal toMonthPayment;
+	private BigDecimal fromCarCost;
+	private BigDecimal toCarCost;
+	private String carLevelCd;
+	
 	
 	public static ParamsDTO getInstance(HttpServletRequest request){
+		
 		dto = new ParamsDTO();
+		dto.setBrandId(StringUtil.toInteger(request.getParameter("brandId")));
+		dto.setFromFirstPayment(StringUtil.toQueryCarBigDecimal(request.getParameter("fromFirstPayment")));
+		dto.setToFirstPayment(StringUtil.toQueryCarBigDecimal(request.getParameter("toFirstPayment")));
+		dto.setFromMonthPayment(StringUtil.toQueryCarBigDecimal(request.getParameter("fromMonthPayment")));
+		dto.setToMonthPayment(StringUtil.toQueryCarBigDecimal(request.getParameter("toMonthPayment")));
+		dto.setFromCarCost(StringUtil.toQueryCarBigDecimal(request.getParameter("fromCarCost")));
+		dto.setToCarCost(StringUtil.toQueryCarBigDecimal(request.getParameter("toCarCost")));
+		dto.setCarLevelCd(request.getParameter("carLevelCd"));
+		
 		dto.setPageNum(StringUtil.toInteger(request.getParameter("pageNum")));
 		dto.setPageSize(StringUtil.toInteger(request.getParameter("pageSize")));
 		dto.setMark(request.getParameter("mark"));
@@ -36,6 +56,102 @@ public class ParamsDTO implements Serializable{
 
 	
 	
+	public int getBrandId() {
+		return brandId;
+	}
+
+
+
+	public BigDecimal getFromFirstPayment() {
+		return fromFirstPayment;
+	}
+
+
+
+	public BigDecimal getToFirstPayment() {
+		return toFirstPayment;
+	}
+
+
+
+	public BigDecimal getFromMonthPayment() {
+		return fromMonthPayment;
+	}
+
+
+
+	public BigDecimal getToMonthPayment() {
+		return toMonthPayment;
+	}
+
+
+
+	public BigDecimal getFromCarCost() {
+		return fromCarCost;
+	}
+
+
+
+	public BigDecimal getToCarCost() {
+		return toCarCost;
+	}
+
+
+
+	public String getCarLevelCd() {
+		return carLevelCd;
+	}
+
+
+
+	public void setBrandId(int brandId) {
+		this.brandId = brandId;
+	}
+
+
+
+	public void setFromFirstPayment(BigDecimal fromFirstPayment) {
+		this.fromFirstPayment = fromFirstPayment;
+	}
+
+
+
+	public void setToFirstPayment(BigDecimal toFirstPayment) {
+		this.toFirstPayment = toFirstPayment;
+	}
+
+
+
+	public void setFromMonthPayment(BigDecimal fromMonthPayment) {
+		this.fromMonthPayment = fromMonthPayment;
+	}
+
+
+
+	public void setToMonthPayment(BigDecimal toMonthPayment) {
+		this.toMonthPayment = toMonthPayment;
+	}
+
+
+
+	public void setFromCarCost(BigDecimal fromCarCost) {
+		this.fromCarCost = fromCarCost;
+	}
+
+
+
+	public void setToCarCost(BigDecimal toCarCost) {
+		this.toCarCost = toCarCost;
+	}
+
+
+
+	public void setCarLevelCd(String carLevelCd) {
+		this.carLevelCd = carLevelCd;
+	}
+
+
+
 	public String getCode() {
 		return code;
 	}

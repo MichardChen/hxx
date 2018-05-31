@@ -51,5 +51,10 @@ public class TCarImportServiceImpl implements TCarImportService {
 	public void deleteBatch(Integer[] ids){
 		tCarImportDao.deleteBatch(ids);
 	}
+
+	@Override
+	public List<TCarImportEntity> queryImportCartList(Map<String, Object> map) {
+		return tCarImportDao.queryImportCartList(map);
+	}
 	
 }

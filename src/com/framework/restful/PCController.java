@@ -44,6 +44,7 @@ import com.framework.service.TCarSecondhandService;
 import com.framework.service.TCarouselService;
 import com.framework.service.TNewsService;
 import com.framework.service.TStoryService;
+import com.framework.utils.DateUtil;
 import com.framework.utils.ReturnData;
 import com.framework.utils.StringUtil;
 
@@ -150,6 +151,7 @@ public class PCController extends RestfulController{
 			slm.setId(e.getId());
 			slm.setTitle(e.getStoryTitle());
 			slm.setType("");
+			slm.setDate(DateUtil.formatCN(e.getCreateTime()));
 			slm.setUrl(e.getDescUrl());
 			storyList.add(slm);
 		}

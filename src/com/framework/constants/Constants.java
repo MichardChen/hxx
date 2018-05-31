@@ -200,7 +200,7 @@ public interface Constants {
 		public static final String PC_INDEX = "040002";
 		// 微信轮播图
 		public static final String WX_INDEX = "040003";
-		// 小程序轮播图
+		// 小程序轮播图  
 		public static final String XCX_INDEX = "040004";
 		// 以租代购横幅
 		public static final String CAR_LEASE_IMAGE = "040005";
@@ -222,5 +222,11 @@ public interface Constants {
 		public static final String FORGET_REGISTER_PWD = "200002";
 		public static final String FORGET_PAY_PWD = "200003";
 		public static final String SUMBIT_QUESTION = "200004";
+	}
+	
+	public static interface CAR_TYPE{
+		public static final String JIAOCHE = "060001";
+		public static final String SUV = "060002";
+		public static final String PAOCHE = "060003";
 	}
 }

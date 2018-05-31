@@ -66,6 +66,15 @@ public class TCarLeaseEntity implements Serializable {
 	private String descUrl;
 	//
 	private Integer cartParam2Id;
+	
+	private String carLevelCd;
+	
+	public String getCarLevelCd() {
+		return carLevelCd;
+	}
+	public void setCarLevelCd(String carLevelCd) {
+		this.carLevelCd = carLevelCd;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

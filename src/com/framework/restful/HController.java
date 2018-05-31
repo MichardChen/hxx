@@ -1,6 +1,7 @@
 package com.framework.restful;
 
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.number.money.MonetaryAmountFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,6 +23,7 @@ import com.framework.dao.TCodemstDao;
 import com.framework.dto.ParamsDTO;
 import com.framework.entity.LocationCityEntity;
 import com.framework.entity.TBrandEntity;
+import com.framework.entity.TBrandSeriesEntity;
 import com.framework.entity.TCarImportEntity;
 import com.framework.entity.TCarLeaseEntity;
 import com.framework.entity.TCarSecondhandEntity;
@@ -37,8 +40,12 @@ import com.framework.restmodel.BrandModel;
 import com.framework.restmodel.CarouselModel;
 import com.framework.restmodel.ImportCarListModel;
 import com.framework.restmodel.LeaseCarListModel;
+import com.framework.restmodel.ListModelImportCar;
+import com.framework.restmodel.ListModelLeaseCar;
+import com.framework.restmodel.ListModelSecondhandCar;
 import com.framework.restmodel.NewsListModel;
 import com.framework.restmodel.SecondHandCarListModel;
+import com.framework.service.TBrandSeriesService;
 import com.framework.service.TBrandService;
 import com.framework.service.TCarImportService;
 import com.framework.service.TCarLeaseService;
@@ -86,6 +93,8 @@ public class HController extends RestfulController{
 	private TQuestionService questionService;
 	@Autowired
 	private TVertifyCodeService vertifyCodeService;
+	@Autowired
+	private TBrandSeriesService carSeriesService;
 	
 
 	@RequestMapping("/index")
@@ -178,6 +187,7 @@ public class HController extends RestfulController{
 			icl.setIcon(e.getIcon());
 			icl.setId(e.getId());
 			icl.setLabels(e.getLabels());
+			icl.setTitleLabel(e.getTitleLabel());
 			icl.setName(e.getCarName());
 			icl.setNowPrice(StringUtil.toString(e.getNowPrice()));
 			icl.setPrimePrice(StringUtil.toString(e.getMarketPrice()));
@@ -213,6 +223,7 @@ public class HController extends RestfulController{
 			slm.setTitle(e.getStoryTitle());
 			slm.setType("");
 			slm.setUrl(e.getDescUrl());
+			slm.setDate(DateUtil.formatCN(e.getCreateTime()));
 			storyList.add(slm);
 		}
 		json.put("storyList", storyList);
@@ -226,6 +237,7 @@ public class HController extends RestfulController{
 			nlm.setId(e.getId());
 			nlm.setTitle(e.getNewsTitle());
 			nlm.setUrl(e.getContentUrl());
+			nlm.setDate(DateUtil.formatCN(e.getCreateTime()));
 			TCodemstEntity mst = codeMstDao.queryByCode(e.getNewsTypeCd());
 			if(mst != null) {
 				nlm.setType(mst.getName());
@@ -294,6 +306,7 @@ public class HController extends RestfulController{
 			nlm.setId(e.getId());
 			nlm.setTitle(e.getNewsTitle());
 			nlm.setUrl(e.getContentUrl());
+			nlm.setDate(DateUtil.formatCN(e.getCreateTime()));
 			TCodemstEntity mst = codeMstDao.queryByCode(e.getNewsTypeCd());
 			if(mst != null) {
 				nlm.setType(mst.getName());
@@ -329,6 +342,7 @@ public class HController extends RestfulController{
 			slm.setId(e.getId());
 			slm.setTitle(e.getStoryTitle());
 			slm.setType("");
+			slm.setDate(DateUtil.formatCN(e.getCreateTime()));
 			slm.setUrl(e.getDescUrl());
 			storyList.add(slm);
 		}
@@ -524,5 +538,134 @@ public class HController extends RestfulController{
 			renderJson(data, response);
 			return;
 		}
+	}
+	
+	//搜新车(以租代购列表)
+	@RequestMapping("/queryLeaseCarList")
+	public void queryLeaseCarList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		Map<String, Object> map = new HashMap<>();
+		map.put("offset", dto.getPageSize()*(dto.getPageNum()-1));
+		map.put("limit", dto.getPageSize());
+		map.put("brandId", dto.getBrandId());
+		map.put("fromFirstPayment", dto.getFromFirstPayment());
+		map.put("toFirstPayment", dto.getToFirstPayment());
+		map.put("fromMonthPayment", dto.getFromMonthPayment());
+		map.put("toMonthPayment", dto.getToMonthPayment());
+		map.put("fromCarCost", dto.getFromCarCost());
+		map.put("toCarCost", dto.getToCarCost());
+		map.put("carLevelCd", dto.getCarLevelCd());
+		
+		List<TCarLeaseEntity> stList = leaseService.queryMobileTerminalList(map);
+		List<ListModelLeaseCar> models = new ArrayList<>();
+		ListModelLeaseCar model = null;
+		for(TCarLeaseEntity e : stList){
+			model = new ListModelLeaseCar();
+			model.setId(e.getId());
+			TBrandSeriesEntity brand = carSeriesService.queryObject(e.getCarSeriesId());
+			if(brand != null){
+				model.setBrand(brand.getCarSerial());
+			}else{
+				model.setBrand("");
+			}
+			model.setCarName(e.getCarName());
+			model.setLabels(e.getLabels());
+			model.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(),0));
+			model.setGuidePrice(StringUtil.formatCarPrice(e.getFirmCost(),0));
+			model.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
+			model.setIcon(e.getIcon());
+			model.setRealFirstPayment(StringUtil.formatCarPrice(e.getRealFirstPayment(),0));
+			models.add(model);
+		}
+		json.put("leaseCarList", models);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	//会淘车
+	@RequestMapping("/querySecondhondCarList")
+	public void querySecondhondCarList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		Map<String, Object> map = new HashMap<>();
+		map.put("offset", dto.getPageSize()*(dto.getPageNum()-1));
+		map.put("limit", dto.getPageSize());
+		map.put("brandId", dto.getBrandId());
+		map.put("fromFirstPayment", dto.getFromFirstPayment());
+		map.put("toFirstPayment", dto.getToFirstPayment());
+		map.put("fromMonthPayment", dto.getFromMonthPayment());
+		map.put("toMonthPayment", dto.getToMonthPayment());
+		map.put("fromCarCost", dto.getFromCarCost());
+		map.put("toCarCost", dto.getToCarCost());
+		map.put("carLevelCd", dto.getCarLevelCd());
+		
+		List<TCarSecondhandEntity> stList = secondService.queryMobileTerminalList(map);
+		List<ListModelSecondhandCar> models = new ArrayList<>();
+		ListModelSecondhandCar model = null;
+		for(TCarSecondhandEntity e : stList){
+			model = new ListModelSecondhandCar();
+			model.setId(e.getId());
+			TBrandSeriesEntity brand = carSeriesService.queryObject(e.getCarSeriesId());
+			if(brand != null){
+				model.setBrand(brand.getCarSerial());
+			}else{
+				model.setBrand("");
+			}
+			model.setCarName(e.getCarName());
+			model.setLabels(e.getLabels());
+			model.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(),0));
+			model.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
+			model.setIcon(e.getIcon());
+			model.setDate(e.getYear());
+			model.setKilomiters(StringUtil.toString(e.getKilomiters())+"万公里");
+			models.add(model);
+		}
+		json.put("secondhandCarList", models);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	//平行进口列表
+	@RequestMapping("/queryImportCarList")
+	public void queryImportCarList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		Map<String, Object> map = new HashMap<>();
+		map.put("offset", dto.getPageSize()*(dto.getPageNum()-1));
+		map.put("limit", dto.getPageSize());
+		map.put("brandId", dto.getBrandId());
+		
+		List<TCarImportEntity> stList = importService.queryImportCartList(map);
+		List<ListModelImportCar> models = new ArrayList<>();
+		ListModelImportCar model = null;
+		for(TCarImportEntity e : stList){
+			model = new ListModelImportCar();
+			model.setId(e.getId());
+			TBrandSeriesEntity brand = carSeriesService.queryObject(e.getCarSeriesId());
+			if(brand != null){
+				model.setBrand(brand.getCarSerial());
+			}else{
+				model.setBrand("");
+			}
+			model.setCarName(e.getCarName());
+			model.setNowPrice(StringUtil.formatCarPrice(e.getNowPrice(),0));
+			model.setMarkPrice(StringUtil.formatCarPrice(e.getMarketPrice(),0));
+			model.setSaveMoneys(StringUtil.formatCarPrice(e.getMaxSave(), 0));
+			model.setIcon(e.getIcon());
+			models.add(model);
+		}
+		json.put("importCarList", models);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
 	}
 }

@@ -18,6 +18,8 @@ public interface TCarSecondhandService {
 	
 	List<TCarSecondhandEntity> queryList(Map<String, Object> map);
 	
+	List<TCarSecondhandEntity> queryMobileTerminalList(Map<String, Object> map);
+	
 	int queryTotal(Map<String, Object> map);
 	
 	void save(TCarSecondhandEntity tCarSecondhand);

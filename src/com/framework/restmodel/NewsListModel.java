@@ -9,8 +9,14 @@ public class NewsListModel implements Serializable{
 	private String title;
 	private String type;
 	private String url;
+	private String date;
 	
-	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public String getUrl() {
 		return url;
 	}

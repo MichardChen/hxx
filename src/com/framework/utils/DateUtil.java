@@ -34,6 +34,10 @@ public final class DateUtil {
 		return format(date, PATTERN);
 	}
 	
+	public static final String formatCN(Date date) {
+		return format(date, "yyyy年MM月dd日");
+	}
+	
 	public static final String formatYM(Date date) {
 		return format(date, "yyyy-MM");
 	}

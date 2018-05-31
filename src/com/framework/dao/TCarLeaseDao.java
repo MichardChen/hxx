@@ -1,5 +1,8 @@
 package com.framework.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.framework.entity.TCarLeaseEntity;
 
 /**
@@ -11,4 +14,5 @@ import com.framework.entity.TCarLeaseEntity;
  */
 public interface TCarLeaseDao extends BaseDao<TCarLeaseEntity> {
 	
+	public List<TCarLeaseEntity> queryMobileTerminalList(Map<String, Object> map);
 }

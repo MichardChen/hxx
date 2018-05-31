@@ -51,5 +51,10 @@ public class TCarLeaseServiceImpl implements TCarLeaseService {
 	public void deleteBatch(Integer[] ids){
 		tCarLeaseDao.deleteBatch(ids);
 	}
+
+	@Override
+	public List<TCarLeaseEntity> queryMobileTerminalList(Map<String, Object> map) {
+		return tCarLeaseDao.queryMobileTerminalList(map);
+	}
 	
 }

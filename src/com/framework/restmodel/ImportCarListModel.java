@@ -10,6 +10,14 @@ public class ImportCarListModel implements Serializable{
 	private String nowPrice;
 	private String primePrice;
 	private String labels;
+	private String titleLabel;
+	
+	public String getTitleLabel() {
+		return titleLabel;
+	}
+	public void setTitleLabel(String titleLabel) {
+		this.titleLabel = titleLabel;
+	}
 	public int getId() {
 		return id;
 	}
