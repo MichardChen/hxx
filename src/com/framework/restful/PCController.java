@@ -109,7 +109,7 @@ public class PCController extends RestfulController{
 		}
 		json.put("brandModels", brandModels);
 		//获取横幅
-		TCarouselEntity entity = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.CAR_LEASE_IMAGE);
+		TCarouselEntity entity = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.PC_CAR_LEASE_IMAGE);
 		if(entity!=null) {
 			CarouselModel m1 = new CarouselModel();
 			m1.setImgUrl(entity.getImgUrl());
@@ -118,7 +118,7 @@ public class PCController extends RestfulController{
 		}else {
 			json.put("leaseCarImage", null);
 		}
-		TCarouselEntity entity1 = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.CAR_IMPORT_IMAGE);
+		TCarouselEntity entity1 = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.PC_CAR_IMPORT_IMAGE);
 		if(entity1!=null) {
 			CarouselModel m1 = new CarouselModel();
 			m1.setImgUrl(entity1.getImgUrl());
@@ -127,7 +127,7 @@ public class PCController extends RestfulController{
 		}else {
 			json.put("importCarImage", null);
 		}
-		TCarouselEntity entity2 = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.CAR_SECONDHAND_IMAGE);
+		TCarouselEntity entity2 = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.PC_CAR_SECONDHAND_IMAGE);
 		if(entity2!=null) {
 			CarouselModel m1 = new CarouselModel();
 			m1.setImgUrl(entity2.getImgUrl());

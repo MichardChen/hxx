@@ -123,14 +123,14 @@ public interface Constants {
 	 */
 
 	public static interface HOST {
-		public static final String LOCALHOST = "https://www.yibuwangluo.cn:88/newsimages/";
-		public static final String TEA = "https://www.yibuwangluo.cn:88/tea/";
-		public static final String DOCUMENT = "https://www.yibuwangluo.cn:88/document/";
-		public static final String FILE = "https://www.yibuwangluo.cn:88/file/";
-		public static final String ICON = "https://www.yibuwangluo.cn:88/icon/";
-		public static final String IMG = "https://www.yibuwangluo.cn:88/img/";
-		public static final String STORE = "https://www.yibuwangluo.cn:88/store/";
-		public static final String COMMON = "https://www.yibuwangluo.cn:88/common/";
+		public static final String LOCALHOST = "http://www.yibuwangluo.cn:88/newsimages/";
+		public static final String TEA = "http://www.yibuwangluo.cn:88/tea/";
+		public static final String DOCUMENT = "http://www.yibuwangluo.cn:88/document/";
+		public static final String FILE = "http://www.yibuwangluo.cn:88/file/";
+		public static final String ICON = "http://www.yibuwangluo.cn:88/icon/";
+		public static final String IMG = "http://www.yibuwangluo.cn:88/img/";
+		public static final String STORE = "http://www.yibuwangluo.cn:88/store/";
+		public static final String COMMON = "http://www.yibuwangluo.cn:88/common/";
 	}
 	
 	public static interface HTTP_HOST {
@@ -202,11 +202,11 @@ public interface Constants {
 		public static final String WX_INDEX = "040003";
 		// 小程序轮播图  
 		public static final String XCX_INDEX = "040004";
-		// 以租代购横幅
+		// 小程序以租代购横幅
 		public static final String CAR_LEASE_IMAGE = "040005";
-		// 二手车横幅
+		// 小程序二手车横幅
 		public static final String CAR_SECONDHAND_IMAGE = "040006";
-		// 平行进口横幅
+		// 小程序平行进口横幅
 		public static final String CAR_IMPORT_IMAGE = "040007";
 		
 		//pc以租代购横幅
@@ -215,6 +215,13 @@ public interface Constants {
 		public static final String PC_CAR_SECONDHAND_IMAGE = "040009";
 		//pc平行进口横幅
 		public static final String PC_CAR_IMPORT_IMAGE = "040010";
+		
+		//h5以租代购横幅
+		public static final String H5_CAR_LEASE_IMAGE = "040011";
+		//h5二手车横幅
+		public static final String H5_CAR_SECONDHAND_IMAGE = "040012";
+		//h5平行进口横幅
+		public static final String H5_CAR_IMPORT_IMAGE = "040013";
 	}
 	
 	public static interface SHORT_MESSAGE_TYPE{
