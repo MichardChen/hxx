@@ -30,7 +30,8 @@
 			`create_by`, 
 			`create_time`, 
 			`update_by`, 
-			`update_time`
+			`update_time`,
+			`type_cd`
 		)
 		values
 		(
@@ -43,7 +44,8 @@
 			#{createBy}, 
 			#{createTime}, 
 			#{updateBy}, 
-			#{updateTime}
+			#{updateTime},
+			#{typeCd}
 		)
 	</insert>
 	 
@@ -60,6 +62,7 @@
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+			<if test="typeCd != null">`type_cd` = #{typeCd}</if>
 		</set>
 		where id = #{id}
 	</update>

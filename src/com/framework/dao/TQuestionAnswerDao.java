@@ -1,5 +1,8 @@
 package com.framework.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.framework.entity.TQuestionAnswerEntity;
 
 /**
@@ -10,5 +13,8 @@ import com.framework.entity.TQuestionAnswerEntity;
  * @date 2018-05-22 14:40:17
  */
 public interface TQuestionAnswerDao extends BaseDao<TQuestionAnswerEntity> {
+
+	public List<TQuestionAnswerEntity> queryQAList(Map<String, Object> map);
 	
+	int queryQATotal(Map<String, Object> map);
 }

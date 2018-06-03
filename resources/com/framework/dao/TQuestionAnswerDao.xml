@@ -14,8 +14,21 @@
 		</if>
 	</select>
 	
+	<select id="queryQAList" resultType="com.framework.entity.TQuestionAnswerEntity">
+		select * from t_question_answer where 1=1
+		<if test="typeCd != null and typeCd != ''">
+			and type_cd=#{typeCd}
+		</if>
+	</select>
+	
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_question_answer 
+	</select>
+	<select id="queryQATotal" resultType="int">
+		select count(*) from t_question_answer where 1=1
+		<if test="typeCd != null and typeCd != ''">
+			and type_cd=#{typeCd}
+		</if>
 	</select>
 	 
 	<insert id="save" parameterType="com.framework.entity.TQuestionAnswerEntity" useGeneratedKeys="true" keyProperty="id">
@@ -27,7 +40,8 @@
 			`update_by`, 
 			`create_time`, 
 			`update_time`, 
-			`flg`
+			`flg`,
+			`type_cd`
 		)
 		values
 		(
@@ -37,7 +51,8 @@
 			#{updateBy}, 
 			#{createTime}, 
 			#{updateTime}, 
-			#{flg}
+			#{flg},
+			#{typeCd}
 		)
 	</insert>
 	 
@@ -51,6 +66,7 @@
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
 			<if test="flg != null">`flg` = #{flg}</if>
+			<if test="typeCd != null">`type_cd` = #{typeCd}</if>
 		</set>
 		where id = #{id}
 	</update>

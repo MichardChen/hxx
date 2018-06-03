@@ -18,7 +18,11 @@ public interface TQuestionAnswerService {
 	
 	List<TQuestionAnswerEntity> queryList(Map<String, Object> map);
 	
+	List<TQuestionAnswerEntity> queryQAList(Map<String, Object> map);
+	
 	int queryTotal(Map<String, Object> map);
+	
+	int queryQATotal(Map<String, Object> map);
 	
 	void save(TQuestionAnswerEntity tQuestionAnswer);
 	

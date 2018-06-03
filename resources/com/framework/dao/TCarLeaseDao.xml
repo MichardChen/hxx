@@ -13,6 +13,39 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
+	<select id="queryPCTerminalList" resultType="com.framework.entity.TCarLeaseEntity">
+		select * from t_car_lease where 1=1
+		<if test="brandId != null and brandId != 0">
+			and brand=#{brandId}
+		</if>
+		<if test="brandSeriesId != null and brandSeriesId != 0">
+			and car_series_id=#{brandSeriesId}
+		</if>
+		<if test="fromFirstPayment != null">
+			and first_payment&gt;=#{fromFirstPayment}
+		</if>
+		<if test="toFirstPayment != null">
+			and first_payment&lt;=#{toFirstPayment}
+		</if>
+		<if test="fromMonthPayment != null">
+			and month_payment&gt;=#{fromMonthPayment}
+		</if>
+		<if test="toMonthPayment != null">
+			and month_payment&lt;=#{toMonthPayment}
+		</if>
+		<if test="fromCarCost != null">
+			and car_cost&gt;=#{fromCarCost}
+		</if>
+		<if test="toCarCost != null">
+			and car_cost&lt;=#{toCarCost}
+		</if>
+		<if test="carLevelCd != null and carLevelCd != ''">
+			and car_level_cd=#{carLevelCd}
+		</if>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
 	<select id="queryMobileTerminalList" resultType="com.framework.entity.TCarLeaseEntity">
 		select * from t_car_lease where 1=1
 		<if test="brandId != null and brandId != 0">
@@ -47,6 +80,36 @@
 		select count(*) from t_car_lease 
 	</select>
 	 
+	 <select id="queryLeaseCarTotal" resultType="int">
+		select count(1) from t_car_lease where 1=1
+		<if test="brandId != null and brandId != 0">
+			and brand=#{brandId}
+		</if>
+		<if test="brandSeriesId != null and brandSeriesId != 0">
+			and car_series_id=#{brandSeriesId}
+		</if>
+		<if test="fromFirstPayment != null">
+			and first_payment&gt;=#{fromFirstPayment}
+		</if>
+		<if test="toFirstPayment != null">
+			and first_payment&lt;=#{toFirstPayment}
+		</if>
+		<if test="fromMonthPayment != null">
+			and month_payment&gt;=#{fromMonthPayment}
+		</if>
+		<if test="toMonthPayment != null">
+			and month_payment&lt;=#{toMonthPayment}
+		</if>
+		<if test="fromCarCost != null">
+			and car_cost&gt;=#{fromCarCost}
+		</if>
+		<if test="toCarCost != null">
+			and car_cost&lt;=#{toCarCost}
+		</if>
+		<if test="carLevelCd != null and carLevelCd != ''">
+			and car_level_cd=#{carLevelCd}
+		</if>
+	</select>
 	<insert id="save" parameterType="com.framework.entity.TCarLeaseEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into t_car_lease
 		(

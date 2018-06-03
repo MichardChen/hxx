@@ -51,5 +51,15 @@ public class TQuestionAnswerServiceImpl implements TQuestionAnswerService {
 	public void deleteBatch(Integer[] ids){
 		tQuestionAnswerDao.deleteBatch(ids);
 	}
+
+	@Override
+	public List<TQuestionAnswerEntity> queryQAList(Map<String, Object> map) {
+		return tQuestionAnswerDao.queryQAList(map);
+	}
+
+	@Override
+	public int queryQATotal(Map<String, Object> map) {
+		return tQuestionAnswerDao.queryQATotal(map);
+	}
 	
 }

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TFinanceCommitDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TFinanceCommitEntity">
+		select * from t_finance_commit where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TFinanceCommitEntity">
+		select * from t_finance_commit 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_finance_commit 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TFinanceCommitEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_finance_commit
+		(
+			`finance_id`, 
+			`brand_id`,
+			`brand_series_id`, 
+			`province_id`, 
+			`city_id`, 
+			`name`, 
+			`age`, 
+			`idcard_no`, 
+			`sex`, 
+			`mobile`, 
+			`mark`, 
+			`create_time`, 
+			`update_by`, 
+			`update_time`, 
+			`status`
+		)
+		values
+		(
+			#{financeId}, 
+			#{brandId},
+			#{brandSeriesId}, 
+			#{provinceId}, 
+			#{cityId}, 
+			#{name}, 
+			#{age}, 
+			#{idcardNo}, 
+			#{sex}, 
+			#{mobile}, 
+			#{mark}, 
+			#{createTime}, 
+			#{updateBy}, 
+			#{updateTime}, 
+			#{status}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TFinanceCommitEntity">
+		update t_finance_commit 
+		<set>
+			<if test="financeId != null">`finance_id` = #{financeId}, </if>
+			<if test="brandId != null">`brand_id` = #{brandId}, </if>
+			<if test="brandSeriesId != null">`brand_series_id` = #{brandSeriesId}, </if>
+			<if test="provinceId != null">`province_id` = #{provinceId}, </if>
+			<if test="cityId != null">`city_id` = #{cityId}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="age != null">`age` = #{age}, </if>
+			<if test="idcardNo != null">`idcard_no` = #{idcardNo}, </if>
+			<if test="sex != null">`sex` = #{sex}, </if>
+			<if test="mobile != null">`mobile` = #{mobile}, </if>
+			<if test="mark != null">`mark` = #{mark}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_finance_commit where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_finance_commit where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

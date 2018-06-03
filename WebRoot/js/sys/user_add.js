@@ -30,18 +30,25 @@ var vm = new Vue({
 			});
 		},
 		saveOrUpdate: function (event) {
+			var formFile = new FormData();
+			var fileObj = document.getElementById("uFile").files[0];
 			var url = vm.user.userId == null ? "../sys/user/save" : "../sys/user/update";
+			formFile.append("uFile", fileObj); 
+			formFile.append("user", JSON.stringify(vm.user));
 			$.ajax({
 				type: "POST",
 			    url: url,
-			    data: JSON.stringify(vm.user),
+			    processData: false,
+			    contentType: false,
+			    data: formFile,
 			    success: function(r){
-			    	if(r.code === 0){
+			    	var rr = eval('('+r+')');
+			    	if(rr.code === 0){
 						alert('操作成功', function(index){
 							vm.back();
 						});
 					}else{
-						alert(r.msg);
+						alert(rr.msg);
 					}
 				}
 			});

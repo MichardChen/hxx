@@ -53,6 +53,56 @@ public class SysUserEntity implements Serializable {
 	 */
 	private Date createTime;
 
+	private String introduce;
+	
+	private int expertFlg;
+	
+	private String skill;
+	
+	private String icon;
+	
+	private String realName;
+	
+	public String getIntroduce() {
+		return introduce;
+	}
+
+	public void setIntroduce(String introduce) {
+		this.introduce = introduce;
+	}
+
+	public int getExpertFlg() {
+		return expertFlg;
+	}
+
+	public void setExpertFlg(int expertFlg) {
+		this.expertFlg = expertFlg;
+	}
+
+	public String getSkill() {
+		return skill;
+	}
+
+	public void setSkill(String skill) {
+		this.skill = skill;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+
 	/**
 	 * 设置：用户ID
 	 * @param userId

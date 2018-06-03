@@ -22,6 +22,46 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
+	<!-- pc集合 -->
+	<select id="queryPCTerminalList" resultType="com.framework.entity.TCarImportEntity">
+		select * from t_car_import where 1=1
+		<if test="brandId != null and brandId != 0">
+			and brand=#{brandId}
+		</if>
+		<if test="carLevelCd != null and carLevelCd != ''">
+			and car_level_cd=#{carLevelCd}
+		</if>
+		<if test="carClassCd != null and carClassCd != ''">
+			and car_class_cd=#{carClassCd}
+		</if>
+		<if test="fromPrice != null">
+			and now_price&gt;=#{fromPrice}
+		</if>
+		<if test="toPrice != null">
+			and now_price&lt;=#{toPrice}
+		</if>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	<select id="queryImportCarTotal" resultType="int">
+		select count(1) from t_car_import where 1=1
+		<if test="brandId != null and brandId != 0">
+			and brand=#{brandId}
+		</if>
+		<if test="carLevelCd != null and carLevelCd != ''">
+			and car_level_cd=#{carLevelCd}
+		</if>
+		<if test="carClassCd != null and carClassCd != ''">
+			and car_class_cd=#{carClassCd}
+		</if>
+		<if test="fromPrice != null">
+			and now_price&gt;=#{fromPrice}
+		</if>
+		<if test="toPrice != null">
+			and now_price&lt;=#{toPrice}
+		</if>
+	</select>
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_car_import 
 	</select>

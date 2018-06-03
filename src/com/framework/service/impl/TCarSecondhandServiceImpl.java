@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.framework.dao.TCarSecondhandDao;
+import com.framework.entity.TCarLeaseEntity;
 import com.framework.entity.TCarSecondhandEntity;
 import com.framework.service.TCarSecondhandService;
 
@@ -55,5 +56,15 @@ public class TCarSecondhandServiceImpl implements TCarSecondhandService {
 	@Override
 	public List<TCarSecondhandEntity> queryMobileTerminalList(Map<String, Object> map) {
 		return tCarSecondhandDao.queryMobileTerminalList(map);
+	}
+
+	@Override
+	public List<TCarSecondhandEntity> queryPCTerminalList(Map<String, Object> map) {
+		return tCarSecondhandDao.queryPCTerminalList(map);
+	}
+
+	@Override
+	public int queryPCTerminalTotal(Map<String, Object> map) {
+		return tCarSecondhandDao.querySecondhandCarTotal(map);
 	}
 }

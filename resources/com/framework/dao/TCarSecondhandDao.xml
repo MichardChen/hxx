@@ -43,6 +43,91 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
+	<!-- pc列表 -->
+	<select id="queryPCTerminalList" resultType="com.framework.entity.TCarSecondhandEntity">
+		select * from t_car_secondhand where 1=1
+		<if test="brandId != null and brandId != 0">
+			and brand=#{brandId}
+		</if>
+		<if test="brandSeriesId != null and brandSeriesId != 0">
+			and car_series_id=#{brandSeriesId}
+		</if>
+		<if test="fromFirstPayment != null">
+			and first_payment&gt;=#{fromFirstPayment}
+		</if>
+		<if test="toFirstPayment != null">
+			and first_payment&lt;=#{toFirstPayment}
+		</if>
+		<if test="fromMonthPayment != null">
+			and month_payment&gt;=#{fromMonthPayment}
+		</if>
+		<if test="toMonthPayment != null">
+			and month_payment&lt;=#{toMonthPayment}
+		</if>
+		<if test="fromCarCost != null">
+			and car_cost&gt;=#{fromCarCost}
+		</if>
+		<if test="toCarCost != null">
+			and car_cost&lt;=#{toCarCost}
+		</if>
+		<if test="fromKilomiter != null">
+			and kilomiters &gt;=#{fromKilomiter}
+		</if>
+		<if test="toKilomiter != null">
+			and kilomiters &lt;=#{toKilomiter}
+		</if>
+		<if test="fromAge != null">
+			and age&gt;=#{fromAge}
+		</if>
+		<if test="toAge != null">
+			and age&lt;=#{toAge}
+		</if>
+		<if test="carLevelCd != null and carLevelCd != ''">
+			and car_level_cd=#{carLevelCd}
+		</if>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	<select id="querySecondhandCarTotal" resultType="int">
+		select count(1) from t_car_secondhand where 1=1
+		<if test="brandId != null and brandId != 0">
+			and brand=#{brandId}
+		</if>
+		<if test="brandSeriesId != null and brandSeriesId != 0">
+			and car_series_id=#{brandSeriesId}
+		</if>
+		<if test="fromFirstPayment != null">
+			and first_payment&gt;=#{fromFirstPayment}
+		</if>
+		<if test="toFirstPayment != null">
+			and first_payment&lt;=#{toFirstPayment}
+		</if>
+		<if test="fromMonthPayment != null">
+			and month_payment&gt;=#{fromMonthPayment}
+		</if>
+		<if test="toMonthPayment != null">
+			and month_payment&lt;=#{toMonthPayment}
+		</if>
+		<if test="fromCarCost != null">
+			and car_cost&gt;=#{fromCarCost}
+		</if>
+		<if test="toCarCost != null">
+			and car_cost&lt;=#{toCarCost}
+		</if>
+		<if test="fromKilomiter != null">
+			and kilomiters &gt;=#{fromKilomiter}
+		</if>
+		<if test="toKilomiter != null">
+			and kilomiters &lt;=#{toKilomiter}
+		</if>
+		<if test="fromAge != null">
+			and age&gt;=#{fromAge}
+		</if>
+		<if test="toAge != null">
+			and age&lt;=#{toAge}
+		</if>
+	</select>
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_car_secondhand 
 	</select>

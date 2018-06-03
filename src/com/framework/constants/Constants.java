@@ -132,7 +132,7 @@ public interface Constants {
 		public static final String STORE = "http://www.yibuwangluo.cn:88/store/";
 		public static final String COMMON = "http://www.yibuwangluo.cn:88/common/";
 	}
-	
+
 	public static interface HTTP_HOST {
 		public static final String LOCALHOST = "http://www.yibuwangluo.cn:88/newsimages/";
 		public static final String TEA = "http://www.yibuwangluo.cn:88/tea/";
@@ -154,17 +154,17 @@ public interface Constants {
 		public static final String STORE = "D:\\upload\\store\\";
 		public static final String COMMON = "D:\\upload\\common\\";
 	}
-	
-	/*public static interface FILE_HOST {
-		public static final String LOCALHOST = "F:\\upload\\newsimages\\";
-		public static final String TEA = "F:\\upload\\tea\\";
-		public static final String DOCUMENT = "F:\\upload\\document\\";
-		public static final String FILE = "F:\\upload\\file\\";
-		public static final String ICON = "F:\\upload\\icon\\";
-		public static final String IMG = "F:\\upload\\img\\";
-		public static final String STORE = "F:\\upload\\store\\";
-		public static final String COMMON = "F:\\upload\\common\\";
-	}*/
+
+	/*
+	 * public static interface FILE_HOST { public static final String LOCALHOST =
+	 * "F:\\upload\\newsimages\\"; public static final String TEA =
+	 * "F:\\upload\\tea\\"; public static final String DOCUMENT =
+	 * "F:\\upload\\document\\"; public static final String FILE =
+	 * "F:\\upload\\file\\"; public static final String ICON = "F:\\upload\\icon\\";
+	 * public static final String IMG = "F:\\upload\\img\\"; public static final
+	 * String STORE = "F:\\upload\\store\\"; public static final String COMMON =
+	 * "F:\\upload\\common\\"; }
+	 */
 
 	/**
 	 * centos服务器 public static interface HOST{ public static final String LOCALHOST
@@ -200,7 +200,7 @@ public interface Constants {
 		public static final String PC_INDEX = "040002";
 		// 微信轮播图
 		public static final String WX_INDEX = "040003";
-		// 小程序轮播图  
+		// 小程序轮播图
 		public static final String XCX_INDEX = "040004";
 		// 小程序以租代购横幅
 		public static final String CAR_LEASE_IMAGE = "040005";
@@ -208,32 +208,61 @@ public interface Constants {
 		public static final String CAR_SECONDHAND_IMAGE = "040006";
 		// 小程序平行进口横幅
 		public static final String CAR_IMPORT_IMAGE = "040007";
-		
-		//pc以租代购横幅
+
+		// pc以租代购横幅
 		public static final String PC_CAR_LEASE_IMAGE = "040008";
-		//pc二手车横幅
+		// pc二手车横幅
 		public static final String PC_CAR_SECONDHAND_IMAGE = "040009";
-		//pc平行进口横幅
+		// pc平行进口横幅
 		public static final String PC_CAR_IMPORT_IMAGE = "040010";
-		
-		//h5以租代购横幅
+
+		// h5以租代购横幅
 		public static final String H5_CAR_LEASE_IMAGE = "040011";
-		//h5二手车横幅
+		// h5二手车横幅
 		public static final String H5_CAR_SECONDHAND_IMAGE = "040012";
-		//h5平行进口横幅
+		// h5平行进口横幅
 		public static final String H5_CAR_IMPORT_IMAGE = "040013";
 	}
-	
-	public static interface SHORT_MESSAGE_TYPE{
+
+	public static interface SHORT_MESSAGE_TYPE {
 		public static final String REGISTER = "200001";
 		public static final String FORGET_REGISTER_PWD = "200002";
 		public static final String FORGET_PAY_PWD = "200003";
 		public static final String SUMBIT_QUESTION = "200004";
 	}
-	
-	public static interface CAR_TYPE{
-		public static final String JIAOCHE = "060001";
-		public static final String SUV = "060002";
-		public static final String PAOCHE = "060003";
+
+	// 车型
+	public static interface CAR_TYPE {
+		public static final String SMALL = "060001";
+		public static final String MIDDLE = "060002";
+		public static final String SUV = "060003";
+		public static final String MPV = "060004";
+		public static final String PAOCHE = "060005";
+	}
+
+	// 品类
+	public static interface CAR_CLASS {
+		public static final String MEIGUI = "070001";
+		public static final String JIAGUI = "070002";
+		public static final String MOGUI = "070003";
+		public static final String ZHONGDONG = "070004";
+		public static final String OUGUI = "070005";
+	}
+
+	// 问答类型
+	public static interface QUESTION_ANSWER_TYPE {
+		public static final String GOUCHE_MARK = "080001";
+		public static final String FEIYONG = "080002";
+		public static final String SHOUHOU = "080003";
+		public static final String YONGCHE = "080004";
+		public static final String BAOXIAN = "080005";
+		public static final String QITA = "080006";
+	}
+
+	//资讯类型
+	public static interface QUESTION_TYPE {
+		public static final String PC = "090001";
+		public static final String XCX = "090002";
+		public static final String H5 = "090003";
 	}
 }

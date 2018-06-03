@@ -272,7 +272,7 @@ public class StringUtil extends StringUtils {
 	}
 	
 	public static BigDecimal toQueryCarBigDecimal(String str){
-		if(StringUtil.isBlank(str) || str == null){
+		if(StringUtil.isBlank(str) || str == null || StringUtil.equals(str, "null")){
 			return null;
 		}else{
 			BigDecimal bd = new BigDecimal(str);

@@ -1,8 +1,13 @@
 package com.framework.utils;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 
 public class ReturnData implements Serializable{
 
@@ -32,7 +37,8 @@ public class ReturnData implements Serializable{
 		if(this.data == null) {
 			return "{\"code\":"+this.code+",\"message\":\""+this.message+"\",\"data\":"+"null}";
 		}
-		return "{\"code\":"+this.code+",\"message\":\""+this.message+"\",\"data\":"+this.data.toJSONString()+"}";
+		//json把map等对象转换为json时出现$ref的情况,要使用DisableCircularReferenceDetect来禁止循环引用检测
+		return "{\"code\":"+this.code+",\"message\":\""+this.message+"\",\"data\":"+this.data.toJSONString(this.data,SerializerFeature.DisableCircularReferenceDetect)+"}";
 	}
 	
 	

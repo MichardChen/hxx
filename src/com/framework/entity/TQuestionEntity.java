@@ -38,6 +38,16 @@ public class TQuestionEntity implements Serializable {
 	private Integer updateBy;
 	//
 	private Timestamp updateTime;
+	
+	private String typeCd;
+	
+	
+	public String getTypeCd() {
+		return typeCd;
+	}
+	public void setTypeCd(String typeCd) {
+		this.typeCd = typeCd;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

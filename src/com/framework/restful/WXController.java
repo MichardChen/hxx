@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
 import com.framework.dao.LocationCityDao;
+import com.framework.dao.TBrandSeriesDao;
 import com.framework.dao.TCodemstDao;
 import com.framework.dto.ParamsDTO;
 import com.framework.entity.LocationCityEntity;
@@ -26,6 +27,7 @@ import com.framework.entity.TCarLeaseEntity;
 import com.framework.entity.TCarSecondhandEntity;
 import com.framework.entity.TCarouselEntity;
 import com.framework.entity.TCodemstEntity;
+import com.framework.entity.TFinanceCommitEntity;
 import com.framework.entity.TFinanceEntity;
 import com.framework.entity.TNewsEntity;
 import com.framework.entity.TQuestionEntity;
@@ -34,6 +36,7 @@ import com.framework.entity.TStoryEntity;
 import com.framework.entity.TVertifyCodeEntity;
 import com.framework.model.FinanceListModel;
 import com.framework.model.StoryListModel;
+import com.framework.restmodel.BrandJsonModel;
 import com.framework.restmodel.BrandModel;
 import com.framework.restmodel.CarouselModel;
 import com.framework.restmodel.ImportCarListModel;
@@ -49,6 +52,7 @@ import com.framework.service.TCarImportService;
 import com.framework.service.TCarLeaseService;
 import com.framework.service.TCarSecondhandService;
 import com.framework.service.TCarouselService;
+import com.framework.service.TFinanceCommitService;
 import com.framework.service.TFinanceService;
 import com.framework.service.TNewsService;
 import com.framework.service.TQuestionService;
@@ -72,6 +76,8 @@ public class WXController extends RestfulController {
 	@Autowired
 	private TCarLeaseService leaseService;
 	@Autowired
+	private TBrandSeriesDao brandSeriesDao;
+	@Autowired
 	private TCarImportService importService;
 	@Autowired
 	private TCarSecondhandService secondService;
@@ -93,6 +99,8 @@ public class WXController extends RestfulController {
 	private TVertifyCodeService vertifyCodeService;
 	@Autowired
 	private TBrandSeriesService carSeriesService;
+	@Autowired
+	private TFinanceCommitService financeCommitService;
 
 	@RequestMapping("/index")
 	public void index(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -370,6 +378,7 @@ public class WXController extends RestfulController {
 			slm.setMoneys(e.getLowRefund());
 			slm.setPeriod(e.getLowRate());
 			slm.setRate(e.getLowRate());
+			slm.setIcon(e.getIcon());
 			slm.setStandard(e.getStandard());
 			models.add(slm);
 		}
@@ -616,12 +625,19 @@ public class WXController extends RestfulController {
 			} else {
 				model.setBrand("");
 			}
+			LocationCityEntity cityEntity = cityDao.queryObject(e.getCityId());
+			if(cityEntity != null) {
+				model.setCity(cityEntity.getName());
+			}else {
+				model.setCity("");
+			}
+			
 			model.setCarName(e.getCarName());
 			model.setLabels(e.getLabels());
 			model.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(), 0));
 			model.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(), 1));
 			model.setIcon(e.getIcon());
-			model.setDate(e.getYear());
+			model.setDate(DateUtil.formatCNYM(e.getYear()));
 			model.setKilomiters(StringUtil.toString(e.getKilomiters()) + "万公里");
 			models.add(model);
 		}
@@ -667,5 +683,140 @@ public class WXController extends RestfulController {
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");
 		renderJson(data, response);
+	}
+	
+	@RequestMapping("/queryAllBrandData")
+	public void queryAllBrandData(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		List<TBrandEntity> list = brandService.queryAllList(1);
+		List<BrandJsonModel> brandList = new ArrayList<>();
+		List<BrandJsonModel> brandSeriesList = new ArrayList<>();
+		BrandJsonModel brandModel = null;
+		for(TBrandEntity entity : list){
+			brandModel = new BrandJsonModel();
+			brandModel.setId(entity.getId());
+			brandModel.setName(entity.getBrand());
+			brandModel.setPid(0);
+			brandList.add(brandModel);
+			
+			BrandJsonModel seriesModel = null;
+			List<TBrandSeriesEntity> sList = brandSeriesDao.queryCarSeriesList(entity.getId());
+			for(TBrandSeriesEntity b : sList) {
+				seriesModel = new BrandJsonModel();
+				seriesModel.setId(b.getId());
+				seriesModel.setName(b.getCarSerial());
+				seriesModel.setPid(entity.getId());
+				brandSeriesList.add(seriesModel);
+			}
+		}
+		json.put("brandList", brandList);
+		json.put("brandSeriesList", brandSeriesList);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	@RequestMapping("/submitConsult")
+	public void submitConsult(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		String code = dto.getCode();
+		String mobile = dto.getMobile();
+		TVertifyCodeEntity vCode = vertifyCodeService.queryObjectByMobile(mobile,Constants.SHORT_MESSAGE_TYPE.SUMBIT_QUESTION);
+		Timestamp expireTime = vCode == null ? null : (Timestamp)vCode.getExpireTime();
+		Timestamp now = DateUtil.getNowTimestamp();
+		if(expireTime == null){
+			data.setCode(Constants.STATUS_CODE.FAIL);
+			data.setMessage("对不起，您还没有获取验证码");
+			renderJson(data, response);
+			return;
+		}
+		
+		if((expireTime != null)&&(now.after(expireTime))){
+			//true，就是过期了
+			data.setCode(Constants.STATUS_CODE.FAIL);
+			data.setMessage("验证码过期了，请重新获取");
+			renderJson(data, response);
+			return;
+		}
+		
+		if((expireTime != null) && (expireTime.after(now))){
+			//没有过期，获取数据库验证码
+			String dcode = vCode.getCode();
+			if(!StringUtil.equals(code, dcode)){
+				//验证码错误
+				data.setCode(Constants.STATUS_CODE.FAIL);
+				data.setMessage("请输入正确的验证码");
+				renderJson(data, response);
+				return;
+			}
+		}
+		
+		TQuestionEntity entity = new TQuestionEntity();
+		
+		entity.setQuestion("从官网提交的汽车咨询");
+		entity.setCartId(dto.getCartId());
+		entity.setLinkMan(dto.getName());
+		entity.setMobile(dto.getMobile());
+		entity.setCreateBy(0);
+		entity.setCreateTime(DateUtil.getNowTimestamp());
+		entity.setUpdateTime(DateUtil.getNowTimestamp());
+		entity.setUpdateBy(0);
+		entity.setStatus(Constants.FEEDBACK_STATUS.STAY_HANDLE);
+		entity.setTypeCd(Constants.QUESTION_TYPE.PC);
+		
+		int ret = questionService.save(entity);
+		if(ret != 0){
+			//更新验证码过期
+			vertifyCodeService.updateExpireCode(vCode.getId(), DateUtil.getNowTimestamp());
+			data.setCode(Constants.STATUS_CODE.SUCCESS);
+			data.setMessage("谢谢您的提交，我们会尽快给您反馈");
+			renderJson(data, response);
+			return;
+		}else{
+			data.setCode(Constants.STATUS_CODE.FAIL);
+			data.setMessage("提交失败，请重试");
+			renderJson(data, response);
+			return;
+		}
+	}
+	
+	//提交金融申请
+	@RequestMapping("/submitFinanceApply")
+	public void submitFinanceApply(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		TFinanceCommitEntity entity = new TFinanceCommitEntity();
+		entity.setFinanceId(dto.getFinanceId());
+		entity.setAge(dto.getAge());
+		entity.setBrandId(dto.getBrandId());
+		entity.setBrandSeriesId(dto.getBrandSeriesId());
+		entity.setProvinceId(dto.getProvinceId());
+		entity.setCityId(dto.getCityId());
+		entity.setName(dto.getName());
+		entity.setIdcardNo(dto.getCardNo());
+		entity.setSex(dto.getSex());
+		entity.setMobile(dto.getMobile());
+		entity.setMark(dto.getMark());
+		entity.setCreateTime(DateUtil.getNowTimestamp());
+		entity.setUpdateTime(DateUtil.getNowTimestamp());
+		entity.setUpdateBy(0);
+		entity.setStatus(Constants.FEEDBACK_STATUS.STAY_HANDLE);
+		
+		int ret = financeCommitService.save(entity);
+		ReturnData data = new ReturnData();
+		if(ret != 0){
+			data.setCode(Constants.STATUS_CODE.SUCCESS);
+			data.setMessage("谢谢您的提交，我们会尽快审核");
+			renderJson(data, response);
+			return;
+		}else{
+			data.setCode(Constants.STATUS_CODE.FAIL);
+			data.setMessage("提交失败，请重试");
+			renderJson(data, response);
+			return;
+		}
 	}
 }

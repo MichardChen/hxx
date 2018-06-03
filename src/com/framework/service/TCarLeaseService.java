@@ -20,6 +20,10 @@ public interface TCarLeaseService {
 	
 	List<TCarLeaseEntity> queryMobileTerminalList(Map<String, Object> map);
 	
+	List<TCarLeaseEntity> queryPCTerminalList(Map<String, Object> map);
+	
+	int queryPCTerminalTotal(Map<String, Object> map);
+	
 	int queryTotal(Map<String, Object> map);
 	
 	void save(TCarLeaseEntity tCarLease);

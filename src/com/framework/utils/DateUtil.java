@@ -38,6 +38,17 @@ public final class DateUtil {
 		return format(date, "yyyy年MM月dd日");
 	}
 	
+	public static final String formatCNYM(Date date) {
+		return format(date, "yyyy年MM月");
+	}
+	
+	public static final String formatCNYM(String date) {
+		if(StringUtil.isBlank(date)||(!date.contains("-"))){
+			return date;
+		}
+		return date.split("-")[0]+"年"+date.split("-")[1]+"月";
+	}
+	
 	public static final String formatYM(Date date) {
 		return format(date, "yyyy-MM");
 	}

@@ -56,5 +56,15 @@ public class TCarImportServiceImpl implements TCarImportService {
 	public List<TCarImportEntity> queryImportCartList(Map<String, Object> map) {
 		return tCarImportDao.queryImportCartList(map);
 	}
+
+	@Override
+	public List<TCarImportEntity> queryPCTerminalList(Map<String, Object> map) {
+		return tCarImportDao.queryPCTerminalList(map);
+	}
+
+	@Override
+	public int queryPCTerminalTotal(Map<String, Object> map) {
+		return tCarImportDao.queryImportCarTotal(map);
+	}
 	
 }

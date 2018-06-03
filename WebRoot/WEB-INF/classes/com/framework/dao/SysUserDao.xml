@@ -50,7 +50,12 @@
 			`email`, 
 			`mobile`, 
 			`status`, 
-			`create_time`
+			`create_time`,
+			`introduce`,
+			`expert_flg`,
+			`skill`,
+			`icon`,
+			`real_name`
 		)
 		values
 		(
@@ -60,7 +65,12 @@
 			#{email}, 
 			#{mobile}, 
 			#{status}, 
-			#{createTime}
+			#{createTime},
+			#{introduce},
+			#{expertFlg},
+			#{skill},
+			#{icon},
+			#{realName}
 		)
 	</insert>
 	 
@@ -72,6 +82,11 @@
 			<if test="email != null">`email` = #{email}, </if>
 			<if test="mobile != null">`mobile` = #{mobile}, </if>
 			<if test="status != null">`status` = #{status}, </if>
+			<if test="introduce != null">`introduce` = #{introduce}, </if>
+			<if test="expertFlg != null">`expert_flg` = #{expertFlg}, </if>
+			<if test="skill != null">`skill` = #{skill}, </if>
+			<if test="icon != null">`icon` = #{icon}, </if>
+			<if test="realName != null">`real_name` = #{realName}, </if>
 		</set>
 		where user_id = #{userId}
 	</update>

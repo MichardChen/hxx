@@ -15,4 +15,8 @@ import com.framework.entity.TCarLeaseEntity;
 public interface TCarLeaseDao extends BaseDao<TCarLeaseEntity> {
 	
 	public List<TCarLeaseEntity> queryMobileTerminalList(Map<String, Object> map);
+	
+	public List<TCarLeaseEntity> queryPCTerminalList(Map<String, Object> map);
+	
+	int queryLeaseCarTotal(Map<String, Object> map);
 }

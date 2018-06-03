@@ -30,8 +30,17 @@ public class TQuestionAnswerEntity implements Serializable {
 	private Timestamp createTime;
 	//
 	private Timestamp updateTime;
+	
+	private String typeCd;
 	//
 	private Integer flg;
+	
+	public String getTypeCd() {
+		return typeCd;
+	}
+	public void setTypeCd(String typeCd) {
+		this.typeCd = typeCd;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

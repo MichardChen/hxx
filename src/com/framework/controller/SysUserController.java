@@ -1,15 +1,25 @@
 package com.framework.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.framework.constants.Constants;
 import com.framework.entity.SysUserEntity;
+import com.framework.entity.TStoryEntity;
+import com.framework.service.FileService;
 import com.framework.service.SysUserRoleService;
 import com.framework.service.SysUserService;
+import com.framework.utils.DateUtil;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
 import com.framework.utils.ShiroUtils;
+import com.framework.utils.StringUtil;
 
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -19,7 +29,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 系统用户
@@ -108,15 +120,32 @@ public class SysUserController extends AbstractController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("sys:user:save")
-	public R save(@RequestBody SysUserEntity user) {
-		if (StringUtils.isBlank(user.getUsername())) {
+	public R save(@RequestParam("user")String user,@RequestParam("uFile")MultipartFile uploadFile) {
+		
+
+		SysUserEntity entity = new SysUserEntity();
+		JSONObject viewModel = JSONObject.parseObject(user);
+		
+		if (StringUtils.isBlank(viewModel.getString("username"))) {
 			return R.error("用户名不能为空");
 		}
-		if (StringUtils.isBlank(user.getPassword())) {
+		if (StringUtils.isBlank(viewModel.getString("password"))) {
 			return R.error("密码不能为空");
 		}
-
-		sysUserService.save(user);
+		entity.setExpertFlg(viewModel.getIntValue("expertFlg"));
+		entity.setIntroduce(viewModel.getString("introduce"));
+		entity.setRealName(viewModel.getString("realName"));
+		entity.setSkill(viewModel.getString("skill"));
+		entity.setCreateTime(DateUtil.getNowTimestamp());
+		//生成html
+		FileService fs=new FileService();
+		String uuid = UUID.randomUUID().toString();
+		//上传图片
+		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if(StringUtil.isNoneBlank(logo)){
+			entity.setIcon(logo);
+		}
+		sysUserService.save(entity);
 
 		return R.ok();
 	}
