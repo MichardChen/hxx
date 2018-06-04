@@ -9,23 +9,27 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.lf5.LogLevelFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
+import com.framework.constants.Constants.CAR_TYPE;
 import com.framework.dao.LocationCityDao;
 import com.framework.dao.TBrandSeriesDao;
 import com.framework.dao.TCodemstDao;
 import com.framework.dto.ParamsDTO;
 import com.framework.entity.LocationCityEntity;
+import com.framework.entity.SysUserEntity;
 import com.framework.entity.TBrandEntity;
 import com.framework.entity.TBrandSeriesEntity;
 import com.framework.entity.TCarImportEntity;
 import com.framework.entity.TCarLeaseEntity;
 import com.framework.entity.TCarSecondhandEntity;
 import com.framework.entity.TCarouselEntity;
+import com.framework.entity.TCartParamsEntity;
 import com.framework.entity.TCodemstEntity;
 import com.framework.entity.TFinanceCommitEntity;
 import com.framework.entity.TFinanceEntity;
@@ -36,6 +40,7 @@ import com.framework.entity.TStoryEntity;
 import com.framework.entity.TVertifyCodeEntity;
 import com.framework.model.FinanceListModel;
 import com.framework.model.StoryListModel;
+import com.framework.pcmodel.PCBrandModel;
 import com.framework.restmodel.BrandJsonModel;
 import com.framework.restmodel.BrandModel;
 import com.framework.restmodel.CarouselModel;
@@ -45,13 +50,17 @@ import com.framework.restmodel.ListModelImportCar;
 import com.framework.restmodel.ListModelLeaseCar;
 import com.framework.restmodel.ListModelSecondhandCar;
 import com.framework.restmodel.NewsListModel;
+import com.framework.restmodel.SaleManageListModel;
 import com.framework.restmodel.SecondHandCarListModel;
+import com.framework.service.SysUserService;
 import com.framework.service.TBrandSeriesService;
 import com.framework.service.TBrandService;
 import com.framework.service.TCarImportService;
 import com.framework.service.TCarLeaseService;
 import com.framework.service.TCarSecondhandService;
 import com.framework.service.TCarouselService;
+import com.framework.service.TCartParam2Service;
+import com.framework.service.TCartParamsService;
 import com.framework.service.TFinanceCommitService;
 import com.framework.service.TFinanceService;
 import com.framework.service.TNewsService;
@@ -101,6 +110,12 @@ public class WXController extends RestfulController {
 	private TBrandSeriesService carSeriesService;
 	@Autowired
 	private TFinanceCommitService financeCommitService;
+	@Autowired
+	private SysUserService sysUserService;
+	@Autowired
+	private TCartParamsService paramsService;
+	@Autowired
+	private TCartParam2Service params2Service;
 
 	@RequestMapping("/index")
 	public void index(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -678,6 +693,20 @@ public class WXController extends RestfulController {
 			model.setIcon(e.getIcon());
 			models.add(model);
 		}
+		
+		List<TBrandEntity> list = brandService.queryShowBrandList(1);
+		List<BrandModel> importBrands = new ArrayList<>();
+		BrandModel importBrand = null;
+		for(TBrandEntity entity : list){
+			importBrand = new BrandModel();
+			importBrand.setBrand(entity.getBrand());
+			importBrand.setId(entity.getId());
+			importBrand.setBrandIcon(entity.getBrandIcon());
+			importBrands.add(importBrand);
+		}
+		
+		json.put("brandList", importBrands);
+		
 		json.put("importCarList", models);
 		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
@@ -818,5 +847,136 @@ public class WXController extends RestfulController {
 			renderJson(data, response);
 			return;
 		}
+	}
+	
+	//销售经理列表
+	@RequestMapping("/querySaleManageList")
+	public void querySaleManageList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		List<SysUserEntity> list = sysUserService.querySaleManager(dto.getPageSize()*(dto.getPageNum()-1)
+																  ,dto.getPageSize()
+																  ,2);
+		
+		List<SaleManageListModel> saleManageList = new ArrayList<>();
+		SaleManageListModel model = null;
+		for(SysUserEntity entity : list){
+			model = new SaleManageListModel();
+			model.setId(entity.getUserId());
+			model.setExpertFlg(entity.getExpertFlg());
+			model.setIcon(entity.getIcon());
+			model.setIntroduce(entity.getIntroduce());
+			model.setSkill(entity.getSkill());
+			model.setName(entity.getRealName());
+			model.setMobile(entity.getMobile());
+			saleManageList.add(model);
+		}
+		json.put("saleManageList", saleManageList);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	//平行进口车品牌查询
+	@RequestMapping("/queryImportCarBrandList")
+	public void queryImportCarBrandList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		List<TBrandEntity> list = brandService.queryShowBrandList(1);
+		List<BrandModel> models = new ArrayList<>();
+		BrandModel model = null;
+		for(TBrandEntity entity : list){
+			model = new BrandModel();
+			model.setBrand(entity.getBrand());
+			model.setId(entity.getId());
+			model.setBrandIcon(entity.getBrandIcon());
+			
+			models.add(model);
+		}
+		json.put("brandList", models);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	//平行进口车详情接口
+	/**
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping("/queryImportCarDetail")
+	public void queryImportCarDetail(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		TCarImportEntity car = importService.queryObject(dto.getCartId());
+		if(car == null){
+			data.setCode(Constants.STATUS_CODE.FAIL);
+			data.setMessage("您来晚啦，此车已下架");
+			renderJson(data, response);
+			return;
+		}
+		ImportCartDetailModel model = new ImportCartDetailModel();
+		model.setCartId(car.getId());
+		TBrandEntity brand = brandService.queryObject(car.getBrand());
+		if(brand != null){
+			model.setCarName(brand.getBrand());
+		}else{
+			model.setCarName("");
+		}
+		TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
+		if(seriesEntity != null){
+			model.setCarSeriesName(seriesEntity.getCarSerial());
+		}else{
+			model.setCarSeriesName("");
+		}
+		
+		model.setColors(car.getCarColor());
+		model.setReferenPrice(StringUtil.formatCarPrice(car.getNowPrice(),0));
+		model.setMarketPrice(StringUtil.formatCarPrice(car.getMarketPrice(), 0));
+		model.setMaxSavePrice(StringUtil.formatCarPrice(car.getMaxSave(), 0));
+		TCodemstEntity mst = codeMstDao.queryByCode(car.getCarClassCd());
+		if(mst != null){
+			model.setClassType(mst.getName());
+		}
+		TCodemstEntity level = codeMstDao.queryByCode(car.getCarLevelCd());
+		if(level != null){
+			model.setCartType(level.getName());
+		}
+		model.setDescUrl(car.getDescUrl());
+		TCartParamsEntity params = paramsService.queryObjectByCartId(car.getId());
+		
+		if(params != null){
+			model.setCheshenjiegou(params.getCheshenjiegou());
+			model.setFadongjixinghao(params.getFadongjixinghao());
+			model.setQudongtype(params.getQudongtype());
+			model.setHeight(params.getHeight());
+			model.setWidth(params.getWidth());
+			model.setLength(params.getLength());
+			model.setBiansuxiangtype(params.getBiansuxiangtype());
+			model.setRanliaotype(params.getRanliaotype());
+			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
+		}
+		//获取常见问题图片
+		TCodemstEntity oftenQuestionUrl = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.IMPORT_CAR_OFTENQUESTION);
+		if(oftenQuestionUrl != null){
+			model.setOftenQuestionUrl(oftenQuestionUrl.getData3());
+		}
+		//客服电话
+		TCodemstEntity kefuTel = codeMstDao.queryByCode(Constants.TEL_TYPE.KEFU);
+		if(kefuTel != null){
+			model.setCompanyMobile(kefuTel.getData2());
+		}
+		
+		json.put("carDetail", model);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
 	}
 }

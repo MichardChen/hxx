@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+#parse("sys/header.html")
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+	<div class="panel-heading">{{title}}</div>
+	<form class="form-horizontal">
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.cartId" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.biaopei" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.length" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.width" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.height" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.zhouju" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.qianlunju" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.houlunju" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.lidijianxi" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.zhiliang" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.cheshenjiegou" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.chemenshu" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.zuoweishu" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.youxiangrongji" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.xinglirongji" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.fadongjixinghao" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.pailiang" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.jinqixingshi" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.qgpxxingshi" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.qigangshu" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.qimenshu" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.gangjing" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.xingcheng" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.maxmali" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.maxgonglv" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.maxgonglvzhuansu" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.maxniuju" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.maxnjzhuansu" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.fadongjityjs" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.ranliaotype" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.ranliaocode" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.gongyoutype" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.ganggaicailiao" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.gangticailiao" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.huanbobiaozhun" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.dangweigeshu" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.biansuxiangtype" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.qudongtype" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.siqutype" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.chasuxiangjg" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.qianxuanliangtype" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.houxuanliangtype" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.zhulitype" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.chetijiegou" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.qianzhidongqitype" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.houzhidongqitype" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.zhuchezhidongtype" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.qianluntaiguige" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.houluntaiguige" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.beitaiguige" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.zhujiashiqinang" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.fujiashiqinang" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.qiancepaiqinang" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.houcepaiqinang" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.qiantouqinang" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.houtouqinang" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.qibuqinang" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.taiyajianceqinang" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.lingtaiyajxxs" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.anquandaiweixts" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.ertongzuoyijiekou" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.fadongjifangdao" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.cheneizhognkongsuo" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.createTime" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10">
+		      <input type="text" class="form-control" v-model="tCartParams.updateTime" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-2 control-label"></div> 
+			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
+		</div>
+	</form>
+</div>
+
+<script src="${rc.contextPath}/js/tcartparams/tcartparams_add.js?_${date.systemTime}"></script>
+</body>
+</html>

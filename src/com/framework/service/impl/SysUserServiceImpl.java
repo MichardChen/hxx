@@ -140,4 +140,10 @@ public class SysUserServiceImpl implements SysUserService {
 	public SysUserEntity queryByUserNamePwd(String username, String pwd) {
 		return sysUserDao.queryByUserNamePwd(username, pwd);
 	}
+
+	@Override
+	public List<SysUserEntity> querySaleManager(int fromRow, int pageSize, int roleId) {
+		return sysUserDao.querySaleManager(fromRow, pageSize, roleId);
+	}
+
 }

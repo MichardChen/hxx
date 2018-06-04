@@ -34,6 +34,14 @@ public class TBrandEntity implements Serializable {
 	
 	private int flg;
 	
+	private int showflg;
+	
+	public int getShowflg() {
+		return showflg;
+	}
+	public void setShowflg(int showflg) {
+		this.showflg = showflg;
+	}
 	public int getFlg() {
 		return flg;
 	}

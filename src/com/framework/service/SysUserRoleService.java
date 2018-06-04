@@ -2,6 +2,8 @@ package com.framework.service;
 
 import java.util.List;
 
+import com.framework.entity.SysUserEntity;
+
 /**
  * 用户与角色对应关系
  * @author R & D

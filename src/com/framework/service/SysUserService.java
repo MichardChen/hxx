@@ -69,4 +69,6 @@ public interface SysUserService {
 	 * @param newPassword 新密码
 	 */
 	int updatePassword(Long userId, String password, String newPassword);
+	
+	List<SysUserEntity> querySaleManager(int fromRow,int pageSize,int roleId);
 }

@@ -1,21 +1,6 @@
 package com.framework.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.framework.constants.Constants;
-import com.framework.entity.SysUserEntity;
-import com.framework.entity.TStoryEntity;
-import com.framework.service.FileService;
-import com.framework.service.SysUserRoleService;
-import com.framework.service.SysUserService;
-import com.framework.utils.DateUtil;
-import com.framework.utils.PageUtils;
-import com.framework.utils.R;
-import com.framework.utils.ShiroUtils;
-import com.framework.utils.StringUtil;
-
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +17,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.framework.constants.Constants;
+import com.framework.entity.SysUserEntity;
+import com.framework.service.FileService;
+import com.framework.service.SysUserRoleService;
+import com.framework.service.SysUserService;
+import com.framework.utils.DateUtil;
+import com.framework.utils.PageUtils;
+import com.framework.utils.R;
+import com.framework.utils.ShiroUtils;
+import com.framework.utils.StringUtil;
 
 /**
  * 系统用户
@@ -120,7 +118,7 @@ public class SysUserController extends AbstractController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("sys:user:save")
-	public R save(@RequestParam("user")String user,@RequestParam("uFile")MultipartFile uploadFile) {
+	public R save(@RequestParam("user")String user,@RequestParam(value="uFile",required=false)MultipartFile uploadFile) {
 		
 
 		SysUserEntity entity = new SysUserEntity();
@@ -136,7 +134,19 @@ public class SysUserController extends AbstractController {
 		entity.setIntroduce(viewModel.getString("introduce"));
 		entity.setRealName(viewModel.getString("realName"));
 		entity.setSkill(viewModel.getString("skill"));
+		entity.setPassword(viewModel.getString("password"));
+		entity.setMobile(viewModel.getString("mobile"));
 		entity.setCreateTime(DateUtil.getNowTimestamp());
+		entity.setUsername(viewModel.getString("username"));
+		entity.setEmail(viewModel.getString("email"));
+		entity.setStatus(viewModel.getInteger("status"));
+		JSONArray roleList = viewModel.getJSONArray("roleIdList");
+		List<Long> roleIdList = new ArrayList<>();
+		for(int i=0;i<roleList.size();i++){
+			roleIdList.add(((Integer)roleList.get(i)).longValue());
+		}
+		
+		entity.setRoleIdList(roleIdList);
 		//生成html
 		FileService fs=new FileService();
 		String uuid = UUID.randomUUID().toString();

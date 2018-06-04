@@ -1,7 +1,6 @@
 package com.framework.restful;
 
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.number.money.MonetaryAmountFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,6 +21,7 @@ import com.framework.dao.TBrandSeriesDao;
 import com.framework.dao.TCodemstDao;
 import com.framework.dto.ParamsDTO;
 import com.framework.entity.LocationCityEntity;
+import com.framework.entity.SysUserEntity;
 import com.framework.entity.TBrandEntity;
 import com.framework.entity.TBrandSeriesEntity;
 import com.framework.entity.TCarImportEntity;
@@ -46,7 +45,9 @@ import com.framework.restmodel.ListModelImportCar;
 import com.framework.restmodel.ListModelLeaseCar;
 import com.framework.restmodel.ListModelSecondhandCar;
 import com.framework.restmodel.NewsListModel;
+import com.framework.restmodel.SaleManageListModel;
 import com.framework.restmodel.SecondHandCarListModel;
+import com.framework.service.SysUserService;
 import com.framework.service.TBrandSeriesService;
 import com.framework.service.TBrandService;
 import com.framework.service.TCarImportService;
@@ -99,6 +100,8 @@ public class HController extends RestfulController{
 	private TBrandSeriesService carSeriesService;
 	@Autowired
 	private TBrandSeriesDao brandSeriesDao;
+	@Autowired
+	private SysUserService sysUserService;
 	
 
 	@RequestMapping("/index")
@@ -675,6 +678,18 @@ public class HController extends RestfulController{
 			model.setIcon(e.getIcon());
 			models.add(model);
 		}
+		
+		List<TBrandEntity> list = brandService.queryShowBrandList(1);
+		List<BrandModel> importBrands = new ArrayList<>();
+		BrandModel importBrand = null;
+		for(TBrandEntity entity : list){
+			importBrand = new BrandModel();
+			importBrand.setBrand(entity.getBrand());
+			importBrand.setId(entity.getId());
+			importBrand.setBrandIcon(entity.getBrandIcon());
+			importBrands.add(importBrand);
+		}
+		json.put("brandList", importBrands);
 		json.put("importCarList", models);
 		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
@@ -781,5 +796,57 @@ public class HController extends RestfulController{
 		}
 	}
 	
+	//查询销售经理的列表
+	@RequestMapping("/querySaleManageList")
+	public void querySaleManageList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		List<SysUserEntity> list = sysUserService.querySaleManager(dto.getPageSize()*(dto.getPageNum()-1)
+																  ,dto.getPageSize()
+																  ,2);
+		
+		List<SaleManageListModel> saleManageList = new ArrayList<>();
+		SaleManageListModel model = null;
+		for(SysUserEntity entity : list){
+			model = new SaleManageListModel();
+			model.setId(entity.getUserId());
+			model.setExpertFlg(entity.getExpertFlg());
+			model.setIcon(entity.getIcon());
+			model.setIntroduce(entity.getIntroduce());
+			model.setSkill(entity.getSkill());
+			model.setName(entity.getRealName());
+			model.setMobile(entity.getMobile());
+			saleManageList.add(model);
+		}
+		json.put("saleManageList", saleManageList);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
 	
+	//平行进口车品牌
+	@RequestMapping("/queryImportCarBrandList")
+	public void queryImportCarBrandList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		List<TBrandEntity> list = brandService.queryShowBrandList(1);
+		List<BrandModel> models = new ArrayList<>();
+		BrandModel model = null;
+		for(TBrandEntity entity : list){
+			model = new BrandModel();
+			model.setBrand(entity.getBrand());
+			model.setId(entity.getId());
+			model.setBrandIcon(entity.getBrandIcon());
+			
+			models.add(model);
+		}
+		json.put("brandList", models);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
 }

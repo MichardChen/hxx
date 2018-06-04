@@ -12,6 +12,14 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
+	<select id="querySaleManager" resultType="com.framework.entity.SysUserEntity">
+		select * from sys_user  su
+		LEFT JOIN sys_user_role rm on su.user_id = rm.user_id
+		where rm.role_id=#{roleId}
+		<if test="fromRow != null and pageSize != null">
+			limit #{fromRow}, #{pageSize}
+		</if>
+	</select>
 	
 	<select id="queryTotal" resultType="int">
 		select count(*) from sys_user

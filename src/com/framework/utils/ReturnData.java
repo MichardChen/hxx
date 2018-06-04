@@ -38,7 +38,7 @@ public class ReturnData implements Serializable{
 			return "{\"code\":"+this.code+",\"message\":\""+this.message+"\",\"data\":"+"null}";
 		}
 		//json把map等对象转换为json时出现$ref的情况,要使用DisableCircularReferenceDetect来禁止循环引用检测
-		return "{\"code\":"+this.code+",\"message\":\""+this.message+"\",\"data\":"+this.data.toJSONString(this.data,SerializerFeature.DisableCircularReferenceDetect)+"}";
+		return "{\"code\":"+this.code+",\"message\":\""+this.message+"\",\"data\":"+this.data.toJSONString(this.data,SerializerFeature.DisableCircularReferenceDetect,SerializerFeature.WriteMapNullValue)+"}";
 	}
 	
 	

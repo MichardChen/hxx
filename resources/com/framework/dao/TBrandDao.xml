@@ -20,6 +20,13 @@
 		</if>
 		order by word asc
 	</select>
+	<select id="queryShowBrandList" resultType="com.framework.entity.TBrandEntity">
+		select * from t_brand where 1=1
+		<if test="showFlg != null">
+			and showflg=#{showFlg}
+		</if>
+		order by word asc limit 0,8
+	</select>
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_brand 
 	</select>
@@ -34,7 +41,8 @@
 			`create_time`, 
 			`update_time`,
 			`word`,
-			`flg`
+			`flg`,
+			`showflg`
 		)
 		values
 		(
@@ -45,7 +53,8 @@
 			#{createTime}, 
 			#{updateTime},
 			#{word},
-			#{flg}
+			#{flg},
+			#{showflg}
 		)
 	</insert>
 	 
@@ -60,6 +69,7 @@
 			<if test="updateTime != null">`update_time` = #{updateTime}</if>
 			<if test="word != null">`word` = #{word}</if>
 			<if test="flg != null">`flg` = #{flg}</if>
+			<if test="showflg != null">`showflg` = #{showflg}</if>
 		</set>
 		where id = #{id}
 	</update>

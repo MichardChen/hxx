@@ -16,4 +16,6 @@ import com.framework.entity.TBrandEntity;
 public interface TBrandDao extends BaseDao<TBrandEntity> {
 	
 	List<TBrandEntity> queryAllList(@Param("flg")Integer flg);
+	
+	List<TBrandEntity> queryShowBrandList(@Param("showFlg")Integer showFlg);
 }

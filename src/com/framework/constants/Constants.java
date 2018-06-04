@@ -222,6 +222,8 @@ public interface Constants {
 		public static final String H5_CAR_SECONDHAND_IMAGE = "040012";
 		// h5平行进口横幅
 		public static final String H5_CAR_IMPORT_IMAGE = "040013";
+		//平行进口车常见问题
+		public static final String IMPORT_CAR_OFTENQUESTION = "040014";
 	}
 
 	public static interface SHORT_MESSAGE_TYPE {
@@ -264,5 +266,10 @@ public interface Constants {
 		public static final String PC = "090001";
 		public static final String XCX = "090002";
 		public static final String H5 = "090003";
+	}
+	
+	//电话
+	public static interface TEL_TYPE {
+		public static final String KEFU = "100001";
 	}
 }

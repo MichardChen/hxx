@@ -3,6 +3,8 @@ package com.framework.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.framework.entity.SysUserEntity;
 
 /**
@@ -34,4 +36,6 @@ public interface SysUserDao extends BaseDao<SysUserEntity> {
 	int updatePassword(Map<String, Object> map);
 	
 	SysUserEntity queryByUserNamePwd(String username,String password);
+	
+	List<SysUserEntity> querySaleManager(@Param("fromRow")int fromRow,@Param("pageSize")int pageSize,@Param("roleId")int roleId);
 }
