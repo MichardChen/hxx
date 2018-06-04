@@ -27,6 +27,7 @@ import com.framework.entity.TCarImportEntity;
 import com.framework.entity.TCarLeaseEntity;
 import com.framework.entity.TCarSecondhandEntity;
 import com.framework.entity.TCarouselEntity;
+import com.framework.entity.TCartParamsEntity;
 import com.framework.entity.TCodemstEntity;
 import com.framework.entity.TFinanceCommitEntity;
 import com.framework.entity.TFinanceEntity;
@@ -55,6 +56,8 @@ import com.framework.service.TCarImportService;
 import com.framework.service.TCarLeaseService;
 import com.framework.service.TCarSecondhandService;
 import com.framework.service.TCarouselService;
+import com.framework.service.TCartParam2Service;
+import com.framework.service.TCartParamsService;
 import com.framework.service.TFinanceCommitService;
 import com.framework.service.TFinanceService;
 import com.framework.service.TNewsService;
@@ -104,6 +107,10 @@ public class PCController extends RestfulController{
 	private TQuestionAnswerService qanswerService;
 	@Autowired
 	private TQuestionService qService;
+	@Autowired
+	private TCartParamsService paramsService;
+	@Autowired
+	private TCartParam2Service params2Service;
 	
 	@RequestMapping("/index")
 	public void index(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -816,5 +823,99 @@ public class PCController extends RestfulController{
 			renderJson(data, response);
 			return;
 		}
+	}
+	
+	@RequestMapping("/queryImportCarDetail")
+	public void queryImportCarDetail(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		TCarImportEntity car = importService.queryObject(dto.getCartId());
+		if(car == null){
+			data.setCode(Constants.STATUS_CODE.FAIL);
+			data.setMessage("您来晚啦，此车已下架");
+			renderJson(data, response);
+			return;
+		}
+		ImportCartDetailModel model = new ImportCartDetailModel();
+		model.setCartId(car.getId());
+		TBrandEntity brand = brandService.queryObject(car.getBrand());
+		if(brand != null){
+			model.setCarName(brand.getBrand());
+		}else{
+			model.setCarName("");
+		}
+		TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
+		if(seriesEntity != null){
+			model.setCarSeriesName(seriesEntity.getCarSerial());
+		}else{
+			model.setCarSeriesName("");
+		}
+		
+		model.setColors(car.getCarColor());
+		model.setReferenPrice(StringUtil.formatCarPrice(car.getNowPrice(),0));
+		model.setMarketPrice(StringUtil.formatCarPrice(car.getMarketPrice(), 0));
+		model.setMaxSavePrice(StringUtil.formatCarPrice(car.getMaxSave(), 0));
+		TCodemstEntity mst = codeMstDao.queryByCode(car.getCarClassCd());
+		if(mst != null){
+			model.setClassType(mst.getName());
+		}
+		TCodemstEntity level = codeMstDao.queryByCode(car.getCarLevelCd());
+		if(level != null){
+			model.setCartType(level.getName());
+		}
+		model.setDescUrl(car.getDescUrl());
+		TCartParamsEntity params = paramsService.queryObjectByCartId(car.getId());
+		
+		if(params != null){
+			model.setCheshenjiegou(params.getCheshenjiegou());
+			model.setFadongjixinghao(params.getFadongjixinghao());
+			model.setQudongtype(params.getQudongtype());
+			model.setHeight(params.getHeight());
+			model.setWidth(params.getWidth());
+			model.setLength(params.getLength());
+			model.setBiansuxiangtype(params.getBiansuxiangtype());
+			model.setRanliaotype(params.getRanliaotype());
+			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
+		}
+		//获取常见问题图片
+		TCodemstEntity oftenQuestionUrl = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.IMPORT_CAR_OFTENQUESTION);
+		if(oftenQuestionUrl != null){
+			model.setOftenQuestionUrl(oftenQuestionUrl.getData2());
+		}
+		//客服电话
+		TCodemstEntity kefuTel = codeMstDao.queryByCode(Constants.TEL_TYPE.KEFU);
+		if(kefuTel != null){
+			model.setCompanyMobile(kefuTel.getData2());
+		}
+		
+		json.put("carDetail", model);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	@RequestMapping("/queryImportCarBrandList")
+	public void queryImportCarBrandList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		List<TBrandEntity> list = brandService.queryShowBrandList(1);
+		List<BrandModel> models = new ArrayList<>();
+		BrandModel model = null;
+		for(TBrandEntity entity : list){
+			model = new BrandModel();
+			model.setBrand(entity.getBrand());
+			model.setId(entity.getId());
+			model.setBrandIcon(entity.getBrandIcon());
+			
+			models.add(model);
+		}
+		json.put("brandList", models);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
 	}
 }

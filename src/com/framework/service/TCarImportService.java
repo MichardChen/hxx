@@ -26,6 +26,8 @@ public interface TCarImportService {
 	void save(TCarImportEntity tCarImport);
 
 	void update(TCarImportEntity tCarImport);
+	
+	int updateHot(int cartId);
 
 	void delete(Integer id);
 

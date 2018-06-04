@@ -151,6 +151,12 @@
 		where id = #{id}
 	</update>
 	
+	<update id="updateHot" parameterType="int">
+		update t_car_import 
+		set hot=hot+1
+		where id = #{cartId}
+	</update>
+	
 	<delete id="delete">
 		delete from t_car_import where id = #{value}
 	</delete>

@@ -3,6 +3,8 @@ package com.framework.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.framework.entity.TCarImportEntity;
 import com.framework.entity.TCarLeaseEntity;
 
@@ -20,4 +22,6 @@ public interface TCarImportDao extends BaseDao<TCarImportEntity> {
 	public List<TCarImportEntity> queryPCTerminalList(Map<String, Object> map);
 	
 	int queryImportCarTotal(Map<String, Object> map);
+	
+	int updateHot(@Param("cartId")int cartId);
 }

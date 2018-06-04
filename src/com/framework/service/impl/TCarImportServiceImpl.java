@@ -66,5 +66,10 @@ public class TCarImportServiceImpl implements TCarImportService {
 	public int queryPCTerminalTotal(Map<String, Object> map) {
 		return tCarImportDao.queryImportCarTotal(map);
 	}
+
+	@Override
+	public int updateHot(int cartId) {
+		return tCarImportDao.updateHot(cartId);
+	}
 	
 }
