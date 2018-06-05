@@ -19,6 +19,7 @@
 		<if test="code != null and code != null">
 			where `code`=#{code}
 		</if>
+		limit 1
 	</select>
 	
  	<select id="queryTotal" resultType="int">

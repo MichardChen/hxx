@@ -19,7 +19,16 @@ public class QuestionAnswerListModel implements Serializable{
 	//
 	private String updateTime;
 	//
+	private String type;
 	private String flg;
+	
+	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	public Integer getId() {
 		return id;
 	}

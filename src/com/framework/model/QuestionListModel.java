@@ -17,6 +17,24 @@ public class QuestionListModel implements Serializable{
 	private String status;
 	//
 	private String createTime;
+	
+	private String updateTime;
+	
+	private String updateBy;
+	
+	
+	public String getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
+	}
+	public String getUpdateBy() {
+		return updateBy;
+	}
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
 	public Integer getId() {
 		return id;
 	}

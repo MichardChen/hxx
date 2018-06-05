@@ -21,8 +21,10 @@ import com.framework.entity.TQuestionEntity;
 import com.framework.model.QuestionAnswerListModel;
 import com.framework.model.QuestionListModel;
 import com.framework.service.TQuestionService;
+import com.framework.utils.DateUtil;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
+import com.framework.utils.ShiroUtils;
 import com.framework.utils.StringUtil;
 
 
@@ -85,7 +87,14 @@ public class TQuestionController {
 			}else{
 				model.setEmployeeId(StringUtil.STRING_BLANK);
 			}
-			
+			int userid = ShiroUtils.getUserId().intValue();
+			SysUserEntity uadmin = userDao.queryObject(userid);
+			if(uadmin != null){
+				model.setUpdateBy(uadmin.getUsername());
+			}else{
+				model.setUpdateBy(StringUtil.STRING_BLANK);
+			}
+			model.setUpdateTime(StringUtil.toString(data.getUpdateTime()));
 			model.setLinkMan(data.getLinkMan());
 			model.setMobile(data.getMobile());
 			model.setQuestion(data.getQuestion());
@@ -130,6 +139,8 @@ public class TQuestionController {
 	@RequestMapping("/update")
 	@RequiresPermissions("tquestion:update")
 	public R update(@RequestBody TQuestionEntity tQuestion){
+		tQuestion.setUpdateBy(ShiroUtils.getUserId().intValue());
+		tQuestion.setUpdateTime(DateUtil.getNowTimestamp());
 		tQuestionService.update(tQuestion);
 		
 		return R.ok();

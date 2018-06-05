@@ -31,7 +31,7 @@ public class StringUtil extends StringUtils {
 		if(StringUtil.equals("undefined", num)){
 			return 0;
 		}
-		if (num == null || StringUtil.equals("", num)){
+		if (num == null || StringUtil.equals("", num)||StringUtil.equals(num, "null")){
 			return 0;
 		}
 		

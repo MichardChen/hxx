@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.framework.dao.SysUserDao;
+import com.framework.dao.TCodemstDao;
 import com.framework.entity.SysUserEntity;
+import com.framework.entity.TCodemstEntity;
 import com.framework.entity.TQuestionAnswerEntity;
 import com.framework.model.QuestionAnswerListModel;
 import com.framework.service.TQuestionAnswerService;
@@ -39,6 +41,8 @@ public class TQuestionAnswerController {
 	private TQuestionAnswerService tQuestionAnswerService;
 	@Autowired
 	private SysUserDao userDao;
+	@Autowired
+	private TCodemstDao codeMstDao;
 	
 	@RequestMapping("/tquestionanswer.html")
 	public String list(){
@@ -78,6 +82,10 @@ public class TQuestionAnswerController {
 				model.setCreateBy(admin.getUsername());
 			}else{
 				model.setCreateBy(StringUtil.STRING_BLANK);
+			}
+			TCodemstEntity codemstEntity = codeMstDao.queryByCode(data.getTypeCd());
+			if(codemstEntity != null) {
+				model.setType(codemstEntity.getName());
 			}
 			
 			SysUserEntity update = userDao.queryObject(data.getUpdateBy());

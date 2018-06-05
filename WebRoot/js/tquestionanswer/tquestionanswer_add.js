@@ -3,7 +3,7 @@ var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		title:"新增",
-		tQuestionAnswer:{}
+		tQuestionAnswer:{typeCd:"080001"}
 	},
 	created: function() {
 		if(id != null){
@@ -18,6 +18,18 @@ var vm = new Vue({
             });
 		},
 		saveOrUpdate: function (event) {
+			if($("#question").val() == ""){
+				alert("请输入问题");
+				return;
+			}
+			if($("#typeCd").val() == ""){
+				alert("请选择问题类型");
+				return;
+			}
+			if($("#answer").val() == ""){
+				alert("请输入答案");
+				return;
+			}
 			var url = vm.tQuestionAnswer.id == null ? "../tquestionanswer/save" : "../tquestionanswer/update";
 			$.ajax({
 				type: "POST",
