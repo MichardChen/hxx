@@ -896,6 +896,7 @@ public class PCController extends RestfulController{
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");
 		renderJson(data, response);
+		return;
 	}
 	
 	//平行进出口车品牌
