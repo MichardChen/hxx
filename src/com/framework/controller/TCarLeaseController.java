@@ -143,7 +143,7 @@ public class TCarLeaseController {
 	@ResponseBody
 	@RequestMapping("/save")
 	@RequiresPermissions("tcarlease:save")
-	public R save(@RequestParam("tCarLease")String tCarLease,@RequestParam("uFile")MultipartFile uploadFile){
+	public R save(@RequestParam("tCarLease")String tCarLease,@RequestParam(value="uFile",required=false)MultipartFile uploadFile){
 		
 		TCarLeaseEntity entity = new TCarLeaseEntity();
 		JSONObject viewModel = JSONObject.parseObject(tCarLease);
@@ -168,6 +168,15 @@ public class TCarLeaseController {
 		entity.setLabels(viewModel.getString("labels"));
 		entity.setRealFirstPayment(viewModel.getBigDecimal("realFirstPayment"));
 		entity.setServiceFee(viewModel.getBigDecimal("serviceFee"));
+		entity.setMark(viewModel.getString("mark"));
+		entity.setFirstPayment1(viewModel.getBigDecimal("firstPayment1"));
+		entity.setMonthPayment1(viewModel.getBigDecimal("monthPayment1"));
+		entity.setPeriods1(36);
+		entity.setMark1(viewModel.getString("mark1"));
+		entity.setTfirstYearFirstPay(viewModel.getBigDecimal("tfirstYearFirstPay"));
+		entity.setTfirstYearMonthPayment(viewModel.getBigDecimal("tfirstYearMonthPayment"));
+		entity.setTperiods(viewModel.getInteger("tperiods"));
+		entity.setTmonthPayment(viewModel.getBigDecimal("tmonthPayment"));
 		
 		//生成html
 		FileService fs=new FileService();

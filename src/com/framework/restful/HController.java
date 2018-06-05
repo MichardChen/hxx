@@ -857,6 +857,7 @@ public class HController extends RestfulController{
 		renderJson(data, response);
 	}
 	
+	//平行进口车详情
 	@RequestMapping("/queryImportCarDetail")
 	public void queryImportCarDetail(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		ParamsDTO dto = ParamsDTO.getInstance(request);
@@ -897,7 +898,7 @@ public class HController extends RestfulController{
 			model.setCartType(level.getName());
 		}
 		model.setDescUrl(car.getDescUrl());
-		TCartParamsEntity params = paramsService.queryObjectByCartId(car.getId());
+		TCartParamsEntity params = paramsService.queryObjectByCartId(car.getId(),Constants.CAR_SALE_TYPE.IMPORT);
 		
 		if(params != null){
 			model.setCheshenjiegou(params.getCheshenjiegou());
@@ -923,6 +924,158 @@ public class HController extends RestfulController{
 		
 		json.put("carDetail", model);
 		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	//会淘车汽车详情
+	@RequestMapping("/querySecondhandCarDetail")
+	public void querySecondhandCarDetail(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		TCarSecondhandEntity car = secondService.queryObject(dto.getCartId());
+		if(car == null){
+			data.setCode(Constants.STATUS_CODE.FAIL);
+			data.setMessage("您来晚啦，此车已下架");
+			renderJson(data, response);
+			return;
+		}
+		SecondhandCartDetailModel model = new SecondhandCartDetailModel();
+		model.setCartId(car.getId());
+		TBrandEntity brand = brandService.queryObject(car.getBrand());
+		if(brand != null){
+			model.setCarName(brand.getBrand());
+		}else{
+			model.setCarName("");
+		}
+		TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
+		if(seriesEntity != null){
+			model.setCarSeriesName(seriesEntity.getCarSerial());
+		}else{
+			model.setCarSeriesName("");
+		}
+		
+		model.setLabels(car.getLabels());
+		model.setFirstPayment(StringUtil.formatCarPrice(car.getFinalPayment(),0));
+		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
+		model.setContainTaxPrice(StringUtil.formatCarPrice(car.getCarTaxCost(), 0));
+		model.setDescUrl(car.getDescUrl());
+		model.setYear(DateUtil.formatCNYM(car.getYear()));
+		model.setKilomiter(StringUtil.formatCarPrice(car.getKilomiters(), 0)+"公里");
+		LocationCityEntity city = cityDao.queryObject(car.getCityId());
+		if(city != null){
+			model.setCity(city.getName());
+		}
+		
+		TCartParamsEntity params = paramsService.queryObjectByCartId(car.getId(),Constants.CAR_SALE_TYPE.SECONDHAND);
+		
+		if(params != null){
+			model.setCheshenjiegou(params.getCheshenjiegou());
+			model.setFadongjixinghao(params.getFadongjixinghao());
+			model.setQudongtype(params.getQudongtype());
+			model.setHeight(params.getHeight());
+			model.setWidth(params.getWidth());
+			model.setLength(params.getLength());
+			model.setBiansuxiangtype(params.getBiansuxiangtype());
+			model.setRanliaotype(params.getRanliaotype());
+			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
+		}
+		//获取购买说明
+		TCodemstEntity buyMark = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYMARK);
+		if(buyMark != null){
+			model.setBuyMarkUrl(buyMark.getData3());
+		}
+		//购买须知
+		TCodemstEntity buyKnow = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYKONW);
+		if(buyKnow != null){
+			model.setBuyKnowUrl(buyKnow.getData3());
+		}
+		//客服电话
+		TCodemstEntity kefuTel = codeMstDao.queryByCode(Constants.TEL_TYPE.KEFU);
+		if(kefuTel != null){
+			model.setCompanyMobile(kefuTel.getData2());
+		}
+		
+		json.put("carDetail", model);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	//惠搜车
+	@RequestMapping("/queryLeaseCarDetail")
+	public void queryLeaseCarDetail(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		TCarLeaseEntity car = leaseService.queryObject(dto.getCartId());
+		if(car == null){
+			data.setCode(Constants.STATUS_CODE.FAIL);
+			data.setMessage("您来晚啦，此车已下架");
+			renderJson(data, response);
+			return;
+		}
+		/*SecondhandCartDetailModel model = new SecondhandCartDetailModel();
+		model.setCartId(car.getId());
+		TBrandEntity brand = brandService.queryObject(car.getBrand());
+		if(brand != null){
+			model.setCarName(brand.getBrand());
+		}else{
+			model.setCarName("");
+		}
+		TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
+		if(seriesEntity != null){
+			model.setCarSeriesName(seriesEntity.getCarSerial());
+		}else{
+			model.setCarSeriesName("");
+		}
+		
+		model.setLabels(car.getLabels());
+		model.setFirstPayment(StringUtil.formatCarPrice(car.getFinalPayment(),0));
+		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
+		model.setContainTaxPrice(StringUtil.formatCarPrice(car.getCarTaxCost(), 0));
+		model.setDescUrl(car.getDescUrl());
+		model.setYear(DateUtil.formatCNYM(car.getYear()));
+		model.setKilomiter(StringUtil.formatCarPrice(car.getKilomiters(), 0)+"公里");
+		LocationCityEntity city = cityDao.queryObject(car.getCityId());
+		if(city != null){
+			model.setCity(city.getName());
+		}
+		
+		TCartParamsEntity params = paramsService.queryObjectByCartId(car.getId(),Constants.CAR_SALE_TYPE.SECONDHAND);
+		
+		if(params != null){
+			model.setCheshenjiegou(params.getCheshenjiegou());
+			model.setFadongjixinghao(params.getFadongjixinghao());
+			model.setQudongtype(params.getQudongtype());
+			model.setHeight(params.getHeight());
+			model.setWidth(params.getWidth());
+			model.setLength(params.getLength());
+			model.setBiansuxiangtype(params.getBiansuxiangtype());
+			model.setRanliaotype(params.getRanliaotype());
+			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
+		}
+		//获取购买说明
+		TCodemstEntity buyMark = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYMARK);
+		if(buyMark != null){
+			model.setBuyMarkUrl(buyMark.getData3());
+		}
+		//购买须知
+		TCodemstEntity buyKnow = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYKONW);
+		if(buyKnow != null){
+			model.setBuyKnowUrl(buyKnow.getData3());
+		}
+		//客服电话
+		TCodemstEntity kefuTel = codeMstDao.queryByCode(Constants.TEL_TYPE.KEFU);
+		if(kefuTel != null){
+			model.setCompanyMobile(kefuTel.getData2());
+		}
+		
+		json.put("carDetail", model);
+		data.setData(json);*/
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");
 		renderJson(data, response);

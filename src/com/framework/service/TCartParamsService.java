@@ -29,5 +29,5 @@ public interface TCartParamsService {
 	
 	void deleteBatch(Integer[] ids);
 	
-	TCartParamsEntity queryObjectByCartId(Integer cartId);
+	TCartParamsEntity queryObjectByCartId(Integer cartId,String cartTypeCd);
 }

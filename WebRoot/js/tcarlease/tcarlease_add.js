@@ -6,6 +6,7 @@ var vm = new Vue({
 		tCarLease:{}
 	},
 	created: function() {
+		alert(1);
 		if(id != null){
 			this.title = "修改";
 			this.getInfo(id)

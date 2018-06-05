@@ -137,7 +137,16 @@
 			`update_by`, 
 			`desc_url`, 
 			`cart_param2_id`,
-			`car_level_cd`
+			`car_level_cd`,
+			`mark`,
+			`first_payment1`,
+			`month_payment1`,
+			`period1`,
+			`mark1`,
+			`tfirst_year_firstpay`,
+			`tfirst_year_month_payment`,
+			`tperiods`,
+			`tmonth_payment`
 		)
 		values
 		(
@@ -165,7 +174,16 @@
 			#{updateBy}, 
 			#{descUrl}, 
 			#{cartParam2Id},
-			#{carLevelCd}
+			#{carLevelCd},
+			#{mark},
+			#{firstPayment1},
+			#{monthPayment1},
+			#{periods1},
+			#{mark1},
+			#{tfirstYearFirstPay},
+			#{tfirstYearMonthPayment},
+			#{tperiods},
+			#{tmonthPayment}
 		)
 	</insert>
 	 
@@ -197,6 +215,15 @@
 			<if test="descUrl != null">`desc_url` = #{descUrl}, </if>
 			<if test="cartParam2Id != null">`cart_param2_id` = #{cartParam2Id}</if>
 			<if test="carLevelCd != null">`car_level_cd` = #{carLevelCd}</if>
+			<if test="mark != null">`mark` = #{mark}</if>
+			<if test="firstPayment1 != null">`first_payment1` = #{firstPayment1}</if>
+			<if test="monthPayment1 != null">`month_payment1` = #{monthPayment1}</if>
+			<if test="periods1 != null">`period1` = #{periods1}</if>
+			<if test="mark1 != null">`mark1` = #{mark1}</if>
+			<if test="tfirstYearFirstPay != null">`tfirst_year_firstpay` = #{tfirstYearFirstPay}</if>
+			<if test="tfirstYearMonthPayment != null">`tfirst_year_month_payment` = #{tfirstYearMonthPayment}</if>
+			<if test="tperiods != null">`tperiods` = #{tperiods}</if>
+			<if test="tmonthPayment != null">`tmonth_payment` = #{tmonthPayment}</if>
 		</set>
 		where id = #{id}
 	</update>

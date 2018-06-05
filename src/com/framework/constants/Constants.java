@@ -224,6 +224,10 @@ public interface Constants {
 		public static final String H5_CAR_IMPORT_IMAGE = "040013";
 		//平行进口车常见问题
 		public static final String IMPORT_CAR_OFTENQUESTION = "040014";
+		//会淘车购买说明
+		public static final String SECONDHAND_CAR_BUYKONW = "040015";
+		//会淘车购买说明
+		public static final String SECONDHAND_CAR_BUYMARK = "040016";
 	}
 
 	public static interface SHORT_MESSAGE_TYPE {
@@ -271,5 +275,12 @@ public interface Constants {
 	//电话
 	public static interface TEL_TYPE {
 		public static final String KEFU = "100001";
+	}
+	
+	//汽车销售类型
+	public static interface CAR_SALE_TYPE {
+		public static final String LEASE = "110001";
+		public static final String SECONDHAND = "110002";
+		public static final String IMPORT = "110003";
 	}
 }

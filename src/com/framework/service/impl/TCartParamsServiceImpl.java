@@ -53,7 +53,7 @@ public class TCartParamsServiceImpl implements TCartParamsService {
 	}
 
 	@Override
-	public TCartParamsEntity queryObjectByCartId(Integer cartId) {
-		return tCartParamsDao.queryObjectByCartId(cartId);
+	public TCartParamsEntity queryObjectByCartId(Integer cartId,String cartTypeCd) {
+		return tCartParamsDao.queryObjectByCartId(cartId,cartTypeCd);
 	}
 }

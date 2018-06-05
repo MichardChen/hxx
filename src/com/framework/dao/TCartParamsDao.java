@@ -13,5 +13,5 @@ import com.framework.entity.TCartParamsEntity;
  */
 public interface TCartParamsDao extends BaseDao<TCartParamsEntity> {
 	
-	TCartParamsEntity queryObjectByCartId(@Param("cartId")int cartId);
+	TCartParamsEntity queryObjectByCartId(@Param("cartId")int cartId,@Param("cartTypeCd")String cartTypeCd);
 }
