@@ -1,28 +1,40 @@
 package com.framework.controller;
 
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.stereotype.Controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.framework.constants.Constants;
 import com.framework.dao.SysUserDao;
 import com.framework.dao.TCodemstDao;
 import com.framework.entity.SysUserEntity;
 import com.framework.entity.TCodemstEntity;
 import com.framework.entity.TNewsEntity;
+import com.framework.entity.TStoryEntity;
 import com.framework.model.NewsListModel;
 import com.framework.model.TNewsAddUpdateModel;
+import com.framework.service.FileService;
 import com.framework.service.TNewsService;
+import com.framework.utils.DateUtil;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
+import com.framework.utils.ShiroUtils;
 import com.framework.utils.StringUtil;
 
 
@@ -132,9 +144,41 @@ public class TNewsController {
 	@ResponseBody
 	@RequestMapping("/save")
 	@RequiresPermissions("tnews:save")
-	public R save(@RequestBody TNewsEntity tNews){
-		tNewsService.save(tNews);
+	public R save(@RequestParam("tNews")String tNews,@RequestParam(value="uFile",required=false)MultipartFile uploadFile) throws Exception{
 		
+		TNewsEntity story = new TNewsEntity();
+		JSONObject viewModel = JSONObject.parseObject(tNews);
+		int userid = ShiroUtils.getUserId().intValue();
+		story.setCreateBy(userid);
+		story.setCreateTime(DateUtil.getNowTimestamp());
+		story.setUpdateBy(userid);
+		story.setNewsTitle(viewModel.getString("newsTitle"));
+		story.setUpdateTime(DateUtil.getNowTimestamp());
+		story.setHotFlg(viewModel.getInteger("hotFlg"));
+		story.setTopFlg(viewModel.getInteger("topFlg"));
+		story.setNewsTypeCd(viewModel.getString("newsTypeCd"));
+		story.setFlg(1);
+		String htmlContent = StringUtil.formatHTML(viewModel.getString("newsTitle"), viewModel.getString("content"));
+		story.setContent(htmlContent);
+		//生成html
+		FileService fs=new FileService();
+		String uuid = UUID.randomUUID().toString();
+		//生成html文件
+		try {
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
+			pw.println(htmlContent);
+			pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//上传图片
+		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if(StringUtil.isNoneBlank(logo)){
+			story.setNewsLogo(logo);
+		}
+		String contentUrl = Constants.HOST.DOCUMENT+uuid+".html";
+		story.setContentUrl(contentUrl);
+		tNewsService.save(story);
 		return R.ok();
 	}
 	
@@ -144,9 +188,38 @@ public class TNewsController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("tnews:update")
-	public R update(@RequestBody TNewsEntity tNews){
-		tNewsService.update(tNews);
-		
+	public R update(@RequestParam("tNews")String tNews,@RequestParam(value="uFile",required=false)MultipartFile uploadFile) throws Exception{
+		TNewsEntity story = new TNewsEntity();
+		JSONObject viewModel = JSONObject.parseObject(tNews);
+		int userid = ShiroUtils.getUserId().intValue();
+		story.setUpdateBy(userid);
+		story.setNewsTitle(viewModel.getString("newsTitle"));
+		story.setUpdateTime(DateUtil.getNowTimestamp());
+		story.setHotFlg(viewModel.getInteger("hotFlg"));
+		story.setTopFlg(viewModel.getInteger("topFlg"));
+		story.setNewsTypeCd(viewModel.getString("newsTypeCd"));
+		story.setId(viewModel.getInteger("id"));
+		String htmlContent = StringUtil.formatHTML(viewModel.getString("newsTitle"), viewModel.getString("content"));
+		story.setContent(htmlContent);
+		//生成html
+		FileService fs=new FileService();
+		String uuid = UUID.randomUUID().toString();
+		//生成html文件
+		try {
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
+			pw.println(htmlContent);
+			pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//上传图片
+		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if(StringUtil.isNoneBlank(logo)){
+			story.setNewsLogo(logo);
+		}
+		String contentUrl = Constants.HOST.DOCUMENT+uuid+".html";
+		story.setContentUrl(contentUrl);
+		tNewsService.update(story);
 		return R.ok();
 	}
 	

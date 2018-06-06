@@ -3,15 +3,13 @@ $(function () {
         url: '../tstory/list',
         datatype: "json",
         colModel: [			
-			{ label: '故事ID', name: 'id', width: 50, key: true },
-			{ label: '故事封面图片', name: 'storyIcon', width: 80 }, 			
-			{ label: '故事标题', name: 'storyTitle', width: 80 }, 			
-			{ label: '故事链接', name: 'descUrl', width: 80 }, 			
-			{ label: '创建者', name: 'createBy', width: 80 }, 	
+			{ label: '故事标题', name: 'storyTitle', width: 150 }, 			
+			{ label: '故事链接', name: 'descUrl', width: 80,hidden:true}, 			
+			{ label: '创建者', name: 'createBy', width: 50 }, 	
 			{ label: '创建时间', name: 'createTime', width: 80 },
-			{ label: '更新者', name: 'updateBy', width: 80 }, 	
+			{ label: '更新者', name: 'updateBy', width: 50 },
 			{ label: '更新时间', name: 'updateTime', width: 80 }	,
-			{ label: '状态', name: 'flg', width: 80 }	
+			{ label: '状态', name: 'flg', width: 50 }	
         ],
 		viewrecords: true,
         height: 400,
@@ -53,6 +51,14 @@ var vm = new Vue({
 			}
 			
 			location.href = "tstory_add.html?id="+id;
+		},
+		show:function(event){
+			var rowKey = getSelectedRow();
+			if(rowKey == null){
+				return ;
+			}
+			var rowData = $( "#jqGrid" ).getRowData(rowKey);
+			window.open(rowData.descUrl);
 		},
 		del: function (event) {
 			var ids = getSelectedRows();

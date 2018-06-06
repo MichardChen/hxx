@@ -3,7 +3,7 @@ var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		title:"新增",
-		tNews:{}
+		tNews:{newsTypeCd:"030001",hotFlg:1,topFlg:0}
 	},
 	created: function() {
 		if(id != null){
@@ -26,21 +26,100 @@ var vm = new Vue({
             });
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.tNews.id == null ? "../tnews/save" : "../tnews/update";
-			$.ajax({
-				type: "POST",
-			    url: url,
-			    data: JSON.stringify(vm.tNews),
-			    success: function(r){
-			    	if(r.code === 0){
-						alert('操作成功', function(index){
-							vm.back();
-						});
-					}else{
-						alert(r.msg);
-					}
+			
+			var newsId=$("#newsId").val();
+			if(!newsId){
+				if($("#newsTitle").val()==""){
+					alert("请输入资讯标题");
+					return;
 				}
-			});
+				if(!$("#uFile").val()){
+					alert("请选择封面图片");
+					return;
+				}
+				if(!$("#newsTypeCd").val()){
+					alert("请选择资讯类型");
+					return;
+				}
+				if(!$("#content").summernote('code')){
+					alert("请编辑资讯内容");
+					return;
+				}
+				var url = "../tnews/save";
+				var fileObj = document.getElementById("uFile").files[0];
+				vm.tNews.content = $("#content").summernote('code');
+				var formFile = new FormData();
+				formFile.append("uFile", fileObj); 
+				formFile.append("tNews", JSON.stringify(vm.tNews));
+				$.ajax({
+					type: "POST",
+				    url: url,
+				    data: formFile,
+				    processData: false,
+				    contentType: false,
+				    success: function(r){
+				    	var rr = eval('('+r+')');
+				    	if(rr.code === 0){
+							alert('操作成功', function(index){
+								vm.back();
+							});
+						}else{
+							alert(rr.msg);
+						}
+				    	/*if(r.code === 0){
+							alert('操作成功', function(index){
+								vm.back();
+							});
+						}else{
+							alert(r.msg);
+						}*/
+					}
+				});
+			}else{
+				if(!$("#newsTitle").val()){
+					alert("请输入资讯标题");
+					return;
+				}
+				if(!$("#newsTypeCd").val()){
+					alert("请选择资讯类型");
+					return;
+				}
+				if(!$("#content").summernote('code')){
+					alert("请编辑资讯内容");
+					return;
+				}
+				var url = "../tnews/update";
+				var fileObj = document.getElementById("uFile").files[0];
+				vm.tNews.content = $("#content").summernote('code');
+				vm.tNews.id=newsId;
+				var formFile = new FormData();
+				formFile.append("uFile", fileObj); 
+				formFile.append("tNews", JSON.stringify(vm.tNews));
+				$.ajax({
+					type: "POST",
+				    url: url,
+				    data: formFile,
+				    processData: false,
+				    contentType: false,
+				    success: function(r){
+				    	var rr = eval('('+r+')');
+				    	if(rr.code === 0){
+							alert('操作成功', function(index){
+								vm.back();
+							});
+						}else{
+							alert(rr.msg);
+						}
+				    	/*if(r.code === 0){
+							alert('操作成功', function(index){
+								vm.back();
+							});
+						}else{
+							alert(r.msg);
+						}*/
+					}
+				});
+			}
 		},
 		back: function (event) {
 			history.go(-1);

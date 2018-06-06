@@ -7,83 +7,41 @@
 <body>
 <div class="panel panel-default" id="rrapp" v-cloak>
 	<div class="panel-heading">{{title}}</div>
-	<form class="form-horizontal">
+	<form class="form-horizontal" enctype="multipart/form-data" style="width: 100%;">
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-2 control-label">产品名称</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.icon" placeholder=""/>
+		      <input type="text" class="form-control" v-model="tFinance.name" id="name" placeholder="请输入产品名称"/>
 		    </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-2 control-label">产品封面</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.name" placeholder=""/>
+		   		 <a style="text-decoration: none;display: none;" target="_blank" id="icon">查看封面</a><input type="file" v-model="tFinance.icon" id="uFile" name="uFile" placeholder="请选择封面图片"/>
 		    </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-2 control-label">最低首付比例</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.lowRate" placeholder=""/>
+		      <input type="text" class="form-control" v-model="tFinance.lowRate" id="lowRate" placeholder="请输入最低首付比例"/>
 		    </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-2 control-label">最低贷款额</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.lowRefund" placeholder=""/>
+		      <input type="text" class="form-control" v-model="tFinance.lowRefund" id="lowRefund" placeholder="请输入最低贷款额"/>
 		    </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-2 control-label">贷款期限</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.timeDistance" placeholder=""/>
+		      <input type="text" class="form-control" v-model="tFinance.timeDistance" id="timeDistance" placeholder="请输入贷款期限"/>
 		    </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-2 control-label">申请提交材料及二手车准入标准</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.standard" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.createBy" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.createTime" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.updateBy" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.updateTime" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.descUrl" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.status" placeholder=""/>
-		    </div>
-		</div>
-		<div class="form-group">
-		   	<div class="col-sm-2 control-label"></div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.title" placeholder=""/>
+		      <input type="text" class="form-control" v-model="tFinance.standard" id="standard" placeholder="请输入准入标准"/>
 		    </div>
 		</div>
 		<div class="form-group">
@@ -91,9 +49,10 @@
 			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
 			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
 		</div>
+		<input type="hidden" id="financeId"/>
 	</form>
 </div>
-
 <script src="${rc.contextPath}/js/tfinance/tfinance_add.js?_${date.systemTime}"></script>
+<script src="${rc.contextPath}/js/sys/common.js"></script>
 </body>
 </html>

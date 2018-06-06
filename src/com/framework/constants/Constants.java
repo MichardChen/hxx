@@ -101,28 +101,41 @@ public interface Constants {
 	/**
 	 * 本地
 	 */
-	/*
-	 * public static interface HOST { public static final String LOCALHOST =
-	 * "http://192.168.1.91:82/newsimages/"; public static final String TEA =
-	 * "http://192.168.1.91:82/tea/"; public static final String DOCUMENT =
-	 * "http://192.168.1.91:82/document/"; public static final String FILE =
-	 * "http://192.168.1.91:82/file/"; public static final String ICON =
-	 * "http://192.168.1.91:82/icon/"; public static final String IMG =
-	 * "http://192.168.1.91:82/img/"; public static final String STORE =
-	 * "http://192.168.1.91:82/store/"; public static final String COMMON =
-	 * "http://192.168.1.91:82/common/"; }
-	 * 
-	 * public static interface FILE_HOST { public static final String LOCALHOST =
-	 * "F:\\upload\\newsimages\\"; public static final String TEA =
-	 * "F:\\upload\\tea\\"; public static final String DOCUMENT =
-	 * "F:\\upload\\document\\"; public static final String FILE =
-	 * "F:\\upload\\file\\"; public static final String ICON = "F:\\upload\\icon\\";
-	 * public static final String IMG = "F:\\upload\\img\\"; public static final
-	 * String STORE = "F:\\upload\\store\\"; public static final String COMMON =
-	 * "F:\\upload\\common\\"; }
-	 */
 
 	public static interface HOST {
+		public static final String LOCALHOST = "http://192.168.1.91:82/newsimages/";
+		public static final String TEA = "http://192.168.1.91:82/tea/";
+		public static final String DOCUMENT = "http://192.168.1.91:82/document/";
+		public static final String FILE = "http://192.168.1.91:82/file/";
+		public static final String ICON = "http://192.168.1.91:82/icon/";
+		public static final String IMG = "http://192.168.1.91:82/img/";
+		public static final String STORE = "http://192.168.1.91:82/store/";
+		public static final String COMMON = "http://192.168.1.91:82/common/";
+	}
+
+	public static interface FILE_HOST {
+		public static final String LOCALHOST = "F:\\upload\\newsimages\\";
+		public static final String TEA = "F:\\upload\\tea\\";
+		public static final String DOCUMENT = "F:\\upload\\document\\";
+		public static final String FILE = "F:\\upload\\file\\";
+		public static final String ICON = "F:\\upload\\icon\\";
+		public static final String IMG = "F:\\upload\\img\\";
+		public static final String STORE = "F:\\upload\\store\\";
+		public static final String COMMON = "F:\\upload\\common\\";
+	}
+	
+	public static interface HTTP_HOST {
+		public static final String LOCALHOST = "http://192.168.1.91:88/newsimages/";
+		public static final String TEA = "http://192.168.1.91:88/tea/";
+		public static final String DOCUMENT = "http://192.168.1.91:88/document/";
+		public static final String FILE = "http://192.168.1.91:88/file/";
+		public static final String ICON = "http://192.168.1.91:88/icon/";
+		public static final String IMG = "http://192.168.1.91:88/img/";
+		public static final String STORE = "http://192.168.1.91:88/store/";
+		public static final String COMMON = "http://192.168.1.91:88/common/";
+	}
+
+	/*public static interface HOST {
 		public static final String LOCALHOST = "http://www.yibuwangluo.cn:88/newsimages/";
 		public static final String TEA = "http://www.yibuwangluo.cn:88/tea/";
 		public static final String DOCUMENT = "http://www.yibuwangluo.cn:88/document/";
@@ -153,28 +166,30 @@ public interface Constants {
 		public static final String IMG = "D:\\upload\\img\\";
 		public static final String STORE = "D:\\upload\\store\\";
 		public static final String COMMON = "D:\\upload\\common\\";
-	}
+	}*/
 
 	/*
-	 * public static interface FILE_HOST { public static final String LOCALHOST =
-	 * "F:\\upload\\newsimages\\"; public static final String TEA =
+	 * public static interface FILE_HOST { public static final String LOCALHOST
+	 * = "F:\\upload\\newsimages\\"; public static final String TEA =
 	 * "F:\\upload\\tea\\"; public static final String DOCUMENT =
 	 * "F:\\upload\\document\\"; public static final String FILE =
-	 * "F:\\upload\\file\\"; public static final String ICON = "F:\\upload\\icon\\";
-	 * public static final String IMG = "F:\\upload\\img\\"; public static final
-	 * String STORE = "F:\\upload\\store\\"; public static final String COMMON =
+	 * "F:\\upload\\file\\"; public static final String ICON = "
+	 * F:\\upload\\icon\\"; public static final String IMG =
+	 * "F:\\upload\\img\\"; public static final String STORE =
+	 * "F:\\upload\\store\\"; public static final String COMMON =
 	 * "F:\\upload\\common\\"; }
 	 */
 
 	/**
-	 * centos服务器 public static interface HOST{ public static final String LOCALHOST
-	 * = "http://app.tongjichaye.com:88/tea/"; public static final String TEA =
-	 * "http://app.tongjichaye.com:88/tea/"; public static final String DOCUMENT =
-	 * "http://app.tongjichaye.com:88/document/"; public static final String FILE =
-	 * "http://app.tongjichaye.com:88/file/"; public static final String ICON =
-	 * "http://app.tongjichaye.com:88/icon/"; public static final String IMG =
-	 * "http://app.tongjichaye.com:88/img/"; public static final String STORE =
-	 * "http://app.tongjichaye.com:88/store/"; public static final String COMMON =
+	 * centos服务器 public static interface HOST{ public static final String
+	 * LOCALHOST = "http://app.tongjichaye.com:88/tea/"; public static final
+	 * String TEA = "http://app.tongjichaye.com:88/tea/"; public static final
+	 * String DOCUMENT = "http://app.tongjichaye.com:88/document/"; public
+	 * static final String FILE = "http://app.tongjichaye.com:88/file/"; public
+	 * static final String ICON = "http://app.tongjichaye.com:88/icon/"; public
+	 * static final String IMG = "http://app.tongjichaye.com:88/img/"; public
+	 * static final String STORE = "http://app.tongjichaye.com:88/store/";
+	 * public static final String COMMON =
 	 * "http://app.tongjichaye.com:88/common/"; }
 	 * 
 	 * public static interface FILE_HOST{ public static final String LOCALHOST =
@@ -222,11 +237,11 @@ public interface Constants {
 		public static final String H5_CAR_SECONDHAND_IMAGE = "040012";
 		// h5平行进口横幅
 		public static final String H5_CAR_IMPORT_IMAGE = "040013";
-		//平行进口车常见问题
+		// 平行进口车常见问题
 		public static final String IMPORT_CAR_OFTENQUESTION = "040014";
-		//会淘车购买说明
+		// 会淘车购买说明
 		public static final String SECONDHAND_CAR_BUYKONW = "040015";
-		//会淘车购买说明
+		// 会淘车购买说明
 		public static final String SECONDHAND_CAR_BUYMARK = "040016";
 	}
 
@@ -265,22 +280,34 @@ public interface Constants {
 		public static final String QITA = "080006";
 	}
 
-	//资讯类型
+	// 资讯类型
 	public static interface QUESTION_TYPE {
 		public static final String PC = "090001";
 		public static final String XCX = "090002";
 		public static final String H5 = "090003";
 	}
-	
-	//电话
+
+	// 电话
 	public static interface TEL_TYPE {
 		public static final String KEFU = "100001";
 	}
-	
-	//汽车销售类型
+
+	// 汽车销售类型
 	public static interface CAR_SALE_TYPE {
 		public static final String LEASE = "110001";
 		public static final String SECONDHAND = "110002";
 		public static final String IMPORT = "110003";
+	}
+	
+	//资讯类型
+	public static interface NEWS_TYPE {
+		//平台通知
+		public static final String PLAT_NOTIFICATION = "030001";
+		//汽车资讯
+		public static final String CAR_NEWS = "030002";
+		//活动专题
+		public static final String ACTIVITY = "030003";
+		//媒体报道
+		public static final String MEDIA = "030004";
 	}
 }

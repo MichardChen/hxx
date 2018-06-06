@@ -8,7 +8,7 @@
 	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TNewsEntity">
-		select * from t_news 
+		select * from t_news order by update_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -58,13 +58,13 @@
 			<if test="newsTitle != null">`news_title` = #{newsTitle}, </if>
 			<if test="newsTypeCd != null">`news_type_cd` = #{newsTypeCd}, </if>
 			<if test="hotFlg != null">`hot_flg` = #{hotFlg}, </if>
-			<if test="createUser != null">`create_by` = #{createBy}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
 			<if test="flg != null">`flg` = #{flg}, </if>
 			<if test="content != null">`content` = #{content}, </if>
 			<if test="contentUrl != null">`content_url` = #{contentUrl}, </if>
-			<if test="updateUserId != null">`update_by` = #{updateBy}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
 			<if test="topFlg != null">`top_flg` = #{topFlg}</if>
 		</set>
 		where id = #{id}

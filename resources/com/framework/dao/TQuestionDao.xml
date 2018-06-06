@@ -8,7 +8,7 @@
 	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TQuestionEntity">
-		select * from t_question 
+		select * from t_question order by update_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>

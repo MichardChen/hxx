@@ -3,16 +3,14 @@ $(function () {
         url: '../tnews/list',
         datatype: "json",
         colModel: [			
-			{ label: '资讯标题', name: 'newsTitle', width: 80 }, 			
-			{ label: '资讯类型', name: 'newsTypeCd', width: 80 }, 			
-			{ label: '是否热门', name: 'hotFlg', width: 80 }, 			
-			{ label: '是否删除', name: 'flg', width: 80 }, 			
-			{ label: '资讯详情', name: 'contentUrl', width: 80 }, 			
-			{ label: '是否置顶', name: 'topFlg', width: 80 },
-			{ label: '创建者', name: 'createBy', width: 80 }, 			
+			{ label: '资讯标题', name: 'newsTitle', width: 200 }, 			
+			{ label: '资讯类型', name: 'newsTypeCd', width: 50 }, 			
+			{ label: '是否热门', name: 'hotFlg', width: 50 }, 			
+			{ label: '是否删除', name: 'flg', width: 50 }, 			
+			{ label: '资讯详情', name: 'contentUrl', width: 80,hidden:true}, 			
+			{ label: '是否置顶', name: 'topFlg', width: 50 },
+			{ label: '创建者', name: 'createBy', width: 50 }, 			
 			{ label: '创建时间', name: 'createTime', width: 80 },
-			{ label: '创建者', name: 'updateBy', width: 80 }, 			
-			{ label: '创建时间', name: 'updateTime', width: 80 }
         ],
 		viewrecords: true,
         height: 400,
@@ -54,6 +52,14 @@ var vm = new Vue({
 			}
 			
 			location.href = "tnews_add.html?id="+id;
+		},
+		show:function(event){
+			var rowKey = getSelectedRow();
+			if(rowKey == null){
+				return ;
+			}
+			var rowData = $( "#jqGrid" ).getRowData(rowKey);
+			window.open(rowData.contentUrl);
 		},
 		del: function (event) {
 			var ids = getSelectedRows();

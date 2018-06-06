@@ -24,20 +24,20 @@ var vm = new Vue({
 		},
 		saveOrUpdate: function (event) {
 			var storyId = $("#storyId").val();
-			if(storyId == null){
+			if(storyId == null || storyId==""){
 				//新增
 				var fileObj = document.getElementById("uFile").files[0];
 				vm.tStory.content = $("#content").summernote('code');
 				var formFile = new FormData();
-				if(vm.tStory.title == null){
+				if(!vm.tStory.title){
 					alert("请输入故事标题");
 					return;
 				}
-				if(fileObj == null){
+				if(!fileObj){
 					alert("请选择封面图片");
 					return;
 				}
-				if($("#content").val() == ""){
+				if(!$("#content").val()){
 					alert("请输入故事内容");
 					return;
 				}
@@ -67,11 +67,11 @@ var vm = new Vue({
 				vm.tStory.content = $("#content").summernote('code');
 				vm.tStory.id=storyId;
 				var formFile = new FormData();
-				if($("#title").val() == null){
+				if(!$("#title").val()){
 					alert("请输入故事标题");
 					return;
 				}
-				if($("#content").val() == ""){
+				if(!$("#content").val()){
 					alert("请输入故事内容");
 					return;
 				}
