@@ -842,6 +842,11 @@ public class PCController extends RestfulController{
 		}
 		ImportCartDetailModel model = new ImportCartDetailModel();
 		model.setCartId(car.getId());
+		List<String> icons = new ArrayList<>();
+		icons.add(car.getIcon());
+		icons.add(car.getIcon());
+		icons.add(car.getIcon());
+		model.setIcons(icons);
 		TBrandEntity brand = brandService.queryObject(car.getBrand());
 		if(brand != null){
 			model.setCarName(brand.getBrand());
@@ -952,7 +957,11 @@ public class PCController extends RestfulController{
 		}else{
 			model.setCarSeriesName("");
 		}
-		
+		List<String> icons = new ArrayList<>();
+		icons.add(car.getIcon());
+		icons.add(car.getIcon());
+		icons.add(car.getIcon());
+		model.setIcons(icons);
 		model.setLabels(car.getLabels());
 		model.setFirstPayment(StringUtil.formatCarPrice(car.getFinalPayment(),0));
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
@@ -1030,6 +1039,8 @@ public class PCController extends RestfulController{
 		}
 		
 		ArrayList<String> logos = new ArrayList<>();
+		logos.add(car.getIcon());
+		logos.add(car.getIcon());
 		logos.add(car.getIcon());
 		model.setIcons(logos);
 		model.setFirmPrice(StringUtil.formatCarPrice(car.getFirmCost(),0));

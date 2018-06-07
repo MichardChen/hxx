@@ -884,7 +884,11 @@ public class HController extends RestfulController{
 		}else{
 			model.setCarSeriesName("");
 		}
-		
+		List<String> icons = new ArrayList<>();
+		icons.add(car.getIcon());
+		icons.add(car.getIcon());
+		icons.add(car.getIcon());
+		model.setIcons(icons);
 		model.setColors(car.getCarColor());
 		model.setReferenPrice(StringUtil.formatCarPrice(car.getNowPrice(),0));
 		model.setMarketPrice(StringUtil.formatCarPrice(car.getMarketPrice(), 0));
@@ -950,6 +954,11 @@ public class HController extends RestfulController{
 		}else{
 			model.setCarName("");
 		}
+		List<String> icons = new ArrayList<>();
+		icons.add(car.getIcon());
+		icons.add(car.getIcon());
+		icons.add(car.getIcon());
+		model.setIcons(icons);
 		TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
 		if(seriesEntity != null){
 			model.setCarSeriesName(seriesEntity.getCarSerial());
@@ -1034,6 +1043,8 @@ public class HController extends RestfulController{
 		}
 		
 		ArrayList<String> logos = new ArrayList<>();
+		logos.add(car.getIcon());
+		logos.add(car.getIcon());
 		logos.add(car.getIcon());
 		model.setIcons(logos);
 		model.setFirmPrice(StringUtil.formatCarPrice(car.getFirmCost(),0));
