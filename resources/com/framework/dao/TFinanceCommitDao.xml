@@ -60,18 +60,7 @@
 	<update id="update" parameterType="com.framework.entity.TFinanceCommitEntity">
 		update t_finance_commit 
 		<set>
-			<if test="financeId != null">`finance_id` = #{financeId}, </if>
-			<if test="brandId != null">`brand_id` = #{brandId}, </if>
-			<if test="brandSeriesId != null">`brand_series_id` = #{brandSeriesId}, </if>
-			<if test="provinceId != null">`province_id` = #{provinceId}, </if>
-			<if test="cityId != null">`city_id` = #{cityId}, </if>
-			<if test="name != null">`name` = #{name}, </if>
-			<if test="age != null">`age` = #{age}, </if>
-			<if test="idcardNo != null">`idcard_no` = #{idcardNo}, </if>
-			<if test="sex != null">`sex` = #{sex}, </if>
-			<if test="mobile != null">`mobile` = #{mobile}, </if>
 			<if test="mark != null">`mark` = #{mark}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
 			<if test="status != null">`status` = #{status}</if>

@@ -22,6 +22,8 @@ public class TCarLeaseEntity implements Serializable {
 	private String icon;
 	//
 	private Integer brand;
+	
+	private Integer salecount;
 	//
 	private String carName;
 	//
@@ -87,6 +89,12 @@ public class TCarLeaseEntity implements Serializable {
 	
 	private String carLevelCd;
 	
+	public Integer getSalecount() {
+		return salecount;
+	}
+	public void setSalecount(Integer salecount) {
+		this.salecount = salecount;
+	}
 	public String getMark() {
 		return mark;
 	}

@@ -1,5 +1,6 @@
 package com.framework.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
 
+import com.framework.dao.SysUserDao;
+import com.framework.entity.SysUserEntity;
 import com.framework.entity.TBrandEntity;
 import com.framework.entity.TBrandSeriesEntity;
+import com.framework.model.BrandSeriesListModel;
 import com.framework.service.TBrandSeriesService;
+import com.framework.service.TBrandService;
+import com.framework.utils.DateUtil;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
+import com.framework.utils.ShiroUtils;
+import com.framework.utils.StringUtil;
 
 
 /**
@@ -31,6 +39,10 @@ import com.framework.utils.R;
 public class TBrandSeriesController {
 	@Autowired
 	private TBrandSeriesService tBrandSeriesService;
+	@Autowired
+	private SysUserDao userDao;
+	@Autowired
+	private TBrandService brandService;
 	
 	@RequestMapping("/tbrandseries.html")
 	public String list(){
@@ -56,8 +68,39 @@ public class TBrandSeriesController {
 		//查询列表数据
 		List<TBrandSeriesEntity> tBrandSeriesList = tBrandSeriesService.queryList(map);
 		int total = tBrandSeriesService.queryTotal(map);
+		List<BrandSeriesListModel> models = new ArrayList<>();
+		BrandSeriesListModel m = null;
+		for(TBrandSeriesEntity entity : tBrandSeriesList){
+			m = new BrandSeriesListModel();
+			m.setId(entity.getId());
+			m.setCarSerial(entity.getCarSerial());
+			m.setCreateTime(DateUtil.format(entity.getCreateTime()));
+			m.setUpdateTime(DateUtil.format(entity.getUpdateTime()));
+			SysUserEntity admin = userDao.queryObject(entity.getCreateBy());
+			if(admin != null){
+				m.setCreateBy(admin.getUsername());
+			}else{
+				m.setCreateBy(StringUtil.STRING_BLANK);
+			}
+			
+			SysUserEntity update = userDao.queryObject(entity.getUpdateBy());
+			if(update != null){
+				m.setUpdateBy(update.getUsername());
+			}else{
+				m.setUpdateBy(StringUtil.STRING_BLANK);
+			}
+			
+			TBrandEntity brand = brandService.queryObject(entity.getBrandId());
+			if(brand != null){
+				m.setBrandId(brand.getBrand());
+			}else{
+				m.setBrandId(StringUtil.STRING_BLANK);
+			}
+			
+			models.add(m);
+		}
 		
-		PageUtils pageUtil = new PageUtils(tBrandSeriesList, total, limit, page);
+		PageUtils pageUtil = new PageUtils(models, total, limit, page);
 		
 		return R.ok().put("page", pageUtil);
 	}
@@ -82,6 +125,11 @@ public class TBrandSeriesController {
 	@RequestMapping("/save")
 	@RequiresPermissions("tbrandseries:save")
 	public R save(@RequestBody TBrandSeriesEntity tBrandSeries){
+		int userid = ShiroUtils.getUserId().intValue();
+		tBrandSeries.setCreateBy(userid);
+		tBrandSeries.setCreateTime(DateUtil.getNowTimestamp());
+		tBrandSeries.setUpdateBy(userid);
+		tBrandSeries.setUpdateTime(DateUtil.getNowTimestamp());
 		tBrandSeriesService.save(tBrandSeries);
 		
 		return R.ok();
@@ -94,6 +142,10 @@ public class TBrandSeriesController {
 	@RequestMapping("/update")
 	@RequiresPermissions("tbrandseries:update")
 	public R update(@RequestBody TBrandSeriesEntity tBrandSeries){
+		
+		int userid = ShiroUtils.getUserId().intValue();
+		tBrandSeries.setUpdateBy(userid);
+		tBrandSeries.setUpdateTime(DateUtil.getNowTimestamp());
 		tBrandSeriesService.update(tBrandSeries);
 		
 		return R.ok();

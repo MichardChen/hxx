@@ -19,15 +19,21 @@ var vm = new Vue({
                 $("#mobile").val(json.tSalecart.mobile);
                 $("#name").val(json.tSalecart.name);
                 $("#mark").val(json.tSalecart.mark);
+                $("#saleCartId").val(json.tSalecart.id);
             });
 		},
 		saveOrUpdate: function (event) {
+			vm.tSalecart.id = $("#saleCartId").val();
 			var url = vm.tSalecart.id == null ? "../tsalecart/save" : "../tsalecart/update";
 			$.ajax({
 				type: "POST",
 			    url: url,
 			    data: JSON.stringify(vm.tSalecart),
-			    success: function(r){
+			    processData: false,
+			    contentType: false,
+			    contentType: "application/json",
+			    success: function(rr){
+			    	var r = eval('('+rr+')');
 			    	if(r.code === 0){
 						alert('操作成功', function(index){
 							vm.back();

@@ -13,14 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
 import com.framework.dao.SysUserDao;
 import com.framework.entity.SysUserEntity;
 import com.framework.entity.TSalecartEntity;
 import com.framework.model.TSalecartListModel;
 import com.framework.service.TSalecartService;
+import com.framework.utils.DateUtil;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
+import com.framework.utils.ShiroUtils;
 import com.framework.utils.StringUtil;
 
 
@@ -127,6 +130,9 @@ public class TSalecartController {
 	@RequestMapping("/update")
 	@RequiresPermissions("tsalecart:update")
 	public R update(@RequestBody TSalecartEntity tSalecart){
+		int userid = ShiroUtils.getUserId().intValue();
+		tSalecart.setUpdateBy(userid);
+		tSalecart.setUpdateTime(DateUtil.getNowTimestamp());
 		tSalecartService.update(tSalecart);
 		
 		return R.ok();

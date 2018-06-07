@@ -15,6 +15,15 @@
 		    </div>
 		</div>
 		<div class="form-group">
+		   	<div class="col-sm-2 control-label">是否显示移动端首页</div>
+		   	<div class="col-sm-10">
+		     		<select  class="form-control" v-model="tBrand.showflg" name="showflg">
+			   			<option value="0">否</option>
+			   			<option value="1">是</option>
+			   		</select>
+		    </div>
+		</div>
+		<div class="form-group">
 		   	<div class="col-sm-2 control-label">首字母</div>
 		   	<div class="col-sm-10">
 		      <input type="text" class="form-control" id="word" v-model="tBrand.word" placeholder="比如路虎，首字母L"/>

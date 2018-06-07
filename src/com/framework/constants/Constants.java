@@ -243,6 +243,10 @@ public interface Constants {
 		public static final String SECONDHAND_CAR_BUYKONW = "040015";
 		// 会淘车购买说明
 		public static final String SECONDHAND_CAR_BUYMARK = "040016";
+		// 以租代购购买须知
+		public static final String LEASE_CAR_BUYKONW = "040017";
+		// 以租代购购买说明
+		public static final String LEASE_CAR_BUYMARK = "040018";
 	}
 
 	public static interface SHORT_MESSAGE_TYPE {

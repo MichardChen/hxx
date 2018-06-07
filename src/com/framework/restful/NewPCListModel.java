@@ -10,7 +10,14 @@ public class NewPCListModel implements Serializable{
 	private String type;
 	private String url;
 	private String date;
+	private String shortTitle;
 	
+	public String getShortTitle() {
+		return shortTitle;
+	}
+	public void setShortTitle(String shortTitle) {
+		this.shortTitle = shortTitle;
+	}
 	public String getDate() {
 		return date;
 	}

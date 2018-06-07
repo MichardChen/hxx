@@ -136,8 +136,7 @@ public class TBrandController {
 	@ResponseBody
 	@RequestMapping("/save")
 	@RequiresPermissions("tbrand:save")
-	public R save(@RequestParam("tBrand") String tb,
-			@RequestParam(value = "uFile", required = false) MultipartFile uploadFile) {
+	public R save(@RequestParam("tBrand") String tb,@RequestParam(value = "uFile", required = false) MultipartFile uploadFile) throws Exception{
 
 		TBrandEntity tBrand = new TBrandEntity();
 		int userid = ShiroUtils.getUserId().intValue();
@@ -149,6 +148,7 @@ public class TBrandController {
 		tBrand.setBrand(viewModel.getString("brand"));
 		tBrand.setWord(viewModel.getString("word"));
 		tBrand.setFlg(1);
+		tBrand.setShowflg(viewModel.getInteger("showflg"));
 
 		// 生成html
 		FileService fs = new FileService();
@@ -169,7 +169,25 @@ public class TBrandController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("tbrand:update")
-	public R update(@RequestBody TBrandEntity tBrand) {
+	public R update(@RequestParam("tBrand") String tb,@RequestParam(value = "uFile", required = false) MultipartFile uploadFile) throws Exception{
+		TBrandEntity tBrand = new TBrandEntity();
+		int userid = ShiroUtils.getUserId().intValue();
+		JSONObject viewModel = JSONObject.parseObject(tb);
+		tBrand.setUpdateBy(userid);
+		tBrand.setUpdateTime(DateUtil.getNowTimestamp());
+		tBrand.setBrand(viewModel.getString("brand"));
+		tBrand.setWord(viewModel.getString("word"));
+		tBrand.setId(viewModel.getInteger("id"));
+		tBrand.setShowflg(viewModel.getInteger("showflg"));
+
+		// 生成html
+		FileService fs = new FileService();
+		// 上传图片
+		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if (StringUtil.isNoneBlank(logo)) {
+			tBrand.setBrandIcon(logo);
+		}
+		
 		tBrandService.update(tBrand);
 
 		return R.ok();

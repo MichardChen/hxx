@@ -1018,7 +1018,7 @@ public class HController extends RestfulController{
 			renderJson(data, response);
 			return;
 		}
-		/*SecondhandCartDetailModel model = new SecondhandCartDetailModel();
+		LeaseCarDetailModel model = new LeaseCarDetailModel();
 		model.setCartId(car.getId());
 		TBrandEntity brand = brandService.queryObject(car.getBrand());
 		if(brand != null){
@@ -1033,19 +1033,41 @@ public class HController extends RestfulController{
 			model.setCarSeriesName("");
 		}
 		
-		model.setLabels(car.getLabels());
+		ArrayList<String> logos = new ArrayList<>();
+		logos.add(car.getIcon());
+		model.setIcons(logos);
+		model.setFirmPrice(StringUtil.formatCarPrice(car.getFirmCost(),0));
+		model.setCarInfo(car.getCarTypeInfo());
+		//48期首付和月供、备注、分期数
 		model.setFirstPayment(StringUtil.formatCarPrice(car.getFinalPayment(),0));
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
-		model.setContainTaxPrice(StringUtil.formatCarPrice(car.getCarTaxCost(), 0));
-		model.setDescUrl(car.getDescUrl());
-		model.setYear(DateUtil.formatCNYM(car.getYear()));
-		model.setKilomiter(StringUtil.formatCarPrice(car.getKilomiters(), 0)+"公里");
-		LocationCityEntity city = cityDao.queryObject(car.getCityId());
-		if(city != null){
-			model.setCity(city.getName());
-		}
+		model.setMark(car.getMark());
+		model.setPeriods(car.getPeriods());
+		//36期首付、月供、备注、分期数
+		model.setFirstPayment1(StringUtil.formatCarPrice(car.getFirstPayment1(),0));
+		model.setMonthPayment1(StringUtil.formatCarPrice(car.getMonthPayment1(), 1));
+		model.setMark1(car.getMark());
+		model.setPeriods1(car.getPeriods());
+		//1+3首年首付、首年月供、一年后分期数、一年后分期月供
+		model.setTfirstYearFirstPay(StringUtil.formatCarPrice(car.getFirstPayment1(),0));
+		model.setTfirstYearMonthPayment(StringUtil.formatCarPrice(car.getTfirstYearMonthPayment(),1));
+		model.setTperiods(car.getTperiods());
+		model.setTmonthPayment(StringUtil.formatCarPrice(car.getTmonthPayment(),1));
+		model.setFinalPayment(StringUtil.formatCarPrice(car.getFinalPayment(), 1));
 		
-		TCartParamsEntity params = paramsService.queryObjectByCartId(car.getId(),Constants.CAR_SALE_TYPE.SECONDHAND);
+		model.setBuyPay(StringUtil.formatCarPrice(car.getRealFirstPayment(),0));
+		model.setServiceFee(StringUtil.formatCarPrice(car.getServiceFee(),1));
+		//客服电话
+		TCodemstEntity kefuTel = codeMstDao.queryByCode(Constants.TEL_TYPE.KEFU);
+		if(kefuTel != null){
+			model.setCompanyMobile(kefuTel.getData2());
+		}
+				
+		model.setLabels(car.getLabels());
+		
+		model.setDescUrl(car.getDescUrl());
+		
+		TCartParamsEntity params = paramsService.queryObjectByCartId(car.getId(),Constants.CAR_SALE_TYPE.LEASE);
 		
 		if(params != null){
 			model.setCheshenjiegou(params.getCheshenjiegou());
@@ -1059,23 +1081,18 @@ public class HController extends RestfulController{
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
 		}
 		//获取购买说明
-		TCodemstEntity buyMark = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYMARK);
+		TCodemstEntity buyMark = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.LEASE_CAR_BUYMARK);
 		if(buyMark != null){
 			model.setBuyMarkUrl(buyMark.getData3());
 		}
 		//购买须知
-		TCodemstEntity buyKnow = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYKONW);
+		TCodemstEntity buyKnow = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.LEASE_CAR_BUYKONW);
 		if(buyKnow != null){
 			model.setBuyKnowUrl(buyKnow.getData3());
 		}
-		//客服电话
-		TCodemstEntity kefuTel = codeMstDao.queryByCode(Constants.TEL_TYPE.KEFU);
-		if(kefuTel != null){
-			model.setCompanyMobile(kefuTel.getData2());
-		}
-		
+		model.setSalecount(StringUtil.toString(car.getSalecount()));
 		json.put("carDetail", model);
-		data.setData(json);*/
+		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");
 		renderJson(data, response);

@@ -6,7 +6,6 @@ $(function () {
 			{ label: '联系电话', name: 'mobile', width: 80 }, 			
 			{ label: '申请人', name: 'name', width: 80 }, 			
 			{ label: '备注', name: 'mark', width: 80 }, 			
-			{ label: '创建者', name: 'createBy', width: 80 }, 			
 			{ label: '更新者', name: 'updateBy', width: 80 }, 			
 			{ label: '申请时间', name: 'createTime', width: 80 }, 			
 			{ label: '更新时间', name: 'updateTime', width: 80 }, 			

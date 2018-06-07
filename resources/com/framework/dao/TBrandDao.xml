@@ -8,7 +8,7 @@
 	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TBrandEntity">
-		select * from t_brand 
+		select * from t_brand order by update_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -25,7 +25,7 @@
 		<if test="showFlg != null">
 			and showflg=#{showFlg}
 		</if>
-		order by word asc limit 0,9
+		order by update_time desc,word asc limit 0,9
 	</select>
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_brand 
@@ -63,12 +63,9 @@
 		<set>
 			<if test="brand != null">`brand` = #{brand}, </if>
 			<if test="brandIcon != null">`brand_icon` = #{brandIcon}, </if>
-			<if test="createBy != null">`create_by` = #{createBy}, </if>
 			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}</if>
 			<if test="word != null">`word` = #{word}</if>
-			<if test="flg != null">`flg` = #{flg}</if>
 			<if test="showflg != null">`showflg` = #{showflg}</if>
 		</set>
 		where id = #{id}
