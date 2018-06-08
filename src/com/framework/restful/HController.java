@@ -28,6 +28,7 @@ import com.framework.entity.TCarImportEntity;
 import com.framework.entity.TCarLeaseEntity;
 import com.framework.entity.TCarSecondhandEntity;
 import com.framework.entity.TCarouselEntity;
+import com.framework.entity.TCartParam2Entity;
 import com.framework.entity.TCartParamsEntity;
 import com.framework.entity.TCodemstEntity;
 import com.framework.entity.TFinanceEntity;
@@ -927,6 +928,14 @@ public class HController extends RestfulController{
 		}
 		
 		json.put("carDetail", model);
+		
+		TCartParamsEntity params1 = paramsService.queryObjectByCartId(dto.getCartId(),Constants.CAR_SALE_TYPE.IMPORT);
+		TCartParam2Entity params2 = params2Service.queryObjectByCartIdType(dto.getCartId(),Constants.CAR_SALE_TYPE.IMPORT);
+		
+		json.put("params1", params1);
+		json.put("params2", params2);
+		
+		
 		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");
@@ -1006,6 +1015,11 @@ public class HController extends RestfulController{
 		if(kefuTel != null){
 			model.setCompanyMobile(kefuTel.getData2());
 		}
+		TCartParamsEntity params1 = paramsService.queryObjectByCartId(dto.getCartId(),Constants.CAR_SALE_TYPE.SECONDHAND);
+		TCartParam2Entity params2 = params2Service.queryObjectByCartIdType(dto.getCartId(),Constants.CAR_SALE_TYPE.SECONDHAND);
+		
+		json.put("params1", params1);
+		json.put("params2", params2);
 		
 		json.put("carDetail", model);
 		data.setData(json);
@@ -1103,6 +1117,38 @@ public class HController extends RestfulController{
 		}
 		model.setSalecount(StringUtil.toString(car.getSalecount()));
 		json.put("carDetail", model);
+		
+		TCartParamsEntity params1 = paramsService.queryObjectByCartId(dto.getCartId(),Constants.CAR_SALE_TYPE.LEASE);
+		TCartParam2Entity params2 = params2Service.queryObjectByCartIdType(dto.getCartId(),Constants.CAR_SALE_TYPE.LEASE);
+		
+		json.put("params1", params1);
+		json.put("params2", params2);
+		
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	//汽车参数
+	@RequestMapping("/queryCarParams")
+	public void queryCarParams(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		int cartId = dto.getCartId();
+		if(cartId == 0){
+			data.setCode(Constants.STATUS_CODE.FAIL);
+			data.setMessage("您来晚啦，此车已下架");
+			renderJson(data, response);
+			return;
+		}
+		
+		TCartParamsEntity params1 = paramsService.queryObjectByCartId(cartId,dto.getTypeCd());
+		TCartParam2Entity params2 = params2Service.queryObjectByCartIdType(cartId,dto.getTypeCd());
+		
+		json.put("params1", params1);
+		json.put("params2", params2);
 		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");

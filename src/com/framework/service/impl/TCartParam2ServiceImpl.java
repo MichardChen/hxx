@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.framework.dao.TCartParam2Dao;
 import com.framework.entity.TCartParam2Entity;
+import com.framework.entity.TCartParamsEntity;
 import com.framework.service.TCartParam2Service;
 
 
@@ -55,6 +56,11 @@ public class TCartParam2ServiceImpl implements TCartParam2Service {
 	@Override
 	public TCartParam2Entity queryObjectByCartId(Integer cartId) {
 		return tCartParam2Dao.queryObjectByCartId(cartId);
+	}
+
+	@Override
+	public TCartParam2Entity queryObjectByCartIdType(Integer cartId, String cartTypeCd) {
+		return tCartParam2Dao.queryObjectByCartIdType(cartId, cartTypeCd);
 	}
 	
 }

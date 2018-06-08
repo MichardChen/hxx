@@ -1,6 +1,7 @@
 package com.framework.service;
 
 import com.framework.entity.TCartParam2Entity;
+import com.framework.entity.TCartParamsEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -29,4 +30,6 @@ public interface TCartParam2Service {
 	void deleteBatch(Integer[] ids);
 	
 	TCartParam2Entity queryObjectByCartId(Integer cartId);
+	
+	TCartParam2Entity queryObjectByCartIdType(Integer cartId,String cartTypeCd);
 }

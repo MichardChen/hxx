@@ -3,6 +3,7 @@ package com.framework.dao;
 import org.apache.ibatis.annotations.Param;
 
 import com.framework.entity.TCartParam2Entity;
+import com.framework.entity.TCartParamsEntity;
 
 /**
  * 
@@ -14,4 +15,6 @@ import com.framework.entity.TCartParam2Entity;
 public interface TCartParam2Dao extends BaseDao<TCartParam2Entity> {
 
 	TCartParam2Entity queryObjectByCartId(@Param("cartId")int cartId);
+	
+	TCartParam2Entity queryObjectByCartIdType(@Param("cartId")Integer cartId,@Param("cartTypeCd")String cartTypeCd);
 }

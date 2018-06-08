@@ -6,7 +6,9 @@
 	<select id="queryObject" resultType="com.framework.entity.TCartParam2Entity">
 		select * from t_cart_param2 where id = #{value}
 	</select>
-
+<select id="queryObjectByCartIdType" resultType="com.framework.entity.TCartParam2Entity">
+		select * from t_cart_param2 where cart_id = #{cartId} and cart_type_cd=#{cartTypeCd}
+	</select>
 	<select id="queryObjectByCartId" resultType="com.framework.entity.TCartParam2Entity">
 		select * from t_cart_param2 where cart_id = #{cartId}
 	</select>
