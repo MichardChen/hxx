@@ -47,6 +47,7 @@ import com.framework.pcmodel.SecondhandCarPCDetailModel;
 import com.framework.pcmodel.SecondhandCarPCListModel;
 import com.framework.restmodel.BrandJsonModel;
 import com.framework.restmodel.BrandModel;
+import com.framework.restmodel.BrandSeriesMJsonModel;
 import com.framework.restmodel.CarouselModel;
 import com.framework.restmodel.NewsListModel;
 import com.framework.restmodel.PCImportCarListModel;
@@ -567,6 +568,7 @@ public class PCController extends RestfulController{
 			slm.setFinanceName(e.getName());
 			slm.setMoneys(e.getLowRefund());
 			slm.setPeriod(e.getLowRate());
+			slm.setIcon(e.getIcon());
 			slm.setRate(e.getLowRate());
 			slm.setStandard(e.getStandard());
 			models.add(slm);
@@ -735,27 +737,27 @@ public class PCController extends RestfulController{
 		JSONObject json = new JSONObject();
 		List<TBrandEntity> list = brandService.queryAllList(1);
 		List<BrandJsonModel> brandList = new ArrayList<>();
-		List<BrandJsonModel> brandSeriesList = new ArrayList<>();
 		BrandJsonModel brandModel = null;
 		for(TBrandEntity entity : list){
 			brandModel = new BrandJsonModel();
 			brandModel.setId(entity.getId());
 			brandModel.setName(entity.getBrand());
 			brandModel.setPid(0);
-			brandList.add(brandModel);
 			
-			BrandJsonModel seriesModel = null;
+			
+			BrandSeriesMJsonModel seriesModel = null;
+			List<BrandSeriesMJsonModel> models = new ArrayList<>();
 			List<TBrandSeriesEntity> sList = brandSeriesDao.queryCarSeriesList(entity.getId());
 			for(TBrandSeriesEntity b : sList) {
-				seriesModel = new BrandJsonModel();
+				seriesModel = new BrandSeriesMJsonModel();
 				seriesModel.setId(b.getId());
 				seriesModel.setName(b.getCarSerial());
-				seriesModel.setPid(entity.getId());
-				brandSeriesList.add(seriesModel);
+				models.add(seriesModel);
 			}
+			brandModel.setModels(models);
+			brandList.add(brandModel);
 		}
 		json.put("brandList", brandList);
-		json.put("brandSeriesList", brandSeriesList);
 		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");

@@ -40,6 +40,7 @@ import com.framework.entity.TVertifyCodeEntity;
 import com.framework.model.FinanceListModel;
 import com.framework.restmodel.BrandJsonModel;
 import com.framework.restmodel.BrandModel;
+import com.framework.restmodel.BrandSeriesMJsonModel;
 import com.framework.restmodel.CarouselModel;
 import com.framework.restmodel.ImportCarListModel;
 import com.framework.restmodel.LeaseCarListModel;
@@ -712,27 +713,27 @@ public class HController extends RestfulController{
 		JSONObject json = new JSONObject();
 		List<TBrandEntity> list = brandService.queryAllList(1);
 		List<BrandJsonModel> brandList = new ArrayList<>();
-		List<BrandJsonModel> brandSeriesList = new ArrayList<>();
 		BrandJsonModel brandModel = null;
 		for(TBrandEntity entity : list){
 			brandModel = new BrandJsonModel();
 			brandModel.setId(entity.getId());
 			brandModel.setName(entity.getBrand());
 			brandModel.setPid(0);
-			brandList.add(brandModel);
 			
-			BrandJsonModel seriesModel = null;
+			
+			BrandSeriesMJsonModel seriesModel = null;
+			List<BrandSeriesMJsonModel> models = new ArrayList<>();
 			List<TBrandSeriesEntity> sList = brandSeriesDao.queryCarSeriesList(entity.getId());
 			for(TBrandSeriesEntity b : sList) {
-				seriesModel = new BrandJsonModel();
+				seriesModel = new BrandSeriesMJsonModel();
 				seriesModel.setId(b.getId());
 				seriesModel.setName(b.getCarSerial());
-				seriesModel.setPid(entity.getId());
-				brandSeriesList.add(seriesModel);
+				models.add(seriesModel);
 			}
+			brandModel.setModels(models);
+			brandList.add(brandModel);
 		}
 		json.put("brandList", brandList);
-		json.put("brandSeriesList", brandSeriesList);
 		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");
