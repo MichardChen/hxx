@@ -33,6 +33,15 @@ public class CarSecondhandListModel implements Serializable{
 	private String createTime;
 	//
 	private String descUrl;
+	
+	private String flg;
+	
+	public String getFlg() {
+		return flg;
+	}
+	public void setFlg(String flg) {
+		this.flg = flg;
+	}
 	public Integer getId() {
 		return id;
 	}

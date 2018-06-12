@@ -11,7 +11,7 @@
 		<div class="form-group">
 			<div class="col-sm-2 control-label">车名</div>
 		   	<div class="col-sm-2">
-		    <input type="text" class="form-control" v-model="tCarSecondhand.carName" placeholder="请输入车名"/>
+		    <input type="text" class="form-control" v-model="tCarSecondhand.carName" id="carName" placeholder="请输入车名"/>
 		    </div>
 		    <div class="col-sm-2 control-label">品牌</div>
 		   	<div class="col-sm-2">
@@ -23,11 +23,11 @@
 		<div class="form-group">
 			<div class="col-sm-2 control-label">图片</div>
 		   	<div class="col-sm-2">
-		   		<input type="file" v-model="tCarSecondhand.icon" id="uFile" name="uFile" placeholder="请选择车标"/>
+		   		<a style="text-decoration: none;display: none;" target="_blank" id="icon">查看封面</a><input type="file" v-model="tCarSecondhand.icon" id="uFile" name="uFile" placeholder="请选择车标"/>
 		    </div>
 		   	<div class="col-sm-2 control-label">封面标签</div>
 		   	<div class="col-sm-2">
-		      <input type="text" class="form-control" v-model="tCarSecondhand.titleLabel" placeholder="请输入封面标签"/>
+		      <input type="text" class="form-control" v-model="tCarSecondhand.titleLabel" id="titleLabel" placeholder="请输入封面标签"/>
 		    </div>
 		</div>
 		<div class="form-group">
@@ -47,27 +47,27 @@
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">公里数 </div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.kilomiters" placeholder="请输入公里数"/>
+		      <input type="number" class="form-control" v-model="tCarSecondhand.kilomiters" id="kilomiters" placeholder="请输入公里数"/>
 		    </div>
 		   	<div class="col-sm-2 control-label">先用年数</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.year" placeholder="请输入先用年数"/>
+		      <input type="number" class="form-control" v-model="tCarSecondhand.year" id="year" placeholder="请输入先用年数"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">首付</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.firstPayment" placeholder="请输入首付"/>
+		      <input type="number" class="form-control" v-model="tCarSecondhand.firstPayment" id="firstPayment" placeholder="请输入首付"/>
 		    </div>
 		   	<div class="col-sm-2 control-label">月供</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.monthPayment" placeholder="请输入月供"/>
+		      <input type="number" class="form-control" v-model="tCarSecondhand.monthPayment" id="monthPayment" placeholder="请输入月供"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">车龄</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.age" placeholder="请输入车龄"/>
+		      <input type="number" class="form-control" v-model="tCarSecondhand.age" id="age" placeholder="请输入车龄"/>
 		    </div>
 		   	<div class="col-sm-2 control-label">车型</div>
 		   	<div class="col-sm-2">
@@ -81,14 +81,14 @@
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">车身颜色</div>
 		   	<div class="col-sm-6">
-		      <input type="text" class="form-control" v-model="tCarSecondhand.carColor" placeholder="请输入颜色编号,用','隔开"/>
+		      <input type="text" class="form-control" v-model="tCarSecondhand.carColor" id="carColor" placeholder="请输入颜色编号,用','隔开"/>
 		      <a href="http://link.fobshanghai.com/rgbcolor.htm" target="_blank" style="text-decoration: none;">查看颜色编号</a>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">车价</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.carCost" placeholder="请输入车价"/>
+		      <input type="number" class="form-control" v-model="tCarSecondhand.carCost" id="carCost" placeholder="请输入车价"/>
 		    </div>
 		</div>
 		<div class="form-group">
@@ -100,23 +100,23 @@
 		    </div>
 		   	<div class="col-sm-2 control-label">新车含税价</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.carTaxCost" placeholder="请输入新车含税价"/>
+		      <input type="number" class="form-control" v-model="tCarSecondhand.carTaxCost" id="carTaxCost" placeholder="请输入新车含税价"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">已使用年数</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.periods" placeholder="请输入已使用年数"/>
+		      <input type="number" class="form-control" v-model="tCarSecondhand.periods" id="periods" placeholder="请输入已使用年数"/>
 		    </div>
 		   	<div class="col-sm-2 control-label">标签</div>
 		   	<div class="col-sm-2">
-		      <input type="text" class="form-control" v-model="tCarSecondhand.labels" placeholder="请输入标签"/>
+		      <input type="text" class="form-control" v-model="tCarSecondhand.labels" id="labels" placeholder="请输入标签"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">尾款</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.finalPayment" placeholder="请输入尾款"/>
+		      <input type="number" class="form-control" v-model="tCarSecondhand.finalPayment" id="finalPayment" placeholder="请输入尾款"/>
 		    </div>
 		</div>
 		<div class="form-group">
@@ -124,6 +124,7 @@
 			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
 			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
 		</div>
+		<input type="hidden" id="cartId"/>
 	</form>
 </div>
 

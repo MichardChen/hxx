@@ -25,6 +25,16 @@ public class ImportCarListModel implements Serializable{
 	private String updateTime;
 	//
 	private String descUrl;
+	
+	private String flg;
+	
+	
+	public String getFlg() {
+		return flg;
+	}
+	public void setFlg(String flg) {
+		this.flg = flg;
+	}
 	public Integer getId() {
 		return id;
 	}

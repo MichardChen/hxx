@@ -70,6 +70,21 @@ public class TCarSecondhandEntity implements Serializable {
 	private Timestamp createTime;
 	//
 	private String descUrl;
+	
+	private int flg;
+	
+	
+	
+	
+	public int getFlg() {
+		return flg;
+	}
+	public void setFlg(int flg) {
+		this.flg = flg;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public Integer getId() {
 		return id;
 	}

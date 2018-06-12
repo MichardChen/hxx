@@ -39,6 +39,27 @@ var vm = new Vue({
 		getInfo: function(id){
 			$.get("../tcarsecondhand/info/"+id, function(r){
                 vm.tCarSecondhand = r.tCarSecondhand;
+                $("#carName").val(r.tCarSecondhand.carName);
+                $("#brand").val(r.tCarSecondhand.brand);
+                $("#titleLabel").val(r.tCarSecondhand.titleLabel);
+                $("#provinceId").val(r.tCarSecondhand.provinceId);
+                $("#cityId").val(r.tCarSecondhand.cityId);
+                $("#kilomiters").val(r.tCarSecondhand.kilomiters);
+                $("#year").val(r.tCarSecondhand.year);
+                $("#firstPayment").val(r.tCarSecondhand.firstPayment);
+                $("#monthPayment").val(r.tCarSecondhand.monthPayment);
+                $("#age").val(r.tCarSecondhand.age);
+                $("#carLevelCd").val(r.tCarSecondhand.carLevelCd);
+                $("#carColor").val(r.tCarSecondhand.carColor);
+                $("#carCost").val(r.tCarSecondhand.carCost);
+                $("#series").val(r.tCarSecondhand.series);
+                $("#carTaxCost").val(r.tCarSecondhand.carTaxCost);
+                $("#periods").val(r.tCarSecondhand.periods);
+                $("#labels").val(r.tCarSecondhand.labels);
+                $("#finalPayment").val(r.tCarSecondhand.finalPayment);
+                $("#cartId").val(r.tCarSecondhand.id);
+                $("#icon").attr("href",r.tCarSecondhand.icon);
+				$("#icon").show();
             });
 		},
 		selectBrand:function(){
@@ -80,28 +101,208 @@ var vm = new Vue({
 				}
 			},
 		saveOrUpdate: function (event) {
-			var fileObj = document.getElementById("uFile").files[0];
-			var formFile = new FormData();
-			var url = vm.tCarSecondhand.id == null ? "../tcarsecondhand/save" : "../tcarsecondhand/update";
-			formFile.append("uFile", fileObj); 
-			formFile.append("tCarSecondhand", JSON.stringify(vm.tCarSecondhand));
-			$.ajax({
-				type: "POST",
-			    url: url,
-			    data: formFile,
-			    contentType: "application/json",
-			    processData: false,
-			    contentType: false,
-			    success: function(r){
-			    	if(r.code === 0){
-						alert('操作成功', function(index){
-							vm.back();
-						});
-					}else{
-						alert(r.msg);
-					}
+			var cartId = $("#cartId").val();
+			if(cartId == "" || cartId == null){
+				//新增
+				var fileObj = document.getElementById("uFile").files[0];
+				var formFile = new FormData();
+				
+				if(!$("#carName").val()){
+					alert("请输入车名");
+					return;
 				}
-			});
+				if(!$("#brand").val()){
+					alert("请选择汽车品牌");
+					return;
+				}
+				if(!fileObj){
+					alert("请选择汽车图片");
+					return;
+				}
+				if(!$("#titleLabel").val()){
+					alert("请输入封面标签");
+					return;
+				}
+				if(!$("#provinceId").val()){
+					alert("请选择省份");
+					return;
+				}
+				if(!$("#cityId").val()){
+					alert("请选择城市");
+					return;
+				}
+				if(!$("#kilomiters").val()){
+					alert("请输入公里数");
+					return;
+				}
+				if(!$("#year").val()){
+					alert("请输入先用年数");
+					return;
+				}
+				if(!$("#firstPayment").val()){
+					alert("请输入首付");
+					return;
+				}
+				if(!$("#monthPayment").val()){
+					alert("请输入月供");
+					return;
+				}
+				if(!$("#age").val()){
+					alert("请输入车龄");
+					return;
+				}
+				if(!$("#carLevelCd").val()){
+					alert("请选择车辆级别");
+					return;
+				}
+				if(!$("#carColor").val()){
+					alert("请输入颜色编号");
+					return;
+				}
+				if(!$("#carCost").val()){
+					alert("请输入车价");
+					return;
+				}
+				if(!$("#series").val()){
+					alert("请选择车系");
+					return;
+				}
+				if(!$("#carTaxCost").val()){
+					alert("请输入新车含税价");
+					return;
+				}
+				if(!$("#periods").val()){
+					alert("请输入已使用年数");
+					return;
+				}
+				if(!$("#labels").val()){
+					alert("请输入标签");
+					return;
+				}
+				if(!$("#finalPayment").val()){
+					alert("请输入尾款");
+					return;
+				}
+				var url = "../tcarsecondhand/save";
+				formFile.append("uFile", fileObj); 
+				formFile.append("tCarSecondhand", JSON.stringify(vm.tCarSecondhand));
+				$.ajax({
+					type: "POST",
+				    url: url,
+				    data: formFile,
+				    contentType: "application/json",
+				    processData: false,
+				    contentType: false,
+				    success: function(r){
+				    	if(r.code === 0){
+							alert('操作成功', function(index){
+								vm.back();
+							});
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+			}else{
+				//更新
+				if(!$("#carName").val()){
+					alert("请输入车名");
+					return;
+				}
+				if(!$("#brand").val()){
+					alert("请选择汽车品牌");
+					return;
+				}
+				
+				if(!$("#titleLabel").val()){
+					alert("请输入封面标签");
+					return;
+				}
+				if(!$("#provinceId").val()){
+					alert("请选择省份");
+					return;
+				}
+				if(!$("#cityId").val()){
+					alert("请选择城市");
+					return;
+				}
+				if(!$("#kilomiters").val()){
+					alert("请输入公里数");
+					return;
+				}
+				if(!$("#year").val()){
+					alert("请输入先用年数");
+					return;
+				}
+				if(!$("#firstPayment").val()){
+					alert("请输入首付");
+					return;
+				}
+				if(!$("#monthPayment").val()){
+					alert("请输入月供");
+					return;
+				}
+				if(!$("#age").val()){
+					alert("请输入车龄");
+					return;
+				}
+				if(!$("#carLevelCd").val()){
+					alert("请选择车辆级别");
+					return;
+				}
+				if(!$("#carColor").val()){
+					alert("请输入颜色编号");
+					return;
+				}
+				if(!$("#carCost").val()){
+					alert("请输入车价");
+					return;
+				}
+				if(!$("#series").val()){
+					alert("请选择车系");
+					return;
+				}
+				if(!$("#carTaxCost").val()){
+					alert("请输入新车含税价");
+					return;
+				}
+				if(!$("#periods").val()){
+					alert("请输入已使用年数");
+					return;
+				}
+				if(!$("#labels").val()){
+					alert("请输入标签");
+					return;
+				}
+				if(!$("#finalPayment").val()){
+					alert("请输入尾款");
+					return;
+				}
+				var fileObj = document.getElementById("uFile").files[0];
+				var formFile = new FormData();
+				var url = "../tcarsecondhand/update";
+				formFile.append("uFile", fileObj); 
+				vm.tCarSecondhand.id=cartId;
+				formFile.append("tCarSecondhand", JSON.stringify(vm.tCarSecondhand));
+				$.ajax({
+					type: "POST",
+				    url: url,
+				    data: formFile,
+				    contentType: "application/json",
+				    processData: false,
+				    contentType: false,
+				    success: function(r){
+				    	if(r.code === 0){
+							alert('操作成功', function(index){
+								vm.back();
+							});
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+			}
+			
 		},
 		back: function (event) {
 			history.go(-1);

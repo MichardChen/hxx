@@ -100,7 +100,7 @@ public class TCarImportController {
 			}else{
 				model.setUpdateBy(StringUtil.STRING_BLANK);
 			}
-			
+			model.setFlg(entity.getFlg() == 1 ? "在售":"下架");
 			model.setMarketPrice(entity.getMarketPrice());
 			model.setNowPrice(entity.getNowPrice());
 			model.setDescUrl(entity.getDescUrl());
@@ -156,6 +156,10 @@ public class TCarImportController {
 		entity.setCarSeriesId(viewModel.getInteger("carSeriesId"));
 		entity.setCarColor(viewModel.getString("carColor"));
 		entity.setCarClassCd(viewModel.getString("carClassCd"));
+		entity.setMaxSave(viewModel.getBigDecimal("maxSave"));
+		entity.setHot(viewModel.getInteger("hot"));
+		entity.setLabels(viewModel.getString("labels"));
+		entity.setFlg(1);
 		
 		//生成html
 		FileService fs=new FileService();
@@ -179,8 +183,6 @@ public class TCarImportController {
 		TCarImportEntity entity = new TCarImportEntity();
 		JSONObject viewModel = JSONObject.parseObject(tCarImport);
 		int userid = ShiroUtils.getUserId().intValue();
-		entity.setCreateBy(userid);
-		entity.setCreateTime(DateUtil.getNowTimestamp());
 		entity.setUpdateBy(userid);
 		entity.setUpdateTime(DateUtil.getNowTimestamp());
 		entity.setBrand(viewModel.getInteger("brand"));
@@ -193,10 +195,12 @@ public class TCarImportController {
 		entity.setFavour(viewModel.getString("favour"));
 		entity.setServicePiror(viewModel.getString("servicePiror"));
 		entity.setHot(viewModel.getInteger("hot"));
+		entity.setMaxSave(viewModel.getBigDecimal("maxSave"));
 		//先使用年数
 		entity.setCarSeriesId(viewModel.getInteger("carSeriesId"));
 		entity.setCarColor(viewModel.getString("carColor"));
 		entity.setLabels(viewModel.getString("labels"));
+		entity.setId(viewModel.getInteger("id"));
 		
 		//生成html
 		FileService fs=new FileService();
@@ -205,7 +209,7 @@ public class TCarImportController {
 		if(StringUtil.isNoneBlank(logo)){
 			entity.setIcon(logo);
 		}
-		tCarImportService.save(entity);
+		tCarImportService.update(entity);
 		return R.ok();
 	}
 	

@@ -314,4 +314,14 @@ public interface Constants {
 		//媒体报道
 		public static final String MEDIA = "030004";
 	}
+	
+	//文档类型
+	public static interface DOCUMENT_ABOUTUS{
+		public static final String ABOUTUS = "120001";
+		public static final String JOINUS = "120002";
+		public static final String SERVICE_ITEM = "120003";
+		public static final String ABOUT_SALEAFTER = "120004";
+		public static final String CONTACT_US = "120005";
+		public static final String BUYCART_PRODUCE = "120003";
+	}
 }

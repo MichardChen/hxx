@@ -27,6 +27,24 @@ var vm = new Vue({
 		getInfo: function(id){
 			$.get("../tcarimport/info/"+id, function(r){
                 vm.tCarImport = r.tCarImport;
+                $("#carName").val(r.tCarImport.carName);
+                $("#brand").val(r.tCarImport.brand);
+                $("#nowPrice").val(r.tCarImport.nowPrice);
+                $("#marketPrice").val(r.tCarImport.marketPrice);
+                $("#maxSave").val(r.tCarImport.maxSave);
+                $("#mark").val(r.tCarImport.mark);
+                $("#carColor").val(r.tCarImport.carColor);
+                $("#favour").val(r.tCarImport.favour);
+                $("#servicePiror").val(r.tCarImport.servicePiror);
+                $("#hot").val(r.tCarImport.hot);
+                $("#labels").val(r.tCarImport.labels);
+                $("#titleLabel").val(r.tCarImport.titleLabel);
+                $("#carLevelCd").val(r.tCarImport.carLevelCd);
+                $("#carClassCd").val(r.tCarImport.carClassCd);
+                $("#series").val(r.tCarImport.series);
+                $("#cartId").val(r.tCarImport.id);
+                $("#icon").attr("href",r.tCarImport.icon);
+				$("#icon").show();
             });
 		},
 		selectBrand:function(){
@@ -50,27 +68,183 @@ var vm = new Vue({
 		},
 		saveOrUpdate: function (event) {
 			var fileObj = document.getElementById("uFile").files[0];
-			var formFile = new FormData();
-			var url = vm.tCarImport.id == null ? "../tcarimport/save" : "../tcarimport/update";
-			formFile.append("uFile", fileObj); 
-			formFile.append("tCarImport", JSON.stringify(vm.tCarImport));
-			$.ajax({
-				type: "POST",
-			    url: url,
-			    data: formFile,
-			    contentType: "application/json",
-			    processData: false,
-			    contentType: false,
-			    success: function(r){
-			    	if(r.code === 0){
-						alert('操作成功', function(index){
-							vm.back();
-						});
-					}else{
-						alert(r.msg);
-					}
+			var cartId = $("#cartId").val();
+			if(cartId == 0 || cartId == "" || cartId == null){
+				if(!$("#carName").val()){
+					alert("请输入车名");
+					return;
 				}
-			});
+				if(!$("#brand").val()){
+					alert("请选择汽车品牌");
+					return;
+				}
+				if(!fileObj){
+					alert("请选择车辆图片");
+					return;
+				}
+				if(!$("#nowPrice").val()){
+					alert("请输入参考价");
+					return;
+				}
+				if(!$("#marketPrice").val()){
+					alert("请输入市场价");
+					return;
+				}
+				if(!$("#maxSave").val()){
+					alert("请输入最大节省金额");
+					return;
+				}
+				if(!$("#mark").val()){
+					alert("请输入备注");
+					return;
+				}
+				if(!$("#carColor").val()){
+					alert("请输入颜色编号");
+					return;
+				}
+				if(!$("#favour").val()){
+					alert("请输入优势条件");
+					return;
+				}
+				if(!$("#servicePiror").val()){
+					alert("请输入服务优势");
+					return;
+				}
+				if(!$("#hot").val()){
+					alert("请输入热度");
+					return;
+				}
+				if(!$("#labels").val()){
+					alert("请输入标签");
+					return;
+				}
+				if(!$("#titleLabel").val()){
+					alert("请输入主标签");
+					return;
+				}
+				if(!$("#carLevelCd").val()){
+					alert("请选择车辆级别");
+					return;
+				}
+				if(!$("#carClassCd").val()){
+					alert("请选择车辆品类");
+					return;
+				}
+				
+				if(!$("#series").val()){
+					alert("请选择车系");
+					return;
+				}
+				
+				var formFile = new FormData();
+				var url = "../tcarimport/save";
+				formFile.append("uFile", fileObj); 
+				formFile.append("tCarImport", JSON.stringify(vm.tCarImport));
+				$.ajax({
+					type: "POST",
+				    url: url,
+				    data: formFile,
+				    contentType: "application/json",
+				    processData: false,
+				    contentType: false,
+				    success: function(r){
+				    	if(r.code === 0){
+							alert('操作成功', function(index){
+								vm.back();
+							});
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+			}else{
+				if(!$("#carName").val()){
+					alert("请输入车名");
+					return;
+				}
+				if(!$("#brand").val()){
+					alert("请选择汽车品牌");
+					return;
+				}
+			
+				if(!$("#nowPrice").val()){
+					alert("请输入参考价");
+					return;
+				}
+				if(!$("#marketPrice").val()){
+					alert("请输入市场价");
+					return;
+				}
+				if(!$("#maxSave").val()){
+					alert("请输入最大节省金额");
+					return;
+				}
+				if(!$("#mark").val()){
+					alert("请输入备注");
+					return;
+				}
+				if(!$("#carColor").val()){
+					alert("请输入颜色编号");
+					return;
+				}
+				if(!$("#favour").val()){
+					alert("请输入优势条件");
+					return;
+				}
+				if(!$("#servicePiror").val()){
+					alert("请输入服务优势");
+					return;
+				}
+				if(!$("#hot").val()){
+					alert("请输入热度");
+					return;
+				}
+				if(!$("#labels").val()){
+					alert("请输入标签");
+					return;
+				}
+				if(!$("#titleLabel").val()){
+					alert("请输入主标签");
+					return;
+				}
+				if(!$("#carLevelCd").val()){
+					alert("请选择车辆级别");
+					return;
+				}
+				if(!$("#carClassCd").val()){
+					alert("请选择车辆品类");
+					return;
+				}
+				
+				if(!$("#series").val()){
+					alert("请选择车系");
+					return;
+				}
+				var fileObj = document.getElementById("uFile").files[0];
+				var formFile = new FormData();
+				var url = "../tcarimport/update";
+				formFile.append("uFile", fileObj); 
+				vm.tCarImport.id=cartId;
+				formFile.append("tCarImport", JSON.stringify(vm.tCarImport));
+				$.ajax({
+					type: "POST",
+				    url: url,
+				    data: formFile,
+				    contentType: "application/json",
+				    processData: false,
+				    contentType: false,
+				    success: function(r){
+				    	if(r.code === 0){
+							alert('操作成功', function(index){
+								vm.back();
+							});
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+			}
+			
 		},
 		back: function (event) {
 			history.go(-1);

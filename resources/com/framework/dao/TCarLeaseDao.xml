@@ -8,7 +8,7 @@
 	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TCarLeaseEntity">
-		select * from t_car_lease 
+		select * from t_car_lease order by flg desc,update_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -147,7 +147,8 @@
 			`tfirst_year_month_payment`,
 			`tperiods`,
 			`tmonth_payment`,
-			`salecount`
+			`salecount`,
+			`flg`
 		)
 		values
 		(
@@ -185,7 +186,8 @@
 			#{tfirstYearMonthPayment},
 			#{tperiods},
 			#{tmonthPayment},
-			#{salecount}
+			#{salecount},
+			#{flg}
 		)
 	</insert>
 	 
@@ -215,17 +217,17 @@
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
 			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
 			<if test="descUrl != null">`desc_url` = #{descUrl}, </if>
-			<if test="cartParam2Id != null">`cart_param2_id` = #{cartParam2Id}</if>
-			<if test="carLevelCd != null">`car_level_cd` = #{carLevelCd}</if>
-			<if test="mark != null">`mark` = #{mark}</if>
-			<if test="firstPayment1 != null">`first_payment1` = #{firstPayment1}</if>
-			<if test="monthPayment1 != null">`month_payment1` = #{monthPayment1}</if>
-			<if test="periods1 != null">`period1` = #{periods1}</if>
-			<if test="mark1 != null">`mark1` = #{mark1}</if>
-			<if test="tfirstYearFirstPay != null">`tfirst_year_firstpay` = #{tfirstYearFirstPay}</if>
-			<if test="tfirstYearMonthPayment != null">`tfirst_year_month_payment` = #{tfirstYearMonthPayment}</if>
-			<if test="tperiods != null">`tperiods` = #{tperiods}</if>
-			<if test="tmonthPayment != null">`tmonth_payment` = #{tmonthPayment}</if>
+			<if test="cartParam2Id != null">`cart_param2_id` = #{cartParam2Id},</if>
+			<if test="carLevelCd != null">`car_level_cd` = #{carLevelCd},</if>
+			<if test="mark != null">`mark` = #{mark},</if>
+			<if test="firstPayment1 != null">`first_payment1` = #{firstPayment1},</if>
+			<if test="monthPayment1 != null">`month_payment1` = #{monthPayment1},</if>
+			<if test="periods1 != null">`period1` = #{periods1},</if>
+			<if test="mark1 != null">`mark1` = #{mark1},</if>
+			<if test="tfirstYearFirstPay != null">`tfirst_year_firstpay` = #{tfirstYearFirstPay},</if>
+			<if test="tfirstYearMonthPayment != null">`tfirst_year_month_payment` = #{tfirstYearMonthPayment},</if>
+			<if test="tperiods != null">`tperiods` = #{tperiods},</if>
+			<if test="tmonthPayment != null">`tmonth_payment` = #{tmonthPayment},</if>
 			<if test="salecount != null">`salecount` = #{salecount}</if>
 		</set>
 		where id = #{id}
@@ -235,11 +237,11 @@
 		delete from t_car_lease where id = #{value}
 	</delete>
 	
-	<delete id="deleteBatch">
-		delete from t_car_lease where id in 
+	<update id="deleteBatch">
+		update t_car_lease set flg=0 where id in 
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
-	</delete>
+	</update>
 
 </mapper>

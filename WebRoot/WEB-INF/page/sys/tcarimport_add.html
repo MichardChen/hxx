@@ -11,7 +11,7 @@
 		<div class="form-group">
 			<div class="col-sm-2 control-label">车名</div>
 		   	<div class="col-sm-2">
-		      <input type="text" class="form-control" v-model="tCarImport.carName" placeholder="请输入车名"/>
+		      <input type="text" class="form-control" v-model="tCarImport.carName" id="carName" placeholder="请输入车名"/>
 		    </div>
 		   	<div class="col-sm-2 control-label">品牌</div>
 		   	<div class="col-sm-2">
@@ -23,70 +23,70 @@
 		<div class="form-group">
 		   <div class="col-sm-2 control-label">车辆图片</div>
 		   	<div class="col-sm-2">
-		      <input type="file" v-model="tCarImport.icon" name="uFile" id="uFile" placeholder=""/>
+		      <a style="text-decoration: none;display: none;" target="_blank" id="icon">查看封面</a><input type="file" v-model="tCarImport.icon" name="uFile" id="uFile" placeholder=""/>
 		    </div>
 		   	<div class="col-sm-2 control-label">参考价</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarImport.nowPrice" placeholder="请输入参考价"/>
+		      <input type="number" class="form-control" v-model="tCarImport.nowPrice" id="nowPrice" placeholder="请输入参考价"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">市场价</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarImport.marketPrice" placeholder="请输入市场价"/>
+		      <input type="number" class="form-control" v-model="tCarImport.marketPrice" id="marketPrice" placeholder="请输入市场价"/>
 		    </div>
 		   	<div class="col-sm-2 control-label">最大节省</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarImport.maxSave" placeholder="请输入最大节省金额"/>
+		      <input type="number" class="form-control" v-model="tCarImport.maxSave" id="maxSave" placeholder="请输入最大节省金额"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">备注</div>
 		   	<div class="col-sm-6">
-		      <input type="text" class="form-control" v-model="tCarImport.mark" placeholder="请输入备注"/>
+		      <input type="text" class="form-control" v-model="tCarImport.mark" id="mark" placeholder="请输入备注"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">车辆颜色</div>
 		   	<div class="col-sm-6">
-		      <input type="text" class="form-control" v-model="tCarImport.carColor" placeholder="请输入颜色编号,用','隔开"/>
+		      <input type="text" class="form-control" v-model="tCarImport.carColor" id="carColor" placeholder="请输入颜色编号,用','隔开"/>
 		      <a href="http://link.fobshanghai.com/rgbcolor.htm" target="_blank" style="text-decoration: none;">查看颜色编号</a>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">优势条件</div>
 		   	<div class="col-sm-2">
-		      <input type="text" class="form-control" v-model="tCarImport.favour" placeholder="请输入优势条件"/>
+		      <input type="text" class="form-control" v-model="tCarImport.favour" id="favour" placeholder="请输入优势条件"/>
 		    </div>
 		   	<div class="col-sm-2 control-label">服务优势</div>
 		   	<div class="col-sm-2">
-		      <input type="text" class="form-control" v-model="tCarImport.servicePiror" placeholder="请输入服务优势"/>
+		      <input type="text" class="form-control" v-model="tCarImport.servicePiror" id="servicePiror" placeholder="请输入服务优势"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">热度</div>
 		   	<div class="col-sm-2">
-		      <input type="text" class="form-control" v-model="tCarImport.hot" placeholder="请输入热度"/>
+		      <input type="text" class="form-control" v-model="tCarImport.hot" id="hot" placeholder="请输入热度"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">标签</div>
 		   	<div class="col-sm-2">
-		      <input type="text" class="form-control" v-model="tCarImport.labelId" placeholder="请输入标签,以','隔开"/>
+		      <input type="text" class="form-control" v-model="tCarImport.labels" id="labels" placeholder="请输入标签,以','隔开"/>
 		    </div>
 		   	<div class="col-sm-2 control-label">主标签</div>
 		   	<div class="col-sm-2">
-		      	<input type="text" class="form-control" v-model="tCarImport.titleLabel" placeholder="请输入主标签"/>
+		      	<input type="text" class="form-control" v-model="tCarImport.titleLabel" id="titleLabel" placeholder="请输入主标签"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">车辆级别</div>
 		   	<div class="col-sm-2">
-		      <input type="text" class="form-control" v-model="tCarImport.carLevelCd" placeholder="请选择车辆级别"/>
+		      <input type="text" class="form-control" v-model="tCarImport.carLevelCd" id="carLevelCd" placeholder="请选择车辆级别"/>
 		    </div>
 		   	<div class="col-sm-2 control-label">车辆品类</div>
 		   	<div class="col-sm-2">
-		      <input type="text" class="form-control" v-model="tCarImport.carClassCd" placeholder="请选择车辆品类"/>
+		      <input type="text" class="form-control" v-model="tCarImport.carClassCd" id="carClassCd" placeholder="请选择车辆品类"/>
 		    </div>
 		</div>
 		<div class="form-group">
@@ -102,6 +102,7 @@
 			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
 			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
 		</div>
+		<input type="hidden" id="cartId"/>
 	</form>
 </div>
 

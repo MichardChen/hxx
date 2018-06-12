@@ -112,7 +112,7 @@ public class TCarLeaseController {
 			}else{
 				model.setUpdateBy(StringUtil.STRING_BLANK);
 			}
-			
+			model.setFlg(entity.getFlg() == 1 ? "在售":"下架");
 			model.setMonthPayment(entity.getMonthPayment());
 			model.setFirstPayment(entity.getFinalPayment());
 			model.setDescUrl(entity.getDescUrl());
@@ -177,6 +177,7 @@ public class TCarLeaseController {
 		entity.setTfirstYearMonthPayment(viewModel.getBigDecimal("tfirstYearMonthPayment"));
 		entity.setTperiods(viewModel.getInteger("tperiods"));
 		entity.setTmonthPayment(viewModel.getBigDecimal("tmonthPayment"));
+		entity.setFlg(1);
 		
 		//生成html
 		FileService fs=new FileService();
@@ -195,9 +196,47 @@ public class TCarLeaseController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("tcarlease:update")
-	public R update(@RequestBody TCarLeaseEntity tCarLease){
-		tCarLeaseService.update(tCarLease);
+	public R update(@RequestParam("tCarLease")String tCarLease,@RequestParam(value="uFile",required=false)MultipartFile uploadFile){
+		TCarLeaseEntity entity = new TCarLeaseEntity();
+		JSONObject viewModel = JSONObject.parseObject(tCarLease);
+		int userid = ShiroUtils.getUserId().intValue();
+		entity.setUpdateBy(userid);
+		entity.setUpdateTime(DateUtil.getNowTimestamp());
+		entity.setBrand(viewModel.getInteger("brand"));
+		entity.setCarName(viewModel.getString("carName"));
+		entity.setId(viewModel.getInteger("id"));
+		//先使用年数
+		entity.setYear(viewModel.getString("year"));
+		entity.setCarTypeInfo(viewModel.getString("carTypeInfo"));
+		entity.setFirstPayment(viewModel.getBigDecimal("firstPayment"));
+		entity.setMonthPayment(viewModel.getBigDecimal("monthPayment"));
+		entity.setTitleLabel(viewModel.getString("titleLabel"));
+		entity.setCarSeriesId(viewModel.getInteger("carSeriesId"));
+		entity.setCarCost(viewModel.getBigDecimal("carCost"));
+		entity.setCarColor(viewModel.getString("carColor"));
+		entity.setFirmCost(viewModel.getBigDecimal("firmCost"));
+		entity.setFinalPayment(viewModel.getBigDecimal("finalPayment"));
+		entity.setLabels(viewModel.getString("labels"));
+		entity.setRealFirstPayment(viewModel.getBigDecimal("realFirstPayment"));
+		entity.setServiceFee(viewModel.getBigDecimal("serviceFee"));
+		entity.setMark(viewModel.getString("mark"));
+		entity.setFirstPayment1(viewModel.getBigDecimal("firstPayment1"));
+		entity.setMonthPayment1(viewModel.getBigDecimal("monthPayment1"));
+		entity.setPeriods1(36);
+		entity.setMark1(viewModel.getString("mark1"));
+		entity.setTfirstYearFirstPay(viewModel.getBigDecimal("tfirstYearFirstPay"));
+		entity.setTfirstYearMonthPayment(viewModel.getBigDecimal("tfirstYearMonthPayment"));
+		entity.setTperiods(viewModel.getInteger("tperiods"));
+		entity.setTmonthPayment(viewModel.getBigDecimal("tmonthPayment"));
 		
+		//生成html
+		FileService fs=new FileService();
+		//上传图片
+		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if(StringUtil.isNoneBlank(logo)){
+			entity.setIcon(logo);
+		}
+		tCarLeaseService.update(entity);
 		return R.ok();
 	}
 	

@@ -66,6 +66,14 @@ public class TCarImportEntity implements Serializable {
 	//
 	private String carClassCd;
 	
+	private int flg;
+	
+	public int getFlg() {
+		return flg;
+	}
+	public void setFlg(int flg) {
+		this.flg = flg;
+	}
 	public String getTitleLabel() {
 		return titleLabel;
 	}

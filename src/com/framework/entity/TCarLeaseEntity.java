@@ -36,6 +36,8 @@ public class TCarLeaseEntity implements Serializable {
 	private BigDecimal monthPayment;
 	//
 	private String titleLabel;
+	
+	private Integer flg;
 	//
 	private Integer carSeriesId;
 	//
@@ -89,6 +91,12 @@ public class TCarLeaseEntity implements Serializable {
 	
 	private String carLevelCd;
 	
+	public Integer getFlg() {
+		return flg;
+	}
+	public void setFlg(Integer flg) {
+		this.flg = flg;
+	}
 	public Integer getSalecount() {
 		return salecount;
 	}

@@ -1,18 +1,15 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../tcarimport/list',
+        url: '../tdocument/list',
         datatype: "json",
         colModel: [			
-			{ label: 'id', name: 'id', width: 50, key: true },
-			{ label: '品牌', name: 'brand', width: 80 }, 			
-			{ label: '车名', name: 'carName', width: 80 }, 			
-			{ label: '现价', name: 'nowPrice', width: 80 }, 			
-			{ label: '市场价', name: 'marketPrice', width: 80 }, 			
-			{ label: '创建者', name: 'createBy', width: 80 }, 			
-			{ label: '更新者', name: 'updateBy', width: 80 }, 			
+			{ label: '文档标题', name: 'title', width: 80 }, 			
+			{ label: '文档类型', name: 'typeCd', width: 80 }, 			
 			{ label: '创建时间', name: 'createTime', width: 80 }, 			
 			{ label: '更新时间', name: 'updateTime', width: 80 }, 			
-			{ label: '状态', name: 'flg', width: 80 }		
+			{ label: '创建者', name: 'createBy', width: 80 }, 			
+			{ label: '更新者', name: 'updateBy', width: 80 },
+			{ label: '状态', name: 'flg', width: 80 }
         ],
 		viewrecords: true,
         height: 400,
@@ -53,7 +50,7 @@ var vm = new Vue({
 				return ;
 			}
 			
-			location.href = "tcarimport_add.html?id="+id;
+			location.href = "tdocument_add.html?id="+id;
 		},
 		del: function (event) {
 			var ids = getSelectedRows();
@@ -64,7 +61,7 @@ var vm = new Vue({
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: "../tcarimport/delete",
+				    url: "../tdocument/delete",
 				    data: JSON.stringify(ids),
 				    success: function(r){
 						if(r.code == 0){

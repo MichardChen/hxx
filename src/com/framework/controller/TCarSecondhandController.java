@@ -107,7 +107,7 @@ public class TCarSecondhandController {
 			}else{
 				model.setUpdateBy(StringUtil.STRING_BLANK);
 			}
-			
+			model.setFlg(entity.getFlg() == 1 ? "在售":"下架");
 			model.setCarName(entity.getCarName());
 			model.setDescUrl(entity.getDescUrl());
 			model.setFirstPayment(entity.getFirstPayment());
@@ -177,7 +177,7 @@ public class TCarSecondhandController {
 		entity.setLabels(viewModel.getString("labels"));
 		entity.setPeriods(viewModel.getInteger("periods"));
 		entity.setFinalPayment(viewModel.getBigDecimal("finalPayment"));
-		
+		entity.setFlg(1);
 		//生成html
 		FileService fs=new FileService();
 		//上传图片
@@ -195,9 +195,44 @@ public class TCarSecondhandController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("tcarsecondhand:update")
-	public R update(@RequestBody TCarSecondhandEntity tCarSecondhand){
-		tCarSecondhandService.update(tCarSecondhand);
+	public R update(@RequestParam("tCarSecondhand")String tCarSecondhand,@RequestParam(value="uFile",required=false)MultipartFile uploadFile){
+		TCarSecondhandEntity entity = new TCarSecondhandEntity();
+		JSONObject viewModel = JSONObject.parseObject(tCarSecondhand);
+		int userid = ShiroUtils.getUserId().intValue();
+		entity.setCreateBy(userid);
+		entity.setCreateTime(DateUtil.getNowTimestamp());
+		entity.setUpdateBy(userid);
+		entity.setUpdateTime(DateUtil.getNowTimestamp());
+		entity.setBrand(viewModel.getInteger("brand"));
+		entity.setCarName(viewModel.getString("carName"));
+		entity.setProvinceId(viewModel.getInteger("provinceId"));
+		entity.setCityId(viewModel.getInteger("cityId"));
+		entity.setKilomiters(viewModel.getBigDecimal("kilomiters"));
+		entity.setAge(viewModel.getBigDecimal("age"));
+		entity.setCarLevelCd(viewModel.getString("carLevelCd"));
+		//先使用年数
+		entity.setYear(viewModel.getString("year"));
+		entity.setFirstPayment(viewModel.getBigDecimal("firstPayment"));
+		entity.setMonthPayment(viewModel.getBigDecimal("monthPayment"));
+		entity.setTitleLabel(viewModel.getString("titleLabel"));
+		entity.setCarSeriesId(viewModel.getInteger("carSeriesId"));
+		entity.setCarCost(viewModel.getBigDecimal("carCost"));
+		entity.setCarTaxCost(viewModel.getBigDecimal("carTaxCost"));
+		entity.setCarColor(viewModel.getString("carColor"));
+		entity.setFinalPayment(viewModel.getBigDecimal("finalPayment"));
+		entity.setLabels(viewModel.getString("labels"));
+		entity.setPeriods(viewModel.getInteger("periods"));
+		entity.setFinalPayment(viewModel.getBigDecimal("finalPayment"));
+		entity.setId(viewModel.getInteger("id"));
 		
+		//生成html
+		FileService fs=new FileService();
+		//上传图片
+		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if(StringUtil.isNoneBlank(logo)){
+			entity.setIcon(logo);
+		}
+		tCarSecondhandService.update(entity);
 		return R.ok();
 	}
 	

@@ -17,10 +17,13 @@ import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
+import com.framework.dao.SysUserDao;
 import com.framework.dao.TCodemstDao;
+import com.framework.entity.SysUserEntity;
 import com.framework.entity.TCarSecondhandEntity;
 import com.framework.entity.TCarouselEntity;
 import com.framework.entity.TCodemstEntity;
+import com.framework.model.CarouselDetailModel;
 import com.framework.model.CarouselListModel;
 import com.framework.service.FileService;
 import com.framework.service.TCarouselService;
@@ -44,6 +47,8 @@ public class TCarouselController {
 	private TCarouselService tCarouselService;
 	@Autowired
 	private TCodemstDao codeMstDao;
+	@Autowired
+	private SysUserDao userDao;
 
 	@RequestMapping("/tcarousel.html")
 	public String list() {
@@ -78,6 +83,21 @@ public class TCarouselController {
 			model.setImgUrl(e.getImgUrl());
 			model.setMark(e.getMark());
 			model.setRealUrl(e.getRealUrl());
+			SysUserEntity admin = userDao.queryObject(e.getCreateBy());
+			if(admin != null){
+				model.setCreateBy(admin.getUsername());
+			}else{
+				model.setCreateBy(StringUtil.STRING_BLANK);
+			}
+			
+			SysUserEntity update = userDao.queryObject(e.getUpdateBy());
+			if(update != null){
+				model.setUpdateBy(update.getUsername());
+			}else{
+				model.setUpdateBy(StringUtil.STRING_BLANK);
+			}
+			model.setUpdateTime(StringUtil.toString(e.getUpdateTime()));
+			model.setCreateTime(StringUtil.toString(e.getCreateTime()));
 			TCodemstEntity mst = codeMstDao.queryByCode(e.getTypeCd());
 			if(mst != null){
 				model.setTypeCd(mst.getName());
@@ -100,8 +120,15 @@ public class TCarouselController {
 	@RequiresPermissions("tcarousel:info")
 	public R info(@PathVariable("id") Integer id) {
 		TCarouselEntity tCarousel = tCarouselService.queryObject(id);
-
-		return R.ok().put("tCarousel", tCarousel);
+		CarouselDetailModel model = new CarouselDetailModel();
+		if(tCarousel != null){
+			model.setId(tCarousel.getId());
+			model.setImgUrl(tCarousel.getImgUrl());
+			model.setMark(tCarousel.getMark());
+			model.setRealUrl(tCarousel.getRealUrl());
+			model.setTypeCd(tCarousel.getTypeCd());
+		}
+		return R.ok().put("tCarousel", model);
 	}
 
 	/**
@@ -143,8 +170,28 @@ public class TCarouselController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("tcarousel:update")
-	public R update(@RequestBody TCarouselEntity tCarousel) {
-		tCarouselService.update(tCarousel);
+	public R update(@RequestParam("tCarousel") String tCarousel,@RequestParam(value = "uFile", required = false) MultipartFile uploadFile) {
+
+		TCarouselEntity entity = new TCarouselEntity();
+		JSONObject viewModel = JSONObject.parseObject(tCarousel);
+		int userid = ShiroUtils.getUserId().intValue();
+		entity.setUpdateBy(userid);
+		entity.setUpdateTime(DateUtil.getNowTimestamp());
+		entity.setTypeCd(viewModel.getString("typeCd"));
+		entity.setFlg(1);
+		entity.setMark(viewModel.getString("mark"));
+		entity.setRealUrl(viewModel.getString("realUrl"));
+		entity.setId(viewModel.getInteger("id"));
+
+		// 生成html
+		FileService fs = new FileService();
+		// 上传图片
+		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if (StringUtil.isNoneBlank(logo)) {
+			entity.setImgUrl(logo);
+		}
+
+		tCarouselService.update(entity);
 
 		return R.ok();
 	}
