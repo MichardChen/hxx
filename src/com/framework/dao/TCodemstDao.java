@@ -1,5 +1,7 @@
 package com.framework.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.framework.entity.TCodemstEntity;
@@ -14,4 +16,6 @@ import com.framework.entity.TCodemstEntity;
 public interface TCodemstDao extends BaseDao<TCodemstEntity> {
 
 	public TCodemstEntity queryByCode(@Param("code")String code);
+	
+	public List<TCodemstEntity> queryByCodeList(@Param("pcode")String pcode);
 }

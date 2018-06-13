@@ -1,5 +1,9 @@
 package com.framework.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.framework.entity.TDocumentEntity;
 
 /**
@@ -11,4 +15,5 @@ import com.framework.entity.TDocumentEntity;
  */
 public interface TDocumentDao extends BaseDao<TDocumentEntity> {
 	
+	public List<TDocumentEntity> queryDocumentByTypeCd(Object[] code);
 }

@@ -30,6 +30,7 @@ import com.framework.entity.TCarouselEntity;
 import com.framework.entity.TCartParam2Entity;
 import com.framework.entity.TCartParamsEntity;
 import com.framework.entity.TCodemstEntity;
+import com.framework.entity.TDocumentEntity;
 import com.framework.entity.TFinanceCommitEntity;
 import com.framework.entity.TFinanceEntity;
 import com.framework.entity.TNewsEntity;
@@ -37,6 +38,8 @@ import com.framework.entity.TQuestionAnswerEntity;
 import com.framework.entity.TQuestionEntity;
 import com.framework.entity.TStoryEntity;
 import com.framework.entity.TVertifyCodeEntity;
+import com.framework.model.DocumentListModel;
+import com.framework.model.DocumentModel;
 import com.framework.model.FinanceListModel;
 import com.framework.model.QuestionAnswerModel;
 import com.framework.pcmodel.ImportCarPCListModel;
@@ -61,6 +64,7 @@ import com.framework.service.TCarSecondhandService;
 import com.framework.service.TCarouselService;
 import com.framework.service.TCartParam2Service;
 import com.framework.service.TCartParamsService;
+import com.framework.service.TDocumentService;
 import com.framework.service.TFinanceCommitService;
 import com.framework.service.TFinanceService;
 import com.framework.service.TNewsService;
@@ -114,6 +118,8 @@ public class PCController extends RestfulController{
 	private TCartParamsService paramsService;
 	@Autowired
 	private TCartParam2Service params2Service;
+	@Autowired
+	private TDocumentService documentService;
 	
 	@RequestMapping("/index")
 	public void index(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -1146,6 +1152,39 @@ public class PCController extends RestfulController{
 		
 		json.put("params1", params1);
 		json.put("params2", params2);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	//查看关于我们的数据列表
+	@RequestMapping("/queryDocumentList")
+	public void queryDocumentList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		List<TCodemstEntity> mstList = codeMstDao.queryByCodeList(Constants.DOCUMENT_ABOUTUS.PCODE);
+		String[] objects = new String[mstList.size()];
+		for(int i=0;i<mstList.size();i++){
+			TCodemstEntity mst = mstList.get(i);
+			if(mst != null){
+				objects[i]=mst.getCode();
+			}
+		}
+		
+		List<TDocumentEntity> documents = documentService.queryListByTypeCd(objects);
+		List<DocumentModel> models = new ArrayList<>();
+		DocumentModel model = null;
+		for(TDocumentEntity entity : documents){
+			model = new DocumentModel();
+			model.setCode(entity.getTypeCd());
+			model.setDocumentName(entity.getTitle());
+			model.setDocumentUrl(entity.getDescUrl());
+			models.add(model);
+		}
+		
+		json.put("documentList", models);
 		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");

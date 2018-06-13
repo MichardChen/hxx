@@ -72,7 +72,7 @@ public class TQuestionController {
 		QuestionListModel model = null;
 		for(TQuestionEntity data : tQuestionList){
 			model = new QuestionListModel();
-			model.setCreateTime(StringUtil.toString(data.getCreateTime()));
+			model.setCreateTime(DateUtil.format(data.getCreateTime()));
 			if(StringUtil.equals(data.getStatus(), Constants.FEEDBACK_STATUS.HANDLE)){
 				model.setStatus("已处理");
 			}
@@ -94,7 +94,7 @@ public class TQuestionController {
 			}else{
 				model.setUpdateBy(StringUtil.STRING_BLANK);
 			}
-			model.setUpdateTime(StringUtil.toString(data.getUpdateTime()));
+			model.setUpdateTime(DateUtil.format(data.getUpdateTime()));
 			model.setLinkMan(data.getLinkMan());
 			model.setMobile(data.getMobile());
 			model.setQuestion(data.getQuestion());

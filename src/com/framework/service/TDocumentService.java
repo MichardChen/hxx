@@ -27,4 +27,6 @@ public interface TDocumentService {
 	void delete(Integer id);
 	
 	void deleteBatch(Integer[] ids);
+	
+	List<TDocumentEntity> queryListByTypeCd(String[] code);
 }

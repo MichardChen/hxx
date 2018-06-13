@@ -52,8 +52,28 @@ var vm = new Vue({
 			if(id == null){
 				return ;
 			}
-			
 			location.href = "tcarlease_add.html?id="+id;
+		},
+		upload:function(event){
+			var fileObj = document.getElementById("btn_file").files[0];
+			var formFile = new FormData();
+			var url = "../common/uploadExcelFile";
+			formFile.append("uploadFile", fileObj); 
+			$.ajax({
+				type: "POST",
+			    url: url,
+			    data: formFile,
+			    contentType: "application/json",
+			    processData: false,
+			    contentType: false,
+			    success: function(r){
+			    	if(r.code === 0){
+						alert(r.msg);
+					}else{
+						alert(r.msg);
+					}
+				}
+			});
 		},
 		del: function (event) {
 			var ids = getSelectedRows();

@@ -51,5 +51,10 @@ public class TDocumentServiceImpl implements TDocumentService {
 	public void deleteBatch(Integer[] ids){
 		tDocumentDao.deleteBatch(ids);
 	}
+
+	@Override
+	public List<TDocumentEntity> queryListByTypeCd(String[] code) {
+		return tDocumentDao.queryDocumentByTypeCd(code);
+	}
 	
 }

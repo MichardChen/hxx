@@ -13,26 +13,75 @@ var vm = new Vue({
     },
 	methods: {
 		getInfo: function(id){
-			$.get("../tdocument/info/"+id, function(r){
-                vm.tDocument = r.tDocument;
+			$.get("../tdocument/info/"+id, function(json){
+				 var r = eval('('+json+')');
+                $("#title").val(r.tDocument.title);
+                $("#documentId").val(r.tDocument.id);
+                $("#typeCd").val(r.tDocument.typeCd);
+                $("#content").summernote('code', r.tDocument.content);
             });
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.tDocument.id == null ? "../tdocument/save" : "../tdocument/update";
-			$.ajax({
-				type: "POST",
-			    url: url,
-			    data: JSON.stringify(vm.tDocument),
-			    success: function(r){
-			    	if(r.code === 0){
-						alert('操作成功', function(index){
-							vm.back();
-						});
-					}else{
-						alert(r.msg);
+			
+			var documentId=$("#documentId").val();
+			var content = $("#content").summernote('code');
+			if($("#title").val()==""){
+				alert("请输入文档标题");
+				return;
+			}
+			if(content==""){
+				alert("请输入文档内容");
+				return;
+			}
+			if($("#typeCd").val()==null){
+				alert("请选择文档类型");
+				return;
+			}
+			if(!documentId){
+				var  url = "../tdocument/save";
+				vm.tDocument.content = $("#content").summernote('code');
+				var formFile = new FormData();
+				formFile.append("tDocument", JSON.stringify(vm.tDocument));
+				$.ajax({
+					type: "POST",
+				    url: url,
+				    data: formFile,
+				    processData: false,
+				    contentType: false,
+				    success: function(r){
+				    	var rr = eval('('+r+')');
+				    	if(rr.code === 0){
+							alert('操作成功', function(index){
+								vm.back();
+							});
+						}else{
+							alert(rr.msg);
+						}
 					}
-				}
-			});
+				});
+			}else{
+				var url = "../tdocument/update";
+				vm.tDocument.id=documentId;
+				vm.tDocument.content = $("#content").summernote('code');
+				var formFile = new FormData();
+				formFile.append("tDocument", JSON.stringify(vm.tDocument));
+				$.ajax({
+					type: "POST",
+				    url: url,
+				    data: formFile,
+				    processData: false,
+				    contentType: false,
+				    success: function(r){
+				    	if(r.code === 0){
+							alert('操作成功', function(index){
+								vm.back();
+							});
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+			}
 		},
 		back: function (event) {
 			history.go(-1);

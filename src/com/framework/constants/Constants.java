@@ -102,7 +102,7 @@ public interface Constants {
 	 * 本地
 	 */
 
-	public static interface HOST {
+	/*public static interface HOST {
 		public static final String LOCALHOST = "http://192.168.1.91:82/newsimages/";
 		public static final String TEA = "http://192.168.1.91:82/tea/";
 		public static final String DOCUMENT = "http://192.168.1.91:82/document/";
@@ -125,17 +125,17 @@ public interface Constants {
 	}
 	
 	public static interface HTTP_HOST {
-		public static final String LOCALHOST = "http://192.168.1.91:88/newsimages/";
-		public static final String TEA = "http://192.168.1.91:88/tea/";
-		public static final String DOCUMENT = "http://192.168.1.91:88/document/";
-		public static final String FILE = "http://192.168.1.91:88/file/";
-		public static final String ICON = "http://192.168.1.91:88/icon/";
-		public static final String IMG = "http://192.168.1.91:88/img/";
-		public static final String STORE = "http://192.168.1.91:88/store/";
-		public static final String COMMON = "http://192.168.1.91:88/common/";
-	}
+		public static final String LOCALHOST = "http://192.168.1.91:82/newsimages/";
+		public static final String TEA = "http://192.168.1.91:82/tea/";
+		public static final String DOCUMENT = "http://192.168.1.91:82/document/";
+		public static final String FILE = "http://192.168.1.91:82/file/";
+		public static final String ICON = "http://192.168.1.91:82/icon/";
+		public static final String IMG = "http://192.168.1.91:82/img/";
+		public static final String STORE = "http://192.168.1.91:82/store/";
+		public static final String COMMON = "http://192.168.1.91:82/common/";
+	}*/
 
-	/*public static interface HOST {
+	public static interface HOST {
 		public static final String LOCALHOST = "http://www.yibuwangluo.cn:88/newsimages/";
 		public static final String TEA = "http://www.yibuwangluo.cn:88/tea/";
 		public static final String DOCUMENT = "http://www.yibuwangluo.cn:88/document/";
@@ -166,7 +166,7 @@ public interface Constants {
 		public static final String IMG = "D:\\upload\\img\\";
 		public static final String STORE = "D:\\upload\\store\\";
 		public static final String COMMON = "D:\\upload\\common\\";
-	}*/
+	}
 
 	/*
 	 * public static interface FILE_HOST { public static final String LOCALHOST
@@ -323,5 +323,6 @@ public interface Constants {
 		public static final String ABOUT_SALEAFTER = "120004";
 		public static final String CONTACT_US = "120005";
 		public static final String BUYCART_PRODUCE = "120003";
+		public static final String PCODE = "120000";
 	}
 }
