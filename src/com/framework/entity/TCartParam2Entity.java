@@ -1,6 +1,7 @@
 package com.framework.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 
@@ -21,6 +22,7 @@ public class TCartParam2Entity implements Serializable {
 	private Integer cartId;
 	//
 	private String yaokongyaosi;
+	private String cartTypeCd;
 	//
 	private String wuyaosiqidong;
 	//
@@ -184,9 +186,9 @@ public class TCartParam2Entity implements Serializable {
 	//
 	private String quanjingshexiangtou;
 	//
-	private Date createTime;
+	private Timestamp createTime;
 	//
-	private Date updateTime;
+	private Timestamp updateTime;
 
 	/**
 	 * 设置：
@@ -619,6 +621,14 @@ public class TCartParam2Entity implements Serializable {
 	 */
 	public String getZuoyicaizhi() {
 		return zuoyicaizhi;
+	}
+	
+	
+	public String getCartTypeCd() {
+		return cartTypeCd;
+	}
+	public void setCartTypeCd(String cartTypeCd) {
+		this.cartTypeCd = cartTypeCd;
 	}
 	/**
 	 * 设置：
@@ -1196,28 +1206,17 @@ public class TCartParam2Entity implements Serializable {
 	public String getQuanjingshexiangtou() {
 		return quanjingshexiangtou;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	/**
-	 * 获取：
-	 */
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-	/**
-	 * 获取：
-	 */
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
+	
 }

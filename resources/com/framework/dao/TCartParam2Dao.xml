@@ -110,7 +110,8 @@
 			`zishiyingxunhang`, 
 			`quanjingshexiangtou`, 
 			`create_time`, 
-			`update_time`
+			`update_time`,
+			`cart_type_cd`
 		)
 		values
 		(
@@ -198,7 +199,8 @@
 			#{zishiyingxunhang}, 
 			#{quanjingshexiangtou}, 
 			#{createTime}, 
-			#{updateTime}
+			#{updateTime},
+			#{cartTypeCd}
 		)
 	</insert>
 	 
@@ -290,6 +292,7 @@
 			<if test="quanjingshexiangtou != null">`quanjingshexiangtou` = #{quanjingshexiangtou}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+			<if test="cartTypeCd != null">`cart_type_cd` = #{cartTypeCd}</if>
 		</set>
 		where id = #{id}
 	</update>

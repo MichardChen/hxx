@@ -1,6 +1,7 @@
 package com.framework.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 
@@ -53,6 +54,8 @@ public class TCartParamsEntity implements Serializable {
 	private String pailiang;
 	//
 	private String jinqixingshi;
+	
+	private String cartTypeCd;
 	//
 	private String qgpxxingshi;
 	//
@@ -144,9 +147,9 @@ public class TCartParamsEntity implements Serializable {
 	//
 	private String cheneizhognkongsuo;
 	//
-	private Date createTime;
+	private Timestamp createTime;
 	//
-	private Date updateTime;
+	private Timestamp updateTime;
 
 	/**
 	 * 设置：
@@ -237,6 +240,14 @@ public class TCartParamsEntity implements Serializable {
 	 */
 	public void setQianlunju(String qianlunju) {
 		this.qianlunju = qianlunju;
+	}
+	
+	
+	public String getCartTypeCd() {
+		return cartTypeCd;
+	}
+	public void setCartTypeCd(String cartTypeCd) {
+		this.cartTypeCd = cartTypeCd;
 	}
 	/**
 	 * 获取：
@@ -898,46 +909,26 @@ public class TCartParamsEntity implements Serializable {
 	public void setFadongjifangdao(String fadongjifangdao) {
 		this.fadongjifangdao = fadongjifangdao;
 	}
-	/**
-	 * 获取：
-	 */
 	public String getFadongjifangdao() {
 		return fadongjifangdao;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setCheneizhognkongsuo(String cheneizhognkongsuo) {
-		this.cheneizhognkongsuo = cheneizhognkongsuo;
-	}
-	/**
-	 * 获取：
-	 */
 	public String getCheneizhognkongsuo() {
 		return cheneizhognkongsuo;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	/**
-	 * 获取：
-	 */
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-	/**
-	 * 获取：
-	 */
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
+	public void setCheneizhognkongsuo(String cheneizhognkongsuo) {
+		this.cheneizhognkongsuo = cheneizhognkongsuo;
+	}
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
+	
 }
