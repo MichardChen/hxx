@@ -19,4 +19,8 @@ public interface TCarLeaseDao extends BaseDao<TCarLeaseEntity> {
 	public List<TCarLeaseEntity> queryPCTerminalList(Map<String, Object> map);
 	
 	int queryLeaseCarTotal(Map<String, Object> map);
+	
+	public List<TCarLeaseEntity> queryPCTerminalByTypeList(Map<String, Object> map);
+	
+	int queryLeaseCarByTypeTotal(Map<String, Object> map);
 }

@@ -24,6 +24,10 @@ public interface TCarLeaseService {
 	
 	int queryPCTerminalTotal(Map<String, Object> map);
 	
+	List<TCarLeaseEntity> queryPCTerminalByBrandList(Map<String, Object> map);
+	
+	int queryPCTerminalByBrandTotal(Map<String, Object> map);
+	
 	int queryTotal(Map<String, Object> map);
 	
 	void save(TCarLeaseEntity tCarLease);

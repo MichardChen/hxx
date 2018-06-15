@@ -66,5 +66,15 @@ public class TCarLeaseServiceImpl implements TCarLeaseService {
 	public int queryPCTerminalTotal(Map<String, Object> map) {
 		return tCarLeaseDao.queryLeaseCarTotal(map);
 	}
+
+	@Override
+	public List<TCarLeaseEntity> queryPCTerminalByBrandList(Map<String, Object> map) {
+		return tCarLeaseDao.queryPCTerminalByTypeList(map);
+	}
+
+	@Override
+	public int queryPCTerminalByBrandTotal(Map<String, Object> map) {
+		return tCarLeaseDao.queryLeaseCarByTypeTotal(map);
+	}
 	
 }

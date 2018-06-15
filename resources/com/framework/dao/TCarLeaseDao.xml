@@ -46,6 +46,30 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
+	
+	<select id="queryPCTerminalByTypeList" resultType="com.framework.entity.TCarLeaseEntity">
+		select a.* from t_car_lease a 
+		<if test="brand != null and brand != ''">
+			 inner join t_brand b on a.brand=b.id
+		</if>
+		where 1=1
+		<if test="brand != null and brand != ''">
+				and b.brand like "%${brand}%"
+		</if>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	<select id="queryLeaseCarByTypeTotal" resultType="int">
+		select count(1) from t_car_lease a 
+		<if test="brand != null and brand != ''">
+			 inner join t_brand b on a.brand=b.id
+		</if>
+		<if test="brand != null and brand != ''">
+				where b.brand like "%${brand}%"
+		</if>
+	</select>
+	
 	<select id="queryMobileTerminalList" resultType="com.framework.entity.TCarLeaseEntity">
 		select * from t_car_lease where 1=1
 		<if test="brandId != null and brandId != 0">

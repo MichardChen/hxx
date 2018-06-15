@@ -46,6 +46,7 @@ public class ParamsDTO implements Serializable {
 	private int sex;
 	
 	private String typeCd;
+	private String brand;
 
 	public static ParamsDTO getInstance(HttpServletRequest request) {
 
@@ -84,11 +85,21 @@ public class ParamsDTO implements Serializable {
 		dto.setToPrice(StringUtil.toQueryCarBigDecimal(request.getParameter("toPrice")));
 		dto.setCarClassCd(request.getParameter("carClassCd"));
 		dto.setTypeCd(request.getParameter("typeCd"));
+		dto.setBrand(request.getParameter("brand"));
 		return dto;
 	}
 	
-	
-	
+	public String getBrand() {
+		return brand;
+	}
+
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+
+
 	public String getTypeCd() {
 		return typeCd;
 	}

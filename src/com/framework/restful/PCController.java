@@ -1190,4 +1190,65 @@ public class PCController extends RestfulController{
 		data.setMessage("查询成功");
 		renderJson(data, response);
 	}
+	
+	@RequestMapping("/common")
+	public void common(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		
+		//获取店招图片
+		TCarouselEntity storyImage = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.STORY_ZHAO);
+		if(storyImage != null) {
+			json.put("storeImage", storyImage.getImgUrl());
+		}else {
+			json.put("storeImage", "");
+		}
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	@RequestMapping("/queryLeaseCarByBrandList")
+	public void queryLeaseCarByBrandList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		Map<String, Object> map = new HashMap<>();
+		map.put("offset", dto.getPageSize() * (dto.getPageNum() - 1));
+		map.put("limit", dto.getPageSize());
+		map.put("brand", dto.getBrand());
+		
+		List<TCarLeaseEntity> list = leaseService.queryPCTerminalByBrandList(map);
+		List<LeaseCarPCListModel> pcListModels = new ArrayList<>();
+		LeaseCarPCListModel model = null;
+		for(TCarLeaseEntity e : list){
+			
+			model = new LeaseCarPCListModel();
+			model.setIcon(e.getIcon());
+			model.setId(e.getId());
+			model.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(), 0));
+			model.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(), 1));
+			model.setLabels(e.getLabels());
+			model.setName(e.getCarName());
+			model.setTitleLabel(e.getTitleLabel());
+			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
+			if(seriesEntity != null) {
+				model.setBrandSeries(seriesEntity.getCarSerial());
+			}else {
+				model.setBrandSeries("");
+			}
+			
+			pcListModels.add(model);
+		}
+		//查询结果集总条数
+		int count = leaseService.queryPCTerminalByBrandTotal(map);
+		json.put("count", count);
+		json.put("leaseCarList", pcListModels);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
 }
