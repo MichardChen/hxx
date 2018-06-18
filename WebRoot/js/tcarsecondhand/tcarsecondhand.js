@@ -59,6 +59,39 @@ var vm = new Vue({
 			
 			location.href = "tcarsecondhand_add.html?id="+id;
 		},
+		modifyParams:function(event){
+			var id = getSelectedRow();
+			if(id == null){
+				return ;
+			}
+			location.href = "params.html?typeCd=110002&id="+id;
+		},
+		upload:function(event){
+			var fileObj = document.getElementById("btn_file").files[0];
+			var formFile = new FormData();
+			var url = "../common/uploadExcelFile";
+			formFile.append("typeCd","110002");
+			if(fileObj==null || fileObj == ""){
+				alert("请选择xls文件");
+				return;
+			}
+			formFile.append("uploadFile", fileObj); 
+			$.ajax({
+				type: "POST",
+			    url: url,
+			    data: formFile,
+			    contentType: "application/json",
+			    processData: false,
+			    contentType: false,
+			    success: function(r){
+			    	if(r.code === 0){
+						alert(r.msg);
+					}else{
+						alert(r.msg);
+					}
+				}
+			});
+		},
 		del: function (event) {
 			var ids = getSelectedRows();
 			if(ids == null){

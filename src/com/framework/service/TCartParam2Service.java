@@ -32,4 +32,6 @@ public interface TCartParam2Service {
 	TCartParam2Entity queryObjectByCartId(Integer cartId);
 	
 	TCartParam2Entity queryObjectByCartIdType(Integer cartId,String cartTypeCd);
+	
+	void updateByCartId(TCartParam2Entity tCartParam2);
 }

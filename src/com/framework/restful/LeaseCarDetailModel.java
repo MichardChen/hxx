@@ -44,6 +44,7 @@ public class LeaseCarDetailModel implements Serializable{
 	private String height;
 	private String length;
 	private String width;
+	private String pailiang;
 	private String biansuxiangtype;
 	private String ranliaotype;
 	private String zhuchezhidongtype;
@@ -53,6 +54,12 @@ public class LeaseCarDetailModel implements Serializable{
 	private String companyMobile;
 	private String salecount;
 	
+	public String getPailiang() {
+		return pailiang;
+	}
+	public void setPailiang(String pailiang) {
+		this.pailiang = pailiang;
+	}
 	public String getFinalPayment() {
 		return finalPayment;
 	}

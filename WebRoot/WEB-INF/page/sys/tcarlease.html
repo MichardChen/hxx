@@ -10,10 +10,11 @@
 		<a class="btn btn-default" href="tcarlease_add.html">新增</a>
 		<button type="button"  class="btn btn-default" @click="update">修改</button>
 		<button type="button" class="btn btn-default" @click="del">删除</button>
+		<button type="button" class="btn btn-default" @click="modifyParams">修改参数</button>
 	</div>
 	<div class="grid-btn">
+			<input type="file" id="btn_file" style="display: inline-block;width:175px;" title="请选择文件">
 			<button type="button" class="btn btn-default" @click="upload" id="confirm">确定</button>
-			<input type="file" id="btn_file">
 	</div>
     <table id="jqGrid"></table>
     <div id="jqGridPager"></div>

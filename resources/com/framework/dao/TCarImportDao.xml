@@ -92,7 +92,8 @@
 			`car_level_cd`, 
 			`car_class_cd`,
 			`title_label`,
-			`flg`
+			`flg`,
+			`content`
 		)
 		values
 		(
@@ -119,7 +120,8 @@
 			#{carLevelCd}, 
 			#{carClassCd},
 			#{titleLabel},
-			#{flg}
+			#{flg},
+			#{content}
 		)
 	</insert>
 	 
@@ -149,6 +151,7 @@
 			<if test="carLevelCd != null">`car_level_cd` = #{carLevelCd}, </if>
 			<if test="carClassCd != null">`car_class_cd` = #{carClassCd}</if>
 			<if test="titleLabel != null">`title_label` = #{titleLabel}</if>
+			<if test="content != null">`content` = #{content}</if>
 		</set>
 		where id = #{id}
 	</update>

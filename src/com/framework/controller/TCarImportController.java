@@ -1,9 +1,13 @@
 package com.framework.controller;
 
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,6 +172,22 @@ public class TCarImportController {
 		if(StringUtil.isNoneBlank(logo)){
 			entity.setIcon(logo);
 		}
+		
+		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));
+		entity.setContent(htmlContent);
+		//生成html
+		String uuid = UUID.randomUUID().toString();
+		//生成html文件
+		try {
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
+			pw.println(htmlContent);
+			pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String contentUrl = Constants.HOST.DOCUMENT+uuid+".html";
+		entity.setDescUrl(contentUrl);
+		
 		tCarImportService.save(entity);
 		return R.ok();
 	}
@@ -209,6 +229,22 @@ public class TCarImportController {
 		if(StringUtil.isNoneBlank(logo)){
 			entity.setIcon(logo);
 		}
+		
+		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));
+		entity.setContent(htmlContent);
+		//生成html
+		String uuid = UUID.randomUUID().toString();
+		//生成html文件
+		try {
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
+			pw.println(htmlContent);
+			pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String contentUrl = Constants.HOST.DOCUMENT+uuid+".html";
+		entity.setDescUrl(contentUrl);
+		
 		tCarImportService.update(entity);
 		return R.ok();
 	}

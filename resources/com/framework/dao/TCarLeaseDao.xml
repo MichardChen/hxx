@@ -172,7 +172,8 @@
 			`tperiods`,
 			`tmonth_payment`,
 			`salecount`,
-			`flg`
+			`flg`,
+			`content`
 		)
 		values
 		(
@@ -211,7 +212,8 @@
 			#{tperiods},
 			#{tmonthPayment},
 			#{salecount},
-			#{flg}
+			#{flg},
+			#{content}
 		)
 	</insert>
 	 
@@ -253,6 +255,7 @@
 			<if test="tperiods != null">`tperiods` = #{tperiods},</if>
 			<if test="tmonthPayment != null">`tmonth_payment` = #{tmonthPayment},</if>
 			<if test="salecount != null">`salecount` = #{salecount}</if>
+			<if test="content != null">`content` = #{content}</if>
 		</set>
 		where id = #{id}
 	</update>

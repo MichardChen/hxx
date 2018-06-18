@@ -200,7 +200,7 @@ public class PCController extends RestfulController{
 			slm.setTitle(e.getStoryTitle());
 			slm.setType("");
 			slm.setDate(DateUtil.formatCN(e.getCreateTime()));
-			slm.setUrl(e.getDescUrl());
+			slm.setUrl(StringUtil.cutBodyHeader(e.getContent()));
 			storyList.add(slm);
 		}
 		json.put("storyList", storyList);
@@ -504,7 +504,7 @@ public class PCController extends RestfulController{
 			nlm.setId(e.getId());
 			nlm.setTitle(e.getNewsTitle());
 			nlm.setShortTitle(StringUtil.StripHT(e.getContent()));
-			nlm.setUrl(e.getContentUrl());
+			nlm.setUrl(StringUtil.cutBodyHeader(e.getContent()));
 			nlm.setDate(DateUtil.formatCN(e.getCreateTime()));
 			TCodemstEntity mst = codeMstDao.queryByCode(e.getNewsTypeCd());
 			if (mst != null) {
@@ -543,7 +543,7 @@ public class PCController extends RestfulController{
 			slm.setTitle(e.getStoryTitle());
 			slm.setType("");
 			slm.setDate(DateUtil.formatCN(e.getCreateTime()));
-			slm.setUrl(e.getDescUrl());
+			slm.setUrl(StringUtil.cutBodyHeader(e.getContent()));
 			storyList.add(slm);
 		}
 		json.put("storyList", storyList);
@@ -881,7 +881,7 @@ public class PCController extends RestfulController{
 		if(level != null){
 			model.setCartType(level.getName());
 		}
-		model.setDescUrl(car.getDescUrl());
+		model.setDescUrl(StringUtil.cutBodyHeader(car.getContent()));
 		TCartParamsEntity params = paramsService.queryObjectByCartId(car.getId(),Constants.CAR_SALE_TYPE.IMPORT);
 		
 		if(params != null){
@@ -966,6 +966,7 @@ public class PCController extends RestfulController{
 		}else{
 			model.setCarName("");
 		}
+		model.setPeriods(StringUtil.toString(car.getPeriods()));
 		TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
 		if(seriesEntity != null){
 			model.setCarSeriesName(seriesEntity.getCarSerial());
@@ -981,7 +982,7 @@ public class PCController extends RestfulController{
 		model.setFirstPayment(StringUtil.formatCarPrice(car.getFinalPayment(),0));
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
 		model.setContainTaxPrice(StringUtil.formatCarPrice(car.getCarTaxCost(), 0));
-		model.setDescUrl(car.getDescUrl());
+		model.setDescUrl(StringUtil.cutBodyHeader(car.getContent()));
 		model.setYear(DateUtil.formatCNYM(car.getYear()));
 		model.setKilomiter(StringUtil.formatCarPrice(car.getKilomiters(), 0)+"公里");
 		LocationCityEntity city = cityDao.queryObject(car.getCityId());
@@ -1093,7 +1094,7 @@ public class PCController extends RestfulController{
 				
 		model.setLabels(car.getLabels());
 		
-		model.setDescUrl(car.getDescUrl());
+		model.setDescUrl(StringUtil.cutBodyHeader(car.getContent()));
 		
 		TCartParamsEntity params = paramsService.queryObjectByCartId(car.getId(),Constants.CAR_SALE_TYPE.LEASE);
 		
@@ -1180,7 +1181,7 @@ public class PCController extends RestfulController{
 			model = new DocumentModel();
 			model.setCode(entity.getTypeCd());
 			model.setDocumentName(entity.getTitle());
-			model.setDocumentUrl(entity.getDescUrl());
+			model.setDocumentUrl(StringUtil.cutBodyHeader(entity.getContent()));
 			models.add(model);
 		}
 		

@@ -25,8 +25,8 @@ var vm = new Vue({
     },
 	methods: {
 		getInfo: function(id){
-			$.get("../tcarimport/info/"+id, function(r){
-                vm.tCarImport = r.tCarImport;
+			$.get("../tcarimport/info/"+id, function(json){
+				var r = eval('('+json+')');
                 $("#carName").val(r.tCarImport.carName);
                 $("#brand").val(r.tCarImport.brand);
                 $("#nowPrice").val(r.tCarImport.nowPrice);
@@ -45,6 +45,7 @@ var vm = new Vue({
                 $("#cartId").val(r.tCarImport.id);
                 $("#icon").attr("href",r.tCarImport.icon);
 				$("#icon").show();
+				$("#content").summernote('code', r.tCarImport.content);
             });
 		},
 		selectBrand:function(){
@@ -139,6 +140,7 @@ var vm = new Vue({
 				var formFile = new FormData();
 				var url = "../tcarimport/save";
 				formFile.append("uFile", fileObj); 
+				vm.tCarImport.content = $("#content").summernote('code');
 				formFile.append("tCarImport", JSON.stringify(vm.tCarImport));
 				$.ajax({
 					type: "POST",
@@ -225,6 +227,7 @@ var vm = new Vue({
 				var url = "../tcarimport/update";
 				formFile.append("uFile", fileObj); 
 				vm.tCarImport.id=cartId;
+				vm.tCarImport.content = $("#content").summernote('code');
 				formFile.append("tCarImport", JSON.stringify(vm.tCarImport));
 				$.ajax({
 					type: "POST",
@@ -250,4 +253,63 @@ var vm = new Vue({
 			history.go(-1);
 		}
 	}
+});
+function sendFile(files, editor, $editable) {
+    var $files = $(files);
+    $files.each(function () {
+        var file = this;
+        // FormData，新的form表单封装，具体可百度，但其实用法很简单，如下
+        var data = new FormData();
+        // 将文件加入到file中，后端可获得到参数名为“file”
+        data.append("uploadFile", file);
+        console.log(URL);
+        // ajax上传
+        $.ajax({
+            async: false, // 设置同步
+            data: data,
+            type: "POST",
+            url: URL+"/common/uploadFile",//图片上传的url（指定action），返回的是图片上传后的路径，http格式
+            cache: false,
+            contentType: false,
+            processData: false,
+            // 成功时调用方法，后端返回json数据
+            success: function (data) {
+            	var temp = eval('('+data+')');
+                $('.summernote').summernote('insertImage',temp.data.imgUrl);
+            },
+            // ajax请求失败时处理
+            error: function () {
+                alert("上传失败");
+            }
+        });
+    });
+}
+
+$(function () {
+	
+    $('.summernote').summernote({
+        height: 400,
+        toolbar: [
+                  ['style', ['style']],
+                  ['fontsize',['fontsize']],
+                  ['font', ['bold', 'underline', 'clear']],
+                  ['fontname', ['fontname']],
+                  ['color', ['color']],
+                  ['para', ['ul', 'ol', 'paragraph']],
+                  ['table', ['table']],
+                  ['insert', ['link', 'picture', 'video']],
+                  ['view', ['fullscreen', 'codeview', 'help']]
+                ],
+        tabsize: 2,
+        lang: 'zh-CN',
+        codemirror: {
+            theme: 'monokai'
+        },
+        focus: true,
+        callbacks: {
+            onImageUpload: function (files, editor, $editable) {
+                sendFile(files);
+            }
+        }
+    });
 });

@@ -161,7 +161,8 @@
 			`update_time`, 
 			`create_time`, 
 			`desc_url`,
-			`flg`
+			`flg`,
+			`content`
 		)
 		values
 		(
@@ -191,7 +192,8 @@
 			#{updateTime}, 
 			#{createTime}, 
 			#{descUrl},
-			#{flg}
+			#{flg},
+			#{content}
 		)
 	</insert>
 	 
@@ -225,6 +227,7 @@
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="descUrl != null">`desc_url` = #{descUrl}</if>
 			<if test="flg != null">`flg` = #{flg}</if>
+			<if test="content != null">`content` = #{content}</if>
 		</set>
 		where id = #{id}
 	</update>

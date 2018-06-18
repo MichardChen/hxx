@@ -234,6 +234,76 @@
 		where id = #{id}
 	</update>
 	
+	<update id="updateByCartId" parameterType="com.framework.entity.TCartParamsEntity">
+		update t_cart_params 
+		<set>
+			<if test="biaopei != null">`biaopei` = #{biaopei}, </if>
+			<if test="length != null">`length` = #{length}, </if>
+			<if test="width != null">`width` = #{width}, </if>
+			<if test="height != null">`height` = #{height}, </if>
+			<if test="zhouju != null">`zhouju` = #{zhouju}, </if>
+			<if test="qianlunju != null">`qianlunju` = #{qianlunju}, </if>
+			<if test="houlunju != null">`houlunju` = #{houlunju}, </if>
+			<if test="lidijianxi != null">`lidijianxi` = #{lidijianxi}, </if>
+			<if test="zhiliang != null">`zhiliang` = #{zhiliang}, </if>
+			<if test="cheshenjiegou != null">`cheshenjiegou` = #{cheshenjiegou}, </if>
+			<if test="chemenshu != null">`chemenshu` = #{chemenshu}, </if>
+			<if test="zuoweishu != null">`zuoweishu` = #{zuoweishu}, </if>
+			<if test="youxiangrongji != null">`youxiangrongji` = #{youxiangrongji}, </if>
+			<if test="xinglirongji != null">`xinglirongji` = #{xinglirongji}, </if>
+			<if test="fadongjixinghao != null">`fadongjixinghao` = #{fadongjixinghao}, </if>
+			<if test="pailiang != null">`pailiang` = #{pailiang}, </if>
+			<if test="jinqixingshi != null">`jinqixingshi` = #{jinqixingshi}, </if>
+			<if test="qgpxxingshi != null">`qgpxxingshi` = #{qgpxxingshi}, </if>
+			<if test="qigangshu != null">`qigangshu` = #{qigangshu}, </if>
+			<if test="qimenshu != null">`qimenshu` = #{qimenshu}, </if>
+			<if test="gangjing != null">`gangjing` = #{gangjing}, </if>
+			<if test="xingcheng != null">`xingcheng` = #{xingcheng}, </if>
+			<if test="maxmali != null">`maxmali` = #{maxmali}, </if>
+			<if test="maxgonglv != null">`maxgonglv` = #{maxgonglv}, </if>
+			<if test="maxgonglvzhuansu != null">`maxgonglvzhuansu` = #{maxgonglvzhuansu}, </if>
+			<if test="maxniuju != null">`maxniuju` = #{maxniuju}, </if>
+			<if test="maxnjzhuansu != null">`maxnjzhuansu` = #{maxnjzhuansu}, </if>
+			<if test="fadongjityjs != null">`fadongjityjs` = #{fadongjityjs}, </if>
+			<if test="ranliaotype != null">`ranliaotype` = #{ranliaotype}, </if>
+			<if test="ranliaocode != null">`ranliaocode` = #{ranliaocode}, </if>
+			<if test="gongyoutype != null">`gongyoutype` = #{gongyoutype}, </if>
+			<if test="ganggaicailiao != null">`ganggaicailiao` = #{ganggaicailiao}, </if>
+			<if test="gangticailiao != null">`gangticailiao` = #{gangticailiao}, </if>
+			<if test="huanbobiaozhun != null">`huanbobiaozhun` = #{huanbobiaozhun}, </if>
+			<if test="dangweigeshu != null">`dangweigeshu` = #{dangweigeshu}, </if>
+			<if test="biansuxiangtype != null">`biansuxiangtype` = #{biansuxiangtype}, </if>
+			<if test="qudongtype != null">`qudongtype` = #{qudongtype}, </if>
+			<if test="siqutype != null">`siqutype` = #{siqutype}, </if>
+			<if test="chasuxiangjg != null">`chasuxiangjg` = #{chasuxiangjg}, </if>
+			<if test="qianxuanliangtype != null">`qianxuanliangtype` = #{qianxuanliangtype}, </if>
+			<if test="houxuanliangtype != null">`houxuanliangtype` = #{houxuanliangtype}, </if>
+			<if test="zhulitype != null">`zhulitype` = #{zhulitype}, </if>
+			<if test="chetijiegou != null">`chetijiegou` = #{chetijiegou}, </if>
+			<if test="qianzhidongqitype != null">`qianzhidongqitype` = #{qianzhidongqitype}, </if>
+			<if test="houzhidongqitype != null">`houzhidongqitype` = #{houzhidongqitype}, </if>
+			<if test="zhuchezhidongtype != null">`zhuchezhidongtype` = #{zhuchezhidongtype}, </if>
+			<if test="qianluntaiguige != null">`qianluntaiguige` = #{qianluntaiguige}, </if>
+			<if test="houluntaiguige != null">`houluntaiguige` = #{houluntaiguige}, </if>
+			<if test="beitaiguige != null">`beitaiguige` = #{beitaiguige}, </if>
+			<if test="zhujiashiqinang != null">`zhujiashiqinang` = #{zhujiashiqinang}, </if>
+			<if test="fujiashiqinang != null">`fujiashiqinang` = #{fujiashiqinang}, </if>
+			<if test="qiancepaiqinang != null">`qiancepaiqinang` = #{qiancepaiqinang}, </if>
+			<if test="houcepaiqinang != null">`houcepaiqinang` = #{houcepaiqinang}, </if>
+			<if test="qiantouqinang != null">`qiantouqinang` = #{qiantouqinang}, </if>
+			<if test="houtouqinang != null">`houtouqinang` = #{houtouqinang}, </if>
+			<if test="qibuqinang != null">`qibuqinang` = #{qibuqinang}, </if>
+			<if test="taiyajianceqinang != null">`taiyajianceqinang` = #{taiyajianceqinang}, </if>
+			<if test="lingtaiyajxxs != null">`lingtaiyajxxs` = #{lingtaiyajxxs}, </if>
+			<if test="anquandaiweixts != null">`anquandaiweixts` = #{anquandaiweixts}, </if>
+			<if test="ertongzuoyijiekou != null">`ertongzuoyijiekou` = #{ertongzuoyijiekou}, </if>
+			<if test="fadongjifangdao != null">`fadongjifangdao` = #{fadongjifangdao}, </if>
+			<if test="cheneizhognkongsuo != null">`cheneizhognkongsuo` = #{cheneizhognkongsuo}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+		</set>
+		where cart_id = #{cartId} and cart_type_cd=#{cartTypeCd}
+	</update>
+	
 	<delete id="delete">
 		delete from t_cart_params where id = #{value}
 	</delete>

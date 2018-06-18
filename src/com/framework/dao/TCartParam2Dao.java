@@ -17,4 +17,6 @@ public interface TCartParam2Dao extends BaseDao<TCartParam2Entity> {
 	TCartParam2Entity queryObjectByCartId(@Param("cartId")int cartId);
 	
 	TCartParam2Entity queryObjectByCartIdType(@Param("cartId")Integer cartId,@Param("cartTypeCd")String cartTypeCd);
+	
+	void updateByCartId(TCartParam2Entity tCartParam2);
 }

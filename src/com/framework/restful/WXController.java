@@ -954,7 +954,7 @@ public class WXController extends RestfulController {
 		if(level != null){
 			model.setCartType(level.getName());
 		}
-		model.setDescUrl(car.getDescUrl());
+		model.setDescUrl(StringUtil.cutBodyHeader(car.getContent()));
 		TCartParamsEntity params = paramsService.queryObjectByCartId(car.getId(),Constants.CAR_SALE_TYPE.IMPORT);
 		
 		if(params != null){
@@ -967,6 +967,7 @@ public class WXController extends RestfulController {
 			model.setBiansuxiangtype(params.getBiansuxiangtype());
 			model.setRanliaotype(params.getRanliaotype());
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
+			model.setPailiang(params.getPailiang()+"mL");
 		}
 		//获取常见问题图片
 		TCodemstEntity oftenQuestionUrl = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.IMPORT_CAR_OFTENQUESTION);
@@ -981,11 +982,11 @@ public class WXController extends RestfulController {
 		
 		json.put("carDetail", model);
 		
-		TCartParamsEntity params1 = paramsService.queryObjectByCartId(dto.getCartId(),Constants.CAR_SALE_TYPE.IMPORT);
+		/*TCartParamsEntity params1 = paramsService.queryObjectByCartId(dto.getCartId(),Constants.CAR_SALE_TYPE.IMPORT);
 		TCartParam2Entity params2 = params2Service.queryObjectByCartIdType(dto.getCartId(),Constants.CAR_SALE_TYPE.IMPORT);
 		
 		json.put("params1", params1);
-		json.put("params2", params2);
+		json.put("params2", params2);*/
 		
 		
 		data.setData(json);
@@ -1015,6 +1016,7 @@ public class WXController extends RestfulController {
 		}else{
 			model.setCarName("");
 		}
+		model.setPeriods(StringUtil.toString(car.getPeriods()));
 		TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
 		if(seriesEntity != null){
 			model.setCarSeriesName(seriesEntity.getCarSerial());
@@ -1030,7 +1032,7 @@ public class WXController extends RestfulController {
 		model.setFirstPayment(StringUtil.formatCarPrice(car.getFirstPayment(),0));
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
 		model.setContainTaxPrice(StringUtil.formatCarPrice(car.getCarTaxCost(), 0));
-		model.setDescUrl(car.getDescUrl());
+		model.setDescUrl(StringUtil.cutBodyHeader(car.getContent()));
 		model.setYear(DateUtil.formatCNYM(car.getYear()));
 		model.setKilomiter(StringUtil.formatCarPrice(car.getKilomiters(), 0)+"公里");
 		LocationCityEntity city = cityDao.queryObject(car.getCityId());
@@ -1050,6 +1052,7 @@ public class WXController extends RestfulController {
 			model.setBiansuxiangtype(params.getBiansuxiangtype());
 			model.setRanliaotype(params.getRanliaotype());
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
+			model.setPailiang(params+"mL");
 		}
 		//获取购买说明
 		TCodemstEntity buyMark = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYMARK);
@@ -1069,11 +1072,11 @@ public class WXController extends RestfulController {
 		
 		json.put("carDetail", model);
 		
-		TCartParamsEntity params1 = paramsService.queryObjectByCartId(dto.getCartId(),Constants.CAR_SALE_TYPE.SECONDHAND);
+		/*TCartParamsEntity params1 = paramsService.queryObjectByCartId(dto.getCartId(),Constants.CAR_SALE_TYPE.SECONDHAND);
 		TCartParam2Entity params2 = params2Service.queryObjectByCartIdType(dto.getCartId(),Constants.CAR_SALE_TYPE.SECONDHAND);
 		
 		json.put("params1", params1);
-		json.put("params2", params2);
+		json.put("params2", params2);*/
 		
 		
 		data.setData(json);
@@ -1143,7 +1146,7 @@ public class WXController extends RestfulController {
 				
 		model.setLabels(car.getLabels());
 		
-		model.setDescUrl(car.getDescUrl());
+		model.setDescUrl(StringUtil.cutBodyHeader(car.getContent()));
 		
 		TCartParamsEntity params = paramsService.queryObjectByCartId(car.getId(),Constants.CAR_SALE_TYPE.LEASE);
 		
@@ -1157,6 +1160,7 @@ public class WXController extends RestfulController {
 			model.setBiansuxiangtype(params.getBiansuxiangtype());
 			model.setRanliaotype(params.getRanliaotype());
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
+			model.setPailiang(params+"mL");
 		}
 		//获取购买说明
 		TCodemstEntity buyMark = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.LEASE_CAR_BUYMARK);
@@ -1170,12 +1174,12 @@ public class WXController extends RestfulController {
 		}
 		model.setSalecount(StringUtil.toString(car.getSalecount()));
 		
-		TCartParamsEntity params1 = paramsService.queryObjectByCartId(dto.getCartId(),Constants.CAR_SALE_TYPE.LEASE);
+		/*TCartParamsEntity params1 = paramsService.queryObjectByCartId(dto.getCartId(),Constants.CAR_SALE_TYPE.LEASE);
 		TCartParam2Entity params2 = params2Service.queryObjectByCartIdType(dto.getCartId(),Constants.CAR_SALE_TYPE.LEASE);
 		
 		json.put("params1", params1);
 		json.put("params2", params2);
-		
+		*/
 		
 		json.put("carDetail", model);
 		data.setData(json);

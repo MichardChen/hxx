@@ -332,6 +332,20 @@ public class StringUtil extends StringUtils {
 		return html;
 	}
 	
+	public static String cutBodyHeader(String html) {
+		if(StringUtil.isBlank(html)) {
+			return null;
+		}
+		if(html.contains("<body>")) {
+			String start = "<body>";
+			String end = "</body>";
+			int s = html.indexOf(start)+start.length();
+			int e = html.indexOf(end);
+			return html.substring(s, e);
+		}
+		return html;
+	}
+	
 	public static String getTeaIcon(String imgs){
 		if(StringUtil.isBlank(imgs)){
 			return "";

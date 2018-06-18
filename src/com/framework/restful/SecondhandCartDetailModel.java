@@ -29,6 +29,23 @@ public class SecondhandCartDetailModel implements Serializable{
 	private String buyKnowUrl;
 	private String descUrl;
 	private String companyMobile;
+	private String pailiang;
+	private String periods;
+	
+	
+	
+	public String getPeriods() {
+		return periods;
+	}
+	public void setPeriods(String periods) {
+		this.periods = periods;
+	}
+	public String getPailiang() {
+		return pailiang;
+	}
+	public void setPailiang(String pailiang) {
+		this.pailiang = pailiang;
+	}
 	public int getCartId() {
 		return cartId;
 	}

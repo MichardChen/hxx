@@ -2,7 +2,8 @@ $(function () {
     $("#jqGrid").jqGrid({
         url: '../tcarlease/list',
         datatype: "json",
-        colModel: [			
+        colModel: [		
+        	{ label: 'id', name: 'id', width: 50, key: true },
 			{ label: '品牌', name: 'brand', width: 80 }, 			
 			{ label: '车名', name: 'carName', width: 80 }, 			
 			{ label: '首付', name: 'firstPayment', width: 80 }, 			
@@ -54,10 +55,25 @@ var vm = new Vue({
 			}
 			location.href = "tcarlease_add.html?id="+id;
 		},
+		chooseFile:function(event){
+			$("#btn_file").click();
+		},
+		modifyParams:function(event){
+			var id = getSelectedRow();
+			if(id == null){
+				return ;
+			}
+			location.href = "params.html?typeCd=110001&id="+id;
+		},
 		upload:function(event){
 			var fileObj = document.getElementById("btn_file").files[0];
 			var formFile = new FormData();
+			if(fileObj==null || fileObj == ""){
+				alert("请选择xls文件");
+				return;
+			}
 			var url = "../common/uploadExcelFile";
+			formFile.append("typeCd","110001");
 			formFile.append("uploadFile", fileObj); 
 			$.ajax({
 				type: "POST",

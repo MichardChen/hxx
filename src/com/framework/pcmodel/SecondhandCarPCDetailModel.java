@@ -30,8 +30,16 @@ public class SecondhandCarPCDetailModel implements Serializable{
 	private String buyKnowUrl;
 	private String descUrl;
 	private String companyMobile;
+	private String periods;
 	
 	
+	
+	public String getPeriods() {
+		return periods;
+	}
+	public void setPeriods(String periods) {
+		this.periods = periods;
+	}
 	public String getTitleLabel() {
 		return titleLabel;
 	}

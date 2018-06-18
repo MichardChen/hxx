@@ -12,10 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
 
+import com.framework.entity.TCartParam2Entity;
 import com.framework.entity.TCartParamsEntity;
+import com.framework.service.TCartParam2Service;
 import com.framework.service.TCartParamsService;
+import com.framework.utils.DateUtil;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
+import com.framework.utils.ShiroUtils;
 
 
 /**
@@ -30,6 +34,8 @@ import com.framework.utils.R;
 public class TCartParamsController {
 	@Autowired
 	private TCartParamsService tCartParamsService;
+	@Autowired
+	private TCartParam2Service tCartParam2Service;
 	
 	@RequestMapping("/tcartparams.html")
 	public String list(){
@@ -66,12 +72,12 @@ public class TCartParamsController {
 	 * 信息
 	 */
 	@ResponseBody
-	@RequestMapping("/info/{id}")
-	@RequiresPermissions("tcartparams:info")
-	public R info(@PathVariable("id") Integer id){
-		TCartParamsEntity tCartParams = tCartParamsService.queryObject(id);
-		
-		return R.ok().put("tCartParams", tCartParams);
+	@RequestMapping("/allInfo/{id}/{typeCd}")
+	//@RequiresPermissions("tcartparams:info")
+	public R info(@PathVariable("id") Integer id,@PathVariable("typeCd")String typeCd){
+		TCartParamsEntity tCartParams = tCartParamsService.queryObjectByCartId(id, typeCd);
+		TCartParam2Entity tCartParams2 = tCartParam2Service.queryObjectByCartIdType(id, typeCd);
+		return R.ok().put("tCartParams", tCartParams).put("tCartParams2", tCartParams2);
 	}
 	
 	/**
@@ -91,10 +97,19 @@ public class TCartParamsController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("tcartparams:update")
+	//@RequiresPermissions("tcartparams:update")
 	public R update(@RequestBody TCartParamsEntity tCartParams){
-		tCartParamsService.update(tCartParams);
-		
+		tCartParams.setUpdateTime(DateUtil.getNowTimestamp());
+		tCartParamsService.updateByCartId(tCartParams);
+		return R.ok();
+	}
+	
+	@ResponseBody
+	@RequestMapping("/update1")
+	//@RequiresPermissions("tcartparams:update")
+	public R update1(@RequestBody TCartParam2Entity tCartParam2){
+		tCartParam2.setUpdateTime(DateUtil.getNowTimestamp());
+		tCartParam2Service.updateByCartId(tCartParam2);
 		return R.ok();
 	}
 	

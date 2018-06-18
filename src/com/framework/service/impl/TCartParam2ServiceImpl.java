@@ -62,5 +62,10 @@ public class TCartParam2ServiceImpl implements TCartParam2Service {
 	public TCartParam2Entity queryObjectByCartIdType(Integer cartId, String cartTypeCd) {
 		return tCartParam2Dao.queryObjectByCartIdType(cartId, cartTypeCd);
 	}
+
+	@Override
+	public void updateByCartId(TCartParam2Entity tCartParam2) {
+		tCartParam2Dao.updateByCartId(tCartParam2);
+	}
 	
 }

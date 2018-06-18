@@ -68,6 +68,14 @@ public class TCarImportEntity implements Serializable {
 	
 	private int flg;
 	
+	private String content;
+	
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
 	public int getFlg() {
 		return flg;
 	}

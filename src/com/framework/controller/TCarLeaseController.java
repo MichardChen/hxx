@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.stereotype.Controller;
 
+import com.alibaba.druid.mock.MockArray;
 import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
 import com.framework.dao.SysUserDao;
@@ -27,6 +28,7 @@ import com.framework.entity.TBrandEntity;
 import com.framework.entity.TBrandSeriesEntity;
 import com.framework.entity.TCarLeaseEntity;
 import com.framework.entity.TStoryEntity;
+import com.framework.model.LeaseCarViewModel;
 import com.framework.model.TCarLeaseListModel;
 import com.framework.service.FileService;
 import com.framework.service.TBrandSeriesService;
@@ -133,7 +135,41 @@ public class TCarLeaseController {
 	@RequiresPermissions("tcarlease:info")
 	public R info(@PathVariable("id") Integer id){
 		TCarLeaseEntity tCarLease = tCarLeaseService.queryObject(id);
-		
+/*		LeaseCarViewModel model = new LeaseCarViewModel();
+		if(tCarLease != null){
+			model.setBrand(tCarLease.getBrand());
+			model.setCarColor(tCarLease.getCarColor());
+			model.setCarCost(tCarLease.getCarCost());
+			model.setCarLevelCd(tCarLease.getCarLevelCd());
+			model.setCarName(tCarLease.getCarName());
+			model.setCarSeriesId(tCarLease.getCarSeriesId());
+			model.setCartParam2Id(tCarLease.getCartParam2Id());
+			model.setCartParamsId(tCarLease.getCartParamsId());
+			model.setCarTypeInfo(tCarLease.getCarTypeInfo());
+			model.setContent(tCarLease.getContent());
+			model.setFinalPayment(tCarLease.getFinalPayment());
+			model.setFirmCost(tCarLease.getFirmCost());
+			model.setFirstPayment(tCarLease.getFirstPayment());
+			model.setFirstPayment1(tCarLease.getFirstPayment1());
+			model.setIcon(tCarLease.getIcon());
+			model.setId(tCarLease.getId());
+			model.setLabels(tCarLease.getLabels());
+			model.setTitleLabel(tCarLease.getTitleLabel());
+			model.setMark(tCarLease.getMark());
+			model.setMark1(tCarLease.getMark1());
+			model.setMonthPayment(tCarLease.getMonthPayment());
+			model.setMonthPayment1(tCarLease.getMonthPayment1());
+			model.setPeriods(tCarLease.getPeriods());
+			model.setPeriods1(tCarLease.getPeriods1());
+			model.setRealFirstPayment(tCarLease.getRealFirstPayment());
+			model.setSalecount(tCarLease.getSalecount());
+			model.setServiceFee(tCarLease.getServiceFee());
+			model.setTfirstYearFirstPay(tCarLease.getTfirstYearFirstPay());
+			model.setTfirstYearMonthPayment(tCarLease.getTfirstYearMonthPayment());
+			model.setTmonthPayment(tCarLease.getTmonthPayment());
+			model.setTperiods(tCarLease.getTperiods());
+			model.setYear(tCarLease.getYear());
+		}*/
 		return R.ok().put("tCarLease", tCarLease);
 	}
 	
@@ -186,6 +222,22 @@ public class TCarLeaseController {
 		if(StringUtil.isNoneBlank(logo)){
 			entity.setIcon(logo);
 		}
+		
+		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));
+		entity.setContent(htmlContent);
+		//生成html
+		String uuid = UUID.randomUUID().toString();
+		//生成html文件
+		try {
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
+			pw.println(htmlContent);
+			pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String contentUrl = Constants.HOST.DOCUMENT+uuid+".html";
+		entity.setDescUrl(contentUrl);
+		
 		tCarLeaseService.save(entity);
 		return R.ok();
 	}
@@ -236,6 +288,22 @@ public class TCarLeaseController {
 		if(StringUtil.isNoneBlank(logo)){
 			entity.setIcon(logo);
 		}
+		
+		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));
+		entity.setContent(htmlContent);
+		//生成html
+		String uuid = UUID.randomUUID().toString();
+		//生成html文件
+		try {
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
+			pw.println(htmlContent);
+			pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String contentUrl = Constants.HOST.DOCUMENT+uuid+".html";
+		entity.setDescUrl(contentUrl);
+		
 		tCarLeaseService.update(entity);
 		return R.ok();
 	}

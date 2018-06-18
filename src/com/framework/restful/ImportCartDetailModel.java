@@ -27,6 +27,15 @@ public class ImportCartDetailModel implements Serializable{
 	private String oftenQuestionUrl;
 	private String descUrl;
 	private String companyMobile;
+	private String pailiang;
+	
+	
+	public String getPailiang() {
+		return pailiang;
+	}
+	public void setPailiang(String pailiang) {
+		this.pailiang = pailiang;
+	}
 	public int getCartId() {
 		return cartId;
 	}
