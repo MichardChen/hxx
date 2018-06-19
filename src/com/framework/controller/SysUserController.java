@@ -118,7 +118,7 @@ public class SysUserController extends AbstractController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("sys:user:save")
-	public R save(@RequestParam("user")String user,@RequestParam(value="uFile",required=false)MultipartFile uploadFile) {
+	public R save(@RequestParam("user")String user,@RequestParam(value="uFile",required=false)MultipartFile uploadFile) throws Exception{
 		
 
 		SysUserEntity entity = new SysUserEntity();
@@ -165,12 +165,36 @@ public class SysUserController extends AbstractController {
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("sys:user:update")
-	public R update(@RequestBody SysUserEntity user) {
-		if (StringUtils.isBlank(user.getUsername())) {
-			return R.error("用户名不能为空");
+	public R update(@RequestParam("user")String user,@RequestParam(value="uFile",required=false)MultipartFile uploadFile) throws Exception{
+		SysUserEntity entity = new SysUserEntity();
+		JSONObject viewModel = JSONObject.parseObject(user);
+		
+		entity.setExpertFlg(viewModel.getIntValue("expertFlg"));
+		entity.setIntroduce(viewModel.getString("introduce"));
+		entity.setRealName(viewModel.getString("realName"));
+		entity.setSkill(viewModel.getString("skill"));
+		entity.setPassword(viewModel.getString("password"));
+		entity.setMobile(viewModel.getString("mobile"));
+		entity.setCreateTime(DateUtil.getNowTimestamp());
+		entity.setUsername(viewModel.getString("username"));
+		entity.setEmail(viewModel.getString("email"));
+		entity.setStatus(viewModel.getInteger("status"));
+		JSONArray roleList = viewModel.getJSONArray("roleIdList");
+		List<Long> roleIdList = new ArrayList<>();
+		for(int i=0;i<roleList.size();i++){
+			roleIdList.add(((Integer)roleList.get(i)).longValue());
 		}
-
-		sysUserService.update(user);
+		
+		entity.setRoleIdList(roleIdList);
+		entity.setUserId(viewModel.getLong("userId"));
+		//生成html
+		FileService fs=new FileService();
+		//上传图片
+		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if(StringUtil.isNoneBlank(logo)){
+			entity.setIcon(logo);
+		}
+		sysUserService.update(entity);
 
 		return R.ok();
 	}

@@ -10,7 +10,7 @@
 	<form class="form-horizontal" style="width: 100%;" enctype="multipart/form-data">
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">资讯标题</div>
-		   	<div class="col-sm-10">
+		   	<div class="col-sm-4">
 		      <input type="text" class="form-control" v-model="tNews.newsTitle" id="newsTitle" placeholder="请输入资讯标题"/>
 		    </div>
 		</div>
@@ -22,7 +22,7 @@
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">资讯类型</div>
-		   	<div class="col-sm-10">
+		   	<div class="col-sm-2">
 		   			<select class="form-control" v-model="tNews.newsTypeCd" id="newsTypeCd">
 		   				<option value="030001">平台通知</option>
 		   				<option value="030002">汽车资讯</option>
@@ -33,7 +33,7 @@
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">是否热门</div>
-		   	<div class="col-sm-10">
+		   	<div class="col-sm-2">
 		   			<select class="form-control" v-model="tNews.hotFlg" id="hotFlg">
 		   				<option value="1">是</option>
 		   				<option value="0">否</option>
@@ -42,7 +42,7 @@
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">是否置顶</div>
-		   	<div class="col-sm-10">
+		   	<div class="col-sm-2">
 		   		<select class="form-control" v-model="tNews.topFlg" id="topFlg">
 		   				<option value="1">是</option>
 		   				<option value="0">否</option>

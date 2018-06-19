@@ -179,7 +179,7 @@ public class TCarLeaseController {
 	@ResponseBody
 	@RequestMapping("/save")
 	@RequiresPermissions("tcarlease:save")
-	public R save(@RequestParam("tCarLease")String tCarLease,@RequestParam(value="uFile",required=false)MultipartFile uploadFile){
+	public R save(@RequestParam("tCarLease")String tCarLease,@RequestParam(value="uFile",required=false)MultipartFile uploadFile,@RequestParam(value="uFile1",required=false)MultipartFile uploadFile1){
 		
 		TCarLeaseEntity entity = new TCarLeaseEntity();
 		JSONObject viewModel = JSONObject.parseObject(tCarLease);
@@ -223,6 +223,12 @@ public class TCarLeaseController {
 			entity.setIcon(logo);
 		}
 		
+		//pc封面
+		String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if(StringUtil.isNoneBlank(logo1)){
+			entity.setPcIcon(logo1);
+		}
+		
 		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));
 		entity.setContent(htmlContent);
 		//生成html
@@ -248,7 +254,7 @@ public class TCarLeaseController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("tcarlease:update")
-	public R update(@RequestParam("tCarLease")String tCarLease,@RequestParam(value="uFile",required=false)MultipartFile uploadFile){
+	public R update(@RequestParam("tCarLease")String tCarLease,@RequestParam(value="uFile",required=false)MultipartFile uploadFile,@RequestParam(value="uFile1",required=false)MultipartFile uploadFile1){
 		TCarLeaseEntity entity = new TCarLeaseEntity();
 		JSONObject viewModel = JSONObject.parseObject(tCarLease);
 		int userid = ShiroUtils.getUserId().intValue();
@@ -287,6 +293,12 @@ public class TCarLeaseController {
 		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
 		if(StringUtil.isNoneBlank(logo)){
 			entity.setIcon(logo);
+		}
+		
+		//pc封面
+		String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if(StringUtil.isNoneBlank(logo1)){
+			entity.setPcIcon(logo1);
 		}
 		
 		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));

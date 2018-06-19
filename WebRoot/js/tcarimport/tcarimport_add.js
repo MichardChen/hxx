@@ -11,8 +11,9 @@ var vm = new Vue({
 			this.getInfo(id)
 		}
 		//获取所有品牌
-		$.get("../tbrand/queryAllBrand", function(r){
-            var list =eval(r.tBrandList);
+		$.get("../tbrand/queryAllBrand", function(rr){
+			var r =eval('('+rr+')');
+            var list = r.tBrandList;
 	    	if(r.code === 0){
 	    		var html = "";
 	    		for(var b in list){
@@ -45,6 +46,8 @@ var vm = new Vue({
                 $("#cartId").val(r.tCarImport.id);
                 $("#icon").attr("href",r.tCarImport.icon);
 				$("#icon").show();
+				$("#pcIcon").attr("href",r.tCarImport.pcIcon);
+				$("#pcIcon").show();
 				$("#content").summernote('code', r.tCarImport.content);
             });
 		},
@@ -54,8 +57,9 @@ var vm = new Vue({
 				$("#series").empty();
 				$("#series").append("<option value=\"0\">请选择车系</option>");
 			}else{
-				$.get("../tbrandseries/queryBrandSeries/"+id, function(r){
-		            var list =eval(r.tBrandSeries);
+				$.get("../tbrandseries/queryBrandSeries/"+id, function(rr){
+					var r =eval('('+rr+')');
+			        var list = r.tBrandSeries;
 			    	if(r.code === 0){
 			    		var html = "";
 			    		for(var b in list){
@@ -69,6 +73,7 @@ var vm = new Vue({
 		},
 		saveOrUpdate: function (event) {
 			var fileObj = document.getElementById("uFile").files[0];
+			var fileObj1 = document.getElementById("uFile1").files[0];
 			var cartId = $("#cartId").val();
 			if(cartId == 0 || cartId == "" || cartId == null){
 				if(!$("#carName").val()){
@@ -140,6 +145,7 @@ var vm = new Vue({
 				var formFile = new FormData();
 				var url = "../tcarimport/save";
 				formFile.append("uFile", fileObj); 
+				formFile.append("uFile1", fileObj1); 
 				vm.tCarImport.content = $("#content").summernote('code');
 				formFile.append("tCarImport", JSON.stringify(vm.tCarImport));
 				$.ajax({
@@ -223,9 +229,11 @@ var vm = new Vue({
 					return;
 				}
 				var fileObj = document.getElementById("uFile").files[0];
+				var fileObj1 = document.getElementById("uFile1").files[0];
 				var formFile = new FormData();
 				var url = "../tcarimport/update";
 				formFile.append("uFile", fileObj); 
+				formFile.append("uFile1", fileObj1); 
 				vm.tCarImport.id=cartId;
 				vm.tCarImport.content = $("#content").summernote('code');
 				formFile.append("tCarImport", JSON.stringify(vm.tCarImport));

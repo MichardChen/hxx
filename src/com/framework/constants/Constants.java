@@ -102,7 +102,7 @@ public interface Constants {
 	 * 本地
 	 */
 
-	/*public static interface HOST {
+	public static interface HOST {
 		public static final String LOCALHOST = "http://192.168.1.91:82/newsimages/";
 		public static final String TEA = "http://192.168.1.91:82/tea/";
 		public static final String DOCUMENT = "http://192.168.1.91:82/document/";
@@ -133,9 +133,9 @@ public interface Constants {
 		public static final String IMG = "http://192.168.1.91:82/img/";
 		public static final String STORE = "http://192.168.1.91:82/store/";
 		public static final String COMMON = "http://192.168.1.91:82/common/";
-	}*/
+	}
 
-	public static interface HOST {
+	/*public static interface HOST {
 		public static final String LOCALHOST = "http://www.yibuwangluo.cn:88/newsimages/";
 		public static final String TEA = "http://www.yibuwangluo.cn:88/tea/";
 		public static final String DOCUMENT = "http://www.yibuwangluo.cn:88/document/";
@@ -167,7 +167,7 @@ public interface Constants {
 		public static final String STORE = "D:\\upload\\store\\";
 		public static final String COMMON = "D:\\upload\\common\\";
 	}
-
+*/
 	/*
 	 * public static interface FILE_HOST { public static final String LOCALHOST
 	 * = "F:\\upload\\newsimages\\"; public static final String TEA =

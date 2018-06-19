@@ -135,7 +135,7 @@ public class TCarImportController {
 	@ResponseBody
 	@RequestMapping("/save")
 	@RequiresPermissions("tcarimport:save")
-	public R save(@RequestParam("tCarImport")String tCarImport,@RequestParam(value="uFile",required=false)MultipartFile uploadFile){
+	public R save(@RequestParam("tCarImport")String tCarImport,@RequestParam(value="uFile",required=false)MultipartFile uploadFile,@RequestParam(value="uFile1",required=false)MultipartFile uploadFile1){
 		
 		TCarImportEntity entity = new TCarImportEntity();
 		JSONObject viewModel = JSONObject.parseObject(tCarImport);
@@ -173,6 +173,12 @@ public class TCarImportController {
 			entity.setIcon(logo);
 		}
 		
+		//pc照片
+		String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if(StringUtil.isNoneBlank(logo1)){
+			entity.setPcIcon(logo1);
+		}
+		
 		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));
 		entity.setContent(htmlContent);
 		//生成html
@@ -198,7 +204,7 @@ public class TCarImportController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("tcarimport:update")
-	public R update(@RequestParam("tCarImport")String tCarImport,@RequestParam(value="uFile",required=false)MultipartFile uploadFile){
+	public R update(@RequestParam("tCarImport")String tCarImport,@RequestParam(value="uFile",required=false)MultipartFile uploadFile,@RequestParam(value="uFile1",required=false)MultipartFile uploadFile1){
 		
 		TCarImportEntity entity = new TCarImportEntity();
 		JSONObject viewModel = JSONObject.parseObject(tCarImport);
@@ -228,6 +234,12 @@ public class TCarImportController {
 		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
 		if(StringUtil.isNoneBlank(logo)){
 			entity.setIcon(logo);
+		}
+		
+		//pc图片
+		String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if(StringUtil.isNoneBlank(logo1)){
+			entity.setPcIcon(logo1);
 		}
 		
 		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));

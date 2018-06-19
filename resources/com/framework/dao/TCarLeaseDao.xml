@@ -173,7 +173,8 @@
 			`tmonth_payment`,
 			`salecount`,
 			`flg`,
-			`content`
+			`content`,
+			`pc_icon`
 		)
 		values
 		(
@@ -213,7 +214,8 @@
 			#{tmonthPayment},
 			#{salecount},
 			#{flg},
-			#{content}
+			#{content},
+			#{pcIcon}
 		)
 	</insert>
 	 
@@ -254,8 +256,9 @@
 			<if test="tfirstYearMonthPayment != null">`tfirst_year_month_payment` = #{tfirstYearMonthPayment},</if>
 			<if test="tperiods != null">`tperiods` = #{tperiods},</if>
 			<if test="tmonthPayment != null">`tmonth_payment` = #{tmonthPayment},</if>
-			<if test="salecount != null">`salecount` = #{salecount}</if>
-			<if test="content != null">`content` = #{content}</if>
+			<if test="salecount != null">`salecount` = #{salecount},</if>
+			<if test="content != null">`content` = #{content},</if>
+			<if test="pcIcon != null">`pc_icon` = #{pcIcon}</if>
 		</set>
 		where id = #{id}
 	</update>

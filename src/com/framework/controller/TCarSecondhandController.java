@@ -152,7 +152,7 @@ public class TCarSecondhandController {
 	@ResponseBody
 	@RequestMapping("/save")
 	@RequiresPermissions("tcarsecondhand:save")
-	public R save(@RequestParam("tCarSecondhand")String tCarSecondhand,@RequestParam(value="uFile",required=false)MultipartFile uploadFile){
+	public R save(@RequestParam("tCarSecondhand")String tCarSecondhand,@RequestParam(value="uFile",required=false)MultipartFile uploadFile,@RequestParam(value="uFile1",required=false)MultipartFile uploadFile1){
 		
 		TCarSecondhandEntity entity = new TCarSecondhandEntity();
 		JSONObject viewModel = JSONObject.parseObject(tCarSecondhand);
@@ -190,6 +190,12 @@ public class TCarSecondhandController {
 			entity.setIcon(logo);
 		}
 		
+		//pc图片
+		String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if(StringUtil.isNoneBlank(logo1)){
+			entity.setPcIcon(logo1);
+		}
+		
 		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));
 		entity.setContent(htmlContent);
 		//生成html
@@ -215,7 +221,7 @@ public class TCarSecondhandController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("tcarsecondhand:update")
-	public R update(@RequestParam("tCarSecondhand")String tCarSecondhand,@RequestParam(value="uFile",required=false)MultipartFile uploadFile){
+	public R update(@RequestParam("tCarSecondhand")String tCarSecondhand,@RequestParam(value="uFile",required=false)MultipartFile uploadFile,@RequestParam(value="uFile1",required=false)MultipartFile uploadFile1){
 		TCarSecondhandEntity entity = new TCarSecondhandEntity();
 		JSONObject viewModel = JSONObject.parseObject(tCarSecondhand);
 		int userid = ShiroUtils.getUserId().intValue();
@@ -251,6 +257,12 @@ public class TCarSecondhandController {
 		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
 		if(StringUtil.isNoneBlank(logo)){
 			entity.setIcon(logo);
+		}
+		
+		//pc图片
+		String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if(StringUtil.isNoneBlank(logo1)){
+			entity.setPcIcon(logo1);
 		}
 		
 		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));

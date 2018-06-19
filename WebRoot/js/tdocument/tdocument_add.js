@@ -3,7 +3,7 @@ var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		title:"新增",
-		tDocument:{}
+		tDocument:{typeCd:'120001'}
 	},
 	created: function() {
 		if(id != null){

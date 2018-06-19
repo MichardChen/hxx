@@ -11,17 +11,9 @@ var vm = new Vue({
 			this.getInfo(id)
 		}
 		//获取所有品牌
-		$.get("../tbrand/queryAllBrand", function(r){
-            var list =eval(r.tBrandList);
-	    	if(r.code === 0){
-	    		var html = "";
-	    		for(var b in list){
-	    			//向品牌下拉框添加品牌
-	    			html += "<option value='" + list[b].id + "'>" +list[b].brand + "</option>";
-	    		}
-	    		 $("#brand").append(html);
-	    		 $("#series").append("<option value=\"0\">请选择车系</option>");
-        }});
+		
+		queryAllBrand();
+		
 		
     },
 	methods: {
@@ -55,6 +47,8 @@ var vm = new Vue({
                 $("#serviceFee").val(r.tCarLease.serviceFee);
                 $("#icon").attr("href",r.tCarLease.icon);
 				$("#icon").show();
+				$("#pcIcon").attr("href",r.tCarLease.pcIcon);
+				$("#pcIcon").show();
 				$("#content").summernote('code', r.tCarLease.content);
             });
 		},
@@ -65,8 +59,9 @@ var vm = new Vue({
 				$("#series").empty();
 				$("#series").append("<option value=\"0\">请选择车系</option>");
 			}else{
-				$.get("../tbrandseries/queryBrandSeries/"+id, function(r){
-		            var list =eval(r.tBrandSeries);
+				$.get("../tbrandseries/queryBrandSeries/"+id, function(rr){
+		            var r =eval('('+rr+')');
+		            var list = r.tBrandSeries;
 			    	if(r.code === 0){
 			    		var html = "";
 			    		for(var b in list){
@@ -86,6 +81,7 @@ var vm = new Vue({
 				
 				//新增
 				var fileObj = document.getElementById("uFile").files[0];
+				var fileObj1 = document.getElementById("uFile1").files[0];
 				var formFile = new FormData();
 				if(!$("#carName").val()){
 					alert("请输入汽车名称");
@@ -185,6 +181,7 @@ var vm = new Vue({
 				}
 				var url = "../tcarlease/save";
 				formFile.append("uFile", fileObj); 
+				formFile.append("uFile1",fileObj);
 				vm.tCarLease.content = $("#content").summernote('code');
 				formFile.append("tCarLease", JSON.stringify(vm.tCarLease));
 				$.ajax({
@@ -299,9 +296,11 @@ var vm = new Vue({
 					return;
 				}
 				var fileObj = document.getElementById("uFile").files[0];
+				var fileObj1 = document.getElementById("uFile1").files[0];
 				var formFile = new FormData();
 				var url = "../tcarlease/update";
 				formFile.append("uFile", fileObj); 
+				formFile.append("uFile1", fileObj1); 
 				vm.tCarLease.id=$("#cartId").val();
 				vm.tCarLease.content = $("#content").summernote('code');
 				formFile.append("tCarLease", JSON.stringify(vm.tCarLease));
@@ -361,7 +360,7 @@ function sendFile(files, editor, $editable) {
 }
 
 $(function () {
-	
+	queryAllBrand();
     $('.summernote').summernote({
         height: 400,
         toolbar: [
@@ -388,3 +387,18 @@ $(function () {
         }
     });
 });
+function queryAllBrand(){
+	//查询所有品牌
+	$.get("../tbrand/queryAllBrand", function(rr){
+        var r =eval('('+rr+')');
+        var list = r.tBrandList;
+    	if(r.code === 0){
+    		var html = "";
+    		for(var b in list){
+    			//向品牌下拉框添加品牌
+    			html += "<option value='" + list[b].id + "'>" +list[b].brand + "</option>";
+    		}
+    		 $("#brand").append(html);
+    		 $("#series").append("<option value=\"0\">请选择车系</option>");
+    }});
+}

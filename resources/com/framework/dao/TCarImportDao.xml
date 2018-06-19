@@ -93,7 +93,8 @@
 			`car_class_cd`,
 			`title_label`,
 			`flg`,
-			`content`
+			`content`,
+			`pc_icon`
 		)
 		values
 		(
@@ -121,7 +122,8 @@
 			#{carClassCd},
 			#{titleLabel},
 			#{flg},
-			#{content}
+			#{content},
+			#{pcIcon}
 		)
 	</insert>
 	 
@@ -149,9 +151,10 @@
 			<if test="descUrl != null">`desc_url` = #{descUrl}, </if>
 			<if test="carSeriesId != null">`car_series_id` = #{carSeriesId}, </if>
 			<if test="carLevelCd != null">`car_level_cd` = #{carLevelCd}, </if>
-			<if test="carClassCd != null">`car_class_cd` = #{carClassCd}</if>
-			<if test="titleLabel != null">`title_label` = #{titleLabel}</if>
-			<if test="content != null">`content` = #{content}</if>
+			<if test="carClassCd != null">`car_class_cd` = #{carClassCd},</if>
+			<if test="titleLabel != null">`title_label` = #{titleLabel},</if>
+			<if test="content != null">`content` = #{content},</if>
+			<if test="pcIcon != null">`pc_icon` = #{pcIcon}</if>
 		</set>
 		where id = #{id}
 	</update>

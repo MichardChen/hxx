@@ -23,21 +23,8 @@ var vm = new Vue({
 		saveOrUpdate: function (event) {
 			var cartId = $("#cartIds").val();
 			if(cartId == null || cartId == 0){
-				var url= "../tcartparams/save";
-				$.ajax({
-					type: "POST",
-				    url: url,
-				    data: JSON.stringify(vm.tCartParams),
-				    success: function(r){
-				    	if(r.code === 0){
-							alert('操作成功', function(index){
-								vm.back();
-							});
-						}else{
-							alert(r.msg);
-						}
-					}
-				});
+				alert("这部汽车，还没没有导入参数，请先导入");
+				return;
 			}else{
 				//更新
 				var url = "../tcartparams/update";

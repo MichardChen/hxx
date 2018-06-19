@@ -22,6 +22,9 @@ var vm = new Vue({
 		getUser: function(userId){
 			$.get("../sys/user/info/"+userId, function(r){
 				vm.user = r.user;
+				$("#userId").val(r.user.userId);
+				$("#icon").attr("href",r.user.icon);
+				$("#icon").show();
 			});
 		},
 		getRoleList: function(){
@@ -30,28 +33,55 @@ var vm = new Vue({
 			});
 		},
 		saveOrUpdate: function (event) {
-			var formFile = new FormData();
-			var fileObj = document.getElementById("uFile").files[0];
-			var url = vm.user.userId == null ? "../sys/user/save" : "../sys/user/update";
-			formFile.append("uFile", fileObj); 
-			formFile.append("user", JSON.stringify(vm.user));
-			$.ajax({
-				type: "POST",
-			    url: url,
-			    processData: false,
-			    contentType: false,
-			    data: formFile,
-			    success: function(r){
-			    	var rr = eval('('+r+')');
-			    	if(rr.code === 0){
-						alert('操作成功', function(index){
-							vm.back();
-						});
-					}else{
-						alert(rr.msg);
+			var userId = $("#userId").val();
+			if(userId == 0 || userId == null){
+				//保存
+				var formFile = new FormData();
+				var fileObj = document.getElementById("uFile").files[0];
+				var url = "../sys/user/save";
+				formFile.append("uFile", fileObj); 
+				formFile.append("user", JSON.stringify(vm.user));
+				$.ajax({
+					type: "POST",
+				    url: url,
+				    processData: false,
+				    contentType: false,
+				    data: formFile,
+				    success: function(rr){
+				    	if(rr.code === 0){
+							alert('操作成功', function(index){
+								vm.back();
+							});
+						}else{
+							alert(rr.msg);
+						}
 					}
-				}
-			});
+				});
+			}else{
+				//更新
+				var formFile = new FormData();
+				var fileObj = document.getElementById("uFile").files[0];
+				var url = "../sys/user/update";
+				formFile.append("uFile", fileObj); 
+				vm.user.userId = userId;
+				formFile.append("user", JSON.stringify(vm.user));
+				$.ajax({
+					type: "POST",
+				    url: url,
+				    processData: false,
+				    contentType: false,
+				    data: formFile,
+				    success: function(rr){
+				    	if(rr.code === 0){
+							alert('操作成功', function(index){
+								vm.back();
+							});
+						}else{
+							alert(rr.msg);
+						}
+					}
+				});
+			}
 		},
 		back: function (event) {
 			history.go(-1);

@@ -162,7 +162,8 @@
 			`create_time`, 
 			`desc_url`,
 			`flg`,
-			`content`
+			`content`,
+			`pc_icon`
 		)
 		values
 		(
@@ -193,7 +194,8 @@
 			#{createTime}, 
 			#{descUrl},
 			#{flg},
-			#{content}
+			#{content},
+			#{pcIcon}
 		)
 	</insert>
 	 
@@ -225,9 +227,10 @@
 			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
-			<if test="descUrl != null">`desc_url` = #{descUrl}</if>
-			<if test="flg != null">`flg` = #{flg}</if>
-			<if test="content != null">`content` = #{content}</if>
+			<if test="descUrl != null">`desc_url` = #{descUrl},</if>
+			<if test="flg != null">`flg` = #{flg},</if>
+			<if test="content != null">`content` = #{content},</if>
+			<if test="pcIcon != null">`pc_icon` = #{pcIcon}</if>
 		</set>
 		where id = #{id}
 	</update>

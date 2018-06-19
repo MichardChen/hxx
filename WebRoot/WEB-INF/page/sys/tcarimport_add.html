@@ -7,7 +7,7 @@
 <body>
 <div class="panel panel-default" id="rrapp" v-cloak>
 	<div class="panel-heading">{{title}}</div>
-	<form class="form-horizontal" style="width:850px;" enctype="multipart/form-data">
+	<form class="form-horizontal" style="width:100%;" enctype="multipart/form-data">
 		<div class="form-group">
 			<div class="col-sm-2 control-label">车名</div>
 		   	<div class="col-sm-2">
@@ -25,9 +25,9 @@
 		   	<div class="col-sm-2">
 		      <a style="text-decoration: none;display: none;" target="_blank" id="icon">查看封面</a><input type="file" v-model="tCarImport.icon" name="uFile" id="uFile" placeholder=""/>
 		    </div>
-		   	<div class="col-sm-2 control-label">参考价</div>
+		    <div class="col-sm-2 control-label">车辆PC图片</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarImport.nowPrice" id="nowPrice" placeholder="请输入参考价"/>
+		      <a style="text-decoration: none;display: none;" target="_blank" id="pcIcon">查看封面</a><input type="file" v-model="tCarImport.pcIcon" name="uFile1" id="uFile1" placeholder=""/>
 		    </div>
 		</div>
 		<div class="form-group">
@@ -35,6 +35,12 @@
 		   	<div class="col-sm-2">
 		      <input type="number" class="form-control" v-model="tCarImport.marketPrice" id="marketPrice" placeholder="请输入市场价"/>
 		    </div>
+		   	<div class="col-sm-2 control-label">参考价</div>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control" v-model="tCarImport.nowPrice" id="nowPrice" placeholder="请输入参考价"/>
+		    </div>
+		</div>
+		<div class="form-group">
 		   	<div class="col-sm-2 control-label">最大节省</div>
 		   	<div class="col-sm-2">
 		      <input type="number" class="form-control" v-model="tCarImport.maxSave" id="maxSave" placeholder="请输入最大节省金额"/>
@@ -100,7 +106,7 @@
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">汽车详情</div>
 		   	<div class="col-sm-10">
-		   		<textarea id="content" name="content" id="content" v-model="tCarImport.content" class="summernote">
+		   		<textarea id="content" name="content" v-model="tCarImport.content" class="summernote">
 				</textarea>
 		    </div>
 		</div>

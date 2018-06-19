@@ -4,7 +4,8 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: '文档标题', name: 'title', width: 80 }, 			
-			{ label: '文档类型', name: 'typeCd', width: 80 }, 			
+			{ label: '文档类型', name: 'typeCd', width: 80 }, 		
+			{ label: '文档链接', name: 'descUrl', width: 80,hidden:true}, 	
 			{ label: '创建时间', name: 'createTime', width: 80 }, 			
 			{ label: '更新时间', name: 'updateTime', width: 80 }, 			
 			{ label: '创建者', name: 'createBy', width: 80 }, 			
@@ -51,6 +52,14 @@ var vm = new Vue({
 			}
 			
 			location.href = "tdocument_add.html?id="+id;
+		},
+		show:function(event){
+			var rowKey = getSelectedRow();
+			if(rowKey == null){
+				return ;
+			}
+			var rowData = $( "#jqGrid" ).getRowData(rowKey);
+			window.open(rowData.descUrl);
 		},
 		del: function (event) {
 			var ids = getSelectedRows();

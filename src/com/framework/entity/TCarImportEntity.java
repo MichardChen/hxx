@@ -70,6 +70,14 @@ public class TCarImportEntity implements Serializable {
 	
 	private String content;
 	
+	private String pcIcon;
+	
+	public String getPcIcon() {
+		return pcIcon;
+	}
+	public void setPcIcon(String pcIcon) {
+		this.pcIcon = pcIcon;
+	}
 	public String getContent() {
 		return content;
 	}

@@ -11,8 +11,9 @@ var vm = new Vue({
 			this.getInfo(id)
 		}
 		//获取所有品牌
-		$.get("../tbrand/queryAllBrand", function(r){
-            var list =eval(r.tBrandList);
+		$.get("../tbrand/queryAllBrand", function(rr){
+			var r =eval('('+rr+')');
+            var list = r.tBrandList;
 	    	if(r.code === 0){
 	    		var html = "";
 	    		for(var b in list){
@@ -23,8 +24,9 @@ var vm = new Vue({
 	    		 $("#series").append("<option value=\"0\">请选择车系</option>");
         }});
 		//获取省市区
-		$.get("../common/queryProvince", function(r){
-            var list =eval(r.provinceList);
+		$.get("../common/queryProvince", function(rr){
+            var r =eval('('+rr+')');
+            var list = r.provinceList;
 	    	if(r.code === 0){
 	    		var html = "";
 	    		for(var b in list){
@@ -60,6 +62,8 @@ var vm = new Vue({
                 $("#cartId").val(r.tCarSecondhand.id);
                 $("#icon").attr("href",r.tCarSecondhand.icon);
 				$("#icon").show();
+				$("#pcIcon").attr("href",r.tCarSecondhand.pcIcon);
+				$("#pcIcon").show();
 				$("#content").summernote('code', r.tCarSecondhand.content);
             });
 		},
@@ -69,8 +73,9 @@ var vm = new Vue({
 				$("#series").empty();
 				$("#series").append("<option value=\"0\">请选择车系</option>");
 			}else{
-				$.get("../tbrandseries/queryBrandSeries/"+id, function(r){
-		            var list =eval(r.tBrandSeries);
+				$.get("../tbrandseries/queryBrandSeries/"+id, function(rr){
+					var r =eval('('+rr+')');
+			        var list = r.tBrandSeries;
 			    	if(r.code === 0){
 			    		var html = "";
 			    		for(var b in list){
@@ -88,8 +93,9 @@ var vm = new Vue({
 					$("#cityId").empty();
 					$("#cityId").append("<option value=\"0\">请选择城市</option>");
 				}else{
-					$.get("../common/queryCity/"+id, function(r){
-			            var list =eval(r.cityList);
+					$.get("../common/queryCity/"+id, function(rr){
+						var r = eval('('+rr+')');
+			            var list = r.cityList;
 				    	if(r.code === 0){
 				    		var html = "";
 				    		for(var b in list){
@@ -106,6 +112,7 @@ var vm = new Vue({
 			if(cartId == "" || cartId == null){
 				//新增
 				var fileObj = document.getElementById("uFile").files[0];
+				var fileObj1 = document.getElementById("uFile1").files[0];
 				var formFile = new FormData();
 				
 				if(!$("#carName").val()){
@@ -186,6 +193,7 @@ var vm = new Vue({
 				}
 				var url = "../tcarsecondhand/save";
 				formFile.append("uFile", fileObj); 
+				formFile.append("uFile1",fileObj1);
 				vm.tCarSecondhand.content = $("#content").summernote('code');
 				formFile.append("tCarSecondhand", JSON.stringify(vm.tCarSecondhand));
 				$.ajax({
@@ -281,9 +289,11 @@ var vm = new Vue({
 					return;
 				}
 				var fileObj = document.getElementById("uFile").files[0];
+				var fileObj1 = document.getElementById("uFile1").files[0];
 				var formFile = new FormData();
 				var url = "../tcarsecondhand/update";
 				formFile.append("uFile", fileObj); 
+				formFile.append("uFile1", fileObj1); 
 				vm.tCarSecondhand.id=cartId;
 				vm.tCarSecondhand.content = $("#content").summernote('code');
 				formFile.append("tCarSecondhand", JSON.stringify(vm.tCarSecondhand));
