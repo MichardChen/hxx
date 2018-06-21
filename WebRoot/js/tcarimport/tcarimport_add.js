@@ -10,6 +10,9 @@ var vm = new Vue({
 			this.title = "修改";
 			this.getInfo(id)
 		}
+		$.ajaxSetup({ 
+		    async : false 
+		});
 		//获取所有品牌
 		$.get("../tbrand/queryAllBrand", function(rr){
 			var r =eval('('+rr+')');
@@ -42,13 +45,30 @@ var vm = new Vue({
                 $("#titleLabel").val(r.tCarImport.titleLabel);
                 $("#carLevelCd").val(r.tCarImport.carLevelCd);
                 $("#carClassCd").val(r.tCarImport.carClassCd);
-                $("#series").val(r.tCarImport.series);
+               
                 $("#cartId").val(r.tCarImport.id);
                 $("#icon").attr("href",r.tCarImport.icon);
 				$("#icon").show();
 				$("#pcIcon").attr("href",r.tCarImport.pcIcon);
 				$("#pcIcon").show();
 				$("#content").summernote('code', r.tCarImport.content);
+                $.get("../tbrandseries/queryBrandSeries/"+r.tCarImport.brand, function(rr){
+					var dr =eval('('+rr+')');
+			        var list = dr.tBrandSeries;
+			    	if(dr.code === 0){
+			    		var html = "";
+			    		for(var b in list){
+			    			//向品牌下拉框添加品牌
+			    			if(list[b].id == r.tCarImport.series){
+			    				html += "<option value='" + list[b].id + "' selected='selected'>" +list[b].carSerial + "</option>";
+			    			}else{
+			    				html += "<option value='" + list[b].id + "'>" +list[b].carSerial + "</option>";
+			    			}
+			    		}
+			    		$("#series").empty();
+			    		 $("#series").append(html);
+		        }});
+               
             });
 		},
 		selectBrand:function(){

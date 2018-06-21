@@ -10,6 +10,9 @@ var vm = new Vue({
 			this.title = "修改";
 			this.getInfo(id)
 		}
+		$.ajaxSetup({ 
+		    async : false 
+		});
 		//获取所有品牌
 		$.get("../tbrand/queryAllBrand", function(rr){
 			var r =eval('('+rr+')');
@@ -43,18 +46,6 @@ var vm = new Vue({
 				var r = eval('('+json+')');
                 $("#carName").val(r.tCarSecondhand.carName);
                 $("#brand").val(r.tCarSecondhand.brand);
-                $("#titleLabel").val(r.tCarSecondhand.titleLabel);
-                $("#provinceId").val(r.tCarSecondhand.provinceId);
-                $("#cityId").val(r.tCarSecondhand.cityId);
-                $("#kilomiters").val(r.tCarSecondhand.kilomiters);
-                $("#year").val(r.tCarSecondhand.year);
-                $("#firstPayment").val(r.tCarSecondhand.firstPayment);
-                $("#monthPayment").val(r.tCarSecondhand.monthPayment);
-                $("#age").val(r.tCarSecondhand.age);
-                $("#carLevelCd").val(r.tCarSecondhand.carLevelCd);
-                $("#carColor").val(r.tCarSecondhand.carColor);
-                $("#carCost").val(r.tCarSecondhand.carCost);
-                $("#series").val(r.tCarSecondhand.series);
                 $("#carTaxCost").val(r.tCarSecondhand.carTaxCost);
                 $("#periods").val(r.tCarSecondhand.periods);
                 $("#labels").val(r.tCarSecondhand.labels);
@@ -65,6 +56,50 @@ var vm = new Vue({
 				$("#pcIcon").attr("href",r.tCarSecondhand.pcIcon);
 				$("#pcIcon").show();
 				$("#content").summernote('code', r.tCarSecondhand.content);
+				  $("#titleLabel").val(r.tCarSecondhand.titleLabel);
+	                $("#provinceId").val(r.tCarSecondhand.provinceId);
+	                $("#kilomiters").val(r.tCarSecondhand.kilomiters);
+	                $("#year").val(r.tCarSecondhand.year);
+	                $("#firstPayment").val(r.tCarSecondhand.firstPayment);
+	                $("#monthPayment").val(r.tCarSecondhand.monthPayment);
+	                $("#age").val(r.tCarSecondhand.age);
+	                $("#carLevelCd").val(r.tCarSecondhand.carLevelCd);
+	                $("#carColor").val(r.tCarSecondhand.carColor);
+	                $("#carCost").val(r.tCarSecondhand.carCost);
+	                
+	                $.get("../common/queryCity/"+r.tCarSecondhand.provinceId, function(rr){
+						var dr = eval('('+rr+')');
+			            var list = dr.cityList;
+				    	if(dr.code === 0){
+				    		var html = "";
+				    		for(var b in list){
+				    			//向品牌下拉框添加品牌
+				    			if(list[b].id == r.tCarSecondhand.cityId){
+				    				html += "<option value='" + list[b].id + "' selected='selected'>" +list[b].name + "</option>";
+				    			}else{
+				    				html += "<option value='" + list[b].id + "'>" +list[b].name + "</option>";
+				    			}
+				    		}
+				    		$("#cityId").empty();
+				    		 $("#cityId").append(html);
+			        }});
+	                
+                $.get("../tbrandseries/queryBrandSeries/"+r.tCarSecondhand.brand, function(rr){
+					var dr =eval('('+rr+')');
+			        var list =dr.tBrandSeries;
+			    	if(dr.code === 0){
+			    		var html = "";
+			    		for(var b in list){
+			    			//向品牌下拉框添加品牌
+			    			if(list[b].id == r.tCarSecondhand.series){
+			    				html += "<option value='" + list[b].id + "' selected='selected'>" +list[b].carSerial + "</option>";
+			    			}else{
+			    				html += "<option value='" + list[b].id + "'>" +list[b].carSerial + "</option>";
+			    			}
+			    		}
+			    		$("#series").empty();
+			    		 $("#series").append(html);
+		        }});
             });
 		},
 		selectBrand:function(){

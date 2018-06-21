@@ -6,6 +6,10 @@ var vm = new Vue({
 		tBrandSeries : {}
 	},
 	created : function() {
+		
+		$.ajaxSetup({ 
+		    async : false 
+		});
 		// 查看所有品牌
 		$.get("../tbrand/queryAllBrand", function(r) {
 			var brandList = r.tBrandList;
@@ -23,8 +27,8 @@ var vm = new Vue({
 	},
 	methods : {
 		getInfo : function(id) {
-			$.get("../tbrandseries/info/" + id, function(r) {
-				vm.tBrandSeries = r.tBrandSeries;
+			$.get("../tbrandseries/info/" + id, function(rr) {
+				var r = eval('('+rr+')');
 				$("#brandSeriesId").val(r.tBrandSeries.id);
 				$("#brandId").val(r.tBrandSeries.brandId);
 				$("#carSerial").val(r.tBrandSeries.carSerial);

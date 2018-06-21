@@ -30,6 +30,7 @@ import com.framework.entity.SysUserEntity;
 import com.framework.entity.TBrandEntity;
 import com.framework.entity.TCarSecondhandEntity;
 import com.framework.model.CarSecondhandListModel;
+import com.framework.model.TCarSecondhandModel;
 import com.framework.service.FileService;
 import com.framework.service.TBrandService;
 import com.framework.service.TCarSecondhandService;
@@ -141,9 +142,33 @@ public class TCarSecondhandController {
 	@RequestMapping("/info/{id}")
 	@RequiresPermissions("tcarsecondhand:info")
 	public R info(@PathVariable("id") Integer id){
-		TCarSecondhandEntity tCarSecondhand = tCarSecondhandService.queryObject(id);
-		
-		return R.ok().put("tCarSecondhand", tCarSecondhand);
+		TCarSecondhandEntity tc = tCarSecondhandService.queryObject(id);
+		TCarSecondhandModel model = new TCarSecondhandModel();
+		if(tc != null){
+			model.setAge(tc.getAge());
+			model.setBrand(tc.getBrand());
+			model.setCarColor(tc.getCarColor());
+			model.setCarCost(tc.getCarCost());
+			model.setCarLevelCd(tc.getCarLevelCd());
+			model.setCarName(tc.getCarName());
+			model.setCarSeriesId(tc.getCarSeriesId());
+			model.setCarTaxCost(tc.getCarTaxCost());
+			model.setCityId(tc.getCityId());
+			model.setContent(tc.getContent());
+			model.setFinalPayment(tc.getFinalPayment());
+			model.setFirstPayment(tc.getFirstPayment());
+			model.setIcon(tc.getIcon());
+			model.setId(tc.getId());
+			model.setKilomiters(tc.getKilomiters());
+			model.setLabels(tc.getLabels());
+			model.setMonthPayment(tc.getMonthPayment());
+			model.setPcIcon(tc.getPcIcon());
+			model.setPeriods(tc.getPeriods());
+			model.setProvinceId(tc.getProvinceId());
+			model.setTitleLabel(tc.getTitleLabel());
+			model.setYear(tc.getYear());
+		}
+		return R.ok().put("tCarSecondhand", model);
 	}
 	
 	/**

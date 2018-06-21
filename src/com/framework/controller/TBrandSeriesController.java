@@ -18,6 +18,7 @@ import com.framework.entity.SysUserEntity;
 import com.framework.entity.TBrandEntity;
 import com.framework.entity.TBrandSeriesEntity;
 import com.framework.model.BrandSeriesListModel;
+import com.framework.model.TBrandSeriesModel;
 import com.framework.service.TBrandSeriesService;
 import com.framework.service.TBrandService;
 import com.framework.utils.DateUtil;
@@ -114,8 +115,13 @@ public class TBrandSeriesController {
 	@RequiresPermissions("tbrandseries:info")
 	public R info(@PathVariable("id") Integer id){
 		TBrandSeriesEntity tBrandSeries = tBrandSeriesService.queryObject(id);
-		
-		return R.ok().put("tBrandSeries", tBrandSeries);
+		TBrandSeriesModel model = new TBrandSeriesModel();
+		if(tBrandSeries != null){
+			model.setBrandId(tBrandSeries.getBrandId());
+			model.setCarSerial(tBrandSeries.getCarSerial());
+			model.setId(tBrandSeries.getId());
+		}
+		return R.ok().put("tBrandSeries", model);
 	}
 	
 	/**

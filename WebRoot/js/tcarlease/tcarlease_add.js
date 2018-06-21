@@ -12,20 +12,22 @@ var vm = new Vue({
 		}
 		//获取所有品牌
 		
-		queryAllBrand();
-		
+		//queryAllBrand();
+		$.ajaxSetup({ 
+		    async : false 
+		});
 		
     },
 	methods: {
 		getInfo: function(id){
 			$.get("../tcarlease/info/"+id, function(json){
+				console.log(1);
 				var r = eval('('+json+')');
                 $("#cartId").val(r.tCarLease.id);
                 $("#carName").val(r.tCarLease.carName);
                 $("#brand").val(r.tCarLease.brand);
                 $("#icon").val(r.tCarLease.icon);
                 $("#year").val(r.tCarLease.year);
-                $("#series").val(r.tCarLease.series);
                 $("#carCost").val(r.tCarLease.carCost);
                 $("#firmCost").val(r.tCarLease.firmCost);
                 $("#carColor").val(r.tCarLease.carColor);
@@ -50,6 +52,23 @@ var vm = new Vue({
 				$("#pcIcon").attr("href",r.tCarLease.pcIcon);
 				$("#pcIcon").show();
 				$("#content").summernote('code', r.tCarLease.content);
+				
+				$.get("../tbrandseries/queryBrandSeries/"+r.tCarLease.brand, function(rr){
+		            var dr =eval('('+rr+')');
+		            var list = dr.tBrandSeries;
+			    	if(dr.code === 0){
+			    		var html = "";
+			    		for(var b in list){
+			    			//向品牌下拉框添加品牌
+			    			if(list[b].id == r.tCarLease.series){
+			    				html += "<option value='" + list[b].id + "' selected='selected'>" +list[b].carSerial + "</option>";
+			    			}else{
+			    				html += "<option value='" + list[b].id + "'>" +list[b].carSerial + "</option>";
+			    			}
+			    		}
+			    		$("#series").empty();
+			    		$("#series").append(html);
+		        }});
             });
 		},
 		selectBrand:function(){
@@ -360,6 +379,7 @@ function sendFile(files, editor, $editable) {
 }
 
 $(function () {
+	console.log(0);
 	queryAllBrand();
     $('.summernote').summernote({
         height: 400,
@@ -388,6 +408,7 @@ $(function () {
     });
 });
 function queryAllBrand(){
+	console.log(3);
 	//查询所有品牌
 	$.get("../tbrand/queryAllBrand", function(rr){
         var r =eval('('+rr+')');
