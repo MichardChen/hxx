@@ -7,11 +7,18 @@ var vm = new Vue({
 	},
 	created : function() {
 		
+		if (id != null) {
+			this.title = "修改";
+			this.getInfo(id);
+		}
 		$.ajaxSetup({ 
 		    async : false 
 		});
+		//Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. 
+		//加上同步，会出现上面的错误，把getInfo写在前面就不会出现错误
 		// 查看所有品牌
-		$.get("../tbrand/queryAllBrand", function(r) {
+		$.get("../tbrand/queryAllBrand", function(json) {
+			var r = eval('('+json+')');
 			var brandList = r.tBrandList;
 			var html = "";
 			for (var i = 0; i < brandList.length; i++) { // 循环
@@ -20,15 +27,12 @@ var vm = new Vue({
 			}
 			$("#brandId").append(html);
 		});
-		if (id != null) {
-			this.title = "修改";
-			this.getInfo(id)
-		}
+		
 	},
 	methods : {
 		getInfo : function(id) {
-			$.get("../tbrandseries/info/" + id, function(rr) {
-				var r = eval('('+rr+')');
+			$.get("../tbrandseries/info/"+id, function(json) {
+				var r = eval('('+json+')');
 				$("#brandSeriesId").val(r.tBrandSeries.id);
 				$("#brandId").val(r.tBrandSeries.brandId);
 				$("#carSerial").val(r.tBrandSeries.carSerial);

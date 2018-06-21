@@ -121,7 +121,7 @@ public class TBrandSeriesController {
 			model.setCarSerial(tBrandSeries.getCarSerial());
 			model.setId(tBrandSeries.getId());
 		}
-		return R.ok().put("tBrandSeries", model);
+		return R.ok().put("tBrandSeries", tBrandSeries);
 	}
 	
 	/**
