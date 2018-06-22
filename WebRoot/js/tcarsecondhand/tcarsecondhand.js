@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../tcarsecondhand/list',
+        url: '../tcarsecondhand/list?queryBrand=0&queryCarName=',
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', width: 50, key: true },
@@ -50,6 +50,19 @@ var vm = new Vue({
 	data:{
 		
 	},
+	created: function() {
+		$.get("../tbrand/queryAllBrand", function(r){
+			//var r =eval('('+rr+')');
+	        var list = r.tBrandList;
+	    	if(r.code === 0){
+	    		var html = "";
+	    		for(var b in list){
+	    			//向品牌下拉框添加品牌
+	    			html += "<option value='" + list[b].id + "'>" +list[b].brand + "</option>";
+	    		}
+	    		 $("#brand").append(html);
+	    }});
+	},
 	methods: {
 		update: function (event) {
 			var id = getSelectedRow();
@@ -58,6 +71,15 @@ var vm = new Vue({
 			}
 			
 			location.href = "tcarsecondhand_add.html?id="+id;
+		},
+		search:function(event){
+			var queryCarName = $("#queryCarName").val();
+			var queryBrand = $("#brand").val();
+			$("#jqGrid").jqGrid('setGridParam',{ 
+                url:"../tcarsecondhand/list", 
+                postData:{'queryCarName':queryCarName,'queryBrand':queryBrand}, //发送数据 
+                page:1 
+            }).trigger("reloadGrid"); 
 		},
 		modifyParams:function(event){
 			var id = getSelectedRow();

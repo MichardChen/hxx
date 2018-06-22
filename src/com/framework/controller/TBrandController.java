@@ -64,10 +64,11 @@ public class TBrandController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("tbrand:list")
-	public R list(Integer page, Integer limit) {
+	public R list(Integer page, Integer limit,@RequestParam("queryBrand")String queryBrand) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
+		map.put("queryBrand", queryBrand);
 
 		// 查询列表数据
 		List<TBrandEntity> tBrandList = tBrandService.queryList(map);
@@ -126,6 +127,7 @@ public class TBrandController {
 			model.setBrand(tBrand.getBrand());
 			model.setBrandIcon(tBrand.getBrandIcon());
 			model.setWord(tBrand.getWord());
+			model.setShowflg(tBrand.getShowflg());
 		}
 		return R.ok().put("tBrand", model);
 	}

@@ -8,7 +8,10 @@
 	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TFinanceCommitEntity">
-		select * from t_finance_commit 
+		select * from t_finance_commit where 1=1
+		<if test="date != null and date != ''">
+			and create_time like "%${date}%"
+		</if>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -16,6 +19,10 @@
 	
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_finance_commit 
+		where 1=1
+		<if test="date != null and date != ''">
+			and create_time like "%${date}%"
+		</if>
 	</select>
 	 
 	<insert id="save" parameterType="com.framework.entity.TFinanceCommitEntity" useGeneratedKeys="true" keyProperty="id">

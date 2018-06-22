@@ -69,11 +69,12 @@ public class TCarImportController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("tcarimport:list")
-	public R list(Integer page, Integer limit){
+	public R list(Integer page, Integer limit,@RequestParam("queryCarName")String queryCarName,@RequestParam("queryBrand")Integer queryBrand){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
-		
+		map.put("queryCarName", queryCarName);
+		map.put("queryBrand", queryBrand);
 		//查询列表数据
 		List<TCarImportEntity> tCarImportList = tCarImportService.queryList(map);
 		int total = tCarImportService.queryTotal(map);

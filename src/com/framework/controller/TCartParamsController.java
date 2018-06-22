@@ -77,7 +77,11 @@ public class TCartParamsController {
 	public R info(@PathVariable("id") Integer id,@PathVariable("typeCd")String typeCd){
 		TCartParamsEntity tCartParams = tCartParamsService.queryObjectByCartId(id, typeCd);
 		TCartParam2Entity tCartParams2 = tCartParam2Service.queryObjectByCartIdType(id, typeCd);
-		return R.ok().put("tCartParams", tCartParams).put("tCartParams2", tCartParams2);
+		if(tCartParams == null || tCartParams2 == null){
+			return R.error("此汽车还没导入参数，请先导入");
+		}else{
+			return R.ok().put("tCartParams", tCartParams).put("tCartParams2", tCartParams2);
+		}
 	}
 	
 	/**

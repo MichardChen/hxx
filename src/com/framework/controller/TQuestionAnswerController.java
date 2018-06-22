@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.framework.dao.SysUserDao;
@@ -60,11 +61,11 @@ public class TQuestionAnswerController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("tquestionanswer:list")
-	public R list(Integer page, Integer limit){
+	public R list(Integer page, Integer limit,@RequestParam("date")String date){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
-		
+		map.put("date", date);
 		//查询列表数据
 		List<TQuestionAnswerEntity> tQuestionAnswerList = tQuestionAnswerService.queryList(map);
 		int total = tQuestionAnswerService.queryTotal(map);

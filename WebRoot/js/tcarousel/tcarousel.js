@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../tcarousel/list',
+        url: '../tcarousel/list?type=',
         datatype: "json",
         colModel: [			
 			{ label: '图片', name: 'imgUrl', width: 80 }, 			
@@ -53,6 +53,14 @@ var vm = new Vue({
 			}
 			
 			location.href = "tcarousel_add.html?id="+id;
+		},
+		search:function(event){
+			var type = $("#type").val();
+			$("#jqGrid").jqGrid('setGridParam',{ 
+	            url:"../tcarousel/list", 
+	            postData:{'type':type}, //发送数据 
+	            page:1 
+	        }).trigger("reloadGrid"); 
 		},
 		del: function (event) {
 			var ids = getSelectedRows();

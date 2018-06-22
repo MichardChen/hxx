@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../tnews/list',
+        url: '../tnews/list?date=',
         datatype: "json",
         colModel: [			
 			{ label: '资讯标题', name: 'newsTitle', width: 200 }, 			
@@ -52,6 +52,14 @@ var vm = new Vue({
 			}
 			
 			location.href = "tnews_add.html?id="+id;
+		},
+		search:function(event){
+			var date = $("#date").val();
+			$("#jqGrid").jqGrid('setGridParam',{ 
+	            url:"../tnews/list", 
+	            postData:{'date':date}, //发送数据 
+	            page:1 
+	        }).trigger("reloadGrid"); 
 		},
 		show:function(event){
 			var rowKey = getSelectedRow();

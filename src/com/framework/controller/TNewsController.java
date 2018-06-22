@@ -71,11 +71,11 @@ public class TNewsController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("tnews:list")
-	public R list(Integer page, Integer limit){
+	public R list(Integer page, Integer limit,@RequestParam("date")String date){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
-		
+		map.put("date", date);
 		//查询列表数据
 		List<TNewsEntity> tNewsList = tNewsService.queryList(map);
 		int total = tNewsService.queryTotal(map);

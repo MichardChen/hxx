@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../tfinancecommit/list',
+        url: '../tfinancecommit/list?date=',
         datatype: "json",
         colModel: [			
 			{ label: '申请产品', name: 'financeId', width: 80 }, 			
@@ -53,6 +53,14 @@ var vm = new Vue({
 			}
 			
 			location.href = "tfinancecommit_add.html?id="+id;
+		},
+		search:function(event){
+			var date = $("#date").val();
+			$("#jqGrid").jqGrid('setGridParam',{ 
+                url:"../tfinancecommit/list", 
+                postData:{'date':date}, //发送数据 
+                page:1 
+            }).trigger("reloadGrid"); 
 		},
 		del: function (event) {
 			var ids = getSelectedRows();

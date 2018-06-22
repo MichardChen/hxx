@@ -1,7 +1,7 @@
 package com.framework.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 
@@ -22,96 +22,55 @@ public class TBrandSeriesEntity implements Serializable {
 	//
 	private String carSerial;
 	//
-	private Date createTime;
+	private Timestamp createTime;
 	//
-	private Date updateTime;
+	private Timestamp updateTime;
 	//
 	private Integer createBy;
 	//
 	private Integer updateBy;
-
-	/**
-	 * 设置：
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	/**
-	 * 获取：
-	 */
 	public Integer getId() {
 		return id;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setBrandId(Integer brandId) {
-		this.brandId = brandId;
-	}
-	/**
-	 * 获取：
-	 */
 	public Integer getBrandId() {
 		return brandId;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setCarSerial(String carSerial) {
-		this.carSerial = carSerial;
-	}
-	/**
-	 * 获取：
-	 */
 	public String getCarSerial() {
 		return carSerial;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	/**
-	 * 获取：
-	 */
-	public Date getCreateTime() {
+	public Timestamp getCreateTime() {
 		return createTime;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-	/**
-	 * 获取：
-	 */
-	public Date getUpdateTime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setCreateBy(Integer createBy) {
-		this.createBy = createBy;
-	}
-	/**
-	 * 获取：
-	 */
 	public Integer getCreateBy() {
 		return createBy;
 	}
-	/**
-	 * 设置：
-	 */
-	public void setUpdateBy(Integer updateBy) {
-		this.updateBy = updateBy;
-	}
-	/**
-	 * 获取：
-	 */
 	public Integer getUpdateBy() {
 		return updateBy;
 	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public void setBrandId(Integer brandId) {
+		this.brandId = brandId;
+	}
+	public void setCarSerial(String carSerial) {
+		this.carSerial = carSerial;
+	}
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
+	public void setCreateBy(Integer createBy) {
+		this.createBy = createBy;
+	}
+	public void setUpdateBy(Integer updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	
 }

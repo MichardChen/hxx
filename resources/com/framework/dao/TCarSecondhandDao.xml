@@ -8,7 +8,15 @@
 	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TCarSecondhandEntity">
-		select * from t_car_secondhand  order by flg desc,update_time desc
+		select * from t_car_secondhand  
+		where 1=1
+		<if test="queryCarName != null and queryCarName != ''">
+			and car_name like "%${queryCarName}%"
+		</if>
+		<if test="queryBrand != null and queryBrand != 0">
+			and brand=#{queryBrand}
+		</if>
+		order by flg desc,update_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -130,6 +138,13 @@
 	</select>
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_car_secondhand 
+		where 1=1
+		<if test="queryCarName != null and queryCarName != ''">
+			and car_name like "%${queryCarName}%"
+		</if>
+		<if test="queryBrand != null and queryBrand != 0">
+			and brand=#{queryBrand}
+		</if>
 	</select>
 	 
 	<insert id="save" parameterType="com.framework.entity.TCarSecondhandEntity" useGeneratedKeys="true" keyProperty="id">

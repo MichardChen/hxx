@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../tstory/list',
+        url: '../tstory/list?date=',
         datatype: "json",
         colModel: [			
 			{ label: '故事标题', name: 'storyTitle', width: 150 }, 			
@@ -49,8 +49,15 @@ var vm = new Vue({
 			if(id == null){
 				return ;
 			}
-			
 			location.href = "tstory_add.html?id="+id;
+		},
+		search:function(event){
+			var date = $("#date").val();
+			$("#jqGrid").jqGrid('setGridParam',{ 
+	            url:"../tstory/list", 
+	            postData:{'date':date}, //发送数据 
+	            page:1 
+	        }).trigger("reloadGrid"); 
 		},
 		show:function(event){
 			var rowKey = getSelectedRow();

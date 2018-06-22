@@ -69,10 +69,11 @@ public class TDocumentController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("tdocument:list")
-	public R list(Integer page, Integer limit){
+	public R list(Integer page, Integer limit,@RequestParam("date")String date){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
+		map.put("date", date);
 		
 		//查询列表数据
 		List<TDocumentEntity> tDocumentList = tDocumentService.queryList(map);

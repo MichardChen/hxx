@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../tbrand/list',
+        url: '../tbrand/list?queryBrand=',
         datatype: "json",
         colModel: [			
 			{ label: '汽车品牌', name: 'brand', width: 80 }, 			
@@ -49,6 +49,14 @@ var vm = new Vue({
 			}
 			
 			location.href = "tbrand_add.html?id="+id;
+		},
+		search:function(event){
+			var queryBrand = $("#brand").val();
+			$("#jqGrid").jqGrid('setGridParam',{ 
+                url:"../tbrand/list", 
+                postData:{'queryBrand':queryBrand}, //发送数据 
+                page:1 
+            }).trigger("reloadGrid"); 
 		},
 		del: function (event) {
 			var ids = getSelectedRows();

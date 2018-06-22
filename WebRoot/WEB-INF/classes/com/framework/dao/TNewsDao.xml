@@ -8,7 +8,12 @@
 	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TNewsEntity">
-		select * from t_news order by update_time desc
+		select * from t_news 
+		where 1=1
+		<if test="date != null and date != ''">
+			and create_time like "%${date}%"
+		</if>
+		order by update_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -16,6 +21,10 @@
 	
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_news 
+		where 1=1
+		<if test="date != null and date != ''">
+			and create_time like "%${date}%"
+		</if>
 	</select>
 	 
 	<insert id="save" parameterType="com.framework.entity.TNewsEntity" useGeneratedKeys="true" keyProperty="id">

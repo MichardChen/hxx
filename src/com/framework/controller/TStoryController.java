@@ -75,10 +75,11 @@ public class TStoryController extends AbstractController{
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("tstory:list")
-	public R list(Integer page, Integer limit){
+	public R list(Integer page, Integer limit,@RequestParam("date")String date){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
+		map.put("date", date);
 		
 		//查询列表数据
 		List<TStoryEntity> tStoryList = tStoryService.queryList(map);

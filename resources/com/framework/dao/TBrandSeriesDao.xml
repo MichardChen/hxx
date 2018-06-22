@@ -9,6 +9,10 @@
 
 	<select id="queryList" resultType="com.framework.entity.TBrandSeriesEntity">
 		select * from t_brand_series 
+		where 1=1
+		<if test="queryBrand != null and queryBrand != 0">
+			and brand_id=#{queryBrand}
+		</if>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -21,6 +25,10 @@
 	
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_brand_series 
+		where 1=1
+		<if test="queryBrand != null and queryBrand != 0">
+			and brand_id=#{queryBrand}
+		</if>
 	</select>
 	 
 	<insert id="save" parameterType="com.framework.entity.TBrandSeriesEntity" useGeneratedKeys="true" keyProperty="id">

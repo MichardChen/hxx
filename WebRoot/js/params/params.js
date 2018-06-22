@@ -10,19 +10,23 @@ var vm = new Vue({
 	created: function() {
 		if(id != null){
 			this.title = "修改";
-			this.getInfo(id)
+			this.getInfo(id);
 		}
     },
 	methods: {
 		getInfo: function(id){
 			$.get("../tcartparams/allInfo/"+id+"/"+typeCd, function(r){
-                vm.tCartParams = r.tCartParams;
-                vm.tCartParam2 = r.tCartParams2;
+				if(r.code === 0){
+					 vm.tCartParams = r.tCartParams;
+		              vm.tCartParam2 = r.tCartParams2;
+				}else{
+					alert(r.msg);
+				}
             });
 		},
 		saveOrUpdate: function (event) {
-			var cartId = $("#cartIds").val();
-			if(cartId == null || cartId == 0){
+			var cartIds = $("#cartIds").val();
+			if(cartIds == null || cartIds == 0){
 				alert("这部汽车，还没没有导入参数，请先导入");
 				return;
 			}else{

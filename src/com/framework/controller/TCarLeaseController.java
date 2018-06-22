@@ -76,11 +76,12 @@ public class TCarLeaseController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("tcarlease:list")
-	public R list(Integer page, Integer limit){
+	public R list(Integer page, Integer limit,@RequestParam("queryCarName")String queryCarName,@RequestParam("queryBrand")Integer queryBrand){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
-		
+		map.put("queryCarName", queryCarName);
+		map.put("queryBrand", queryBrand);
 		//查询列表数据
 		List<TCarLeaseEntity> tCarLeaseList = tCarLeaseService.queryList(map);
 		int total = tCarLeaseService.queryTotal(map);

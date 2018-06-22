@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../tquestion/list',
+        url: '../tquestion/list?date=',
         datatype: "json",
         colModel: [			
 			{ label: '联系电话', name: 'mobile', width: 50 }, 			
@@ -52,6 +52,14 @@ var vm = new Vue({
 			}
 			
 			location.href = "tquestion_add.html?id="+id;
+		},
+		search:function(event){
+			var date = $("#date").val();
+			$("#jqGrid").jqGrid('setGridParam',{ 
+	            url:"../tquestion/list", 
+	            postData:{'date':date}, //发送数据 
+	            page:1 
+	        }).trigger("reloadGrid"); 
 		},
 		del: function (event) {
 			var ids = getSelectedRows();

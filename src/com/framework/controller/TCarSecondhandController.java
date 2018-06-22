@@ -78,10 +78,12 @@ public class TCarSecondhandController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("tcarsecondhand:list")
-	public R list(Integer page, Integer limit){
+	public R list(Integer page, Integer limit,@RequestParam("queryCarName")String queryCarName,@RequestParam("queryBrand")Integer queryBrand){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
+		map.put("queryCarName", queryCarName);
+		map.put("queryBrand", queryBrand);
 		
 		//查询列表数据
 		List<TCarSecondhandEntity> tCarSecondhandList = tCarSecondhandService.queryList(map);

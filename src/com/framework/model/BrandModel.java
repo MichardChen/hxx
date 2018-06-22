@@ -11,6 +11,17 @@ public class BrandModel implements Serializable{
 	private String brandIcon;
 	//
 	private String word;
+	
+	private int showflg;
+	
+	
+	
+	public int getShowflg() {
+		return showflg;
+	}
+	public void setShowflg(int showflg) {
+		this.showflg = showflg;
+	}
 	public Integer getId() {
 		return id;
 	}

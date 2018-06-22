@@ -1,6 +1,9 @@
 $(function () {
-    $("#jqGrid").jqGrid({
-        url: '../tcarlease/list',
+	loadData();
+});
+function loadData(){
+	$("#jqGrid").jqGrid({
+        url: '../tcarlease/list?queryBrand=0&queryCarName=',
         datatype: "json",
         colModel: [		
         	{ label: 'id', name: 'id', width: 50, key: true },
@@ -40,12 +43,24 @@ $(function () {
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
         }
     });
-});
-
+}
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		
+	},
+	created: function() {
+		$.get("../tbrand/queryAllBrand", function(r){
+			//var r =eval('('+rr+')');
+	        var list = r.tBrandList;
+	    	if(r.code === 0){
+	    		var html = "";
+	    		for(var b in list){
+	    			//向品牌下拉框添加品牌
+	    			html += "<option value='" + list[b].id + "'>" +list[b].brand + "</option>";
+	    		}
+	    		 $("#brand").append(html);
+	    }});
 	},
 	methods: {
 		update: function (event) {
@@ -64,6 +79,15 @@ var vm = new Vue({
 				return ;
 			}
 			location.href = "params.html?typeCd=110001&id="+id;
+		},
+		search:function(event){
+			var queryCarName = $("#queryCarName").val();
+			var queryBrand = $("#brand").val();
+			$("#jqGrid").jqGrid('setGridParam',{ 
+                url:"../tcarlease/list", 
+                postData:{'queryCarName':queryCarName,'queryBrand':queryBrand}, //发送数据 
+                page:1 
+            }).trigger("reloadGrid"); 
 		},
 		upload:function(event){
 			var fileObj = document.getElementById("btn_file").files[0];

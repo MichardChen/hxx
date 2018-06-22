@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../tdocument/list',
+        url: '../tdocument/list?date=',
         datatype: "json",
         colModel: [			
 			{ label: '文档标题', name: 'title', width: 80 }, 			
@@ -52,6 +52,14 @@ var vm = new Vue({
 			}
 			
 			location.href = "tdocument_add.html?id="+id;
+		},
+		search:function(event){
+			var date = $("#date").val();
+			$("#jqGrid").jqGrid('setGridParam',{ 
+	            url:"../tdocument/list", 
+	            postData:{'date':date}, //发送数据 
+	            page:1 
+	        }).trigger("reloadGrid"); 
 		},
 		show:function(event){
 			var rowKey = getSelectedRow();

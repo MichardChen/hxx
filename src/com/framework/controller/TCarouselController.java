@@ -66,11 +66,11 @@ public class TCarouselController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("tcarousel:list")
-	public R list(Integer page, Integer limit) {
+	public R list(Integer page, Integer limit,@RequestParam("type")String type) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
-
+		map.put("type", type);
 		// 查询列表数据
 		List<TCarouselEntity> tCarouselList = tCarouselService.queryList(map);
 		int total = tCarouselService.queryTotal(map);

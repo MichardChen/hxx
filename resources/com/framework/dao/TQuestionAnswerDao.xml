@@ -9,6 +9,10 @@
 
 	<select id="queryList" resultType="com.framework.entity.TQuestionAnswerEntity">
 		select * from t_question_answer 
+		where 1=1
+		<if test="date != null and date != ''">
+			and create_time like "%${date}%"
+		</if>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -23,6 +27,10 @@
 	
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_question_answer 
+		where 1=1
+		<if test="date != null and date != ''">
+			and create_time like "%${date}%"
+		</if>
 	</select>
 	<select id="queryQATotal" resultType="int">
 		select count(*) from t_question_answer where 1=1

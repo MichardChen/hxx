@@ -49,12 +49,18 @@ var vm = new Vue({
 			}
 			var brandSeriesId = $("#brandSeriesId").val();
 			if (brandSeriesId == null || brandSeriesId == "") {
+				var formFile = new FormData();
+				formFile.append("tBrandSeries", JSON.stringify(vm.tBrandSeries));
 				var url = "../tbrandseries/save";
 				$.ajax({
 					type : "POST",
 					url : url,
-					data : JSON.stringify(vm.tBrandSeries),
-					success : function(r) {
+					data : formFile,
+					contentType: "application/json",
+				    processData: false,
+				    contentType: false,
+					success : function(json) {
+						var r = eval('('+json+')');
 						if (r.code === 0) {
 							alert('操作成功', function(index) {
 								vm.back();
@@ -67,11 +73,17 @@ var vm = new Vue({
 			} else {
 				var url = "../tbrandseries/update";
 				vm.tBrandSeries.id = brandSeriesId;
+				var formFile = new FormData();
+				formFile.append("tBrandSeries", JSON.stringify(vm.tBrandSeries));
 				$.ajax({
 					type : "POST",
 					url : url,
-					data : JSON.stringify(vm.tBrandSeries),
-					success : function(r) {
+					data : formFile,
+					contentType: "application/json",
+				    processData: false,
+				    contentType: false,
+					success : function(json) {
+						var r = eval('('+json+')');
 						if (r.code === 0) {
 							alert('操作成功', function(index) {
 								vm.back();

@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.framework.dao.SysUserDao;
 import com.framework.entity.SysUserEntity;
 import com.framework.entity.TBrandEntity;
@@ -61,10 +63,11 @@ public class TBrandSeriesController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("tbrandseries:list")
-	public R list(Integer page, Integer limit){
+	public R list(Integer page, Integer limit,@RequestParam("queryBrand")Integer queryBrand){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
+		map.put("queryBrand", queryBrand);
 		
 		//查询列表数据
 		List<TBrandSeriesEntity> tBrandSeriesList = tBrandSeriesService.queryList(map);
@@ -130,13 +133,18 @@ public class TBrandSeriesController {
 	@ResponseBody
 	@RequestMapping("/save")
 	@RequiresPermissions("tbrandseries:save")
-	public R save(@RequestBody TBrandSeriesEntity tBrandSeries){
+	public R save(@RequestParam("tBrandSeries") String tBrandSeries)throws Exception{
+		
+		TBrandSeriesEntity bs = new TBrandSeriesEntity();
 		int userid = ShiroUtils.getUserId().intValue();
-		tBrandSeries.setCreateBy(userid);
-		tBrandSeries.setCreateTime(DateUtil.getNowTimestamp());
-		tBrandSeries.setUpdateBy(userid);
-		tBrandSeries.setUpdateTime(DateUtil.getNowTimestamp());
-		tBrandSeriesService.save(tBrandSeries);
+		JSONObject viewModel = JSONObject.parseObject(tBrandSeries);
+		bs.setBrandId(viewModel.getInteger("brandId"));
+		bs.setCarSerial(viewModel.getString("carSerial"));
+		bs.setCreateBy(userid);
+		bs.setCreateTime(DateUtil.getNowTimestamp());
+		bs.setUpdateBy(userid);
+		bs.setUpdateTime(DateUtil.getNowTimestamp());
+		tBrandSeriesService.save(bs);
 		
 		return R.ok();
 	}
@@ -147,12 +155,17 @@ public class TBrandSeriesController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("tbrandseries:update")
-	public R update(@RequestBody TBrandSeriesEntity tBrandSeries){
+	public R update(@RequestParam("tBrandSeries") String tBrandSeries) throws Exception{
 		
+		TBrandSeriesEntity bs = new TBrandSeriesEntity();
 		int userid = ShiroUtils.getUserId().intValue();
-		tBrandSeries.setUpdateBy(userid);
-		tBrandSeries.setUpdateTime(DateUtil.getNowTimestamp());
-		tBrandSeriesService.update(tBrandSeries);
+		JSONObject viewModel = JSONObject.parseObject(tBrandSeries);
+		bs.setId(viewModel.getInteger("id"));
+		bs.setBrandId(viewModel.getInteger("brandId"));
+		bs.setCarSerial(viewModel.getString("carSerial"));
+		bs.setUpdateBy(userid);
+		bs.setUpdateTime(DateUtil.getNowTimestamp());
+		tBrandSeriesService.update(bs);
 		
 		return R.ok();
 	}

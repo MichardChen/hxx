@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../sys/user/list',
+        url: '../sys/user/list?queryName=',
         datatype: "json",
         colModel: [			
 			{ label: '用户ID', name: 'userId', width: 45, key: true },
@@ -54,6 +54,14 @@ var vm = new Vue({
 			}
 			
 			location.href = "user_add.html?userId="+userId;
+		},
+		search:function(event){
+			var queryName = $("#queryName").val();
+			$("#jqGrid").jqGrid('setGridParam',{ 
+	            url:"../sys/user/list", 
+	            postData:{'queryName':queryName}, //发送数据 
+	            page:1 
+	        }).trigger("reloadGrid"); 
 		},
 		del: function (event) {
 			var userIds = getSelectedRows();

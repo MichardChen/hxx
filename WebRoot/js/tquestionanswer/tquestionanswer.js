@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../tquestionanswer/list',
+        url: '../tquestionanswer/list?date=',
         datatype: "json",
         colModel: [			
 			{ label: '问题', name: 'question', width: 80 }, 			
@@ -50,6 +50,14 @@ var vm = new Vue({
 			}
 			
 			location.href = "tquestionanswer_add.html?id="+id;
+		},
+		search:function(event){
+			var date = $("#date").val();
+			$("#jqGrid").jqGrid('setGridParam',{ 
+	            url:"../tquestionanswer/list", 
+	            postData:{'date':date}, //发送数据 
+	            page:1 
+	        }).trigger("reloadGrid"); 
 		},
 		del: function (event) {
 			var ids = getSelectedRows();

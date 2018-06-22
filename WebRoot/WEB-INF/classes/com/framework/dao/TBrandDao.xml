@@ -8,7 +8,12 @@
 	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TBrandEntity">
-		select * from t_brand order by update_time desc
+		select * from t_brand 
+		where 1=1
+		<if test="queryBrand != null and queryBrand != ''">
+			and brand like "%${queryBrand}%"
+		</if>
+		order by update_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -28,7 +33,10 @@
 		order by update_time desc,word asc limit 0,9
 	</select>
  	<select id="queryTotal" resultType="int">
-		select count(*) from t_brand 
+		select count(*) from t_brand where 1=1
+		<if test="queryBrand != null and queryBrand != ''">
+			and brand like "%${queryBrand}%"
+		</if>
 	</select>
 	 
 	<insert id="save" parameterType="com.framework.entity.TBrandEntity" useGeneratedKeys="true" keyProperty="id">
@@ -64,8 +72,8 @@
 			<if test="brand != null">`brand` = #{brand}, </if>
 			<if test="brandIcon != null">`brand_icon` = #{brandIcon}, </if>
 			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
-			<if test="updateTime != null">`update_time` = #{updateTime}</if>
-			<if test="word != null">`word` = #{word}</if>
+			<if test="updateTime != null">`update_time` = #{updateTime},</if>
+			<if test="word != null">`word` = #{word},</if>
 			<if test="showflg != null">`showflg` = #{showflg}</if>
 		</set>
 		where id = #{id}
