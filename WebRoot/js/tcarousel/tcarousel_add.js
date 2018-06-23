@@ -34,11 +34,11 @@ var vm = new Vue({
 					alert("请选择上传图片");
 					return;
 				}
-				var realUrl = $("#realUrl").val();
+				/*var realUrl = $("#realUrl").val();
 				if(realUrl == ""){
 					alert("请输入跳转地址");
 					return;
-				}
+				}*/
 				var typeCd = $("#typeCd").val();
 				if(typeCd == null){
 					alert("请选择图片类型");
@@ -47,6 +47,7 @@ var vm = new Vue({
 				var formFile = new FormData();
 				var url = "../tcarousel/save";
 				formFile.append("uFile", fileObj); 
+				vm.tCarousel.realUrl="#";
 				formFile.append("tCarousel", JSON.stringify(vm.tCarousel));
 				$.ajax({
 					type: "POST",
@@ -67,11 +68,11 @@ var vm = new Vue({
 				});
 			}else{
 				//更新
-				var realUrl = $("#realUrl").val();
+				/*var realUrl = $("#realUrl").val();
 				if(realUrl == ""){
 					alert("请输入跳转地址");
 					return;
-				}
+				}*/
 				var typeCd = $("#typeCd").val();
 				if(typeCd == ""){
 					alert("请选择图片类型");

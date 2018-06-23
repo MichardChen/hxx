@@ -14,10 +14,10 @@
 		   		<a style="text-decoration: none;display: none;" target="_blank" id="icon">查看封面</a><input type="file" v-model="tCarousel.imgUrl" id="uFile" name="uFile" placeholder="请选择轮播图"/>
 		    </div>
 		</div>
-		<div class="form-group">
+		<div class="form-group" style="display: none;">
 		   	<div class="col-sm-2 control-label">跳转地址</div>
 		   	<div class="col-sm-10">
-		   		<input type="text" class="form-control" v-model="tCarousel.realUrl" id="realUrl" placeholder="若无跳转地址，请输入#"/>
+		   		<input type="text" class="form-control" value="#" v-model="tCarousel.realUrl" id="realUrl" placeholder="若无跳转地址，请输入#"/>
 		    </div>
 		</div>
 		<div class="form-group">
@@ -37,6 +37,12 @@
 		   			<option value="040011">微信h5以租代购横幅</option>
 		   			<option value="040012">微信h5二手车横幅</option>
 		   			<option value="040013">微信h5平行进口车横幅</option>
+		   			<option value="040014">平行进口车常见问题</option>
+		   			<option value="040015">会淘车购买说明</option>
+		   			<option value="040016">会淘车购买说明</option>
+		   			<option value="040017">惠搜车购买须知</option>
+		   			<option value="040018">惠搜车购买说明</option>
+		   			<option value="040019">惠车邦售后服务图片</option>
 		   		</select>
 		    </div>
 		</div>

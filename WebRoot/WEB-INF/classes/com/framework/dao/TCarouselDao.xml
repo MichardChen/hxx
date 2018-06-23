@@ -24,13 +24,16 @@
 		<if test="typeCd != null">
 			and type_cd=#{typeCd}
 		</if>
+		order by update_time desc
 	</select>
 	
 	<select id="queryCarouselByTypeCd" resultType="com.framework.entity.TCarouselEntity">
 		select * from t_carousel where 1=1
 		<if test="typeCd != null">
 			and type_cd=#{typeCd}
-		</if> limit 1
+		</if>
+		order by update_time desc
+		 limit 1
 	</select>
 	
  	<select id="queryTotal" resultType="int">

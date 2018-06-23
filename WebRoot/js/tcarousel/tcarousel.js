@@ -4,7 +4,7 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: '图片', name: 'imgUrl', width: 80 }, 			
-			{ label: '真实跳转地址', name: 'realUrl', width: 80 }, 	
+			{ label: '真实跳转地址', name: 'realUrl', width: 80,hidden:true}, 	
 			{ label: '类型', name: 'typeCd', width: 80 },
 			{ label: '备注', name: 'mark', width: 80 }, 		
 			{ label: '创建者', name: 'createBy', width: 80 },

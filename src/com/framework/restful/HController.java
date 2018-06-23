@@ -3,13 +3,19 @@ package com.framework.restful;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -297,7 +303,22 @@ public class HController extends RestfulController{
 				map.put(word, value);
 			}
 		}
-		json.put("brandList", map);
+		
+		List<Map.Entry<String, List<BrandModel>>> infoIds =
+			    new ArrayList<Map.Entry<String, List<BrandModel>>>(map.entrySet());
+		
+		Collections.sort(infoIds, new Comparator<Map.Entry<String, List<BrandModel>>>() {   
+			@Override
+			public int compare(Entry<String, List<BrandModel>> arg0, Entry<String, List<BrandModel>> arg1) {
+				return (arg0.getKey()).toString().compareTo(arg1.getKey());
+			}
+		}); 
+		Map<String, List<BrandModel>> map1 = new LinkedHashMap<>();
+		for(Map.Entry<String, List<BrandModel>> e : infoIds) {
+			System.out.println(e.getKey());
+			map1.put(e.getKey(), map.get(e.getKey()));
+		}
+		json.put("brandList", map1);
 		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");
@@ -918,9 +939,9 @@ public class HController extends RestfulController{
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
 		}
 		//获取常见问题图片
-		TCodemstEntity oftenQuestionUrl = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.IMPORT_CAR_OFTENQUESTION);
+		TCarouselEntity oftenQuestionUrl = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.IMPORT_CAR_OFTENQUESTION);
 		if(oftenQuestionUrl != null){
-			model.setOftenQuestionUrl(oftenQuestionUrl.getData3());
+			model.setOftenQuestionUrl(oftenQuestionUrl.getImgUrl());
 		}
 		//客服电话
 		TCodemstEntity kefuTel = codeMstDao.queryByCode(Constants.TEL_TYPE.KEFU);
@@ -1002,14 +1023,14 @@ public class HController extends RestfulController{
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
 		}
 		//获取购买说明
-		TCodemstEntity buyMark = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYMARK);
+		TCarouselEntity buyMark = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYMARK);
 		if(buyMark != null){
-			model.setBuyMarkUrl(buyMark.getData3());
+			model.setBuyMarkUrl(buyMark.getImgUrl());
 		}
 		//购买须知
-		TCodemstEntity buyKnow = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYKONW);
+		TCarouselEntity buyKnow = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYKONW);
 		if(buyKnow != null){
-			model.setBuyKnowUrl(buyKnow.getData3());
+			model.setBuyKnowUrl(buyKnow.getImgUrl());
 		}
 		//客服电话
 		TCodemstEntity kefuTel = codeMstDao.queryByCode(Constants.TEL_TYPE.KEFU);
@@ -1107,14 +1128,14 @@ public class HController extends RestfulController{
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
 		}
 		//获取购买说明
-		TCodemstEntity buyMark = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.LEASE_CAR_BUYMARK);
+		TCarouselEntity buyMark = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.LEASE_CAR_BUYMARK);
 		if(buyMark != null){
-			model.setBuyMarkUrl(buyMark.getData3());
+			model.setBuyMarkUrl(buyMark.getImgUrl());
 		}
 		//购买须知
-		TCodemstEntity buyKnow = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.LEASE_CAR_BUYKONW);
+		TCarouselEntity buyKnow = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.LEASE_CAR_BUYKONW);
 		if(buyKnow != null){
-			model.setBuyKnowUrl(buyKnow.getData3());
+			model.setBuyKnowUrl(buyKnow.getImgUrl());
 		}
 		model.setSalecount(StringUtil.toString(car.getSalecount()));
 		json.put("carDetail", model);
@@ -1150,6 +1171,28 @@ public class HController extends RestfulController{
 		
 		json.put("params1", params1);
 		json.put("params2", params2);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	@RequestMapping("/queryCustomerService")
+	public void queryCustomerService(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		json.put("address", "厦门市翔安区马巷巷西路888号");
+		json.put("emailCode", "3610000");
+		json.put("phone", "0592-2688966");
+		json.put("longtitude", "118.24338197705003");
+		json.put("latitude", "24.674669004378305");
+		TCarouselEntity serviceImg = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.AFTER_SALE);
+		if(serviceImg != null) {
+			json.put("customerServiceImg", serviceImg.getImgUrl());
+		}else {
+			json.put("customerServiceImg", "");
+		}
 		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");

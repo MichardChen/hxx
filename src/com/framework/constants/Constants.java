@@ -246,6 +246,8 @@ public interface Constants {
 		public static final String LEASE_CAR_BUYKONW = "040017";
 		// 以租代购购买说明
 		public static final String LEASE_CAR_BUYMARK = "040018";
+		//惠车邦售后服务图片
+		public static final String AFTER_SALE = "040019";
 	}
 
 	public static interface SHORT_MESSAGE_TYPE {

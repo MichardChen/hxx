@@ -896,9 +896,9 @@ public class PCController extends RestfulController{
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
 		}
 		//获取常见问题图片
-		TCodemstEntity oftenQuestionUrl = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.IMPORT_CAR_OFTENQUESTION);
+		TCarouselEntity oftenQuestionUrl = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.IMPORT_CAR_OFTENQUESTION);
 		if(oftenQuestionUrl != null){
-			model.setOftenQuestionUrl(oftenQuestionUrl.getData2());
+			model.setOftenQuestionUrl(oftenQuestionUrl.getImgUrl());
 		}
 		//客服电话
 		TCodemstEntity kefuTel = codeMstDao.queryByCode(Constants.TEL_TYPE.KEFU);
@@ -1004,19 +1004,19 @@ public class PCController extends RestfulController{
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
 		}
 		//获取购买说明
-		TCodemstEntity buyMark = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYMARK);
+		TCarouselEntity buyMark = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYMARK);
 		if(buyMark != null){
-			model.setBuyMarkUrl(buyMark.getData2());
+			model.setBuyMarkUrl(buyMark.getImgUrl());
 		}
 		//购买须知
-		TCodemstEntity buyKnow = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYKONW);
+		TCarouselEntity buyKnow = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYKONW);
 		if(buyKnow != null){
-			model.setBuyKnowUrl(buyKnow.getData2());
+			model.setBuyKnowUrl(buyKnow.getImgUrl());
 		}
 		//客服电话
-		TCodemstEntity kefuTel = codeMstDao.queryByCode(Constants.TEL_TYPE.KEFU);
+		TCarouselEntity kefuTel = carouselService.queryByTypeCd(Constants.TEL_TYPE.KEFU);
 		if(kefuTel != null){
-			model.setCompanyMobile(kefuTel.getData2());
+			model.setCompanyMobile(kefuTel.getImgUrl());
 		}
 		
 		TCartParamsEntity params1 = paramsService.queryObjectByCartId(dto.getCartId(),Constants.CAR_SALE_TYPE.SECONDHAND);
@@ -1110,14 +1110,14 @@ public class PCController extends RestfulController{
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
 		}
 		//获取购买说明
-		TCodemstEntity buyMark = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.LEASE_CAR_BUYMARK);
+		TCarouselEntity buyMark = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.LEASE_CAR_BUYMARK);
 		if(buyMark != null){
-			model.setBuyMarkUrl(buyMark.getData3());
+			model.setBuyMarkUrl(buyMark.getImgUrl());
 		}
 		//购买须知
-		TCodemstEntity buyKnow = codeMstDao.queryByCode(Constants.CAROUSEL_TYPE.LEASE_CAR_BUYKONW);
+		TCarouselEntity buyKnow = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.LEASE_CAR_BUYKONW);
 		if(buyKnow != null){
-			model.setBuyKnowUrl(buyKnow.getData3());
+			model.setBuyKnowUrl(buyKnow.getImgUrl());
 		}
 		model.setSalecount(StringUtil.toString(car.getSalecount()));
 		
@@ -1247,6 +1247,28 @@ public class PCController extends RestfulController{
 		int count = leaseService.queryPCTerminalByBrandTotal(map);
 		json.put("count", count);
 		json.put("leaseCarList", pcListModels);
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
+	}
+	
+	@RequestMapping("/queryCustomerService")
+	public void queryCustomerService(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		json.put("address", "厦门市翔安区马巷巷西路888号");
+		json.put("emailCode", "3610000");
+		json.put("phone", "0592-2688966");
+		json.put("longtitude", "118.24338197705003");
+		json.put("latitude", "24.674669004378305");
+		TCarouselEntity serviceImg = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.AFTER_SALE);
+		if(serviceImg != null) {
+			json.put("customerServiceImg", serviceImg.getImgUrl());
+		}else {
+			json.put("customerServiceImg", "");
+		}
 		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");
