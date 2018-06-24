@@ -852,9 +852,9 @@ public class PCController extends RestfulController{
 		ImportCartDetailModel model = new ImportCartDetailModel();
 		model.setCartId(car.getId());
 		List<String> icons = new ArrayList<>();
-		icons.add(car.getIcon());
-		icons.add(car.getIcon());
-		icons.add(car.getIcon());
+		icons.add(car.getPcIcon());
+		icons.add(car.getPcIcon());
+		icons.add(car.getPcIcon());
 		model.setIcons(icons);
 		TBrandEntity brand = brandService.queryObject(car.getBrand());
 		if(brand != null){
@@ -896,7 +896,7 @@ public class PCController extends RestfulController{
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
 		}
 		//获取常见问题图片
-		TCarouselEntity oftenQuestionUrl = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.IMPORT_CAR_OFTENQUESTION);
+		TCarouselEntity oftenQuestionUrl = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.PC_IMPORT_CAR_OFTENQUESTION);
 		if(oftenQuestionUrl != null){
 			model.setOftenQuestionUrl(oftenQuestionUrl.getImgUrl());
 		}
@@ -974,9 +974,9 @@ public class PCController extends RestfulController{
 			model.setCarSeriesName("");
 		}
 		List<String> icons = new ArrayList<>();
-		icons.add(car.getIcon());
-		icons.add(car.getIcon());
-		icons.add(car.getIcon());
+		icons.add(car.getPcIcon());
+		icons.add(car.getPcIcon());
+		icons.add(car.getPcIcon());
 		model.setIcons(icons);
 		model.setLabels(car.getLabels());
 		model.setFirstPayment(StringUtil.formatCarPrice(car.getFinalPayment(),0));
@@ -1004,12 +1004,12 @@ public class PCController extends RestfulController{
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
 		}
 		//获取购买说明
-		TCarouselEntity buyMark = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYMARK);
+		TCarouselEntity buyMark = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.PC_SECONDHAND_CAR_BUYMARK);
 		if(buyMark != null){
 			model.setBuyMarkUrl(buyMark.getImgUrl());
 		}
 		//购买须知
-		TCarouselEntity buyKnow = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.SECONDHAND_CAR_BUYKONW);
+		TCarouselEntity buyKnow = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.PC_SECONDHAND_CAR_BUYKONW);
 		if(buyKnow != null){
 			model.setBuyKnowUrl(buyKnow.getImgUrl());
 		}
@@ -1061,9 +1061,9 @@ public class PCController extends RestfulController{
 		}
 		
 		ArrayList<String> logos = new ArrayList<>();
-		logos.add(car.getIcon());
-		logos.add(car.getIcon());
-		logos.add(car.getIcon());
+		logos.add(car.getPcIcon());
+		logos.add(car.getPcIcon());
+		logos.add(car.getPcIcon());
 		model.setIcons(logos);
 		model.setFirmPrice(StringUtil.formatCarPrice(car.getFirmCost(),0));
 		model.setCarInfo(car.getCarTypeInfo());
@@ -1110,12 +1110,12 @@ public class PCController extends RestfulController{
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
 		}
 		//获取购买说明
-		TCarouselEntity buyMark = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.LEASE_CAR_BUYMARK);
+		TCarouselEntity buyMark = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.PC_LEASE_CAR_BUYMARK);
 		if(buyMark != null){
 			model.setBuyMarkUrl(buyMark.getImgUrl());
 		}
 		//购买须知
-		TCarouselEntity buyKnow = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.LEASE_CAR_BUYKONW);
+		TCarouselEntity buyKnow = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.PC_LEASE_CAR_BUYKONW);
 		if(buyKnow != null){
 			model.setBuyKnowUrl(buyKnow.getImgUrl());
 		}
@@ -1263,7 +1263,7 @@ public class PCController extends RestfulController{
 		json.put("phone", "0592-2688966");
 		json.put("longtitude", "118.24338197705003");
 		json.put("latitude", "24.674669004378305");
-		TCarouselEntity serviceImg = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.AFTER_SALE);
+		TCarouselEntity serviceImg = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.PC_AFTER_SALE);
 		if(serviceImg != null) {
 			json.put("customerServiceImg", serviceImg.getImgUrl());
 		}else {

@@ -101,6 +101,7 @@ public interface Constants {
 	/**
 	 * 本地
 	 */
+	/**
 	public static interface HOST {
 		public static final String LOCALHOST = "http://192.168.1.91:82/newsimages/";
 		public static final String TEA = "http://192.168.1.91:82/tea/";
@@ -132,8 +133,8 @@ public interface Constants {
 		public static final String IMG = "http://192.168.1.91:82/img/";
 		public static final String STORE = "http://192.168.1.91:82/store/";
 		public static final String COMMON = "http://192.168.1.91:82/common/";
-	}
-/**
+	}*/
+
 	public static interface HOST {
 		public static final String LOCALHOST = "http://www.yibuwangluo.cn:88/newsimages/";
 		public static final String TEA = "http://www.yibuwangluo.cn:88/tea/";
@@ -165,7 +166,7 @@ public interface Constants {
 		public static final String IMG = "D:\\upload\\img\\";
 		public static final String STORE = "D:\\upload\\store\\";
 		public static final String COMMON = "D:\\upload\\common\\";
-	}*/
+	}
 
 	/*
 	 * public static interface FILE_HOST { public static final String LOCALHOST
@@ -238,7 +239,7 @@ public interface Constants {
 		public static final String H5_CAR_IMPORT_IMAGE = "040013";
 		// 平行进口车常见问题
 		public static final String IMPORT_CAR_OFTENQUESTION = "040014";
-		// 会淘车购买说明
+		// 会淘车购买须知
 		public static final String SECONDHAND_CAR_BUYKONW = "040015";
 		// 会淘车购买说明
 		public static final String SECONDHAND_CAR_BUYMARK = "040016";
@@ -248,6 +249,19 @@ public interface Constants {
 		public static final String LEASE_CAR_BUYMARK = "040018";
 		//惠车邦售后服务图片
 		public static final String AFTER_SALE = "040019";
+		//pc
+		//PC平行进口车常见问题
+		public static final String PC_IMPORT_CAR_OFTENQUESTION = "040020";
+		//PC会淘车购买须知
+		public static final String PC_SECONDHAND_CAR_BUYKONW = "040021";
+		//PC会淘车购买说明
+		public static final String PC_SECONDHAND_CAR_BUYMARK = "040022";
+		//PC以租代购购买须知
+		public static final String PC_LEASE_CAR_BUYKONW = "040023";
+		//PC以租代购购买说明
+		public static final String PC_LEASE_CAR_BUYMARK = "040024";
+		//PC惠车邦售后服务图片
+		public static final String PC_AFTER_SALE = "040025";
 	}
 
 	public static interface SHORT_MESSAGE_TYPE {
