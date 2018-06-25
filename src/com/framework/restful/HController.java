@@ -3,7 +3,6 @@ package com.framework.restful;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -15,11 +14,11 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
 import com.framework.dao.LocationCityDao;
@@ -72,8 +71,11 @@ import com.framework.service.TSalecartService;
 import com.framework.service.TStoryService;
 import com.framework.service.TVertifyCodeService;
 import com.framework.utils.DateUtil;
+import com.framework.utils.HttpRequest;
+import com.framework.utils.MapWxData;
 import com.framework.utils.ReturnData;
 import com.framework.utils.ShortMessageUtil;
+import com.framework.utils.Sign;
 import com.framework.utils.StringUtil;
 import com.framework.utils.VertifyUtil;
 
@@ -1197,5 +1199,44 @@ public class HController extends RestfulController{
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");
 		renderJson(data, response);
+	}
+	
+	@RequestMapping("/getData1")
+	public void getData1(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		JSONObject json = new JSONObject();
+		ReturnData data = new ReturnData();
+		//获取普通接口access_token
+		//{"access_token":"9_ayVikot_KLJlDk96aOXJ_Uc7mxqsER0FwwuzkHmB7WeuLkjpYVExL16W508IjbyQd496RDd1o2g9XOcUpT0G6EAoAtGgZoM7uuX5vtBTx56CTTpgk9zF8z9qqJh-6AdSdZVJtJcCs6A57TqlCYEcAAAFBH","expires_in":7200}
+		String retJson = HttpRequest.sendGet("https://api.weixin.qq.com/cgi-bin/token", "grant_type=client_credential&appid=wx8a76e10bf06dd7f5&secret=56004ccb89ccf4c9aeea5aef1179d44a");
+		try {
+			org.json.JSONObject retJson1 = new org.json.JSONObject(retJson);
+			String accessToken = retJson1.getString("access_token");
+			System.out.println("accessToken:"+retJson1.getString("access_token"));
+			String retJson2 = HttpRequest.sendGet("https://api.weixin.qq.com/cgi-bin/ticket/getticket", "access_token="+accessToken+"&type=jsapi");
+			org.json.JSONObject retJson3 = new org.json.JSONObject(retJson2);
+			String ticket = retJson3.getString("ticket");
+					
+			Map<String, String> map1 = Sign.sign(ticket, "http://www.yibuwangluo.cn/framework/map.html");
+			MapWxData map = new MapWxData();
+			//服务号appID
+			map.setAppId("wx8a76e10bf06dd7f5");
+			map.setNonceStr(map1.get("nonceStr"));
+			map.setTimestamp(map1.get("timestamp"));
+			map.setSignature(map1.get("signature"));
+			json.put("mapInfo", map);
+			data.setData(json);
+			data.setCode(Constants.STATUS_CODE.SUCCESS);
+			data.setMessage("查询成功");
+			renderJson(data, response);
+			//ticket 
+			//{"errcode":0,"errmsg":"ok","ticket":"HoagFKDcsGMVCIY2vOjf9qApGHHu2Z24NkT1dQLud9N6E1WQkiizCOaffeWLbsdHp7LEZ6WHQh9BbdQPdq5jmA","expires_in":7200}
+		} catch (JSONException e) {
+			data.setCode(Constants.STATUS_CODE.FAIL);
+			data.setMessage("导航失败，请重试");
+			data.setData(null);
+			e.printStackTrace();
+			renderJson(data, response);
+		}
 	}
 }
