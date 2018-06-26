@@ -198,11 +198,13 @@ public class WXController extends RestfulController {
 		LeaseCarListModel lcm = null;
 		for (TCarLeaseEntity e : clList) {
 			lcm = new LeaseCarListModel();
-			lcm.setFirstPayment(StringUtil.toString(e.getFirstPayment()));
+			lcm.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(),0));
 			lcm.setIcon(e.getIcon());
 			lcm.setId(e.getId());
-			lcm.setMonthPayment(StringUtil.toString(e.getMonthPayment()));
-			lcm.setName(e.getCarName());
+			lcm.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
+			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
+			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
+			lcm.setName(brandEntity.getBrand()+" "+seriesEntity.getCarSerial()+" "+e.getCarName());
 			lcm.setPeriod(StringUtil.toString(e.getPeriods()));
 			leaseList.add(lcm);
 		}
@@ -213,9 +215,11 @@ public class WXController extends RestfulController {
 			icl.setIcon(e.getIcon());
 			icl.setId(e.getId());
 			icl.setLabels(e.getLabels());
-			icl.setName(e.getCarName());
-			icl.setNowPrice(StringUtil.toString(e.getNowPrice()));
-			icl.setPrimePrice(StringUtil.toString(e.getMarketPrice()));
+			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
+			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
+			icl.setName(brandEntity.getBrand()+" "+seriesEntity.getCarSerial()+" "+e.getCarName());
+			icl.setNowPrice(StringUtil.formatCarPrice(e.getNowPrice(),0));
+			icl.setPrimePrice(StringUtil.formatCarPrice(e.getMarketPrice(),0));
 			icl.setLabels(e.getLabels());
 			icl.setTitleLabel(e.getTitleLabel());
 			importList.add(icl);
@@ -225,11 +229,13 @@ public class WXController extends RestfulController {
 		for (TCarSecondhandEntity e : csList) {
 			scl = new SecondHandCarListModel();
 			scl.setIcon(e.getIcon());
-			scl.setName(e.getCarName());
+			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
+			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
+			scl.setName(brandEntity.getBrand()+" "+seriesEntity.getCarSerial()+" "+e.getCarName());
 			scl.setKilometers(StringUtil.toString(e.getKilomiters()));
-			scl.setMonthPayment(StringUtil.toString(e.getMonthPayment()));
+			scl.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
 			scl.setId(e.getId());
-			scl.setDate(e.getYear());
+			scl.setDate(DateUtil.formatCNYM(e.getYear()));
 			LocationCityEntity city = cityDao.queryObject(e.getCityId());
 			scl.setCity(city == null ? "" : city.getName());
 			secondList.add(scl);
@@ -240,7 +246,7 @@ public class WXController extends RestfulController {
 		json.put("secondList", secondList);
 
 		// 车主故事
-		List<TStoryEntity> stList = storyService.queryList(carListMap);
+		List<TStoryEntity> stList = storyService.queryListData(carListMap);
 		List<NewsListModel> storyList = new ArrayList<>();
 		NewsListModel slm = null;
 		for (TStoryEntity e : stList) {
@@ -255,7 +261,7 @@ public class WXController extends RestfulController {
 		}
 		json.put("storyList", storyList);
 		// 资讯
-		List<TNewsEntity> snList = newsService.queryList(carListMap);
+		List<TNewsEntity> snList = newsService.queryListData(carListMap);
 		List<NewsListModel> newList = new ArrayList<>();
 		NewsListModel nlm = null;
 		for (TNewsEntity e : snList) {
@@ -340,7 +346,7 @@ public class WXController extends RestfulController {
 		Map<String, Object> carListMap = new HashMap<>();
 		carListMap.put("offset", dto.getPageSize() * (dto.getPageNum() - 1));
 		carListMap.put("limit", dto.getPageSize());
-		List<TNewsEntity> snList = newsService.queryList(carListMap);
+		List<TNewsEntity> snList = newsService.queryListData(carListMap);
 		List<NewsListModel> newList = new ArrayList<>();
 		NewsListModel nlm = null;
 		for (TNewsEntity e : snList) {
@@ -376,7 +382,7 @@ public class WXController extends RestfulController {
 		carListMap.put("offset", dto.getPageSize() * (dto.getPageNum() - 1));
 		carListMap.put("limit", dto.getPageSize());
 
-		List<TStoryEntity> stList = storyService.queryList(carListMap);
+		List<TStoryEntity> stList = storyService.queryListData(carListMap);
 		List<NewsListModel> storyList = new ArrayList<>();
 		NewsListModel slm = null;
 		for (TStoryEntity e : stList) {
@@ -413,7 +419,7 @@ public class WXController extends RestfulController {
 			slm.setId(e.getId());
 			slm.setFinanceName(e.getName());
 			slm.setMoneys(e.getLowRefund());
-			slm.setPeriod(e.getLowRate());
+			slm.setPeriod(e.getTimeDistance());
 			slm.setRate(e.getLowRate());
 			slm.setIcon(e.getIcon());
 			slm.setStandard(e.getStandard());
@@ -464,7 +470,7 @@ public class WXController extends RestfulController {
 			int updateFlg = vertifyCodeService.update(vertifyCodeEntity);
 			if (updateFlg != 0) {
 				data.setCode(Constants.STATUS_CODE.SUCCESS);
-				data.setMessage("验证码已发送，请接收");
+				data.setMessage("发送成功");
 				String shortMsg = "您的验证码是：" + code + "，10分钟内有效，请不要把验证码泄露给其他人。";
 				ShortMessageUtil.sendsms(dto.getMobile(), shortMsg);
 				renderJson(data, response);
@@ -488,7 +494,7 @@ public class WXController extends RestfulController {
 			int ret = vertifyCodeService.save(e);
 			if (ret != 0) {
 				data.setCode(Constants.STATUS_CODE.SUCCESS);
-				data.setMessage("验证码已发送，请接收");
+				data.setMessage("发送成功");
 				String shortMsg = "您的验证码是：" + code + "，10分钟内有效，请不要把验证码泄露给其他人。";
 				ShortMessageUtil.sendsms(dto.getMobile(), shortMsg);
 				renderJson(data, response);
@@ -612,7 +618,12 @@ public class WXController extends RestfulController {
 			model.setId(e.getId());
 			TBrandSeriesEntity brand = carSeriesService.queryObject(e.getCarSeriesId());
 			if (brand != null) {
-				model.setBrand(brand.getCarSerial());
+				TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
+				if(brandEntity != null){
+					model.setBrand(brandEntity.getBrand()+" "+brand.getCarSerial());
+				}else{
+					model.setBrand(brand.getCarSerial());
+				}
 			} else {
 				model.setBrand("");
 			}
@@ -658,7 +669,12 @@ public class WXController extends RestfulController {
 			model.setId(e.getId());
 			TBrandSeriesEntity brand = carSeriesService.queryObject(e.getCarSeriesId());
 			if (brand != null) {
-				model.setBrand(brand.getCarSerial());
+				TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
+				if(brandEntity != null){
+					model.setBrand(brandEntity.getBrand()+" "+brand.getCarSerial());
+				}else{
+					model.setBrand(brand.getCarSerial());
+				}
 			} else {
 				model.setBrand("");
 			}
@@ -704,7 +720,12 @@ public class WXController extends RestfulController {
 			model.setId(e.getId());
 			TBrandSeriesEntity brand = carSeriesService.queryObject(e.getCarSeriesId());
 			if (brand != null) {
-				model.setBrand(brand.getCarSerial());
+				TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
+				if(brandEntity != null){
+					model.setBrand(brandEntity.getBrand()+" "+brand.getCarSerial());
+				}else{
+					model.setBrand(brand.getCarSerial());
+				}
 			} else {
 				model.setBrand("");
 			}

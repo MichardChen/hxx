@@ -19,6 +19,26 @@
 		</if>
 	</select>
 	
+	<select id="queryListData" resultType="com.framework.entity.TStoryEntity">
+		select * from t_story 
+		where 1=1 and flg=1
+		<if test="date != null and date != ''">
+			and create_time like "%${date}%"
+		</if>
+		order by update_time desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+	<select id="queryTotalData" resultType="int">
+		select count(*) from t_story 
+		where 1=1 and flg=1
+		<if test="date != null and date != ''">
+			and create_time like "%${date}%"
+		</if>
+	</select>
+	
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_story 
 		where 1=1

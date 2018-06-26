@@ -48,8 +48,7 @@ var vm = new Vue({
 				    data: formFile,
 				    processData: false,
 				    contentType: false,
-				    success: function(r){
-				    	var rr = eval('('+r+')');
+				    success: function(rr){
 				    	if(rr.code === 0){
 							alert('操作成功', function(index){
 								vm.back();

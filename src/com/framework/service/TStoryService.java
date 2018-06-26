@@ -20,7 +20,11 @@ public interface TStoryService {
 	
 	List<TStoryEntity> queryList(Map<String, Object> map);
 	
+	List<TStoryEntity> queryListData(Map<String, Object> map);
+	
 	int queryTotal(Map<String, Object> map);
+	
+	int queryTotalData(Map<String, Object> map);
 	
 	void save(TStoryEntity tStory);
 	

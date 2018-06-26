@@ -57,5 +57,15 @@ public class TStoryServiceImpl implements TStoryService {
 		map.put("ids", ids);
 		tStoryDao.deleteBatchs(map);
 	}
+
+	@Override
+	public List<TStoryEntity> queryListData(Map<String, Object> map) {
+		return tStoryDao.queryListData(map);
+	}
+
+	@Override
+	public int queryTotalData(Map<String, Object> map) {
+		return tStoryDao.queryTotalData(map);
+	}
 	
 }

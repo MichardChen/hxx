@@ -24,12 +24,17 @@ var vm = new Vue({
 				var id=vm.tFinanceCommit.id;
 				var status = vm.tFinanceCommit.status;
 				var mark = vm.tFinanceCommit.mark;
-				var params = "id="+id+"&status="+status+"&mark="+mark;
+				var formFile = new FormData();
+				formFile.append("id",id);
+				formFile.append("status",status);
+				formFile.append("mark",mark);
 				var url = "../tfinancecommit/update";
 				$.ajax({
 					type: "POST",
-				    url: url+"?"+params,
-				    data: "",
+				    url: url,
+				    data: formFile,
+				    processData: false,
+				    contentType: false,
 				    success: function(r){
 				    	if(r.code === 0){
 							alert('操作成功', function(index){

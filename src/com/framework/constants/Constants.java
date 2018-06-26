@@ -145,6 +145,10 @@ public interface Constants {
 		public static final String STORE = "http://www.yibuwangluo.cn:88/store/";
 		public static final String COMMON = "http://www.yibuwangluo.cn:88/common/";
 	}
+	
+	public static interface HTTPS_HOST {
+		public static final String DOCUMENT = "https://www.yibuwangluo.cn/document/";
+	}
 
 	public static interface HTTP_HOST {
 		public static final String LOCALHOST = "http://www.yibuwangluo.cn:88/newsimages/";
@@ -155,6 +159,10 @@ public interface Constants {
 		public static final String IMG = "http://www.yibuwangluo.cn:88/img/";
 		public static final String STORE = "http://www.yibuwangluo.cn:88/store/";
 		public static final String COMMON = "http://www.yibuwangluo.cn:88/common/";
+	}
+	
+	public static interface HTTPS_FILE_HOST {
+		public static final String DOCUMENT = "D:\\apache-tomcat-7.0.69-ht\\webapps\\ROOT\\document\\";
 	}
 
 	public static interface FILE_HOST {

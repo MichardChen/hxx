@@ -230,11 +230,8 @@ public class TFinanceCommitController {
 	@ResponseBody
 	@RequestMapping(value="/update",method=RequestMethod.POST)
 	@RequiresPermissions("tfinancecommit:update")
-	public R update(HttpServletRequest request){
+	public R update(@RequestParam("id")Integer id,@RequestParam("status")String status,@RequestParam("mark")String mark) throws Exception{
 		
-		String mark = request.getParameter("mark");
-		String status = request.getParameter("status");
-		int id = StringUtil.toInteger(request.getParameter("id"));
 		TFinanceCommitEntity tFinanceCommit = new TFinanceCommitEntity();
 		tFinanceCommit.setStatus(status);
 		tFinanceCommit.setId(id);

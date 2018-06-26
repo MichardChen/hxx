@@ -18,7 +18,11 @@ public interface TNewsService {
 	
 	List<TNewsEntity> queryList(Map<String, Object> map);
 	
+	List<TNewsEntity> queryListData(Map<String, Object> map);
+	
 	int queryTotal(Map<String, Object> map);
+	
+	int queryTotalData(Map<String, Object> map);
 	
 	void save(TNewsEntity tNews);
 	

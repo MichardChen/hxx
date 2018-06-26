@@ -158,7 +158,7 @@ public class TStoryController extends AbstractController{
 		String uuid = UUID.randomUUID().toString();
 		//生成html文件
 		try {
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.HTTPS_FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
 			pw.println(htmlContent);
 			pw.close();
 		} catch (Exception e) {
@@ -169,7 +169,7 @@ public class TStoryController extends AbstractController{
 		if(StringUtil.isNoneBlank(logo)){
 			story.setStoryIcon(logo);
 		}
-		String contentUrl = Constants.HOST.DOCUMENT+uuid+".html";
+		String contentUrl = Constants.HTTPS_HOST.DOCUMENT+uuid+".html";
 		story.setDescUrl(contentUrl);
 		tStoryService.save(story);
 		return R.ok();
@@ -196,7 +196,7 @@ public class TStoryController extends AbstractController{
 		String uuid = UUID.randomUUID().toString();
 		//生成html文件
 		try {
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.HTTPS_FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
 			pw.println(htmlContent);
 			pw.close();
 		} catch (Exception e) {
@@ -207,7 +207,7 @@ public class TStoryController extends AbstractController{
 		if(StringUtil.isNoneBlank(logo)){
 			story.setStoryIcon(logo);
 		}
-		String contentUrl = Constants.HOST.DOCUMENT+uuid+".html";
+		String contentUrl = Constants.HTTPS_HOST.DOCUMENT+uuid+".html";
 		story.setDescUrl(contentUrl);
 		tStoryService.update(story);
 		return R.ok();

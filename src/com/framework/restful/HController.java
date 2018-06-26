@@ -125,11 +125,11 @@ public class HController extends RestfulController{
 	public void index(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		ParamsDTO dto = ParamsDTO.getInstance(request);
 		ReturnData data = new ReturnData();
-		//查询轮播图
+		// 查询轮播图
 		List<TCarouselEntity> list = carouselService.queryListByTypeCd(Constants.CAROUSEL_TYPE.WX_INDEX);
 		List<CarouselModel> models = new ArrayList<>();
 		CarouselModel model = null;
-		for(TCarouselEntity e : list) {
+		for (TCarouselEntity e : list) {
 			model = new CarouselModel();
 			model.setImgUrl(e.getImgUrl());
 			model.setRealUrl(e.getRealUrl());
@@ -137,42 +137,42 @@ public class HController extends RestfulController{
 		}
 		JSONObject json = new JSONObject();
 		json.put("carousel", models);
-		//以租代购、二手车、平行进口车横幅
-		TCarouselEntity entity = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.H5_CAR_LEASE_IMAGE);
-		if(entity!=null) {
+		// 以租代购、二手车、平行进口车横幅
+		TCarouselEntity entity = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.CAR_LEASE_IMAGE);
+		if (entity != null) {
 			CarouselModel m1 = new CarouselModel();
 			m1.setImgUrl(entity.getImgUrl());
 			m1.setRealUrl(entity.getRealUrl());
 			json.put("leaseCarImage", m1);
-		}else {
+		} else {
 			json.put("leaseCarImage", null);
 		}
-		TCarouselEntity entity1 = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.H5_CAR_IMPORT_IMAGE);
-		if(entity1!=null) {
+		TCarouselEntity entity1 = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.CAR_IMPORT_IMAGE);
+		if (entity1 != null) {
 			CarouselModel m1 = new CarouselModel();
 			m1.setImgUrl(entity1.getImgUrl());
 			m1.setRealUrl(entity1.getRealUrl());
 			json.put("importCarImage", m1);
-		}else {
+		} else {
 			json.put("importCarImage", null);
 		}
-		TCarouselEntity entity2 = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.H5_CAR_SECONDHAND_IMAGE);
-		if(entity2!=null) {
+		TCarouselEntity entity2 = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.CAR_SECONDHAND_IMAGE);
+		if (entity2 != null) {
 			CarouselModel m1 = new CarouselModel();
 			m1.setImgUrl(entity2.getImgUrl());
 			m1.setRealUrl(entity2.getRealUrl());
-			json.put("secondHandCarImage",m1);
-		}else {
-			json.put("secondHandCarImage",null);
+			json.put("secondHandCarImage", m1);
+		} else {
+			json.put("secondHandCarImage", null);
 		}
-		//车的图标
+		// 车的图标
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", 0);
 		map.put("limit", 9);
 		List<TBrandEntity> brandsList = brandService.queryList(map);
 		List<BrandModel> brandModels = new ArrayList<>();
 		BrandModel bm = null;
-		for(TBrandEntity e : brandsList) {
+		for (TBrandEntity e : brandsList) {
 			bm = new BrandModel();
 			bm.setBrand(e.getBrand());
 			bm.setId(e.getId());
@@ -180,67 +180,74 @@ public class HController extends RestfulController{
 			brandModels.add(bm);
 		}
 		json.put("brandList", brandModels);
-		//以租代购
+		// 以租代购
 		Map<String, Object> carListMap = new HashMap<>();
 		carListMap.put("offset", 0);
 		carListMap.put("limit", 6);
-		
+
 		List<TCarLeaseEntity> clList = leaseService.queryList(carListMap);
 		List<TCarImportEntity> ciList = importService.queryList(carListMap);
 		List<TCarSecondhandEntity> csList = secondService.queryList(carListMap);
-		
+
 		List<LeaseCarListModel> leaseList = new ArrayList<>();
 		List<ImportCarListModel> importList = new ArrayList<>();
 		List<SecondHandCarListModel> secondList = new ArrayList<>();
-		
+
 		LeaseCarListModel lcm = null;
-		for(TCarLeaseEntity e : clList) {
+		for (TCarLeaseEntity e : clList) {
 			lcm = new LeaseCarListModel();
-			lcm.setFirstPayment(StringUtil.toString(e.getFirstPayment()));
+			lcm.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(),0));
 			lcm.setIcon(e.getIcon());
 			lcm.setId(e.getId());
-			lcm.setMonthPayment(StringUtil.toString(e.getMonthPayment()));
-			lcm.setName(e.getCarName());
+			lcm.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
+			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
+			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
+			lcm.setName(brandEntity.getBrand()+" "+seriesEntity.getCarSerial()+" "+e.getCarName());
 			lcm.setPeriod(StringUtil.toString(e.getPeriods()));
 			leaseList.add(lcm);
 		}
-		
+
 		ImportCarListModel icl = null;
-		for(TCarImportEntity e : ciList) {
+		for (TCarImportEntity e : ciList) {
 			icl = new ImportCarListModel();
 			icl.setIcon(e.getIcon());
 			icl.setId(e.getId());
 			icl.setLabels(e.getLabels());
+			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
+			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
+			icl.setName(brandEntity.getBrand()+" "+seriesEntity.getCarSerial()+" "+e.getCarName());
+			icl.setNowPrice(StringUtil.formatCarPrice(e.getNowPrice(),0));
+			icl.setPrimePrice(StringUtil.formatCarPrice(e.getMarketPrice(),0));
+			icl.setLabels(e.getLabels());
 			icl.setTitleLabel(e.getTitleLabel());
-			icl.setName(e.getCarName());
-			icl.setNowPrice(StringUtil.toString(e.getNowPrice()));
-			icl.setPrimePrice(StringUtil.toString(e.getMarketPrice()));
 			importList.add(icl);
 		}
-		
+
 		SecondHandCarListModel scl = null;
-		for(TCarSecondhandEntity e : csList) {
+		for (TCarSecondhandEntity e : csList) {
 			scl = new SecondHandCarListModel();
 			scl.setIcon(e.getIcon());
-			scl.setName(e.getCarName());
+			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
+			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
+			scl.setName(brandEntity.getBrand()+" "+seriesEntity.getCarSerial()+" "+e.getCarName());
 			scl.setKilometers(StringUtil.toString(e.getKilomiters()));
-			scl.setMonthPayment(StringUtil.toString(e.getMonthPayment()));
+			scl.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
 			scl.setId(e.getId());
 			scl.setDate(e.getYear());
 			LocationCityEntity city = cityDao.queryObject(e.getCityId());
-			scl.setCity(city == null ? "":city.getName());
+			scl.setCity(city == null ? "" : city.getName());
 			secondList.add(scl);
 		}
-		
+
 		json.put("leaseList", leaseList);
 		json.put("importList", importList);
 		json.put("secondList", secondList);
-		
-		//车主故事
-		List<TStoryEntity> stList = storyService.queryList(carListMap);
+
+		// 车主故事
+		List<TStoryEntity> stList = storyService.queryListData(carListMap);
 		List<NewsListModel> storyList = new ArrayList<>();
 		NewsListModel slm = null;
-		for(TStoryEntity e : stList) {
+		for (TStoryEntity e : stList) {
 			slm = new NewsListModel();
 			slm.setIcon(e.getStoryIcon());
 			slm.setId(e.getId());
@@ -251,11 +258,11 @@ public class HController extends RestfulController{
 			storyList.add(slm);
 		}
 		json.put("storyList", storyList);
-		//资讯
-		List<TNewsEntity> snList = newsService.queryList(carListMap);
+		// 资讯
+		List<TNewsEntity> snList = newsService.queryListData(carListMap);
 		List<NewsListModel> newList = new ArrayList<>();
 		NewsListModel nlm = null;
-		for(TNewsEntity e : snList) {
+		for (TNewsEntity e : snList) {
 			nlm = new NewsListModel();
 			nlm.setIcon(e.getNewsLogo());
 			nlm.setId(e.getId());
@@ -263,16 +270,16 @@ public class HController extends RestfulController{
 			nlm.setUrl(e.getContentUrl());
 			nlm.setDate(DateUtil.formatCN(e.getCreateTime()));
 			TCodemstEntity mst = codeMstDao.queryByCode(e.getNewsTypeCd());
-			if(mst != null) {
+			if (mst != null) {
 				nlm.setType(mst.getName());
-			}else {
+			} else {
 				nlm.setType("");
 			}
 			newList.add(nlm);
 		}
 		json.put("storyList", storyList);
 		json.put("newList", newList);
-		
+
 		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");
@@ -336,7 +343,7 @@ public class HController extends RestfulController{
 		Map<String, Object> carListMap = new HashMap<>();
 		carListMap.put("offset", dto.getPageSize()*(dto.getPageNum()-1));
 		carListMap.put("limit", dto.getPageSize());
-		List<TNewsEntity> snList = newsService.queryList(carListMap);
+		List<TNewsEntity> snList = newsService.queryListData(carListMap);
 		List<NewsListModel> newList = new ArrayList<>();
 		NewsListModel nlm = null;
 		for(TNewsEntity e : snList) {
@@ -372,7 +379,7 @@ public class HController extends RestfulController{
 		carListMap.put("offset", dto.getPageSize()*(dto.getPageNum()-1));
 		carListMap.put("limit", dto.getPageSize());
 		
-		List<TStoryEntity> stList = storyService.queryList(carListMap);
+		List<TStoryEntity> stList = storyService.queryListData(carListMap);
 		List<NewsListModel> storyList = new ArrayList<>();
 		NewsListModel slm = null;
 		for(TStoryEntity e : stList) {
@@ -409,7 +416,7 @@ public class HController extends RestfulController{
 			slm.setId(e.getId());
 			slm.setFinanceName(e.getName());
 			slm.setMoneys(e.getLowRefund());
-			slm.setPeriod(e.getLowRate());
+			slm.setPeriod(e.getTimeDistance());
 			slm.setRate(e.getLowRate());
 			slm.setIcon(e.getIcon());
 			slm.setStandard(e.getStandard());
@@ -460,7 +467,7 @@ public class HController extends RestfulController{
 			int updateFlg = vertifyCodeService.update(vertifyCodeEntity);
 			if(updateFlg != 0){
 				data.setCode(Constants.STATUS_CODE.SUCCESS);
-				data.setMessage("验证码已发送，请接收");
+				data.setMessage("发送成功");
 				String shortMsg = "您的验证码是：" + code + "，10分钟内有效，请不要把验证码泄露给其他人。";
 				ShortMessageUtil.sendsms(dto.getMobile(), shortMsg);
 				renderJson(data, response);
@@ -484,7 +491,7 @@ public class HController extends RestfulController{
 			int ret = vertifyCodeService.save(e);
 			if(ret != 0){
 				data.setCode(Constants.STATUS_CODE.SUCCESS);
-				data.setMessage("验证码已发送，请接收");
+				data.setMessage("发送成功");
 				String shortMsg = "您的验证码是：" + code + "，10分钟内有效，请不要把验证码泄露给其他人。";
 				ShortMessageUtil.sendsms(dto.getMobile(), shortMsg);
 				renderJson(data, response);

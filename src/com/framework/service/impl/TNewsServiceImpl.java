@@ -51,5 +51,15 @@ public class TNewsServiceImpl implements TNewsService {
 	public void deleteBatch(Integer[] ids){
 		tNewsDao.deleteBatch(ids);
 	}
+
+	@Override
+	public List<TNewsEntity> queryListData(Map<String, Object> map) {
+		return tNewsDao.queryListData(map);
+	}
+
+	@Override
+	public int queryTotalData(Map<String, Object> map) {
+		return tNewsDao.queryTotalData(map);
+	}
 	
 }

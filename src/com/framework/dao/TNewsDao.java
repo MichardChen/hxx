@@ -1,5 +1,8 @@
 package com.framework.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.framework.entity.TNewsEntity;
 
 /**
@@ -11,4 +14,7 @@ import com.framework.entity.TNewsEntity;
  */
 public interface TNewsDao extends BaseDao<TNewsEntity> {
 	
+	List<TNewsEntity> queryListData(Map<String, Object> map);
+	
+	int queryTotalData(Map<String, Object> map);
 }

@@ -1,5 +1,6 @@
 package com.framework.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import com.framework.entity.TStoryEntity;
@@ -14,4 +15,8 @@ import com.framework.entity.TStoryEntity;
 public interface TStoryDao extends BaseDao<TStoryEntity> {
 	
 	int deleteBatchs(Map<String, Object> map);
+	
+	List<TStoryEntity> queryListData(Map<String, Object> map);
+	
+	int queryTotalData(Map<String, Object> map);
 }
