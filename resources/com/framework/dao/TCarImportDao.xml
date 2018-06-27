@@ -108,7 +108,8 @@
 			`title_label`,
 			`flg`,
 			`content`,
-			`pc_icon`
+			`pc_icon`,
+			`favour_money`
 		)
 		values
 		(
@@ -137,7 +138,8 @@
 			#{titleLabel},
 			#{flg},
 			#{content},
-			#{pcIcon}
+			#{pcIcon},
+			#{favourMoney}
 		)
 	</insert>
 	 
@@ -168,7 +170,8 @@
 			<if test="carClassCd != null">`car_class_cd` = #{carClassCd},</if>
 			<if test="titleLabel != null">`title_label` = #{titleLabel},</if>
 			<if test="content != null">`content` = #{content},</if>
-			<if test="pcIcon != null">`pc_icon` = #{pcIcon}</if>
+			<if test="pcIcon != null">`pc_icon` = #{pcIcon},</if>
+			<if test="favourMoney != null">`favour_money` = #{favourMoney},</if>
 		</set>
 		where id = #{id}
 	</update>

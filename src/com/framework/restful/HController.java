@@ -672,12 +672,12 @@ public class HController extends RestfulController{
 			}
 			
 			model.setCarName(e.getCarName());
-			model.setLabels(e.getLabels());
+			model.setLabels(e.getTitleLabel());
 			model.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(),0));
 			model.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
 			model.setIcon(e.getIcon());
 			model.setDate(DateUtil.formatCNYM(e.getYear()));
-			model.setKilomiters(StringUtil.toString(e.getKilomiters())+"万公里");
+			model.setKilomiters(StringUtil.toMoneyString(e.getKilomiters())+"万公里");
 			models.add(model);
 		}
 		json.put("secondhandCarList", models);
@@ -705,12 +705,21 @@ public class HController extends RestfulController{
 			model = new ListModelImportCar();
 			model.setId(e.getId());
 			TBrandSeriesEntity brand = carSeriesService.queryObject(e.getCarSeriesId());
-			if(brand != null){
-				model.setBrand(brand.getCarSerial());
-			}else{
+			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
+			
+			if (brand != null) {
+				if(brandEntity != null){
+					model.setBrand(brandEntity.getBrand()+" "+brand.getCarSerial());
+					model.setCarName(brandEntity.getBrand()+brand.getCarSerial()+" "+e.getCarName());
+				}else{
+					model.setBrand(brand.getCarSerial());
+					model.setCarName(brand.getCarSerial()+" "+e.getCarName());
+				}
+			} else {
 				model.setBrand("");
+				model.setCarName(e.getCarName());
 			}
-			model.setCarName(e.getCarName());
+			
 			model.setNowPrice(StringUtil.formatCarPrice(e.getNowPrice(),0));
 			model.setMarkPrice(StringUtil.formatCarPrice(e.getMarketPrice(),0));
 			model.setSaveMoneys(StringUtil.formatCarPrice(e.getMaxSave(), 0));
@@ -903,12 +912,18 @@ public class HController extends RestfulController{
 			return;
 		}
 		ImportCartDetailModel model = new ImportCartDetailModel();
+		model.setFavourMoney(StringUtil.formatCarPrice(car.getFavourMoney(), 0));
 		model.setCartId(car.getId());
 		TBrandEntity brand = brandService.queryObject(car.getBrand());
 		if(brand != null){
-			model.setCarName(brand.getBrand());
+			TBrandSeriesEntity brandSeriesEntity = carSeriesService.queryObject(car.getCarSeriesId());
+			if(brandSeriesEntity != null){
+				model.setCarName(brand.getBrand()+brandSeriesEntity.getCarSerial()+" "+car.getCarName());
+			}else{
+				model.setCarName(car.getCarName());
+			}
 		}else{
-			model.setCarName("");
+			model.setCarName(car.getCarName());
 		}
 		TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
 		if(seriesEntity != null){
@@ -990,9 +1005,14 @@ public class HController extends RestfulController{
 		model.setCartId(car.getId());
 		TBrandEntity brand = brandService.queryObject(car.getBrand());
 		if(brand != null){
-			model.setCarName(brand.getBrand());
+			TBrandSeriesEntity brandSeriesEntity = carSeriesService.queryObject(car.getCarSeriesId());
+			if(brandSeriesEntity != null){
+				model.setCarName(brand.getBrand()+brandSeriesEntity.getCarSerial()+" "+car.getCarName());
+			}else{
+				model.setCarName(car.getCarName());
+			}
 		}else{
-			model.setCarName("");
+			model.setCarName(car.getCarName());
 		}
 		List<String> icons = new ArrayList<>();
 		icons.add(car.getIcon());
@@ -1076,9 +1096,14 @@ public class HController extends RestfulController{
 		model.setCartId(car.getId());
 		TBrandEntity brand = brandService.queryObject(car.getBrand());
 		if(brand != null){
-			model.setCarName(brand.getBrand());
+			TBrandSeriesEntity brandSeriesEntity = carSeriesService.queryObject(car.getCarSeriesId());
+			if(brandSeriesEntity != null){
+				model.setCarName(brand.getBrand()+brandSeriesEntity.getCarSerial()+" "+car.getCarName());
+			}else{
+				model.setCarName(car.getCarName());
+			}
 		}else{
-			model.setCarName("");
+			model.setCarName(car.getCarName());
 		}
 		TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
 		if(seriesEntity != null){
@@ -1095,7 +1120,7 @@ public class HController extends RestfulController{
 		model.setFirmPrice(StringUtil.formatCarPrice(car.getFirmCost(),0));
 		model.setCarInfo(car.getCarTypeInfo());
 		//48期首付和月供、备注、分期数
-		model.setFirstPayment(StringUtil.formatCarPrice(car.getFinalPayment(),0));
+		model.setFirstPayment(StringUtil.formatCarPrice(car.getFirstPayment(),0));
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
 		model.setMark(car.getMark());
 		model.setPeriods(car.getPeriods());
@@ -1105,11 +1130,11 @@ public class HController extends RestfulController{
 		model.setMark1(car.getMark());
 		model.setPeriods1(car.getPeriods());
 		//1+3首年首付、首年月供、一年后分期数、一年后分期月供
-		model.setTfirstYearFirstPay(StringUtil.formatCarPrice(car.getFirstPayment1(),0));
+		model.setTfirstYearFirstPay(StringUtil.formatCarPrice(car.getTfirstYearFirstPay(),0));
 		model.setTfirstYearMonthPayment(StringUtil.formatCarPrice(car.getTfirstYearMonthPayment(),1));
 		model.setTperiods(car.getTperiods());
 		model.setTmonthPayment(StringUtil.formatCarPrice(car.getTmonthPayment(),1));
-		model.setFinalPayment(StringUtil.formatCarPrice(car.getFinalPayment(), 1));
+		model.setFinalPayment(StringUtil.formatCarPrice(car.getFinalPayment(), 0));
 		
 		model.setBuyPay(StringUtil.formatCarPrice(car.getRealFirstPayment(),0));
 		model.setServiceFee(StringUtil.formatCarPrice(car.getServiceFee(),1));

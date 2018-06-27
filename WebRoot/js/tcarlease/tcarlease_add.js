@@ -52,6 +52,7 @@ var vm = new Vue({
 				$("#pcIcon").attr("href",r.tCarLease.pcIcon);
 				$("#pcIcon").show();
 				$("#content").summernote('code', r.tCarLease.content);
+				$("#salecount").val(r.tCarLease.salecount);
 				
 				$.get("../tbrandseries/queryBrandSeries/"+r.tCarLease.brand, function(rr){
 		            var dr =eval('('+rr+')');

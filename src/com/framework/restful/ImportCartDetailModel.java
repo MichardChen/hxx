@@ -28,8 +28,14 @@ public class ImportCartDetailModel implements Serializable{
 	private String descUrl;
 	private String companyMobile;
 	private String pailiang;
+	private String favourMoney;
 	
-	
+	public String getFavourMoney() {
+		return favourMoney;
+	}
+	public void setFavourMoney(String favourMoney) {
+		this.favourMoney = favourMoney;
+	}
 	public String getPailiang() {
 		return pailiang;
 	}

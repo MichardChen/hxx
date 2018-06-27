@@ -47,6 +47,7 @@ var vm = new Vue({
                 $("#carClassCd").val(r.tCarImport.carClassCd);
                
                 $("#cartId").val(r.tCarImport.id);
+                $("#favourMoney").val(r.tCarImport.favourMoney);
                 $("#icon").attr("href",r.tCarImport.icon);
 				$("#icon").show();
 				$("#pcIcon").attr("href",r.tCarImport.pcIcon);
@@ -118,6 +119,10 @@ var vm = new Vue({
 				}
 				if(!$("#maxSave").val()){
 					alert("请输入最大节省金额");
+					return;
+				}
+				if(!$("#favourMoney").val()){
+					alert("请输入预购单优惠金额");
 					return;
 				}
 				if(!$("#mark").val()){
@@ -205,6 +210,10 @@ var vm = new Vue({
 				}
 				if(!$("#maxSave").val()){
 					alert("请输入最大节省金额");
+					return;
+				}
+				if(!$("#favourMoney").val()){
+					alert("请输入预购单优惠金额");
 					return;
 				}
 				if(!$("#mark").val()){

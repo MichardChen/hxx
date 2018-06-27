@@ -429,9 +429,9 @@ public class PCController extends RestfulController{
 			model.setId(e.getId());
 			model.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(), 0));
 			model.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(), 1));
-			model.setLabels(e.getLabels());
+			model.setLabels(e.getTitleLabel());
 			model.setName(e.getCarName());
-			model.setKilomiters(StringUtil.toString(e.getKilomiters())+"公里");
+			model.setKilomiters(StringUtil.toMoneyString(e.getKilomiters())+"公里");
 			model.setDate(DateUtil.formatCNYM(e.getCreateTime()));
 			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
 			if(seriesEntity != null) {
@@ -484,19 +484,23 @@ public class PCController extends RestfulController{
 			model.setMarketPrice(StringUtil.formatCarPrice(e.getMarketPrice(), 1));
 			model.setLabels(e.getLabels());
 			model.setSavePrice(StringUtil.formatCarPrice(e.getMaxSave(), 0));
-			model.setName(e.getCarName());
 			model.setTitleLabel(e.getTitleLabel());
 			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
 			if(seriesEntity != null) {
 				TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
 				if(brandEntity != null){
 					model.setBrandSeries(brandEntity.getBrand()+" "+seriesEntity.getCarSerial());
+					model.setName(brandEntity.getBrand()+seriesEntity.getCarSerial()+" "+e.getCarName());
 				}else{
 					model.setBrandSeries(seriesEntity.getCarSerial());
+					model.setName(seriesEntity.getCarSerial()+" "+e.getCarName());
 				}
 			}else {
 				model.setBrandSeries("");
+				model.setName(e.getCarName());
 			}
+			
+			
 			
 			pcListModels.add(model);
 		}
@@ -873,6 +877,7 @@ public class PCController extends RestfulController{
 			return;
 		}
 		ImportCartDetailModel model = new ImportCartDetailModel();
+		model.setFavourMoney(StringUtil.formatCarPrice(car.getFavourMoney(), 0));
 		model.setCartId(car.getId());
 		List<String> icons = new ArrayList<>();
 		icons.add(car.getPcIcon());
@@ -881,9 +886,14 @@ public class PCController extends RestfulController{
 		model.setIcons(icons);
 		TBrandEntity brand = brandService.queryObject(car.getBrand());
 		if(brand != null){
-			model.setCarName(brand.getBrand());
+			TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
+			if(brandSeriesEntity != null){
+				model.setCarName(brand.getBrand()+brandSeriesEntity.getCarSerial()+" "+car.getCarName());
+			}else{
+				model.setCarName(car.getCarName());
+			}
 		}else{
-			model.setCarName("");
+			model.setCarName(car.getCarName());
 		}
 		TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
 		if(seriesEntity != null){
@@ -985,9 +995,14 @@ public class PCController extends RestfulController{
 		model.setTitleLabel(car.getTitleLabel());
 		TBrandEntity brand = brandService.queryObject(car.getBrand());
 		if(brand != null){
-			model.setCarName(brand.getBrand());
+			TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
+			if(brandSeriesEntity != null){
+				model.setCarName(brand.getBrand()+brandSeriesEntity.getCarSerial()+" "+car.getCarName());
+			}else{
+				model.setCarName(car.getCarName());
+			}
 		}else{
-			model.setCarName("");
+			model.setCarName(car.getCarName());
 		}
 		model.setPeriods(StringUtil.toString(car.getPeriods()));
 		TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
@@ -1072,9 +1087,14 @@ public class PCController extends RestfulController{
 		model.setCartId(car.getId());
 		TBrandEntity brand = brandService.queryObject(car.getBrand());
 		if(brand != null){
-			model.setCarName(brand.getBrand());
+			TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
+			if(brandSeriesEntity != null){
+				model.setCarName(brand.getBrand()+brandSeriesEntity.getCarSerial()+" "+car.getCarName());
+			}else{
+				model.setCarName(car.getCarName());
+			}
 		}else{
-			model.setCarName("");
+			model.setCarName(car.getCarName());
 		}
 		TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
 		if(seriesEntity != null){
@@ -1091,7 +1111,7 @@ public class PCController extends RestfulController{
 		model.setFirmPrice(StringUtil.formatCarPrice(car.getFirmCost(),0));
 		model.setCarInfo(car.getCarTypeInfo());
 		//48期首付和月供、备注、分期数
-		model.setFirstPayment(StringUtil.formatCarPrice(car.getFinalPayment(),0));
+		model.setFirstPayment(StringUtil.formatCarPrice(car.getFirstPayment(),0));
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
 		model.setMark(car.getMark());
 		model.setPeriods(car.getPeriods());
@@ -1101,11 +1121,11 @@ public class PCController extends RestfulController{
 		model.setMark1(car.getMark());
 		model.setPeriods1(car.getPeriods());
 		//1+3首年首付、首年月供、一年后分期数、一年后分期月供
-		model.setTfirstYearFirstPay(StringUtil.formatCarPrice(car.getFirstPayment1(),0));
+		model.setTfirstYearFirstPay(StringUtil.formatCarPrice(car.getTfirstYearFirstPay(),0));
 		model.setTfirstYearMonthPayment(StringUtil.formatCarPrice(car.getTfirstYearMonthPayment(),1));
 		model.setTperiods(car.getTperiods());
 		model.setTmonthPayment(StringUtil.formatCarPrice(car.getTmonthPayment(),1));
-		model.setFinalPayment(StringUtil.formatCarPrice(car.getFinalPayment(), 1));
+		model.setFinalPayment(StringUtil.formatCarPrice(car.getFinalPayment(), 0));
 		
 		model.setBuyPay(StringUtil.formatCarPrice(car.getRealFirstPayment(),0));
 		model.setServiceFee(StringUtil.formatCarPrice(car.getServiceFee(),1));

@@ -179,23 +179,54 @@ public class StringUtil extends StringUtils {
 		return num.toString();
 	}
 	
+	public static String toMoneyString(BigDecimal num){
+		if(num == null || StringUtil.isBlank(num.toString())){
+			return "0";
+		}
+		String numStr = num.toString();
+		if(numStr.contains(".")){
+			String smallPoint = numStr.split("\\.")[1];
+			if(smallPoint.length()==1){
+				if(StringUtil.equals(smallPoint, "0")){
+					return numStr.split("\\.")[0];
+				}else{
+					return num.setScale(1,BigDecimal.ROUND_HALF_UP).toString();
+				}
+			}else if(smallPoint.length()==2){
+				if(StringUtil.equals(smallPoint, "00")){
+					return numStr.split("\\.")[0];
+				}else{
+					return num.setScale(2,BigDecimal.ROUND_HALF_UP).toString();
+				}
+			}
+			String numFormat = num.setScale(2,BigDecimal.ROUND_HALF_UP).toString();
+			if(StringUtil.equals(numFormat.split("\\.")[1], "00")){
+				return numFormat.split("\\.")[0];
+			}else{
+				return numFormat;
+			}
+		}else{
+			return num.toString();
+		}
+	}
+	
 	public static String formatCarPrice(BigDecimal num,int flg){
 		if(num == null){
 			return "0元";
 		}
 		if(flg == 0){
 			if(num.compareTo(new BigDecimal("0.00"))>0){
-				return StringUtil.toString(num)+"万";
+				return StringUtil.toMoneyString(num)+"万";
 			}else{
-				return StringUtil.toString(num)+"元";
+				return StringUtil.toMoneyString(num)+"元";
 			}
 		}
 		
 		if(flg == 1){
 			if(num.compareTo(new BigDecimal("0.00"))>0){
-				return StringUtil.toString(num)+"元";
+				return StringUtil.toMoneyString(num)+"元";
 			}else{
-				return StringUtil.toString(num)+"元";
+				return StringUtil.toMoneyString(num)+"元";
 			}
 		}
 		return "0元";

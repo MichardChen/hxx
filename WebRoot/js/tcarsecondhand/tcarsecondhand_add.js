@@ -198,10 +198,10 @@ var vm = new Vue({
 					alert("请选择车辆级别");
 					return;
 				}
-				if(!$("#carColor").val()){
+				/*if(!$("#carColor").val()){
 					alert("请输入颜色编号");
 					return;
-				}
+				}*/
 				if(!$("#carCost").val()){
 					alert("请输入车价");
 					return;
@@ -222,10 +222,10 @@ var vm = new Vue({
 					alert("请输入标签");
 					return;
 				}
-				if(!$("#finalPayment").val()){
+				/*if(!$("#finalPayment").val()){
 					alert("请输入尾款");
 					return;
-				}
+				}*/
 				var url = "../tcarsecondhand/save";
 				formFile.append("uFile", fileObj); 
 				formFile.append("uFile1",fileObj1);
@@ -295,10 +295,10 @@ var vm = new Vue({
 					alert("请选择车辆级别");
 					return;
 				}
-				if(!$("#carColor").val()){
+			/*	if(!$("#carColor").val()){
 					alert("请输入颜色编号");
 					return;
-				}
+				}*/
 				if(!$("#carCost").val()){
 					alert("请输入车价");
 					return;
@@ -319,10 +319,10 @@ var vm = new Vue({
 					alert("请输入标签");
 					return;
 				}
-				if(!$("#finalPayment").val()){
+				/*if(!$("#finalPayment").val()){
 					alert("请输入尾款");
 					return;
-				}
+				}*/
 				var fileObj = document.getElementById("uFile").files[0];
 				var fileObj1 = document.getElementById("uFile1").files[0];
 				var formFile = new FormData();

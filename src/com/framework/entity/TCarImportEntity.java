@@ -31,6 +31,8 @@ public class TCarImportEntity implements Serializable {
 	private BigDecimal marketPrice;
 	//
 	private BigDecimal maxSave;
+	
+	private BigDecimal favourMoney;
 	//
 	private String mark;
 	//
@@ -72,6 +74,12 @@ public class TCarImportEntity implements Serializable {
 	
 	private String pcIcon;
 	
+	public BigDecimal getFavourMoney() {
+		return favourMoney;
+	}
+	public void setFavourMoney(BigDecimal favourMoney) {
+		this.favourMoney = favourMoney;
+	}
 	public String getPcIcon() {
 		return pcIcon;
 	}
