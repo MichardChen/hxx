@@ -271,6 +271,7 @@
 			<if test="tmonthPayment != null">`tmonth_payment` = #{tmonthPayment},</if>
 			<if test="salecount != null">`salecount` = #{salecount},</if>
 			<if test="content != null">`content` = #{content},</if>
+			<if test="flg != null">`flg` = #{flg},</if>
 			<if test="pcIcon != null">`pc_icon` = #{pcIcon}</if>
 		</set>
 		where id = #{id}

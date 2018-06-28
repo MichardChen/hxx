@@ -66,6 +66,7 @@ var vm = new Vue({
 	                $("#carLevelCd").val(r.tCarSecondhand.carLevelCd);
 	                $("#carColor").val(r.tCarSecondhand.carColor);
 	                $("#carCost").val(r.tCarSecondhand.carCost);
+	                $("#flg").val(r.tCarSecondhand.flg);
 	                
 	                $.get("../common/queryCity/"+r.tCarSecondhand.provinceId, function(rr){
 						var dr = eval('('+rr+')');
@@ -144,6 +145,27 @@ var vm = new Vue({
 			},
 		saveOrUpdate: function (event) {
 			var cartId = $("#cartId").val();
+			
+			vm.tCarSecondhand.carName = $("#carName").val();
+			vm.tCarSecondhand.brand = $("#brand").val();
+			vm.tCarSecondhand.provinceId = $("#provinceId").val();
+			vm.tCarSecondhand.cityId = $("#cityId").val();
+			vm.tCarSecondhand.kilomiters = $("#kilomiters").val();
+			vm.tCarSecondhand.year = $("#year").val();
+			vm.tCarSecondhand.firstPayment = $("#firstPayment").val();
+			vm.tCarSecondhand.monthPayment = $("#monthPayment").val();
+			vm.tCarSecondhand.age = $("#age").val();
+			vm.tCarSecondhand.carLevelCd = $("#carLevelCd").val();
+			vm.tCarSecondhand.carColor = $("#carColor").val();
+			vm.tCarSecondhand.carCost = $("#carCost").val();
+			vm.tCarSecondhand.titleLabel = $("#titleLabel").val();
+			vm.tCarSecondhand.carSeriesId = $("#series").val();
+			vm.tCarSecondhand.carTaxCost = $("#carTaxCost").val();
+			vm.tCarSecondhand.periods = $("#periods").val();
+			vm.tCarSecondhand.labels = $("#labels").val();
+			vm.tCarSecondhand.finalPayment = $("#finalPayment").val();
+			vm.tCarSecondhand.flg = $("#flg").val();
+			
 			if(cartId == "" || cartId == null){
 				//新增
 				var fileObj = document.getElementById("uFile").files[0];
@@ -178,8 +200,8 @@ var vm = new Vue({
 					alert("请输入公里数");
 					return;
 				}
-				if(!$("#year").val()){
-					alert("请输入先用年数");
+				if($("#year").val()==""){
+					alert("请选择汽车年限");
 					return;
 				}
 				if(!$("#firstPayment").val()){
@@ -195,7 +217,7 @@ var vm = new Vue({
 					return;
 				}
 				if(!$("#carLevelCd").val()){
-					alert("请选择车辆级别");
+					alert("请选择车型");
 					return;
 				}
 				/*if(!$("#carColor").val()){
@@ -238,7 +260,8 @@ var vm = new Vue({
 				    contentType: "application/json",
 				    processData: false,
 				    contentType: false,
-				    success: function(r){
+				    success: function(json){
+				    	var r = eval('('+json+')');
 				    	if(r.code === 0){
 							alert('操作成功', function(index){
 								vm.back();
@@ -275,8 +298,8 @@ var vm = new Vue({
 					alert("请输入公里数");
 					return;
 				}
-				if(!$("#year").val()){
-					alert("请输入先用年数");
+				if($("#year").val()==""){
+					alert("请选择汽车年限");
 					return;
 				}
 				if(!$("#firstPayment").val()){
@@ -292,7 +315,7 @@ var vm = new Vue({
 					return;
 				}
 				if(!$("#carLevelCd").val()){
-					alert("请选择车辆级别");
+					alert("请选择车型");
 					return;
 				}
 			/*	if(!$("#carColor").val()){
@@ -339,7 +362,8 @@ var vm = new Vue({
 				    contentType: "application/json",
 				    processData: false,
 				    contentType: false,
-				    success: function(r){
+				    success: function(json){
+				    	var r = eval('('+json+')');
 				    	if(r.code === 0){
 							alert('操作成功', function(index){
 								vm.back();

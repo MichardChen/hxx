@@ -41,7 +41,16 @@ public class TQuestionEntity implements Serializable {
 	
 	private String typeCd;
 	
+	private Integer cartflg;
 	
+	
+	
+	public Integer getCartflg() {
+		return cartflg;
+	}
+	public void setCartflg(Integer cartflg) {
+		this.cartflg = cartflg;
+	}
 	public String getTypeCd() {
 		return typeCd;
 	}

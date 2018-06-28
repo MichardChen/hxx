@@ -31,4 +31,6 @@ public interface TBrandService {
 	List<TBrandEntity> queryAllList(Integer flg);
 	
 	List<TBrandEntity> queryShowBrandList(Integer showFlg);
+	
+	List<TBrandEntity> queryImportBrandList(Integer importFlg);
 }

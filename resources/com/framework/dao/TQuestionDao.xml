@@ -39,7 +39,8 @@
 			`create_time`, 
 			`update_by`, 
 			`update_time`,
-			`type_cd`
+			`type_cd`,
+			`cartflg`
 		)
 		values
 		(
@@ -53,24 +54,18 @@
 			#{createTime}, 
 			#{updateBy}, 
 			#{updateTime},
-			#{typeCd}
+			#{typeCd},
+			#{cartflg}
 		)
 	</insert>
 	 
 	<update id="update" parameterType="com.framework.entity.TQuestionEntity">
 		update t_question 
 		<set>
-			<if test="mobile != null">`mobile` = #{mobile}, </if>
-			<if test="linkMan != null">`link_man` = #{linkMan}, </if>
-			<if test="question != null">`question` = #{question}, </if>
-			<if test="cartId != null">`cart_id` = #{cartId}, </if>
 			<if test="employeeId != null">`employee_id` = #{employeeId}, </if>
 			<if test="status != null">`status` = #{status}, </if>
-			<if test="createBy != null">`create_by` = #{createBy}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}</if>
-			<if test="typeCd != null">`type_cd` = #{typeCd}</if>
 		</set>
 		where id = #{id}
 	</update>

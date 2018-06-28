@@ -32,6 +32,10 @@
 		</if>
 		order by update_time desc,word asc limit 0,9
 	</select>
+	<select id="queryImportBrandList" resultType="com.framework.entity.TBrandEntity">
+		select * from t_brand where 1=1 and importflg=1
+		order by update_time desc,word asc
+	</select>
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_brand where 1=1
 		<if test="queryBrand != null and queryBrand != ''">
@@ -50,7 +54,8 @@
 			`update_time`,
 			`word`,
 			`flg`,
-			`showflg`
+			`showflg`,
+			`importflg`
 		)
 		values
 		(
@@ -62,7 +67,8 @@
 			#{updateTime},
 			#{word},
 			#{flg},
-			#{showflg}
+			#{showflg},
+			#{importflg}
 		)
 	</insert>
 	 
@@ -74,7 +80,8 @@
 			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime},</if>
 			<if test="word != null">`word` = #{word},</if>
-			<if test="showflg != null">`showflg` = #{showflg}</if>
+			<if test="showflg != null">`showflg` = #{showflg},</if>
+			<if test="importflg != null">`importflg` = #{importflg}</if>
 		</set>
 		where id = #{id}
 	</update>

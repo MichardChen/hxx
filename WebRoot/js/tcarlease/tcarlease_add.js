@@ -96,7 +96,31 @@ var vm = new Vue({
 		saveOrUpdate: function (event) {
 			
 			var cartId = $("#cartId").val();
-			
+			vm.tCarLease.carName = $("#carName").val();
+			vm.tCarLease.brand = $("#brand").val();
+			vm.tCarLease.carSeriesId = $("#series").val();
+			vm.tCarLease.carCost = $("#carCost").val();
+			vm.tCarLease.firmCost = $("#firmCost").val();
+			vm.tCarLease.carColor = $("#carColor").val();
+			vm.tCarLease.carTypeInfo = $("#carTypeInfo").val();
+			vm.tCarLease.year = $("#year").val();
+			vm.tCarLease.titleLabel = $("#titleLabel").val();
+			vm.tCarLease.labels = $("#labels").val();
+			vm.tCarLease.firstPayment = $("#firstPayment").val();
+			vm.tCarLease.monthPayment = $("#monthPayment").val();
+			vm.tCarLease.mark = $("#mark").val();
+			vm.tCarLease.firstPayment1 = $("#firstPayment1").val();
+			vm.tCarLease.monthPayment1 = $("#monthPayment1").val();
+			vm.tCarLease.mark1 = $("#mark1").val();
+			vm.tCarLease.tfirstYearFirstPay = $("#tfirstYearFirstPay").val();
+			vm.tCarLease.tfirstYearMonthPayment = $("#tfirstYearMonthPayment").val();
+			vm.tCarLease.tperiods = $("#tperiods").val();
+			vm.tCarLease.tmonthPayment = $("#tmonthPayment").val();
+			vm.tCarLease.finalPayment = $("#finalPayment").val();
+			vm.tCarLease.realFirstPayment = $("#realFirstPayment").val();
+			vm.tCarLease.serviceFee = $("#serviceFee").val();
+			vm.tCarLease.salecount = $("#salecount").val();
+			vm.tCarLease.flg = $("#flg").val();
 			if(cartId == 0 || cartId == "" || cartId == null){
 				
 				//新增
@@ -111,10 +135,14 @@ var vm = new Vue({
 					alert("请选择汽车品牌");
 					return;
 				}
-			/*	if(!fileObj){
+				if(!fileObj){
 					alert("请选择汽车图片");
 					return;
-				}*/
+				}
+				if(!fileObj1){
+					alert("请选择汽车图片");
+					return;
+				}
 				if(!$("#year").val()){
 					alert("请输入先用年数");
 					return;
@@ -199,9 +227,14 @@ var vm = new Vue({
 					alert("请输入1+3交车服务费用");
 					return;
 				}
+				if(!$("#salecount").val()){
+					alert("请输入销量");
+					return;
+				}
+				
 				var url = "../tcarlease/save";
 				formFile.append("uFile", fileObj); 
-				formFile.append("uFile1",fileObj);
+				formFile.append("uFile1",fileObj1);
 				vm.tCarLease.content = $("#content").summernote('code');
 				formFile.append("tCarLease", JSON.stringify(vm.tCarLease));
 				$.ajax({
@@ -211,7 +244,8 @@ var vm = new Vue({
 				    contentType: "application/json",
 				    processData: false,
 				    contentType: false,
-				    success: function(r){
+				    success: function(rr){
+				    	var r = eval('('+rr+')');
 				    	if(r.code === 0){
 							alert('操作成功', function(index){
 								vm.back();
@@ -223,6 +257,8 @@ var vm = new Vue({
 				});
 			}else{
 				//更新
+				var fileObj = document.getElementById("uFile").files[0];
+				var fileObj1 = document.getElementById("uFile1").files[0];
 				if(!$("#carName").val()){
 					alert("请输入汽车名称");
 					return;
@@ -231,6 +267,7 @@ var vm = new Vue({
 					alert("请选择汽车品牌");
 					return;
 				}
+				
 				if(!$("#year").val()){
 					alert("请输入先用年数");
 					return;
@@ -315,8 +352,12 @@ var vm = new Vue({
 					alert("请输入1+3交车服务费用");
 					return;
 				}
-				var fileObj = document.getElementById("uFile").files[0];
-				var fileObj1 = document.getElementById("uFile1").files[0];
+				if(!$("#salecount").val()){
+					alert("请输入销量");
+					return;
+				}
+				vm.tCarLease.salecount = $("#salecount").val();
+				
 				var formFile = new FormData();
 				var url = "../tcarlease/update";
 				formFile.append("uFile", fileObj); 
@@ -331,7 +372,8 @@ var vm = new Vue({
 				    contentType: "application/json",
 				    processData: false,
 				    contentType: false,
-				    success: function(r){
+				    success: function(rr){
+				    	var r = eval('('+rr+')');
 				    	if(r.code === 0){
 							alert('操作成功', function(index){
 								vm.back();

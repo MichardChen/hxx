@@ -172,6 +172,7 @@
 			<if test="content != null">`content` = #{content},</if>
 			<if test="pcIcon != null">`pc_icon` = #{pcIcon},</if>
 			<if test="favourMoney != null">`favour_money` = #{favourMoney},</if>
+			<if test="flg != null">`flg` = #{flg}</if>
 		</set>
 		where id = #{id}
 	</update>

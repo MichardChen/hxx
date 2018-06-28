@@ -19,10 +19,17 @@ var vm = new Vue({
 		},
 		saveOrUpdate: function (event) {
 			var url = vm.tQuestion.id == null ? "../tquestion/save" : "../tquestion/update";
+			var status = vm.tQuestion.status;
+			var id=vm.tQuestion.id;
+			var formData = new FormData();
+			formData.append("status",status);
+			formData.append("id",id);
 			$.ajax({
 				type: "POST",
 			    url: url,
-			    data: JSON.stringify(vm.tQuestion),
+			    data: formData,
+			    processData: false,
+			    contentType: false,
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('操作成功', function(index){

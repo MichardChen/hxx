@@ -45,6 +45,7 @@ var vm = new Vue({
                 $("#titleLabel").val(r.tCarImport.titleLabel);
                 $("#carLevelCd").val(r.tCarImport.carLevelCd);
                 $("#carClassCd").val(r.tCarImport.carClassCd);
+                $("#flg").val(r.tCarImport.flg);
                
                 $("#cartId").val(r.tCarImport.id);
                 $("#favourMoney").val(r.tCarImport.favourMoney);
@@ -96,6 +97,24 @@ var vm = new Vue({
 			var fileObj = document.getElementById("uFile").files[0];
 			var fileObj1 = document.getElementById("uFile1").files[0];
 			var cartId = $("#cartId").val();
+			
+			vm.tCarImport.carName = $("#carName").val();
+			vm.tCarImport.brand = $("#brand").val();
+			vm.tCarImport.marketPrice = $("#marketPrice").val();
+			vm.tCarImport.nowPrice = $("#nowPrice").val();
+			vm.tCarImport.maxSave = $("#maxSave").val();
+			vm.tCarImport.favourMoney = $("#favourMoney").val();
+			vm.tCarImport.mark = $("#mark").val();
+			vm.tCarImport.carColor = $("#carColor").val();
+			vm.tCarImport.favour = $("#favour").val();
+			vm.tCarImport.servicePiror = $("#servicePiror").val();
+			vm.tCarImport.hot = $("#hot").val();
+			vm.tCarImport.labels = $("#labels").val();
+			vm.tCarImport.titleLabel = $("#titleLabel").val();
+			vm.tCarImport.carLevelCd = $("#carLevelCd").val();
+			vm.tCarImport.carClassCd = $("#carClassCd").val();
+			vm.tCarImport.carSeriesId = $("#series").val();
+			vm.tCarImport.flg = $("#flg").val();
 			if(cartId == 0 || cartId == "" || cartId == null){
 				if(!$("#carName").val()){
 					alert("请输入车名");
@@ -180,7 +199,8 @@ var vm = new Vue({
 				    contentType: "application/json",
 				    processData: false,
 				    contentType: false,
-				    success: function(r){
+				    success: function(json){
+				    	var r = eval('('+json+')');
 				    	if(r.code === 0){
 							alert('操作成功', function(index){
 								vm.back();
@@ -273,7 +293,8 @@ var vm = new Vue({
 				    contentType: "application/json",
 				    processData: false,
 				    contentType: false,
-				    success: function(r){
+				    success: function(json){
+				    	var r = eval('('+json+')');
 				    	if(r.code === 0){
 							alert('操作成功', function(index){
 								vm.back();

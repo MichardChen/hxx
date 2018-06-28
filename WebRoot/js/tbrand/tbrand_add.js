@@ -3,7 +3,7 @@ var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		title:"新增",
-		tBrand:{showflg:0}
+		tBrand:{showflg:0,importflg:0}
 	},
 	created: function() {
 		if(id != null){
@@ -19,6 +19,7 @@ var vm = new Vue({
 				$("#brandId").val(json.tBrand.id);
 				$("#word").val(json.tBrand.word);
 				$("#showflg").val(json.tBrand.showflg);
+				$("#importflg").val(json.tBrand.importflg);
                 $("#icon").attr("href",json.tBrand.brandIcon);
 				$("#icon").show();
             });

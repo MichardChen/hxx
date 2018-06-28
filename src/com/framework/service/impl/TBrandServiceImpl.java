@@ -61,4 +61,9 @@ public class TBrandServiceImpl implements TBrandService {
 	public List<TBrandEntity> queryShowBrandList(Integer showFlg) {
 		return tBrandDao.queryShowBrandList(showFlg);
 	}
+
+	@Override
+	public List<TBrandEntity> queryImportBrandList(Integer importFlg) {
+		return tBrandDao.queryImportBrandList(importFlg);
+	}
 }

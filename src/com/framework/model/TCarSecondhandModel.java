@@ -49,6 +49,18 @@ public class TCarSecondhandModel implements Serializable{
 	private String content;
 	
 	private String pcIcon;
+	
+	private Integer flg;
+	
+	
+
+	public Integer getFlg() {
+		return flg;
+	}
+
+	public void setFlg(Integer flg) {
+		this.flg = flg;
+	}
 
 	public Integer getId() {
 		return id;

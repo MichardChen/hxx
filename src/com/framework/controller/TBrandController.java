@@ -128,6 +128,7 @@ public class TBrandController {
 			model.setBrandIcon(tBrand.getBrandIcon());
 			model.setWord(tBrand.getWord());
 			model.setShowflg(tBrand.getShowflg());
+			model.setImportflg(tBrand.getImportflg());
 		}
 		return R.ok().put("tBrand", model);
 	}
@@ -151,6 +152,7 @@ public class TBrandController {
 		tBrand.setWord(viewModel.getString("word"));
 		tBrand.setFlg(1);
 		tBrand.setShowflg(viewModel.getInteger("showflg"));
+		tBrand.setImportflg(viewModel.getInteger("importflg"));
 
 		// 生成html
 		FileService fs = new FileService();
@@ -181,6 +183,7 @@ public class TBrandController {
 		tBrand.setWord(viewModel.getString("word"));
 		tBrand.setId(viewModel.getInteger("id"));
 		tBrand.setShowflg(viewModel.getInteger("showflg"));
+		tBrand.setImportflg(viewModel.getInteger("importflg"));
 
 		// 生成html
 		FileService fs = new FileService();

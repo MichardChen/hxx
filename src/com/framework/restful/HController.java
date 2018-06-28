@@ -520,6 +520,7 @@ public class HController extends RestfulController{
 		entity.setQuestion(dto.getQuestion());
 		entity.setMobile(dto.getMobile());
 		entity.setStatus(Constants.FEEDBACK_STATUS.STAY_HANDLE);
+		entity.setCartflg(dto.getCartFlg());
 		//判断验证码
 		String code = dto.getCode();
 		if(StringUtil.isBlank(code)){
@@ -817,7 +818,7 @@ public class HController extends RestfulController{
 		
 		TQuestionEntity entity = new TQuestionEntity();
 		
-		entity.setQuestion("从官网提交的汽车咨询");
+		entity.setQuestion("从微信H5提交的汽车立即咨询");
 		entity.setCartId(dto.getCartId());
 		entity.setLinkMan(dto.getName());
 		entity.setMobile(dto.getMobile());
@@ -826,7 +827,8 @@ public class HController extends RestfulController{
 		entity.setUpdateTime(DateUtil.getNowTimestamp());
 		entity.setUpdateBy(0);
 		entity.setStatus(Constants.FEEDBACK_STATUS.STAY_HANDLE);
-		entity.setTypeCd(Constants.QUESTION_TYPE.PC);
+		entity.setTypeCd(Constants.QUESTION_TYPE.H5);
+		entity.setCartflg(dto.getCartFlg());
 		
 		int ret = questionService.save(entity);
 		if(ret != 0){
@@ -880,8 +882,8 @@ public class HController extends RestfulController{
 		ParamsDTO dto = ParamsDTO.getInstance(request);
 		ReturnData data = new ReturnData();
 		JSONObject json = new JSONObject();
-		List<TBrandEntity> list = brandService.queryShowBrandList(1);
-		List<BrandModel> models = new ArrayList<>();
+		List<TBrandEntity> list = brandService.queryImportBrandList(1);
+		/*List<BrandModel> models = new ArrayList<>();
 		BrandModel model = null;
 		for(TBrandEntity entity : list){
 			model = new BrandModel();
@@ -891,7 +893,43 @@ public class HController extends RestfulController{
 			
 			models.add(model);
 		}
-		json.put("brandList", models);
+		*/
+		Map<String, List<BrandModel>> map = new HashMap<>();
+		for(TBrandEntity e : list){
+			String word = e.getWord();
+			BrandModel bm = new BrandModel();
+			bm.setBrand(e.getBrand());
+			bm.setId(e.getId());
+			bm.setBrandIcon(e.getBrandIcon());
+			if(map.containsKey(word)){
+				//包含
+				List<BrandModel> value = map.get(word);
+				value.add(bm);
+				map.put(word, value);
+			}else{
+				//不包含
+				List<BrandModel> value = new ArrayList<>();
+				value.add(bm);
+				map.put(word, value);
+			}
+		}
+		
+		List<Map.Entry<String, List<BrandModel>>> infoIds =
+			    new ArrayList<Map.Entry<String, List<BrandModel>>>(map.entrySet());
+		
+		Collections.sort(infoIds, new Comparator<Map.Entry<String, List<BrandModel>>>() {   
+			@Override
+			public int compare(Entry<String, List<BrandModel>> arg0, Entry<String, List<BrandModel>> arg1) {
+				return (arg0.getKey()).toString().compareTo(arg1.getKey());
+			}
+		}); 
+		Map<String, List<BrandModel>> map1 = new LinkedHashMap<>();
+		for(Map.Entry<String, List<BrandModel>> e : infoIds) {
+			System.out.println(e.getKey());
+			map1.put(e.getKey(), map.get(e.getKey()));
+		}
+		
+		json.put("brandList", map1);
 		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
 		data.setMessage("查询成功");
@@ -1221,6 +1259,7 @@ public class HController extends RestfulController{
 		json.put("phone", "0592-2688966");
 		json.put("longtitude", "118.24338197705003");
 		json.put("latitude", "24.674669004378305");
+		json.put("companyName", "惠搜车总部（厦门）");
 		TCarouselEntity serviceImg = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.AFTER_SALE);
 		if(serviceImg != null) {
 			json.put("customerServiceImg", serviceImg.getImgUrl());

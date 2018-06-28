@@ -243,8 +243,8 @@
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="descUrl != null">`desc_url` = #{descUrl},</if>
-			<if test="flg != null">`flg` = #{flg},</if>
 			<if test="content != null">`content` = #{content},</if>
+			<if test="flg != null">`flg` = #{flg},</if>
 			<if test="pcIcon != null">`pc_icon` = #{pcIcon}</if>
 		</set>
 		where id = #{id}

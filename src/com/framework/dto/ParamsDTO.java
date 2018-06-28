@@ -47,7 +47,8 @@ public class ParamsDTO implements Serializable {
 	
 	private String typeCd;
 	private String brand;
-
+	private Integer cartFlg;
+	
 	public static ParamsDTO getInstance(HttpServletRequest request) {
 
 		dto = new ParamsDTO();
@@ -86,9 +87,33 @@ public class ParamsDTO implements Serializable {
 		dto.setCarClassCd(request.getParameter("carClassCd"));
 		dto.setTypeCd(request.getParameter("typeCd"));
 		dto.setBrand(request.getParameter("brand"));
+		dto.setCartFlg(StringUtil.toInteger(request.getParameter("cartFlg")));
 		return dto;
 	}
 	
+	
+	
+
+
+
+	public Integer getCartFlg() {
+		return cartFlg;
+	}
+
+
+
+
+
+
+	public void setCartFlg(Integer cartFlg) {
+		this.cartFlg = cartFlg;
+	}
+
+
+
+
+
+
 	public String getBrand() {
 		return brand;
 	}

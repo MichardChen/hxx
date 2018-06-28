@@ -121,7 +121,7 @@ var vm = new Vue({
 				return ;
 			}
 			
-			confirm('确定要删除选中的记录？', function(){
+			confirm('确定要下架？', function(){
 				$.ajax({
 					type: "POST",
 				    url: "../tcarlease/delete",

@@ -154,6 +154,7 @@ public class TCarSecondhandController {
 			model.setCarLevelCd(tc.getCarLevelCd());
 			model.setCarName(tc.getCarName());
 			model.setCarSeriesId(tc.getCarSeriesId());
+			model.setFlg(tc.getFlg());
 			model.setCarTaxCost(tc.getCarTaxCost());
 			model.setCityId(tc.getCityId());
 			model.setContent(tc.getContent());
@@ -208,7 +209,7 @@ public class TCarSecondhandController {
 		entity.setLabels(viewModel.getString("labels"));
 		entity.setPeriods(viewModel.getInteger("periods"));
 		entity.setFinalPayment(viewModel.getBigDecimal("finalPayment"));
-		entity.setFlg(1);
+		entity.setFlg(viewModel.getInteger("flg"));
 		//生成html
 		FileService fs=new FileService();
 		//上传图片
@@ -277,6 +278,7 @@ public class TCarSecondhandController {
 		entity.setPeriods(viewModel.getInteger("periods"));
 		entity.setFinalPayment(viewModel.getBigDecimal("finalPayment"));
 		entity.setId(viewModel.getInteger("id"));
+		entity.setFlg(viewModel.getInteger("flg"));
 		
 		//生成html
 		FileService fs=new FileService();

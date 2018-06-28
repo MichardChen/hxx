@@ -16,11 +16,22 @@ import org.springframework.stereotype.Controller;
 
 import com.framework.constants.Constants;
 import com.framework.dao.SysUserDao;
+import com.framework.dao.TBrandDao;
+import com.framework.dao.TBrandSeriesDao;
+import com.framework.dao.TCarImportDao;
+import com.framework.dao.TCarLeaseDao;
+import com.framework.dao.TCarSecondhandDao;
 import com.framework.entity.SysUserEntity;
+import com.framework.entity.TBrandEntity;
+import com.framework.entity.TBrandSeriesEntity;
+import com.framework.entity.TCarImportEntity;
+import com.framework.entity.TCarLeaseEntity;
+import com.framework.entity.TCarSecondhandEntity;
 import com.framework.entity.TQuestionAnswerEntity;
 import com.framework.entity.TQuestionEntity;
 import com.framework.model.QuestionAnswerListModel;
 import com.framework.model.QuestionListModel;
+import com.framework.model.TQuestionModel;
 import com.framework.service.TQuestionService;
 import com.framework.utils.DateUtil;
 import com.framework.utils.PageUtils;
@@ -43,6 +54,17 @@ public class TQuestionController {
 	private TQuestionService tQuestionService;
 	@Autowired
 	private SysUserDao userDao;
+	@Autowired
+	private TCarLeaseDao carLeaseDao;
+	@Autowired
+	private TCarImportDao carImportDao;
+	@Autowired
+	private TCarSecondhandDao carSecondhandDao;
+	@Autowired
+	private TBrandDao brandDao;
+	@Autowired
+	private TBrandSeriesDao brandSeriesDao;
+	
 	
 	@RequestMapping("/tquestion.html")
 	public String list(){
@@ -73,7 +95,7 @@ public class TQuestionController {
 		QuestionListModel model = null;
 		for(TQuestionEntity data : tQuestionList){
 			model = new QuestionListModel();
-			model.setCreateTime(DateUtil.format(data.getCreateTime()));
+			model.setCreateTime(StringUtil.toString(data.getCreateTime()));
 			if(StringUtil.equals(data.getStatus(), Constants.FEEDBACK_STATUS.HANDLE)){
 				model.setStatus("已处理");
 			}
@@ -95,7 +117,7 @@ public class TQuestionController {
 			}else{
 				model.setUpdateBy(StringUtil.STRING_BLANK);
 			}
-			model.setUpdateTime(DateUtil.format(data.getUpdateTime()));
+			model.setUpdateTime(StringUtil.toString(data.getUpdateTime()));
 			model.setLinkMan(data.getLinkMan());
 			model.setMobile(data.getMobile());
 			model.setQuestion(data.getQuestion());
@@ -117,8 +139,87 @@ public class TQuestionController {
 	@RequiresPermissions("tquestion:info")
 	public R info(@PathVariable("id") Integer id){
 		TQuestionEntity tQuestion = tQuestionService.queryObject(id);
-		
-		return R.ok().put("tQuestion", tQuestion);
+		TQuestionModel model = new TQuestionModel();
+		if(tQuestion != null){
+			//model.setCartId(tQuestion.getCartId());
+			int cartFlg = tQuestion.getCartflg();
+			if(cartFlg == 2){
+				//以租代购
+				TCarLeaseEntity entity = carLeaseDao.queryObject(tQuestion.getCartId());
+				if(entity != null){
+					String name = "【以租代购】";
+					TBrandEntity brandEntity = brandDao.queryObject(entity.getBrand());
+					if(brandEntity != null){
+						name = brandEntity.getBrand();
+					}
+					TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObject(entity.getCarSeriesId());
+					if(brandSeriesEntity != null){
+						name = name + brandSeriesEntity.getCarSerial();
+					}
+					model.setCartId(name + " " +entity.getCarName());
+				}else{
+					model.setCartId("");
+				}
+			}else if(cartFlg == 3){
+				//会淘车
+				TCarSecondhandEntity entity = carSecondhandDao.queryObject(tQuestion.getCartId());
+				if(entity != null){
+					String name = "【会淘车】";
+					TBrandEntity brandEntity = brandDao.queryObject(entity.getBrand());
+					if(brandEntity != null){
+						name = brandEntity.getBrand();
+					}
+					TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObject(entity.getCarSeriesId());
+					if(brandSeriesEntity != null){
+						name = name + brandSeriesEntity.getCarSerial();
+					}
+					model.setCartId(name + " " +entity.getCarName());
+				}else{
+					model.setCartId("");
+				}
+			}else if(cartFlg == 4){
+				//平行进口车
+				TCarImportEntity entity = carImportDao.queryObject(tQuestion.getCartId());
+				if(entity != null){
+					String name = "【平行进口车】";
+					TBrandEntity brandEntity = brandDao.queryObject(entity.getBrand());
+					if(brandEntity != null){
+						name = brandEntity.getBrand();
+					}
+					TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObject(entity.getCarSeriesId());
+					if(brandSeriesEntity != null){
+						name = name + brandSeriesEntity.getCarSerial();
+					}
+					model.setCartId(name + " " +entity.getCarName());
+				}else{
+					model.setCartId("");
+				}
+			}
+			
+			model.setCreateTime(StringUtil.toString(tQuestion.getCreateTime()));
+			
+			SysUserEntity userEntity = userDao.queryObject(tQuestion.getEmployeeId());
+			if(userEntity != null){
+				model.setEmployeeId(userEntity.getRealName());
+			}else{
+				model.setEmployeeId("");
+			}
+			
+			SysUserEntity updateBy = userDao.queryObject(tQuestion.getUpdateBy());
+			if(updateBy != null){
+				model.setEmployeeId(updateBy.getRealName());
+			}else{
+				model.setEmployeeId("");
+			}
+			model.setUpdateTime(StringUtil.toString(tQuestion.getUpdateTime()));
+			model.setId(tQuestion.getId());
+			model.setLinkMan(tQuestion.getLinkMan());
+			model.setMobile(tQuestion.getMobile());
+			model.setQuestion(tQuestion.getQuestion());
+			model.setStatus(tQuestion.getStatus());
+			model.setTypeCd(tQuestion.getTypeCd());
+		}
+		return R.ok().put("tQuestion", model);
 	}
 	
 	/**
@@ -139,7 +240,10 @@ public class TQuestionController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("tquestion:update")
-	public R update(@RequestBody TQuestionEntity tQuestion){
+	public R update(@RequestParam("status")String status,@RequestParam("id")Integer id){
+		TQuestionEntity tQuestion = new TQuestionEntity();
+		tQuestion.setId(id);
+		tQuestion.setStatus(status);
 		tQuestion.setUpdateBy(ShiroUtils.getUserId().intValue());
 		tQuestion.setUpdateTime(DateUtil.getNowTimestamp());
 		tQuestionService.update(tQuestion);

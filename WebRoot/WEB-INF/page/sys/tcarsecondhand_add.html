@@ -11,11 +11,11 @@
 		<div class="form-group">
 			<div class="col-sm-2 control-label">车名</div>
 		   	<div class="col-sm-2">
-		    <input type="text" class="form-control" v-model="tCarSecondhand.carName" id="carName" placeholder="请输入车名"/>
+		    <input type="text" class="form-control"  id="carName" placeholder="请输入车名"/>
 		    </div>
 		    <div class="col-sm-2 control-label">品牌</div>
 		   	<div class="col-sm-2">
-		   		<select  class="form-control" v-model="tCarSecondhand.brand" id="brand" @change="selectBrand">
+		   		<select  class="form-control"  id="brand" @change="selectBrand">
 		   			<option value="0">请选择汽车品牌</option>
 		   		</select>
 		    </div>
@@ -23,23 +23,23 @@
 		<div class="form-group">
 			<div class="col-sm-2 control-label">图片</div>
 		   	<div class="col-sm-2">
-		   		<a style="text-decoration: none;display: none;" target="_blank" id="icon">查看封面</a><input type="file" v-model="tCarSecondhand.icon" id="uFile" name="uFile" placeholder="请选择车标"/>
+		   		<a style="text-decoration: none;display: none;" target="_blank" id="icon">查看封面</a><input type="file"  id="uFile" name="uFile" placeholder="请选择车标"/>
 		    </div>
 		   <div class="col-sm-2 control-label">PC图片</div>
 		   	<div class="col-sm-2">
-		   		<a style="text-decoration: none;display: none;" target="_blank" id="pcIcon">查看封面</a><input type="file" v-model="tCarSecondhand.pcIcon" id="uFile1" name="uFile1" placeholder="请选择车标"/>
+		   		<a style="text-decoration: none;display: none;" target="_blank" id="pcIcon">查看封面</a><input type="file"  id="uFile1" name="uFile1" placeholder="请选择车标"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">省</div>
 		   	<div class="col-sm-2">
-		   		<select  class="form-control" v-model="tCarSecondhand.provinceId" id="provinceId" @change="selectCity">
+		   		<select  class="form-control"  id="provinceId" @change="selectCity">
 		   			<option value="0">请选择省份</option>
 		   		</select>
 		    </div>
 		   	<div class="col-sm-2 control-label">市</div>
 		   	<div class="col-sm-2">
-		   		<select  class="form-control" v-model="tCarSecondhand.cityId" id="cityId">
+		   		<select  class="form-control"  id="cityId">
 		   			<option value="0">请选择城市</option>
 		   		</select>
 		    </div>
@@ -47,86 +47,97 @@
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">公里数 </div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.kilomiters" id="kilomiters" placeholder="请输入公里数"/>
+		      <input type="number" class="form-control"  id="kilomiters" placeholder="请输入公里数"/>
 		    </div>
-		   	<div class="col-sm-2 control-label">先用年数</div>
+		   	<div class="col-sm-2 control-label">汽车年限</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.year" id="year" placeholder="请输入先用年数"/>
+		   		<input class="Wdate form-control"  id="year" onfocus="WdatePicker({dateFmt:'yyyy-MM',readOnly:true})"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">首付</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.firstPayment" id="firstPayment" placeholder="请输入首付"/>
+		      <input type="number" class="form-control"  id="firstPayment" placeholder="请输入首付"/>
 		    </div>
 		   	<div class="col-sm-2 control-label">月供</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.monthPayment" id="monthPayment" placeholder="请输入月供"/>
+		      <input type="number" class="form-control"  id="monthPayment" placeholder="请输入月供"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">车龄</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.age" id="age" placeholder="请输入车龄"/>
+		      <input type="number" class="form-control"  id="age" placeholder="请输入车龄"/>
 		    </div>
 		   	<div class="col-sm-2 control-label">车型</div>
 		   	<div class="col-sm-2">
-		   			<select  class="form-control" v-model="tCarSecondhand.carLevelCd" id="carLevelCd">
-			   			<option value="060001">轿车</option>
-			   			<option value="060002">SUV</option>
-			   			<option value="060003">跑车</option>
+		   			<select  class="form-control"  id="carLevelCd">
+			   			<option value="060001">小型车</option>
+			   			<option value="060002">中型车</option>
+			   			<option value="060003">SUV</option>
+			   			<option value="060004">MPV</option>
+			   			<option value="060005">跑车</option>
 			   		</select>
 		    </div>
 		</div>
 		<div class="form-group" style="display: none;">
 		   	<div class="col-sm-2 control-label">车身颜色</div>
 		   	<div class="col-sm-6">
-		      <input type="text" class="form-control" v-model="tCarSecondhand.carColor" id="carColor" placeholder="请输入颜色编号,用','隔开"/>
+		      <input type="text" class="form-control"  id="carColor" placeholder="请输入颜色编号,用','隔开"/>
 		      <a href="http://link.fobshanghai.com/rgbcolor.htm" target="_blank" style="text-decoration: none;">查看颜色编号</a>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">车价</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.carCost" id="carCost" placeholder="请输入车价"/>
+		      <input type="number" class="form-control"  id="carCost" placeholder="请输入车价"/>
 		    </div>
 		    <div class="col-sm-2 control-label">封面标签</div>
 		   	<div class="col-sm-2">
-		      <input type="text" class="form-control" v-model="tCarSecondhand.titleLabel" id="titleLabel" placeholder="请输入封面标签"/>
+		      <input type="text" class="form-control"  id="titleLabel" placeholder="请输入封面标签"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">车系</div>
 		   	<div class="col-sm-2">
-		   		<select  class="form-control" v-model="tCarSecondhand.carSeriesId" id="series">
+		   		<select  class="form-control"  id="series">
 		   			<option value="0">请选择车系</option>
 		   		</select>
 		    </div>
 		   	<div class="col-sm-2 control-label">新车含税价</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.carTaxCost" id="carTaxCost" placeholder="请输入新车含税价"/>
+		      <input type="number" class="form-control"  id="carTaxCost" placeholder="请输入新车含税价"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">已使用年数</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.periods" id="periods" placeholder="请输入已使用年数"/>
+		      <input type="number" class="form-control"  id="periods" placeholder="请输入已使用年数"/>
 		    </div>
 		   	<div class="col-sm-2 control-label">标签</div>
 		   	<div class="col-sm-2">
-		      <input type="text" class="form-control" v-model="tCarSecondhand.labels" id="labels" placeholder="请输入标签"/>
+		      <input type="text" class="form-control"  id="labels" placeholder="请输入标签"/>
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-2 control-label">状态</div>
+		   	<div class="col-sm-2">
+		      	<select  class="form-control"  id="flg">
+		   			<option value="1">在售中</option>
+		   			<option value="0">下架中</option>
+		   		</select>
 		    </div>
 		</div>
 		<div class="form-group" style="display: none;">
 		   	<div class="col-sm-2 control-label">尾款</div>
 		   	<div class="col-sm-2">
-		      <input type="number" class="form-control" v-model="tCarSecondhand.finalPayment" id="finalPayment" placeholder="请输入尾款"/>
+		      <input type="number" class="form-control"  id="finalPayment" placeholder="请输入尾款"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">汽车详情</div>
 		   	<div class="col-sm-10">
-		   		<textarea id="content" name="content" id="content" v-model="tCarSecondhand.content" class="summernote">
+		   		<textarea id="content" name="content" id="content"  class="summernote">
 				</textarea>
 		    </div>
 		</div>
@@ -146,5 +157,6 @@
 <script src="${rc.contextPath}/summernote/dist/lang/summernote-zh-CN.js"></script>    <!-- 中文-->
 <script src="${rc.contextPath}/js/sys/common.js"></script>
 <script src="${rc.contextPath}/js/tcarsecondhand/tcarsecondhand_add.js?_${date.systemTime}"></script>
+<script src="${rc.contextPath}/statics/My97DatePicker/WdatePicker.js?_${date.systemTime}"></script>
 </body>
 </html>

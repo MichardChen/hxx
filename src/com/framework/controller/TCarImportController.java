@@ -165,7 +165,7 @@ public class TCarImportController {
 		entity.setHot(viewModel.getInteger("hot"));
 		entity.setLabels(viewModel.getString("labels"));
 		entity.setFavourMoney(viewModel.getBigDecimal("favourMoney"));
-		entity.setFlg(1);
+		entity.setFlg(viewModel.getInteger("flg"));
 		
 		//生成html
 		FileService fs=new FileService();
@@ -230,6 +230,7 @@ public class TCarImportController {
 		entity.setLabels(viewModel.getString("labels"));
 		entity.setId(viewModel.getInteger("id"));
 		entity.setFavourMoney(viewModel.getBigDecimal("favourMoney"));
+		entity.setFlg(viewModel.getInteger("flg"));
 		
 		//生成html
 		FileService fs=new FileService();

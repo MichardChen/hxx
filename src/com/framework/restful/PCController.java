@@ -846,6 +846,7 @@ public class PCController extends RestfulController{
 		entity.setUpdateBy(0);
 		entity.setStatus(Constants.FEEDBACK_STATUS.STAY_HANDLE);
 		entity.setTypeCd(Constants.QUESTION_TYPE.PC);
+		entity.setCartflg(dto.getCartFlg());
 		
 		int ret = qService.save(entity);
 		if(ret != 0){
@@ -1306,6 +1307,7 @@ public class PCController extends RestfulController{
 		json.put("phone", "0592-2688966");
 		json.put("longtitude", "118.24338197705003");
 		json.put("latitude", "24.674669004378305");
+		json.put("companyName", "惠搜车总部（厦门）");
 		TCarouselEntity serviceImg = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.PC_AFTER_SALE);
 		if(serviceImg != null) {
 			json.put("customerServiceImg", serviceImg.getImgUrl());
