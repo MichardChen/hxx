@@ -20,8 +20,8 @@ public class StringUtil extends StringUtils {
 	     if(StringUtil.isBlank(txtcontent)){
 	    	 return txtcontent;
 	     }else{
-	    	 if(txtcontent.length() > 20){
-	    		 return txtcontent.substring(0,20);
+	    	 if(txtcontent.length() > 30){
+	    		 return txtcontent.substring(0,30);
 	    	 }else{
 	    		 return txtcontent;
 	    	 }
