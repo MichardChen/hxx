@@ -11,6 +11,15 @@ public class PCImportCarListModel implements Serializable{
 	private String primePrice;
 	private String labels;
 	private String titleLabels;
+	private String savePrice;
+	
+	
+	public String getSavePrice() {
+		return savePrice;
+	}
+	public void setSavePrice(String savePrice) {
+		this.savePrice = savePrice;
+	}
 	public int getId() {
 		return id;
 	}

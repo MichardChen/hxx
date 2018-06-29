@@ -69,6 +69,7 @@ public class TBrandController {
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
 		map.put("queryBrand", queryBrand);
+		System.out.println("参数："+queryBrand);
 
 		// 查询列表数据
 		List<TBrandEntity> tBrandList = tBrandService.queryList(map);
@@ -94,6 +95,21 @@ public class TBrandController {
 			}
 			model.setUpdateTime(StringUtil.toString(m.getUpdateTime()));
 			model.setCreateTime(StringUtil.toString(m.getCreateTime()));
+			if(m.getShowflg() == 1){
+				model.setShowflg("是");
+			}else {
+				model.setShowflg("否");
+			}
+			if(m.getImportflg() == 1){
+				model.setImportflg("是");
+			}else {
+				model.setImportflg("否");
+			}
+			if(m.getFlg() == 1){
+				model.setFlg("上架中");
+			}else{
+				model.setFlg("已下架");
+			}
 			model.setBrand(m.getBrand());
 			model.setId(m.getId());
 			models.add(model);
@@ -144,6 +160,11 @@ public class TBrandController {
 		TBrandEntity tBrand = new TBrandEntity();
 		int userid = ShiroUtils.getUserId().intValue();
 		JSONObject viewModel = JSONObject.parseObject(tb);
+		TBrandEntity exitBrand = tBrandService.queryObjectByName(viewModel.getString("brand"));
+		if(exitBrand != null){
+			//已存在
+			return R.error("此品牌已存在,不能重复添加");
+		}
 		tBrand.setCreateBy(userid);
 		tBrand.setCreateTime(DateUtil.getNowTimestamp());
 		tBrand.setUpdateBy(userid);
@@ -177,6 +198,13 @@ public class TBrandController {
 		TBrandEntity tBrand = new TBrandEntity();
 		int userid = ShiroUtils.getUserId().intValue();
 		JSONObject viewModel = JSONObject.parseObject(tb);
+		
+		TBrandEntity exitBrand = tBrandService.queryObjectByName(viewModel.getString("brand"));
+		if((exitBrand != null)&&(exitBrand.getId()!=viewModel.getInteger("id"))){
+			//已存在
+			return R.error("此品牌已存在,不能重复添加");
+		}
+		
 		tBrand.setUpdateBy(userid);
 		tBrand.setUpdateTime(DateUtil.getNowTimestamp());
 		tBrand.setBrand(viewModel.getString("brand"));

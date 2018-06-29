@@ -8,6 +8,21 @@ public class PCLeaseCarListModel {
 	private String firstPayment;
 	private String monthPayment;
 	private String label;
+	private String titleLabel;
+	private String brand;
+	
+	public String getBrand() {
+		return brand;
+	}
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+	public String getTitleLabel() {
+		return titleLabel;
+	}
+	public void setTitleLabel(String titleLabel) {
+		this.titleLabel = titleLabel;
+	}
 	public int getId() {
 		return id;
 	}

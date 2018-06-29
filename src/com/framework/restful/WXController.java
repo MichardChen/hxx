@@ -171,7 +171,7 @@ public class WXController extends RestfulController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", 0);
 		map.put("limit", 9);
-		List<TBrandEntity> brandsList = brandService.queryList(map);
+		List<TBrandEntity> brandsList = brandService.queryShowBrandList(1);
 		List<BrandModel> brandModels = new ArrayList<>();
 		BrandModel bm = null;
 		for (TBrandEntity e : brandsList) {
@@ -1320,7 +1320,7 @@ public class WXController extends RestfulController {
 		json.put("phone", "0592-2688966");
 		json.put("longtitude", "118.24338197705003");
 		json.put("latitude", "24.674669004378305");
-		json.put("companyName", "惠搜车总部（厦门）");
+		json.put("companyName", "厦门永翔群汽车贸易有限公司");
 		TCarouselEntity serviceImg = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.AFTER_SALE);
 		if(serviceImg != null) {
 			json.put("customerServiceImg", serviceImg.getImgUrl());

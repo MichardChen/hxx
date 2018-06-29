@@ -36,6 +36,12 @@ var vm = new Vue({
 				return;
 			}
 			if(brandId == null || brandId==""){
+				
+				vm.tBrand.brand=$("#brand").val();
+				vm.tBrand.importflg=$("#importflg").val();
+				vm.tBrand.showflg=$("#showflg").val();
+				vm.tBrand.word=$("#word").val();
+				
 				var fileObj = document.getElementById("uFile").files[0];
 				if(!fileObj){
 					alert("请选择车标");
@@ -67,6 +73,10 @@ var vm = new Vue({
 				var fileObj = document.getElementById("uFile").files[0];
 				var formFile = new FormData();
 				vm.tBrand.id = brandId;
+				vm.tBrand.brand=$("#brand").val();
+				vm.tBrand.importflg=$("#importflg").val();
+				vm.tBrand.showflg=$("#showflg").val();
+				vm.tBrand.word=$("#word").val();
 				var url = "../tbrand/update";
 				formFile.append("uFile", fileObj); 
 				formFile.append("tBrand", JSON.stringify(vm.tBrand));

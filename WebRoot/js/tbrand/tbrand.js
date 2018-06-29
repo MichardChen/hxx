@@ -3,7 +3,10 @@ $(function () {
         url: '../tbrand/list?queryBrand=',
         datatype: "json",
         colModel: [			
-			{ label: '汽车品牌', name: 'brand', width: 80 }, 			
+			{ label: '汽车品牌', name: 'brand', width: 80 }, 	
+			{ label: '状态', name: 'flg', width: 80 },
+			{ label: '是否显示首页', name: 'showflg', width: 80 },
+			{ label: '是否进口车品牌', name: 'importflg', width: 80 },
 			{ label: '创建者', name: 'createBy', width: 80 }, 			
 			{ label: '创建时间', name: 'createTime', width: 80 }, 	
 			{ label: '更新者', name: 'updateBy', width: 80 },

@@ -12,6 +12,14 @@ public class SecondHandCarListModel implements Serializable{
 	private String kilometers;
 	private String firstPayment;
 	private String monthPayment;
+	private String brand;
+	
+	public String getBrand() {
+		return brand;
+	}
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
 	public int getId() {
 		return id;
 	}

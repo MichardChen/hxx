@@ -145,7 +145,7 @@ public class PCController extends RestfulController{
 		}
 		json.put("carouselModels", carouselModels);
 		//获取商标
-		List<TBrandEntity> brands = brandService.queryAllList(1);
+		List<TBrandEntity> brands = brandService.queryShowBrandList(1);
 		List<BrandModel> brandModels = new ArrayList<>();
 		BrandModel bmodel = null;
 		for(TBrandEntity e : brands) {
@@ -234,14 +234,16 @@ public class PCController extends RestfulController{
 		for(TCarLeaseEntity e : clList) {
 			lcm = new PCLeaseCarListModel();
 			
-			lcm.setFirstPayment(StringUtil.toString(e.getFirstPayment()));
+			lcm.setTitleLabel(e.getTitleLabel());
+			lcm.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(),0));
 			lcm.setIcon(e.getIcon());
 			lcm.setId(e.getId());
 			lcm.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
 			
 			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
 			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
-			lcm.setName(brandEntity.getBrand()+" "+seriesEntity.getCarSerial()+" "+e.getCarName());
+			lcm.setBrand(brandEntity.getBrand()+seriesEntity.getCarSerial());
+			lcm.setName(e.getCarName());
 			lcm.setLabel(e.getTitleLabel());
 			leaseList.add(lcm);
 		}
@@ -255,9 +257,10 @@ public class PCController extends RestfulController{
 			icl.setLabels(e.getLabels());
 			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
 			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
-			icl.setName(brandEntity.getBrand()+" "+seriesEntity.getCarSerial()+" "+e.getCarName());
+			icl.setName(brandEntity.getBrand()+seriesEntity.getCarSerial()+" "+e.getCarName());
 			icl.setNowPrice(StringUtil.formatCarPrice(e.getNowPrice(),0));
 			icl.setPrimePrice(StringUtil.formatCarPrice(e.getMarketPrice(),0));
+			icl.setSavePrice(StringUtil.formatCarPrice(e.getMaxSave(), 0));
 			icl.setTitleLabels(e.getTitleLabel());
 			importList.add(icl);
 		}
@@ -269,7 +272,8 @@ public class PCController extends RestfulController{
 			scl.setIcon(e.getIcon());
 			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
 			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
-			scl.setName(brandEntity.getBrand()+" "+seriesEntity.getCarSerial()+" "+e.getCarName());
+			scl.setBrand(brandEntity.getBrand()+seriesEntity.getCarSerial());
+			scl.setName(e.getCarName());
 			scl.setKilometers(StringUtil.toString(e.getKilomiters()));
 			scl.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
 			scl.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(),0));

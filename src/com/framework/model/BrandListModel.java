@@ -18,6 +18,31 @@ public class BrandListModel implements Serializable{
 	private String createTime;
 	//
 	private String updateTime;
+	
+	private String flg;
+	
+	private String showflg;
+	
+	private String importflg;
+	
+	public String getShowflg() {
+		return showflg;
+	}
+	public String getImportflg() {
+		return importflg;
+	}
+	public void setShowflg(String showflg) {
+		this.showflg = showflg;
+	}
+	public void setImportflg(String importflg) {
+		this.importflg = importflg;
+	}
+	public String getFlg() {
+		return flg;
+	}
+	public void setFlg(String flg) {
+		this.flg = flg;
+	}
 	public Integer getId() {
 		return id;
 	}

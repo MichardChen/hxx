@@ -16,6 +16,8 @@ public interface TBrandService {
 	
 	TBrandEntity queryObject(Integer id);
 	
+	TBrandEntity queryObjectByName(String name);
+	
 	List<TBrandEntity> queryList(Map<String, Object> map);
 	
 	int queryTotal(Map<String, Object> map);

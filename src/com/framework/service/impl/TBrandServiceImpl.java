@@ -66,4 +66,9 @@ public class TBrandServiceImpl implements TBrandService {
 	public List<TBrandEntity> queryImportBrandList(Integer importFlg) {
 		return tBrandDao.queryImportBrandList(importFlg);
 	}
+
+	@Override
+	public TBrandEntity queryObjectByName(String name) {
+		return tBrandDao.queryObjectByName(name);
+	}
 }

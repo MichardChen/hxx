@@ -6,6 +6,9 @@
 	<select id="queryObject" resultType="com.framework.entity.TBrandEntity">
 		select * from t_brand where id = #{value}
 	</select>
+	<select id="queryObjectByName" resultType="com.framework.entity.TBrandEntity">
+		select * from t_brand where brand = #{name} limit 1
+	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TBrandEntity">
 		select * from t_brand 
@@ -13,7 +16,7 @@
 		<if test="queryBrand != null and queryBrand != ''">
 			and brand like "%${queryBrand}%"
 		</if>
-		order by update_time desc
+		order by flg desc,update_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -26,14 +29,14 @@
 		order by word asc
 	</select>
 	<select id="queryShowBrandList" resultType="com.framework.entity.TBrandEntity">
-		select * from t_brand where 1=1
+		select * from t_brand where 1=1 and flg=1
 		<if test="showFlg != null">
 			and showflg=#{showFlg}
 		</if>
 		order by update_time desc,word asc limit 0,9
 	</select>
 	<select id="queryImportBrandList" resultType="com.framework.entity.TBrandEntity">
-		select * from t_brand where 1=1 and importflg=1
+		select * from t_brand where 1=1 and importflg=1 and flg=1
 		order by update_time desc,word asc
 	</select>
  	<select id="queryTotal" resultType="int">
@@ -90,11 +93,10 @@
 		delete from t_brand where id = #{value}
 	</delete>
 	
-	<delete id="deleteBatch">
-		delete from t_brand where id in 
+	<update id="deleteBatch">
+		update t_brand set flg=0 where id in 
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
-	</delete>
-
+	</update>
 </mapper>

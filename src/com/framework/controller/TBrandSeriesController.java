@@ -138,6 +138,14 @@ public class TBrandSeriesController {
 		TBrandSeriesEntity bs = new TBrandSeriesEntity();
 		int userid = ShiroUtils.getUserId().intValue();
 		JSONObject viewModel = JSONObject.parseObject(tBrandSeries);
+		TBrandEntity brandEntity = brandService.queryObject(viewModel.getInteger("brandId"));
+		if(brandEntity==null || brandEntity.getFlg()==0){
+			return R.error("此品牌已下架，不能添加车系");
+		}
+		TBrandSeriesEntity seriesEntity = tBrandSeriesService.queryObjectByName(viewModel.getString("carSerial"));
+		if(seriesEntity != null){
+			return R.error("此车系已存在，不能重复添加");
+		}
 		bs.setBrandId(viewModel.getInteger("brandId"));
 		bs.setCarSerial(viewModel.getString("carSerial"));
 		bs.setCreateBy(userid);
@@ -160,6 +168,16 @@ public class TBrandSeriesController {
 		TBrandSeriesEntity bs = new TBrandSeriesEntity();
 		int userid = ShiroUtils.getUserId().intValue();
 		JSONObject viewModel = JSONObject.parseObject(tBrandSeries);
+		
+		TBrandEntity brandEntity = brandService.queryObject(viewModel.getInteger("brandId"));
+		if(brandEntity==null || brandEntity.getFlg()==0){
+			return R.error("此品牌已下架，不能添加车系");
+		}
+		TBrandSeriesEntity seriesEntity = tBrandSeriesService.queryObjectByName(viewModel.getString("carSerial"));
+		if((seriesEntity != null)&&(seriesEntity.getId() != viewModel.getInteger("id"))){
+			return R.error("此车系已存在，不能重复添加");
+		}
+		
 		bs.setId(viewModel.getInteger("id"));
 		bs.setBrandId(viewModel.getInteger("brandId"));
 		bs.setCarSerial(viewModel.getString("carSerial"));

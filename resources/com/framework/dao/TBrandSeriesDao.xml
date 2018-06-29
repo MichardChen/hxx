@@ -6,6 +6,9 @@
 	<select id="queryObject" resultType="com.framework.entity.TBrandSeriesEntity">
 		select * from t_brand_series where id = #{value}
 	</select>
+	<select id="queryObjectByName" resultType="com.framework.entity.TBrandSeriesEntity">
+		select * from t_brand_series where car_serial = #{name} limit 1
+	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TBrandSeriesEntity">
 		select * from t_brand_series 

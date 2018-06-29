@@ -16,4 +16,6 @@ import com.framework.entity.TBrandSeriesEntity;
 public interface TBrandSeriesDao extends BaseDao<TBrandSeriesEntity> {
 	
 	List<TBrandSeriesEntity> queryCarSeriesList(@Param("brandId")int brandId);
+	
+	TBrandSeriesEntity queryObjectByName(@Param("name")String name);
 }

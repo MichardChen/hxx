@@ -17,7 +17,15 @@ public class StringUtil extends StringUtils {
 	public static String StripHT(String strHtml) {  
 	     String txtcontent = strHtml.replaceAll("</?[^>]+>", ""); //剔出<html>的标签    
 	     txtcontent = txtcontent.replaceAll("<a>\\s*|\t|\r|\n</a>", "");//去除字符串中的空格,回车,换行符,制表符    
-	     return txtcontent;  
+	     if(StringUtil.isBlank(txtcontent)){
+	    	 return txtcontent;
+	     }else{
+	    	 if(txtcontent.length() > 20){
+	    		 return txtcontent.substring(0,20);
+	    	 }else{
+	    		 return txtcontent;
+	    	 }
+	     }
 	}  
 
 	public static final String STRING_BLANK = "";

@@ -169,7 +169,7 @@ public class HController extends RestfulController{
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", 0);
 		map.put("limit", 9);
-		List<TBrandEntity> brandsList = brandService.queryList(map);
+		List<TBrandEntity> brandsList = brandService.queryShowBrandList(1);
 		List<BrandModel> brandModels = new ArrayList<>();
 		BrandModel bm = null;
 		for (TBrandEntity e : brandsList) {
