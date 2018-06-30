@@ -16,9 +16,14 @@ public class BrandModel implements Serializable{
 	
 	private int importflg;
 	
+	private int flg;
 	
-	
-	
+	public int getFlg() {
+		return flg;
+	}
+	public void setFlg(int flg) {
+		this.flg = flg;
+	}
 	public int getImportflg() {
 		return importflg;
 	}

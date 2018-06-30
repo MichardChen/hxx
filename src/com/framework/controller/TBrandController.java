@@ -145,6 +145,7 @@ public class TBrandController {
 			model.setWord(tBrand.getWord());
 			model.setShowflg(tBrand.getShowflg());
 			model.setImportflg(tBrand.getImportflg());
+			model.setFlg(tBrand.getFlg());
 		}
 		return R.ok().put("tBrand", model);
 	}
@@ -171,7 +172,7 @@ public class TBrandController {
 		tBrand.setUpdateTime(DateUtil.getNowTimestamp());
 		tBrand.setBrand(viewModel.getString("brand"));
 		tBrand.setWord(viewModel.getString("word"));
-		tBrand.setFlg(1);
+		tBrand.setFlg(viewModel.getInteger("flg"));
 		tBrand.setShowflg(viewModel.getInteger("showflg"));
 		tBrand.setImportflg(viewModel.getInteger("importflg"));
 
@@ -212,7 +213,7 @@ public class TBrandController {
 		tBrand.setId(viewModel.getInteger("id"));
 		tBrand.setShowflg(viewModel.getInteger("showflg"));
 		tBrand.setImportflg(viewModel.getInteger("importflg"));
-
+		tBrand.setFlg(viewModel.getInteger("flg"));
 		// 生成html
 		FileService fs = new FileService();
 		// 上传图片

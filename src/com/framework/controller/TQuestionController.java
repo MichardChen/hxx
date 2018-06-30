@@ -106,7 +106,7 @@ public class TQuestionController {
 			model.setId(data.getId());
 			SysUserEntity admin = userDao.queryObject(data.getEmployeeId());
 			if(admin != null){
-				model.setEmployeeId(admin.getUsername());
+				model.setEmployeeId(admin.getRealName());
 			}else{
 				model.setEmployeeId(StringUtil.STRING_BLANK);
 			}

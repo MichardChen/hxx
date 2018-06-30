@@ -84,6 +84,7 @@
 			<if test="updateTime != null">`update_time` = #{updateTime},</if>
 			<if test="word != null">`word` = #{word},</if>
 			<if test="showflg != null">`showflg` = #{showflg},</if>
+			<if test="flg != null">`flg` = #{flg},</if>
 			<if test="importflg != null">`importflg` = #{importflg}</if>
 		</set>
 		where id = #{id}

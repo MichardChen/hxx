@@ -886,12 +886,12 @@ public class WXController extends RestfulController {
 		ReturnData data = new ReturnData();
 		if(ret != 0){
 			data.setCode(Constants.STATUS_CODE.SUCCESS);
-			data.setMessage("谢谢您的提交，我们会尽快审核");
+			data.setMessage("提交成功");
 			renderJson(data, response);
 			return;
 		}else{
 			data.setCode(Constants.STATUS_CODE.FAIL);
-			data.setMessage("提交失败，请重试");
+			data.setMessage("提交失败");
 			renderJson(data, response);
 			return;
 		}

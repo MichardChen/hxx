@@ -3,7 +3,7 @@ var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		title:"新增",
-		tBrand:{showflg:0,importflg:0}
+		tBrand:{showflg:0,importflg:0,flg:1}
 	},
 	created: function() {
 		if(id != null){
@@ -19,6 +19,7 @@ var vm = new Vue({
 				$("#brandId").val(json.tBrand.id);
 				$("#word").val(json.tBrand.word);
 				$("#showflg").val(json.tBrand.showflg);
+				$("#flg").val(json.tBrand.flg);
 				$("#importflg").val(json.tBrand.importflg);
                 $("#icon").attr("href",json.tBrand.brandIcon);
 				$("#icon").show();
@@ -41,6 +42,7 @@ var vm = new Vue({
 				vm.tBrand.importflg=$("#importflg").val();
 				vm.tBrand.showflg=$("#showflg").val();
 				vm.tBrand.word=$("#word").val();
+				vm.tBrand.flg=$("#flg").val();
 				
 				var fileObj = document.getElementById("uFile").files[0];
 				if(!fileObj){
@@ -77,6 +79,7 @@ var vm = new Vue({
 				vm.tBrand.importflg=$("#importflg").val();
 				vm.tBrand.showflg=$("#showflg").val();
 				vm.tBrand.word=$("#word").val();
+				vm.tBrand.flg=$("#flg").val();
 				var url = "../tbrand/update";
 				formFile.append("uFile", fileObj); 
 				formFile.append("tBrand", JSON.stringify(vm.tBrand));

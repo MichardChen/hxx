@@ -36,6 +36,7 @@ import com.framework.entity.TCarouselEntity;
 import com.framework.entity.TCartParam2Entity;
 import com.framework.entity.TCartParamsEntity;
 import com.framework.entity.TCodemstEntity;
+import com.framework.entity.TFinanceCommitEntity;
 import com.framework.entity.TFinanceEntity;
 import com.framework.entity.TNewsEntity;
 import com.framework.entity.TQuestionEntity;
@@ -64,6 +65,7 @@ import com.framework.service.TCarSecondhandService;
 import com.framework.service.TCarouselService;
 import com.framework.service.TCartParam2Service;
 import com.framework.service.TCartParamsService;
+import com.framework.service.TFinanceCommitService;
 import com.framework.service.TFinanceService;
 import com.framework.service.TNewsService;
 import com.framework.service.TQuestionService;
@@ -85,6 +87,8 @@ public class HController extends RestfulController{
 	
 	@Autowired
 	private TCarouselService carouselService;
+	@Autowired
+	private TFinanceCommitService financeCommitService;
 	@Autowired
 	private TBrandService brandService;
 	@Autowired
@@ -1308,6 +1312,41 @@ public class HController extends RestfulController{
 			data.setData(null);
 			e.printStackTrace();
 			renderJson(data, response);
+		}
+	}
+	
+	@RequestMapping("/submitFinanceApply")
+	public void submitFinanceApply(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		TFinanceCommitEntity entity = new TFinanceCommitEntity();
+		entity.setFinanceId(dto.getFinanceId());
+		entity.setAge(dto.getAge());
+		entity.setBrandId(dto.getBrandId());
+		entity.setBrandSeriesId(dto.getBrandSeriesId());
+		entity.setProvinceId(dto.getProvinceId());
+		entity.setCityId(dto.getCityId());
+		entity.setName(dto.getName());
+		entity.setIdcardNo(dto.getCardNo());
+		entity.setSex(dto.getSex());
+		entity.setMobile(dto.getMobile());
+		entity.setMark(dto.getMark());
+		entity.setCreateTime(DateUtil.getNowTimestamp());
+		entity.setUpdateTime(DateUtil.getNowTimestamp());
+		entity.setUpdateBy(0);
+		entity.setStatus(Constants.FEEDBACK_STATUS.STAY_HANDLE);
+		
+		int ret = financeCommitService.save(entity);
+		ReturnData data = new ReturnData();
+		if(ret != 0){
+			data.setCode(Constants.STATUS_CODE.SUCCESS);
+			data.setMessage("提交成功");
+			renderJson(data, response);
+			return;
+		}else{
+			data.setCode(Constants.STATUS_CODE.FAIL);
+			data.setMessage("提交失败");
+			renderJson(data, response);
+			return;
 		}
 	}
 }
