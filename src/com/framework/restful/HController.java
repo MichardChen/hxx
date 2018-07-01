@@ -839,12 +839,12 @@ public class HController extends RestfulController{
 			//更新验证码过期
 			vertifyCodeService.updateExpireCode(vCode.getId(), DateUtil.getNowTimestamp());
 			data.setCode(Constants.STATUS_CODE.SUCCESS);
-			data.setMessage("谢谢您的提交，我们会尽快给您反馈");
+			data.setMessage("提交成功");
 			renderJson(data, response);
 			return;
 		}else{
 			data.setCode(Constants.STATUS_CODE.FAIL);
-			data.setMessage("提交失败，请重试");
+			data.setMessage("提交失败");
 			renderJson(data, response);
 			return;
 		}
