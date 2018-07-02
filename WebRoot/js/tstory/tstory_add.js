@@ -18,6 +18,7 @@ var vm = new Vue({
 				$("#title").val(json.tStory.title);
 				$("#storyId").val(json.tStory.id);
 				$("#content").summernote('code', json.tStory.content);
+				console.log(json.tStory.icon);
 				$("#icon").attr("href",json.tStory.icon);
 				$("#icon").show();
             });

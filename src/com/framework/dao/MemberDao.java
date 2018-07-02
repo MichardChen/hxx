@@ -29,4 +29,6 @@ public interface MemberDao extends BaseDao<Member> {
 	 * 修改密码
 	 */
 	int updatePassword(Map<String, Object> map);
+	
+	
 }

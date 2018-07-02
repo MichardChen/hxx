@@ -77,11 +77,11 @@
 		delete from t_finance where id = #{value}
 	</delete>
 	
-	<delete id="deleteBatch">
-		delete from t_finance where id in 
+	<update id="deleteBatch">
+		update t_finance set status=0  where id in 
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
-	</delete>
+	</update>
 
 </mapper>

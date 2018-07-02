@@ -11,37 +11,46 @@
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">产品名称</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.name" id="name" placeholder="请输入产品名称"/>
+		      <input type="text" class="form-control"  id="name" placeholder="请输入产品名称"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">产品封面</div>
 		   	<div class="col-sm-10">
-		   		 <a style="text-decoration: none;display: none;" target="_blank" id="icon">查看封面</a><input type="file" v-model="tFinance.icon" id="uFile" name="uFile" placeholder="请选择封面图片"/>
+		   		 <a style="text-decoration: none;display: none;" target="_blank" id="icon">查看封面</a><input type="file"  id="uFile" name="uFile" placeholder="请选择封面图片"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">最低首付比例</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.lowRate" id="lowRate" placeholder="请输入最低首付比例"/>
+		      <input type="text" class="form-control"  id="lowRate" placeholder="请输入最低首付比例"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">最低贷款额</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.lowRefund" id="lowRefund" placeholder="请输入最低贷款额"/>
+		      <input type="text" class="form-control"  id="lowRefund" placeholder="请输入最低贷款额"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">贷款期限</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.timeDistance" id="timeDistance" placeholder="请输入贷款期限"/>
+		      <input type="text" class="form-control"  id="timeDistance" placeholder="请输入贷款期限"/>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">申请提交材料及二手车准入标准</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tFinance.standard" id="standard" placeholder="请输入准入标准"/>
+		      <input type="text" class="form-control"  id="standard" placeholder="请输入准入标准"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">状态</div>
+		   	<div class="col-sm-10">
+		      	<select  class="form-control"  id="status">
+			   			<option value="1">上架中</option>
+			   			<option value="0">已下架</option>
+			   		</select>
 		    </div>
 		</div>
 		<div class="form-group">

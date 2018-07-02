@@ -3,7 +3,7 @@ var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		title:"新增",
-		tFinance:{}
+		tFinance:{status:'1'}
 	},
 	created: function() {
 		if(id != null){
@@ -20,6 +20,7 @@ var vm = new Vue({
                 $("#timeDistance").val(json.tFinance.timeDistance);
                 $("#standard").val(json.tFinance.standard);
                 $("#financeId").val(json.tFinance.id);
+                $("#status").val(json.tFinance.status);
 				$("#icon").attr("href",json.tFinance.icon);
 				$("#icon").show();
             });
@@ -55,6 +56,12 @@ var vm = new Vue({
 					alert("请输入准入标准");
 					return;
 				}
+				vm.tFinance.name=$("#name").val();
+				vm.tFinance.lowRate=$("#lowRate").val();
+				vm.tFinance.lowRefund=$("#lowRefund").val();
+				vm.tFinance.timeDistance=$("#timeDistance").val();
+				vm.tFinance.standard=$("#standard").val();
+				vm.tFinance.status=$("#status").val();
 				formFile.append("uFile", fileObj); 
 				formFile.append("tFinance", JSON.stringify(vm.tFinance));
 				$.ajax({
@@ -100,6 +107,12 @@ var vm = new Vue({
 				}
 				formFile.append("uFile", fileObj); 
 				vm.tFinance.id=financeId;
+				vm.tFinance.name=$("#name").val();
+				vm.tFinance.lowRate=$("#lowRate").val();
+				vm.tFinance.lowRefund=$("#lowRefund").val();
+				vm.tFinance.timeDistance=$("#timeDistance").val();
+				vm.tFinance.standard=$("#standard").val();
+				vm.tFinance.status=$("#status").val();
 				formFile.append("tFinance", JSON.stringify(vm.tFinance));
 				$.ajax({
 					type: "POST",

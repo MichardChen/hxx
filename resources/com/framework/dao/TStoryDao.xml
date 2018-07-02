@@ -13,7 +13,7 @@
 		<if test="date != null and date != ''">
 			and create_time like "%${date}%"
 		</if>
-		order by update_time desc
+		order by flg desc,update_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -81,10 +81,8 @@
 			<if test="storyTitle != null">`story_title` = #{storyTitle}, </if>
 			<if test="content != null">`content` = #{content}, </if>
 			<if test="descUrl != null">`desc_url` = #{descUrl}, </if>
-			<if test="createBy != null">`create_by` = #{createBy}, </if>
 			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
-			<if test="updateTime != null">`update_time` = #{updateTime},</if>
-			<if test="flg != null">`flg` = #{flg}</if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
 		</set>
 		where id = #{id}
 	</update>

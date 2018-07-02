@@ -110,7 +110,7 @@ public class TQuestionController {
 			}else{
 				model.setEmployeeId(StringUtil.STRING_BLANK);
 			}
-			int userid = ShiroUtils.getUserId().intValue();
+			int userid = data.getUpdateBy();
 			SysUserEntity uadmin = userDao.queryObject(userid);
 			if(uadmin != null){
 				model.setUpdateBy(uadmin.getUsername());

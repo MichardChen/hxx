@@ -169,10 +169,15 @@ public class TBrandSeriesController {
 		int userid = ShiroUtils.getUserId().intValue();
 		JSONObject viewModel = JSONObject.parseObject(tBrandSeries);
 		
-		TBrandEntity brandEntity = brandService.queryObject(viewModel.getInteger("brandId"));
+		TBrandSeriesEntity brandSeriesEntity = tBrandSeriesService.queryObject(viewModel.getInteger("id"));
+		if(brandSeriesEntity == null){
+			return R.error("此车系不存在");
+		}
+		TBrandEntity brandEntity = brandService.queryObject(brandSeriesEntity.getBrandId());
 		if(brandEntity==null || brandEntity.getFlg()==0){
 			return R.error("此品牌已下架，不能添加车系");
 		}
+		
 		TBrandSeriesEntity seriesEntity = tBrandSeriesService.queryObjectByName(viewModel.getString("carSerial"));
 		if((seriesEntity != null)&&(seriesEntity.getId() != viewModel.getInteger("id"))){
 			return R.error("此车系已存在，不能重复添加");

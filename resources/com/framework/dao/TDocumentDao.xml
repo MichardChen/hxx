@@ -33,6 +33,14 @@
 			and create_time like "%${date}%"
 		</if>
 	</select>
+	<select id="queryDocumentCountByTypeCd" resultType="int">
+		select count(*) from t_document 
+		where type_cd=#{typeCd} and flg=1
+	</select>
+	<select id="queryDocumentCount" resultType="int">
+		select count(*) from t_document 
+		where type_cd=#{typeCd} and flg=1 and id !=#{documentId}
+	</select>
 	 
 	<insert id="save" parameterType="com.framework.entity.TDocumentEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into t_document
@@ -67,9 +75,7 @@
 			<if test="title != null">`title` = #{title}, </if>
 			<if test="content != null">`content` = #{content}, </if>
 			<if test="typeCd != null">`type_cd` = #{typeCd}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
-			<if test="flg != null">`flg` = #{flg}, </if>
 			<if test="descUrl != null">`desc_url` = #{descUrl}, </if>
 			<if test="createBy != null">`create_by` = #{createBy}, </if>
 			<if test="updateBy != null">`update_by` = #{updateBy}</if>

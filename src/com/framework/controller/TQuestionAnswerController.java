@@ -144,6 +144,10 @@ public class TQuestionAnswerController {
 	@RequestMapping("/update")
 	@RequiresPermissions("tquestionanswer:update")
 	public R update(@RequestBody TQuestionAnswerEntity tQuestionAnswer){
+		
+		int userid = ShiroUtils.getUserId().intValue();
+		tQuestionAnswer.setUpdateBy(userid);
+		tQuestionAnswer.setUpdateTime(DateUtil.getNowTimestamp());
 		tQuestionAnswerService.update(tQuestionAnswer);
 		
 		return R.ok();

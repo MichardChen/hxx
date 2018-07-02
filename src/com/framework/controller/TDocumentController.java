@@ -22,6 +22,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
 import com.framework.dao.SysUserDao;
 import com.framework.dao.TCodemstDao;
+import com.framework.dao.TDocumentDao;
 import com.framework.entity.SysUserEntity;
 import com.framework.entity.TCodemstEntity;
 import com.framework.entity.TDocumentEntity;
@@ -52,6 +53,8 @@ public class TDocumentController {
 	private SysUserDao userDao;
 	@Autowired
 	private TCodemstDao codeMstDao;
+	@Autowired
+	private TDocumentDao documentDao;
 	
 	@RequestMapping("/tdocument.html")
 	public String list(){
@@ -144,6 +147,10 @@ public class TDocumentController {
 		story.setTitle(viewModel.getString("title"));
 		story.setUpdateTime(DateUtil.getNowTimestamp());
 		story.setTypeCd(viewModel.getString("typeCd"));
+		int count = documentDao.queryDocumentCountByTypeCd(viewModel.getString("typeCd"));
+		if(count > 0){
+			return R.error("此文档已经添加，不能重复添加");
+		}
 		story.setFlg(1);
 		String htmlContent = StringUtil.formatHTML(viewModel.getString("title"), viewModel.getString("content"));
 		story.setContent(htmlContent);
@@ -179,7 +186,12 @@ public class TDocumentController {
 		story.setTitle(viewModel.getString("title"));
 		story.setUpdateTime(DateUtil.getNowTimestamp());
 		story.setTypeCd(viewModel.getString("typeCd"));
-		story.setFlg(1);
+		
+		int count = documentDao.queryDocumentCount(viewModel.getString("typeCd"),viewModel.getInteger("id"));
+		if(count > 0){
+			return R.error("此文档已经添加，不能重复添加");
+		}
+		
 		story.setId(viewModel.getInteger("id"));
 		String htmlContent = StringUtil.formatHTML(viewModel.getString("title"), viewModel.getString("content"));
 		story.setContent(htmlContent);
@@ -208,6 +220,7 @@ public class TDocumentController {
 	@RequestMapping("/delete")
 	@RequiresPermissions("tdocument:delete")
 	public R delete(@RequestBody Integer[] ids){
+		
 		tDocumentService.deleteBatch(ids);
 		
 		return R.ok();

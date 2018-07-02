@@ -81,6 +81,12 @@ public class TFinanceController {
 			m.setLowRate(entity.getLowRate());
 			m.setLowRefund(entity.getLowRefund());
 			m.setName(entity.getName());
+			if(StringUtil.equals(entity.getStatus(), "1")){
+				entity.setStatus("上架中");
+			}else{
+				entity.setStatus("已下架");
+			}
+			m.setStatus(entity.getStatus());
 			m.setStandard(entity.getStandard());
 			SysUserEntity admin = userDao.queryObject(entity.getCreateBy());
 			if(admin != null){
@@ -115,6 +121,7 @@ public class TFinanceController {
 			model.setName(tFinance.getName());
 			model.setStandard(tFinance.getStandard());
 			model.setTimeDistance(tFinance.getTimeDistance());
+			model.setStatus(tFinance.getStatus());
 		}
 		return R.ok().put("tFinance", model);
 	}
@@ -140,6 +147,7 @@ public class TFinanceController {
 		story.setStandard(viewModel.getString("standard"));
 		story.setTimeDistance(viewModel.getString("timeDistance"));
 		story.setTitle(viewModel.getString("title"));
+		story.setStatus(viewModel.getString("status"));
 		//生成html
 		FileService fs=new FileService();
 		
@@ -171,6 +179,7 @@ public class TFinanceController {
 		story.setTimeDistance(viewModel.getString("timeDistance"));
 		story.setTitle(viewModel.getString("title"));
 		story.setId(viewModel.getInteger("id"));
+		story.setStatus(viewModel.getString("status"));
 		//生成html
 		FileService fs=new FileService();
 		

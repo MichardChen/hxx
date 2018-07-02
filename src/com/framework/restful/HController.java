@@ -990,7 +990,7 @@ public class HController extends RestfulController{
 		if(level != null){
 			model.setCartType(level.getName());
 		}
-		model.setDescUrl(car.getDescUrl());
+		model.setDescUrl(StringUtil.cutBodyHeader(car.getContent()));
 		TCartParamsEntity params = paramsService.queryObjectByCartId(car.getId(),Constants.CAR_SALE_TYPE.IMPORT);
 		
 		if(params != null){
@@ -1072,7 +1072,7 @@ public class HController extends RestfulController{
 		model.setFirstPayment(StringUtil.formatCarPrice(car.getFinalPayment(),0));
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
 		model.setContainTaxPrice(StringUtil.formatCarPrice(car.getCarTaxCost(), 0));
-		model.setDescUrl(car.getDescUrl());
+		model.setDescUrl(StringUtil.cutBodyHeader(car.getContent()));
 		model.setYear(DateUtil.formatCNYM(car.getYear()));
 		model.setKilomiter(StringUtil.formatCarPrice(car.getKilomiters(), 0)+"公里");
 		LocationCityEntity city = cityDao.queryObject(car.getCityId());
@@ -1188,7 +1188,7 @@ public class HController extends RestfulController{
 				
 		model.setLabels(car.getLabels());
 		
-		model.setDescUrl(car.getDescUrl());
+		model.setDescUrl(StringUtil.cutBodyHeader(car.getContent()));
 		
 		TCartParamsEntity params = paramsService.queryObjectByCartId(car.getId(),Constants.CAR_SALE_TYPE.LEASE);
 		

@@ -48,7 +48,8 @@ var vm = new Vue({
 				    data: formFile,
 				    processData: false,
 				    contentType: false,
-				    success: function(rr){
+				    success: function(json){
+				    	var rr = eval('('+json+')');
 				    	if(rr.code === 0){
 							alert('操作成功', function(index){
 								vm.back();
@@ -61,6 +62,8 @@ var vm = new Vue({
 			}else{
 				var url = "../tdocument/update";
 				vm.tDocument.id=documentId;
+				 vm.tDocument.title=$("#title").val();
+				 vm.tDocument.typeCd=$("#typeCd").val();
 				vm.tDocument.content = $("#content").summernote('code');
 				var formFile = new FormData();
 				formFile.append("tDocument", JSON.stringify(vm.tDocument));
@@ -70,7 +73,8 @@ var vm = new Vue({
 				    data: formFile,
 				    processData: false,
 				    contentType: false,
-				    success: function(r){
+				    success: function(json){
+				    	var r = eval('('+json+')');
 				    	if(r.code === 0){
 							alert('操作成功', function(index){
 								vm.back();
