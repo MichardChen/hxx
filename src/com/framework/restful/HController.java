@@ -1258,9 +1258,9 @@ public class HController extends RestfulController{
 		ParamsDTO dto = ParamsDTO.getInstance(request);
 		ReturnData data = new ReturnData();
 		JSONObject json = new JSONObject();
-		json.put("address", "厦门市翔安区马巷巷西路888号");
+		json.put("address", "厦门市翔安区马巷镇巷西路611号");
 		json.put("emailCode", "3610000");
-		json.put("phone", "0592-2688966");
+		json.put("phone", "0592-6597999");
 		json.put("longtitude", "118.24338197705003");
 		json.put("latitude", "24.674669004378305");
 		json.put("companyName", "惠搜车总部（厦门）");
@@ -1299,6 +1299,16 @@ public class HController extends RestfulController{
 			map.setNonceStr(map1.get("nonceStr"));
 			map.setTimestamp(map1.get("timestamp"));
 			map.setSignature(map1.get("signature"));
+			map.setAddress("厦门市翔安区马巷镇巷西路611号");
+			map.setCompanyName("厦门永翔群汽车贸易有限公司");
+			map.setEmailCode("3610000");
+			map.setPhone("0592-6597999");
+			TCarouselEntity serviceImg = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.PC_AFTER_SALE);
+			if(serviceImg != null) {
+				map.setCustomerServiceImg(serviceImg.getImgUrl());
+			}else {
+				map.setCustomerServiceImg("");
+			}
 			json.put("mapInfo", map);
 			data.setData(json);
 			data.setCode(Constants.STATUS_CODE.SUCCESS);

@@ -8,6 +8,42 @@ public class MapWxData implements Serializable{
 	private String timestamp;
 	private String nonceStr;
 	private String signature;
+	private String address;
+	private String emailCode;
+	private String phone;
+	private String companyName;
+	private String customerServiceImg;
+	
+	public String getCustomerServiceImg() {
+		return customerServiceImg;
+	}
+	public void setCustomerServiceImg(String customerServiceImg) {
+		this.customerServiceImg = customerServiceImg;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public String getEmailCode() {
+		return emailCode;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public void setEmailCode(String emailCode) {
+		this.emailCode = emailCode;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
 	public String getAppId() {
 		return appId;
 	}

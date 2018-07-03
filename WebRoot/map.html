@@ -1,32 +1,54 @@
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width,initial-scale=1,user-scalable=0">
-<title></title>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no"> 
+<title>惠车邦</title>
 <link rel="stylesheet"
 	href="https://cdn.bootcss.com/weui/1.1.2/style/weui.css" />
 <!--这是WEUI样式库文件自行官网下载使用-->
 <!--这是WEUI样式库文件自行官网下载使用-->
 <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<style>
+	#container {width:100%; height: 180px; }  
+	#txt-color{color: #333333;font-size: 26px;}
+</style>
 <!--调用jQuery-->
 </head>
 <body>
-	<div class="bd">
+	<div class="bd" style="margin-top: 23px;margin-left: 10px;margin-right: 10px;">
 		<div class="weui_cells">
 			<div class="weui_cell_bd weui_cell_primary">
-				<span id="locationText"></span>
+				<div id="companyName" class="txt-color"></div>
+				<div id="locationText" class="txt-color"></div>
+				<div id="emailCode" class="txt-color"></div>
+				<div id="phone" class="txt-color"></div>
 			</div>
-			<div class="weui_cell">
-				<button class="weui_btn weui_btn_primary" id="openLocationId">openLocation</button>
-			</div>
+			<div id="container"></div> 
 		</div>
+		<img alt="售后服务" id="serviceImg" width="100%">
 	</div>
 </body>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.7&key=39c9da3c4cfe10940be1b7bab3a845c5"></script> 
 <!--调用JSSDK-->
 <script>
 	window.onload = function() {
+		var map = new AMap.Map('container', {
+		       center:[118.24338197705003,24.674669004378305],
+		       zoom:11
+		    });
+		
+		var marker = new AMap.Marker({
+		    position: new AMap.LngLat(118.24338197705003,24.674669004378305),
+		    title: '厦门永翔群汽车贸易有限公司',
+		    icon: new AMap.Icon({  //复杂图标
+	            size: new AMap.Size(27, 36),//图标大小
+	            image: "http://webapi.amap.com/images/custom_a_j.png", //大图地址
+	            imageOffset: new AMap.Pixel(-28, 0)//相对于大图的取图位置
+	        })
+		});
+		marker.on('click',onMarkerClick);
+		map.add(marker);
 		$.ajax({
 			url :   "http://www.yibuwangluo.cn/framework/hrest/getData1",
 			type : "get",
@@ -35,14 +57,23 @@
 			data : {},
 			success : function(data) {
 				if (data.code == "5600") {
-					alert(data.data.mapInfo.timestamp);
 					var timestamp = data.data.mapInfo.timestamp;
 					var appId = data.data.mapInfo.appId;
 					var nonceStr = data.data.mapInfo.nonceStr;
 					var signature = data.data.mapInfo.signature;
+					var address = data.data.mapInfo.address;
+					var emailCode = data.data.mapInfo.emailCode;
+					var phone = data.data.mapInfo.phone;
+					var companyName = data.data.mapInfo.companyName;
+					$("#locationText").text("地址："+address);
+					$("#emailCode").text("邮编："+emailCode);
+					$("#phone").text("电话："+phone);
+					$("#companyName").text(companyName);
+					var customerServiceImg = data.data.mapInfo.customerServiceImg;
+					$("#serviceImg").attr("src",customerServiceImg);
 					//JSSDK配置参数 通过config接口注入权限验证配置
 					wx.config({
-						debug : true,
+						debug : false,
 						appId : appId,
 						timestamp : timestamp,
 						nonceStr : nonceStr,
@@ -62,6 +93,7 @@
 								'chooseWXPay', 'openProductSpecificView',
 								'addCard', 'chooseCard', 'openCard' ]
 					});
+					
 				}
 			},
 			error : function(msg) {
@@ -72,10 +104,10 @@
 
 	function getData() {
 		wx.openLocation({
-			latitude : 39.914139,
-			longitude : 116.466881,
-			name : "国贸", //要写引号
-			address : "北京市朝阳区建国门外大街国贸桥", //要写引号
+			latitude : 24.674669004378305,
+			longitude : 118.24338197705003,
+			name : "厦门永翔群汽车贸易有限公司", //要写引号
+			address : "厦门市翔安区马巷镇巷西路611号", //要写引号
 			scale : 15,
 			infoUrl : "http://www.baidu.com" //要写引号
 		}); 
@@ -86,12 +118,9 @@
 		//getData();
 	});
 
-
-
-	document.querySelector('#openLocationId').onclick = function() {
-		getData();
-	};
-	
+	 var onMarkerClick  =  function(e) {
+		 getData();
+	 } 
 	wx.error(function(res) {
 		//alert(res.errMsg);
 	});
