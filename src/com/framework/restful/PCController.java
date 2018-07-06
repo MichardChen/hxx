@@ -244,7 +244,7 @@ public class PCController extends RestfulController{
 			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
 			lcm.setBrand(brandEntity.getBrand()+seriesEntity.getCarSerial());
 			lcm.setName(e.getCarName());
-			lcm.setLabel(e.getTitleLabel());
+			lcm.setLabel(e.getLabels());
 			leaseList.add(lcm);
 		}
 		
@@ -271,10 +271,9 @@ public class PCController extends RestfulController{
 			scl = new SecondHandCarListModel();
 			scl.setIcon(e.getIcon());
 			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
-			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
-			scl.setBrand(brandEntity.getBrand()+seriesEntity.getCarSerial());
+			scl.setBrand(seriesEntity.getCarSerial());
 			scl.setName(e.getCarName());
-			scl.setKilometers(StringUtil.toString(e.getKilomiters()));
+			scl.setKilometers(StringUtil.formatCarPrice(e.getKilomiters(),0)+"公里");
 			scl.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
 			scl.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(),0));
 			scl.setId(e.getId());
@@ -378,17 +377,17 @@ public class PCController extends RestfulController{
 			model.setName(e.getCarName());
 			model.setTitleLabel(e.getTitleLabel());
 			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
+			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
+			if(brandEntity != null){
+				model.setBrand(brandEntity.getBrand());
+			}else{
+				model.setBrand("");
+			}
 			if(seriesEntity != null) {
-				TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
-				if(brandEntity != null){
-					model.setBrandSeries(brandEntity.getBrand()+" "+seriesEntity.getCarSerial());
-				}else{
-					model.setBrandSeries(seriesEntity.getCarSerial());
-				}
+				model.setBrandSeries(seriesEntity.getCarSerial());
 			}else {
 				model.setBrandSeries("");
 			}
-			
 			pcListModels.add(model);
 		}
 		//查询结果集总条数
@@ -438,13 +437,14 @@ public class PCController extends RestfulController{
 			model.setKilomiters(StringUtil.toMoneyString(e.getKilomiters())+"公里");
 			model.setDate(DateUtil.formatCNYM(e.getCreateTime()));
 			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
+			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
+			if(brandEntity != null){
+				model.setBrand(brandEntity.getBrand());
+			}else{
+				model.setBrand("");
+			}
 			if(seriesEntity != null) {
-				TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
-				if(brandEntity != null){
-					model.setBrandSeries(brandEntity.getBrand()+" "+seriesEntity.getCarSerial());
-				}else{
-					model.setBrandSeries(seriesEntity.getCarSerial());
-				}
+				model.setBrandSeries(seriesEntity.getCarSerial());
 			}else {
 				model.setBrandSeries("");
 			}
@@ -503,8 +503,6 @@ public class PCController extends RestfulController{
 				model.setBrandSeries("");
 				model.setName(e.getCarName());
 			}
-			
-			
 			
 			pcListModels.add(model);
 		}

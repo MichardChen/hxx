@@ -7,12 +7,21 @@ public class SecondhandCarPCListModel implements Serializable{
 	private int id;
 	private String icon;
 	private String brandSeries;
+	private String brand;
 	private String name;
 	private String labels;
 	private String firstPayment;
 	private String monthPayment;
 	private String kilomiters;
 	private String date;
+	
+	
+	public String getBrand() {
+		return brand;
+	}
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
 	public int getId() {
 		return id;
 	}

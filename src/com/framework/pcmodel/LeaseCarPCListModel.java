@@ -12,6 +12,14 @@ public class LeaseCarPCListModel implements Serializable{
 	private String labels;
 	private String firstPayment;
 	private String monthPayment;
+	private String brand;
+	
+	public String getBrand() {
+		return brand;
+	}
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
 	public int getId() {
 		return id;
 	}
