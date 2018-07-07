@@ -14,8 +14,16 @@ public class SecondhandCarPCListModel implements Serializable{
 	private String monthPayment;
 	private String kilomiters;
 	private String date;
+	private String city;
 	
 	
+	
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
 	public String getBrand() {
 		return brand;
 	}

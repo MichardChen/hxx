@@ -135,6 +135,9 @@
 		<if test="toAge != null">
 			and age&lt;=#{toAge}
 		</if>
+		<if test="carLevelCd != null and carLevelCd != ''">
+			and car_level_cd=#{carLevelCd}
+		</if>
 	</select>
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_car_secondhand 

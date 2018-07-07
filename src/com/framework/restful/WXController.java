@@ -449,7 +449,7 @@ public class WXController extends RestfulController {
 		saleCartService.save(entity);
 		data.setData(json);
 		data.setCode(Constants.STATUS_CODE.SUCCESS);
-		data.setMessage("提交成功");
+		data.setMessage("提交成功,我们会尽快联系您");
 		renderJson(data, response);
 	}
 
@@ -572,16 +572,16 @@ public class WXController extends RestfulController {
 						DateUtil.getNowTimestamp());
 				if (updateRet != 0) {
 					data.setCode(Constants.STATUS_CODE.SUCCESS);
-					data.setMessage("提交成功");
+					data.setMessage("提交成功,我们会尽快处理您的反馈");
 					renderJson(data, response);
 				} else {
 					data.setCode(Constants.STATUS_CODE.FAIL);
-					data.setMessage("提交失败");
+					data.setMessage("提交失败,请重新提交");
 					renderJson(data, response);
 				}
 			} else {
 				data.setCode(Constants.STATUS_CODE.FAIL);
-				data.setMessage("提交失败");
+				data.setMessage("提交失败,请重新提交");
 				renderJson(data, response);
 			}
 			return;
@@ -850,12 +850,12 @@ public class WXController extends RestfulController {
 			//更新验证码过期
 			vertifyCodeService.updateExpireCode(vCode.getId(), DateUtil.getNowTimestamp());
 			data.setCode(Constants.STATUS_CODE.SUCCESS);
-			data.setMessage("提交成功");
+			data.setMessage("提交成功,我们会尽快联系您");
 			renderJson(data, response);
 			return;
 		}else{
 			data.setCode(Constants.STATUS_CODE.FAIL);
-			data.setMessage("提交失败");
+			data.setMessage("提交失败,请重新提交");
 			renderJson(data, response);
 			return;
 		}
@@ -886,12 +886,12 @@ public class WXController extends RestfulController {
 		ReturnData data = new ReturnData();
 		if(ret != 0){
 			data.setCode(Constants.STATUS_CODE.SUCCESS);
-			data.setMessage("提交成功");
+			data.setMessage("提交成功,我们会尽快处理您的申请");
 			renderJson(data, response);
 			return;
 		}else{
 			data.setCode(Constants.STATUS_CODE.FAIL);
-			data.setMessage("提交失败");
+			data.setMessage("提交失败,请重新提交");
 			renderJson(data, response);
 			return;
 		}
