@@ -21,6 +21,7 @@ public class ParamsDTO implements Serializable {
 	private String code;
 	private int brandSeriesId;
 	private int financeId;
+	private int key;
 
 	private int brandId;
 	private BigDecimal fromFirstPayment;
@@ -88,11 +89,25 @@ public class ParamsDTO implements Serializable {
 		dto.setTypeCd(request.getParameter("typeCd"));
 		dto.setBrand(request.getParameter("brand"));
 		dto.setCartFlg(StringUtil.toInteger(request.getParameter("cartFlg")));
+		dto.setKey(StringUtil.toInteger(request.getParameter("key")));
 		return dto;
 	}
 	
-	
-	
+	public int getKey() {
+		return key;
+	}
+
+
+
+
+
+
+	public void setKey(int key) {
+		this.key = key;
+	}
+
+
+
 
 
 
