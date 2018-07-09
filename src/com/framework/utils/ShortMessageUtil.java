@@ -48,7 +48,7 @@ public class ShortMessageUtil {
 		        new NameValuePair("random", random),
 		        new NameValuePair("mobile", mobile),
 				new NameValuePair("content", content),
-				new NameValuePair("sign", "【惠搜车】")
+				new NameValuePair("sign", "【惠搜车超市】")
 				
 		};
 		postMethod.setRequestBody(data);

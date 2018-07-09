@@ -772,6 +772,9 @@ public class PCController extends RestfulController{
 		entity.setUpdateBy(0);
 		entity.setStatus(Constants.FEEDBACK_STATUS.STAY_HANDLE);
 		entity.setTypeCd(Constants.QUESTION_TYPE.PC);
+		entity.setCartflg(0);
+		entity.setCartId(0);
+		entity.setEmployeeId(0);
 		
 		int ret = qService.save(entity);
 		ReturnData data = new ReturnData();
@@ -934,6 +937,8 @@ public class PCController extends RestfulController{
 		model.setMarketPrice(StringUtil.formatCarPrice(car.getMarketPrice(), 0));
 		model.setMaxSavePrice(StringUtil.formatCarPrice(car.getMaxSave(), 0));
 		TCodemstEntity mst = codeMstDao.queryByCode(car.getCarClassCd());
+		model.setHot(StringUtil.toString(car.getHot()));
+		importService.updateHot(dto.getCartId());
 		if(mst != null){
 			model.setClassType(mst.getName());
 		}
@@ -954,6 +959,8 @@ public class PCController extends RestfulController{
 			model.setBiansuxiangtype(params.getBiansuxiangtype());
 			model.setRanliaotype(params.getRanliaotype());
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
+			model.setPailiang(params.getPailiang()+"ml");
+			model.setGongyoutype(params.getGongyoutype());
 		}
 		//获取常见问题图片
 		TCarouselEntity oftenQuestionUrl = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.PC_IMPORT_CAR_OFTENQUESTION);
@@ -1067,6 +1074,8 @@ public class PCController extends RestfulController{
 			model.setBiansuxiangtype(params.getBiansuxiangtype());
 			model.setRanliaotype(params.getRanliaotype());
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
+			model.setPailiang(params.getPailiang()+"ml");
+			model.setGongyoutype(params.getGongyoutype());
 		}
 		//获取购买说明
 		TCarouselEntity buyMark = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.PC_SECONDHAND_CAR_BUYMARK);
@@ -1178,6 +1187,8 @@ public class PCController extends RestfulController{
 			model.setBiansuxiangtype(params.getBiansuxiangtype());
 			model.setRanliaotype(params.getRanliaotype());
 			model.setZhuchezhidongtype(params.getZhuchezhidongtype());
+			model.setPailiang(params.getPailiang()+"ml");
+			model.setGongyoutype(params.getGongyoutype());
 		}
 		//获取购买说明
 		TCarouselEntity buyMark = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.PC_LEASE_CAR_BUYMARK);

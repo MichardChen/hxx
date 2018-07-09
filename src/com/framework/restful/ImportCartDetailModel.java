@@ -29,7 +29,21 @@ public class ImportCartDetailModel implements Serializable{
 	private String companyMobile;
 	private String pailiang;
 	private String favourMoney;
+	private String hot;
+	private String gongyoutype;
 	
+	public String getGongyoutype() {
+		return gongyoutype;
+	}
+	public void setGongyoutype(String gongyoutype) {
+		this.gongyoutype = gongyoutype;
+	}
+	public String getHot() {
+		return hot;
+	}
+	public void setHot(String hot) {
+		this.hot = hot;
+	}
 	public String getFavourMoney() {
 		return favourMoney;
 	}

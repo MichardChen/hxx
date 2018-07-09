@@ -31,9 +31,23 @@ public class SecondhandCarPCDetailModel implements Serializable{
 	private String descUrl;
 	private String companyMobile;
 	private String periods;
+	private String gongyoutype;
+	private String pailiang;
 	
 	
 	
+	public String getGongyoutype() {
+		return gongyoutype;
+	}
+	public String getPailiang() {
+		return pailiang;
+	}
+	public void setGongyoutype(String gongyoutype) {
+		this.gongyoutype = gongyoutype;
+	}
+	public void setPailiang(String pailiang) {
+		this.pailiang = pailiang;
+	}
 	public String getPeriods() {
 		return periods;
 	}

@@ -53,7 +53,16 @@ public class LeaseCarDetailModel implements Serializable{
 	private String descUrl;
 	private String companyMobile;
 	private String salecount;
+	private String gongyoutype;
 	
+	
+	
+	public String getGongyoutype() {
+		return gongyoutype;
+	}
+	public void setGongyoutype(String gongyoutype) {
+		this.gongyoutype = gongyoutype;
+	}
 	public String getPailiang() {
 		return pailiang;
 	}
