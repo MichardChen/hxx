@@ -1096,9 +1096,9 @@ public class PCController extends RestfulController{
 			model.setBuyKnowUrl(buyKnow.getImgUrl());
 		}
 		//客服电话
-		TCarouselEntity kefuTel = carouselService.queryByTypeCd(Constants.TEL_TYPE.KEFU);
+		TCodemstEntity kefuTel = codeMstDao.queryByCode(Constants.TEL_TYPE.KEFU);
 		if(kefuTel != null){
-			model.setCompanyMobile(kefuTel.getImgUrl());
+			model.setCompanyMobile(kefuTel.getData2());
 		}
 		
 		TCartParamsEntity params1 = paramsService.queryObjectByCartId(dto.getCartId(),Constants.CAR_SALE_TYPE.SECONDHAND);
