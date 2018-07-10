@@ -188,6 +188,7 @@ public class PCController extends RestfulController{
 		Map<String, Object> carListMap = new HashMap<>();
 		carListMap.put("offset", 0);
 		carListMap.put("limit", 6);
+		carListMap.put("flg", 1);
 		
 		//车主故事
 		List<TStoryEntity> stList = storyService.queryListData(carListMap);
@@ -220,6 +221,7 @@ public class PCController extends RestfulController{
 		Map<String, Object> listMap = new HashMap<>();
 		listMap.put("offset", 0);
 		listMap.put("limit", 8);
+		listMap.put("flg", 1);
 		
 		List<TCarLeaseEntity> clList = leaseService.queryList(listMap);
 		List<TCarImportEntity> ciList = importService.queryList(listMap);
@@ -372,6 +374,7 @@ public class PCController extends RestfulController{
 		map.put("fromCarCost", dto.getFromCarCost());
 		map.put("toCarCost", dto.getToCarCost());
 		map.put("carLevelCd", dto.getCarLevelCd());
+		map.put("flg", 1);
 		List<TCarLeaseEntity> list = leaseService.queryPCTerminalList(map);
 		List<LeaseCarPCListModel> pcListModels = new ArrayList<>();
 		LeaseCarPCListModel model = null;
@@ -436,6 +439,7 @@ public class PCController extends RestfulController{
 		map.put("toAge", dto.getToAge());
 		map.put("fromKilomiter", dto.getFromKilomiter());
 		map.put("toKilomiter", dto.getToKilomiter());
+		map.put("flg", 1);
 		List<TCarSecondhandEntity> list = secondService.queryPCTerminalList(map);
 		List<SecondhandCarPCListModel> pcListModels = new ArrayList<>();
 		SecondhandCarPCListModel model = null;
@@ -500,6 +504,7 @@ public class PCController extends RestfulController{
 		map.put("toPrice", dto.getToPrice());
 		map.put("carClassCd", dto.getCarClassCd());
 		map.put("carLevelCd", dto.getCarLevelCd());
+		map.put("flg", 1);
 		List<TCarImportEntity> list = importService.queryPCTerminalList(map);
 		List<ImportCarPCListModel> pcListModels = new ArrayList<>();
 		ImportCarPCListModel model = null;
@@ -585,6 +590,7 @@ public class PCController extends RestfulController{
 		Map<String, Object> carListMap = new HashMap<>();
 		carListMap.put("offset", dto.getPageSize() * (dto.getPageNum() - 1));
 		carListMap.put("limit", dto.getPageSize());
+		carListMap.put("flg", 1);
 
 		List<TStoryEntity> stList = storyService.queryListData(carListMap);
 		List<NewPCListModel> storyList = new ArrayList<>();
@@ -617,6 +623,7 @@ public class PCController extends RestfulController{
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", dto.getPageSize() * (dto.getPageNum() - 1));
 		map.put("limit", dto.getPageSize());
+		map.put("status", 1);
 
 		List<TFinanceEntity> stList = financeService.queryList(map);
 		List<FinancePCListModel> models = new ArrayList<>();
@@ -738,6 +745,7 @@ public class PCController extends RestfulController{
 		JSONObject json = new JSONObject();
 		Map<String, Object> map = new HashMap<>();
 		map.put("typeCd", dto.getTypeCd());
+		map.put("flg", 1);
 
 		List<TQuestionAnswerEntity> stList = qanswerService.queryQAList(map);
 		List<PCQuestionAnswerListModel> models = new ArrayList<>();

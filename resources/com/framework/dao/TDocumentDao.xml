@@ -19,7 +19,7 @@
 		</if>
 	</select>
 	<select id="queryDocumentByTypeCd" resultType="com.framework.entity.TDocumentEntity">
-		select * from t_document where type_cd in
+		select * from t_document where flg=1 and type_cd in
 		<foreach item="code" collection="array" open="(" separator="," close=")">
 			#{code}
 		</foreach>

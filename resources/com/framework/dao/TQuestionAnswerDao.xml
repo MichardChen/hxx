@@ -13,6 +13,9 @@
 		<if test="date != null and date != ''">
 			and create_time like "%${date}%"
 		</if>
+		<if test="flg != null and flg != ''">
+			and flg=#{flg}
+		</if>
 		order by flg desc,update_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
@@ -23,6 +26,9 @@
 		select * from t_question_answer where 1=1 and flg=1
 		<if test="typeCd != null and typeCd != ''">
 			and type_cd=#{typeCd}
+		</if>
+		<if test="flg != null and flg != ''">
+			and flg=#{flg}
 		</if>
 	</select>
 	
@@ -37,6 +43,9 @@
 		select count(*) from t_question_answer where 1=1 and flg=1
 		<if test="typeCd != null and typeCd != ''">
 			and type_cd=#{typeCd}
+		</if>
+		<if test="flg != null and flg != ''">
+			and flg=#{flg}
 		</if>
 	</select>
 	 

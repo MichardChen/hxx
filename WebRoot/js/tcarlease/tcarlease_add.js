@@ -53,6 +53,7 @@ var vm = new Vue({
 				$("#pcIcon").show();
 				$("#content").summernote('code', r.tCarLease.content);
 				$("#salecount").val(r.tCarLease.salecount);
+				$("#flg").val(r.tCarLease.flg);
 				
 				$.get("../tbrandseries/queryBrandSeries/"+r.tCarLease.brand, function(rr){
 		            var dr =eval('('+rr+')');

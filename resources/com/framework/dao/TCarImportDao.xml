@@ -16,6 +16,9 @@
 		<if test="queryBrand != null and queryBrand != 0">
 			and brand=#{queryBrand}
 		</if>
+		<if test="flg != null">
+			and flg=#{flg}
+		</if>
 		order by flg desc,update_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
@@ -25,6 +28,9 @@
 		select * from t_car_import where 1=1
 		<if test="brandId != null and brandId != 0">
 			and brand=#{brandId}
+		</if>
+		<if test="flg != null and flg != ''">
+			and flg=#{flg}
 		</if>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
@@ -48,6 +54,9 @@
 		<if test="toPrice != null">
 			and now_price&lt;=#{toPrice}
 		</if>
+		<if test="flg != null and flg != ''">
+			and flg=#{flg}
+		</if>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -68,6 +77,9 @@
 		</if>
 		<if test="toPrice != null">
 			and now_price&lt;=#{toPrice}
+		</if>
+		<if test="flg != null and flg != ''">
+			and flg=#{flg}
 		</if>
 	</select>
  	<select id="queryTotal" resultType="int">

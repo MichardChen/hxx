@@ -186,6 +186,7 @@ public class WXController extends RestfulController {
 		Map<String, Object> carListMap = new HashMap<>();
 		carListMap.put("offset", 0);
 		carListMap.put("limit", 6);
+		carListMap.put("flg", 1);
 
 		List<TCarLeaseEntity> clList = leaseService.queryList(carListMap);
 		List<TCarImportEntity> ciList = importService.queryList(carListMap);
@@ -410,6 +411,7 @@ public class WXController extends RestfulController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", dto.getPageSize() * (dto.getPageNum() - 1));
 		map.put("limit", dto.getPageSize());
+		map.put("status", 1);
 
 		List<TFinanceEntity> stList = financeService.queryList(map);
 		List<FinanceListModel> models = new ArrayList<>();
@@ -610,6 +612,7 @@ public class WXController extends RestfulController {
 		map.put("fromCarCost", dto.getFromCarCost());
 		map.put("toCarCost", dto.getToCarCost());
 		map.put("carLevelCd", dto.getCarLevelCd());
+		map.put("flg", 1);
 
 		List<TCarLeaseEntity> stList = leaseService.queryMobileTerminalList(map);
 		List<ListModelLeaseCar> models = new ArrayList<>();
@@ -661,6 +664,7 @@ public class WXController extends RestfulController {
 		map.put("fromCarCost", dto.getFromCarCost());
 		map.put("toCarCost", dto.getToCarCost());
 		map.put("carLevelCd", dto.getCarLevelCd());
+		map.put("flg", 1);
 
 		List<TCarSecondhandEntity> stList = secondService.queryMobileTerminalList(map);
 		List<ListModelSecondhandCar> models = new ArrayList<>();
@@ -712,6 +716,7 @@ public class WXController extends RestfulController {
 		map.put("offset", dto.getPageSize() * (dto.getPageNum() - 1));
 		map.put("limit", dto.getPageSize());
 		map.put("brandId", dto.getBrandId());
+		map.put("flg", 1);
 
 		List<TCarImportEntity> stList = importService.queryImportCartList(map);
 		List<ListModelImportCar> models = new ArrayList<>();

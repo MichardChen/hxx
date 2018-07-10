@@ -52,7 +52,7 @@ public class ImageZipUtil  {
             JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
             JPEGEncodeParam jep = JPEGCodec.getDefaultJPEGEncodeParam(tag);
             /** 压缩质量 */
-            jep.setQuality(quality, true);
+            jep.setQuality(quality, false);
             encoder.encode(tag, jep);
             out.close();
 
@@ -116,7 +116,7 @@ public class ImageZipUtil  {
             JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
             JPEGEncodeParam jep = JPEGCodec.getDefaultJPEGEncodeParam(tag);
             /** 压缩质量 */
-            jep.setQuality(quality, true);
+            jep.setQuality(quality, false);
             encoder.encode(tag, jep);
             out.close();
         } catch (FileNotFoundException e) {

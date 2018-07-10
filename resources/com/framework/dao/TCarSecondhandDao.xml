@@ -16,6 +16,9 @@
 		<if test="queryBrand != null and queryBrand != 0">
 			and brand=#{queryBrand}
 		</if>
+		<if test="flg != null">
+			and flg=#{flg}
+		</if>
 		order by flg desc,update_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
@@ -46,6 +49,9 @@
 		</if>
 		<if test="carLevelCd != null and carLevelCd != ''">
 			and car_level_cd=#{carLevelCd}
+		</if>
+		<if test="flg != null and flg != ''">
+			and flg=#{flg}
 		</if>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
@@ -93,6 +99,9 @@
 		<if test="carLevelCd != null and carLevelCd != ''">
 			and car_level_cd=#{carLevelCd}
 		</if>
+		<if test="flg != null and flg != ''">
+			and flg=#{flg}
+		</if>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -137,6 +146,9 @@
 		</if>
 		<if test="carLevelCd != null and carLevelCd != ''">
 			and car_level_cd=#{carLevelCd}
+		</if>
+		<if test="flg != null and flg != ''">
+			and flg=#{flg}
 		</if>
 	</select>
  	<select id="queryTotal" resultType="int">
