@@ -374,6 +374,7 @@ public class PCController extends RestfulController{
 		map.put("fromCarCost", dto.getFromCarCost());
 		map.put("toCarCost", dto.getToCarCost());
 		map.put("carLevelCd", dto.getCarLevelCd());
+		System.out.println(dto.getFromCarCost()+"="+dto.getToCarCost());
 		map.put("flg", 1);
 		List<TCarLeaseEntity> list = leaseService.queryPCTerminalList(map);
 		List<LeaseCarPCListModel> pcListModels = new ArrayList<>();
