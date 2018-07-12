@@ -135,15 +135,12 @@ public interface Constants {
 		public static final String COMMON = "http://192.168.1.91:82/common/";
 	}*/
 
+	//测试服务器地址
+	/**
 	public static interface HOST {
-		public static final String LOCALHOST = "http://www.yibuwangluo.cn:88/newsimages/";
-		public static final String TEA = "http://www.yibuwangluo.cn:88/tea/";
 		public static final String DOCUMENT = "http://www.yibuwangluo.cn:88/document/";
-		public static final String FILE = "http://www.yibuwangluo.cn:88/file/";
-		public static final String ICON = "http://www.yibuwangluo.cn:88/icon/";
 		public static final String IMG = "http://www.yibuwangluo.cn:88/img/";
-		public static final String STORE = "http://www.yibuwangluo.cn:88/store/";
-		public static final String COMMON = "http://www.yibuwangluo.cn:88/common/";
+		public static final String MAP_URL = "http://www.yibuwangluo.cn/framework/map.html";
 	}
 	
 	public static interface HTTPS_HOST {
@@ -151,14 +148,7 @@ public interface Constants {
 	}
 
 	public static interface HTTP_HOST {
-		public static final String LOCALHOST = "http://www.yibuwangluo.cn:88/newsimages/";
-		public static final String TEA = "http://www.yibuwangluo.cn:88/tea/";
 		public static final String DOCUMENT = "http://www.yibuwangluo.cn:88/document/";
-		public static final String FILE = "http://www.yibuwangluo.cn:88/file/";
-		public static final String ICON = "http://www.yibuwangluo.cn:88/icon/";
-		public static final String IMG = "http://www.yibuwangluo.cn:88/img/";
-		public static final String STORE = "http://www.yibuwangluo.cn:88/store/";
-		public static final String COMMON = "http://www.yibuwangluo.cn:88/common/";
 	}
 	
 	public static interface HTTPS_FILE_HOST {
@@ -166,50 +156,35 @@ public interface Constants {
 	}
 
 	public static interface FILE_HOST {
-		public static final String LOCALHOST = "D:\\upload\\newsimages\\";
-		public static final String TEA = "D:\\upload\\tea\\";
 		public static final String DOCUMENT = "D:\\upload\\document\\";
-		public static final String FILE = "D:\\upload\\file\\";
-		public static final String ICON = "D:\\upload\\icon\\";
 		public static final String IMG = "D:\\upload\\img\\";
-		public static final String STORE = "D:\\upload\\store\\";
-		public static final String COMMON = "D:\\upload\\common\\";
+	}
+	*/
+
+	//Linux服务器地址
+	public static interface HOST {
+		public static final String DOCUMENT = "https://www.huisouche8.com:88/document/";
+		public static final String IMG = "https://www.huisouche8.com:88/img/";
+		public static final String MAP_URL = "https://www.huisouche8.com/framework/map.html";
+	}
+	
+	public static interface HTTPS_HOST {
+		public static final String DOCUMENT = "https://www.huisouche8.com/document/";
 	}
 
-	/*
-	 * public static interface FILE_HOST { public static final String LOCALHOST
-	 * = "F:\\upload\\newsimages\\"; public static final String TEA =
-	 * "F:\\upload\\tea\\"; public static final String DOCUMENT =
-	 * "F:\\upload\\document\\"; public static final String FILE =
-	 * "F:\\upload\\file\\"; public static final String ICON = "
-	 * F:\\upload\\icon\\"; public static final String IMG =
-	 * "F:\\upload\\img\\"; public static final String STORE =
-	 * "F:\\upload\\store\\"; public static final String COMMON =
-	 * "F:\\upload\\common\\"; }
-	 */
+	public static interface HTTP_HOST {
+		public static final String DOCUMENT = "https://www.huisouche8.com:88/document/";
+	}
+	
+	public static interface HTTPS_FILE_HOST {
+		public static final String DOCUMENT = "/home/tomcat/apache-tomcat-8.0.30/webapps/ROOT/document/";
+	}
 
-	/**
-	 * centos服务器 public static interface HOST{ public static final String
-	 * LOCALHOST = "http://app.tongjichaye.com:88/tea/"; public static final
-	 * String TEA = "http://app.tongjichaye.com:88/tea/"; public static final
-	 * String DOCUMENT = "http://app.tongjichaye.com:88/document/"; public
-	 * static final String FILE = "http://app.tongjichaye.com:88/file/"; public
-	 * static final String ICON = "http://app.tongjichaye.com:88/icon/"; public
-	 * static final String IMG = "http://app.tongjichaye.com:88/img/"; public
-	 * static final String STORE = "http://app.tongjichaye.com:88/store/";
-	 * public static final String COMMON =
-	 * "http://app.tongjichaye.com:88/common/"; }
-	 * 
-	 * public static interface FILE_HOST{ public static final String LOCALHOST =
-	 * "/home/data/images/tea/"; public static final String TEA =
-	 * "/home/data/images/tea/"; public static final String DOCUMENT =
-	 * "/home/data/images/document/"; public static final String FILE =
-	 * "/home/data/images/file/"; public static final String ICON =
-	 * "/home/data/images/icon/"; public static final String IMG =
-	 * "/home/data/images/img/"; public static final String STORE =
-	 * "/home/data/images/store/"; public static final String COMMON =
-	 * "/home/data/images/common/"; }
-	 */
+	public static interface FILE_HOST {
+		public static final String DOCUMENT = "/home/data/document/";
+		public static final String IMG = "/home/data/img/";
+	}
+
 
 	public static interface FEEDBACK_STATUS {
 		public static final String HANDLE = "050002";

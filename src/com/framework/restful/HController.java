@@ -1297,7 +1297,7 @@ public class HController extends RestfulController{
 			org.json.JSONObject retJson3 = new org.json.JSONObject(retJson2);
 			String ticket = retJson3.getString("ticket");
 					
-			Map<String, String> map1 = Sign.sign(ticket, "http://www.yibuwangluo.cn/framework/map.html");
+			Map<String, String> map1 = Sign.sign(ticket, Constants.HOST.MAP_URL);
 			MapWxData map = new MapWxData();
 			//服务号appID
 			map.setAppId("wx8a76e10bf06dd7f5");
