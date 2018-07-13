@@ -78,13 +78,19 @@ public class TBrandSeriesController {
 			m = new BrandSeriesListModel();
 			m.setId(entity.getId());
 			m.setCarSerial(entity.getCarSerial());
-			m.setCreateTime(DateUtil.format(entity.getCreateTime()));
-			m.setUpdateTime(DateUtil.format(entity.getUpdateTime()));
+			m.setCreateTime(StringUtil.toString(entity.getCreateTime()));
+			m.setUpdateTime(StringUtil.toString(entity.getUpdateTime()));
 			SysUserEntity admin = userDao.queryObject(entity.getCreateBy());
 			if(admin != null){
 				m.setCreateBy(admin.getUsername());
 			}else{
 				m.setCreateBy(StringUtil.STRING_BLANK);
+			}
+			
+			if(entity.getFlg() == 1){
+				m.setFlg("是");
+			}else{
+				m.setFlg("否");
 			}
 			
 			SysUserEntity update = userDao.queryObject(entity.getUpdateBy());
@@ -123,8 +129,9 @@ public class TBrandSeriesController {
 			model.setBrandId(tBrandSeries.getBrandId());
 			model.setCarSerial(tBrandSeries.getCarSerial());
 			model.setId(tBrandSeries.getId());
+			model.setFlg(tBrandSeries.getFlg());
 		}
-		return R.ok().put("tBrandSeries", tBrandSeries);
+		return R.ok().put("tBrandSeries", model);
 	}
 	
 	/**
@@ -151,6 +158,7 @@ public class TBrandSeriesController {
 		bs.setCreateBy(userid);
 		bs.setCreateTime(DateUtil.getNowTimestamp());
 		bs.setUpdateBy(userid);
+		bs.setFlg(viewModel.getInteger("flg"));
 		bs.setUpdateTime(DateUtil.getNowTimestamp());
 		tBrandSeriesService.save(bs);
 		
@@ -187,6 +195,7 @@ public class TBrandSeriesController {
 		bs.setBrandId(viewModel.getInteger("brandId"));
 		bs.setCarSerial(viewModel.getString("carSerial"));
 		bs.setUpdateBy(userid);
+		bs.setFlg(viewModel.getInteger("flg"));
 		bs.setUpdateTime(DateUtil.getNowTimestamp());
 		tBrandSeriesService.update(bs);
 		

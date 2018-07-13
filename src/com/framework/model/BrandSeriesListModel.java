@@ -18,6 +18,15 @@ public class BrandSeriesListModel implements Serializable{
 	private String createBy;
 	//
 	private String updateBy;
+	
+	private String flg;
+	
+	public String getFlg() {
+		return flg;
+	}
+	public void setFlg(String flg) {
+		this.flg = flg;
+	}
 	public Integer getId() {
 		return id;
 	}

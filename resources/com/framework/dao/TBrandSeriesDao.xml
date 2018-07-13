@@ -16,6 +16,7 @@
 		<if test="queryBrand != null and queryBrand != 0">
 			and brand_id=#{queryBrand}
 		</if>
+		order by flg desc,update_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -42,7 +43,8 @@
 			`create_time`, 
 			`update_time`, 
 			`create_by`, 
-			`update_by`
+			`update_by`,
+			`flg`
 		)
 		values
 		(
@@ -51,7 +53,8 @@
 			#{createTime}, 
 			#{updateTime}, 
 			#{createBy}, 
-			#{updateBy}
+			#{updateBy},
+			#{flg}
 		)
 	</insert>
 	 
@@ -60,9 +63,8 @@
 		<set>
 			<if test="brandId != null">`brand_id` = #{brandId}, </if>
 			<if test="carSerial != null">`car_serial` = #{carSerial}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
-			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="flg != null">`flg` = #{flg}, </if>
 			<if test="updateBy != null">`update_by` = #{updateBy}</if>
 		</set>
 		where id = #{id}
@@ -72,11 +74,11 @@
 		delete from t_brand_series where id = #{value}
 	</delete>
 	
-	<delete id="deleteBatch">
-		delete from t_brand_series where id in 
+	<update id="deleteBatch">
+		update  t_brand_series set flg=0 where id in 
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
-	</delete>
+	</update>
 
 </mapper>

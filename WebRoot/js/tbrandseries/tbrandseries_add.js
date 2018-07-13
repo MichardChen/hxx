@@ -3,7 +3,7 @@ var vm = new Vue({
 	el : '#rrapp',
 	data : {
 		title : "新增",
-		tBrandSeries : {}
+		tBrandSeries : {flg:1}
 	},
 	created : function() {
 		
@@ -36,6 +36,7 @@ var vm = new Vue({
 				$("#brandSeriesId").val(r.tBrandSeries.id);
 				$("#brandId").val(r.tBrandSeries.brandId);
 				$("#carSerial").val(r.tBrandSeries.carSerial);
+				$("#flg").val(r.tBrandSeries.flg);
 			});
 		},
 		saveOrUpdate : function(event) {
@@ -50,6 +51,9 @@ var vm = new Vue({
 			var brandSeriesId = $("#brandSeriesId").val();
 			if (brandSeriesId == null || brandSeriesId == "") {
 				var formFile = new FormData();
+				vm.tBrandSeries.brandId = $("#brandId").val();
+				vm.tBrandSeries.carSerial = $("#carSerial").val();
+				vm.tBrandSeries.flg = $("#flg").val();
 				formFile.append("tBrandSeries", JSON.stringify(vm.tBrandSeries));
 				var url = "../tbrandseries/save";
 				$.ajax({
@@ -73,6 +77,9 @@ var vm = new Vue({
 			} else {
 				var url = "../tbrandseries/update";
 				vm.tBrandSeries.id = brandSeriesId;
+				vm.tBrandSeries.brandId = $("#brandId").val();
+				vm.tBrandSeries.carSerial = $("#carSerial").val();
+				vm.tBrandSeries.flg = $("#flg").val();
 				var formFile = new FormData();
 				formFile.append("tBrandSeries", JSON.stringify(vm.tBrandSeries));
 				$.ajax({

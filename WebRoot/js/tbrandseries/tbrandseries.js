@@ -5,6 +5,7 @@ $(function () {
         colModel: [			
 			{ label: '汽车品牌', name: 'brandId', width: 80 }, 			
 			{ label: '车系', name: 'carSerial', width: 80 },
+			{ label: '是否上架', name: 'flg', width: 80 },
 			{ label: '创建者', name: 'createBy', width: 80 }, 	
 			{ label: '创建时间', name: 'createTime', width: 80 }, 	
 			{ label: '更新者', name: 'updateBy', width: 80 },

@@ -11,14 +11,23 @@
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">汽车品牌</div>
 		   	<div class="col-sm-10">
-		   			<select  class="form-control" v-model="tBrandSeries.brandId" name="brandId" id="brandId">
+		   			<select  class="form-control"  name="brandId" id="brandId">
 			   		</select>
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">车系</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="tBrandSeries.carSerial" placeholder="请输入车系名称" id="carSerial"/>
+		      <input type="text" class="form-control"  placeholder="请输入车系名称" id="carSerial"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">是否上架</div>
+		   	<div class="col-sm-10">
+		   			<select  class="form-control"  id="flg">
+		   				<option value="1">是</option>
+			   			<option value="0">否</option>
+			   		</select>
 		    </div>
 		</div>
 		<div class="form-group">

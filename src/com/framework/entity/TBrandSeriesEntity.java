@@ -29,6 +29,16 @@ public class TBrandSeriesEntity implements Serializable {
 	private Integer createBy;
 	//
 	private Integer updateBy;
+	
+	private int flg;
+	
+	
+	public int getFlg() {
+		return flg;
+	}
+	public void setFlg(int flg) {
+		this.flg = flg;
+	}
 	public Integer getId() {
 		return id;
 	}

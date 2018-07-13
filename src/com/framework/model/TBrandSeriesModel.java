@@ -9,6 +9,16 @@ public class TBrandSeriesModel implements Serializable{
 	private Integer brandId;
 	//
 	private String carSerial;
+	
+	private int flg;
+	
+	
+	public int getFlg() {
+		return flg;
+	}
+	public void setFlg(int flg) {
+		this.flg = flg;
+	}
 	public Integer getId() {
 		return id;
 	}
