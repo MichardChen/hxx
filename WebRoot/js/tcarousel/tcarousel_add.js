@@ -34,16 +34,26 @@ var vm = new Vue({
 					alert("请选择上传图片");
 					return;
 				}
-				/*var realUrl = $("#realUrl").val();
+				var realUrl = $("#realUrl").val();
 				if(realUrl == ""){
 					alert("请输入跳转地址");
 					return;
-				}*/
+				}
 				var typeCd = $("#typeCd").val();
 				if(typeCd == null){
 					alert("请选择图片类型");
 					return;
 				}
+				
+				//判断小程序跳转地址是否是包含域名
+				if(typeCd=="040004" || typeCd=="040005" || typeCd=="040006" || typeCd=="040007"){
+					if(realUrl.indexOf(DOMAIN_URL) == -1){
+						//不包含域名
+						alert("请正确输入跳转网址，小程序跳转网址必须以"+DOMAIN_URL+"开头");
+						return;
+					}
+				}
+				
 				var formFile = new FormData();
 				var url = "../tcarousel/save";
 				formFile.append("uFile", fileObj); 
@@ -68,16 +78,26 @@ var vm = new Vue({
 				});
 			}else{
 				//更新
-				/*var realUrl = $("#realUrl").val();
+				var realUrl = $("#realUrl").val();
 				if(realUrl == ""){
 					alert("请输入跳转地址");
 					return;
-				}*/
+				}
 				var typeCd = $("#typeCd").val();
 				if(typeCd == ""){
 					alert("请选择图片类型");
 					return;
 				}
+				
+				//判断小程序跳转地址是否是包含域名
+				if(typeCd=="040004" || typeCd=="040005" || typeCd=="040006" || typeCd=="040007"){
+					if(realUrl.indexOf(DOMAIN_URL) == -1){
+						//不包含域名
+						alert("请正确输入跳转网址，小程序跳转网址必须以"+DOMAIN_URL+"开头");
+						return;
+					}
+				}
+				
 				var fileObj = document.getElementById("uFile").files[0];
 				var formFile = new FormData();
 				var url = "../tcarousel/update";

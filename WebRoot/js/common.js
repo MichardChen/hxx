@@ -73,3 +73,4 @@ function getSelectedRows() {
     return grid.getGridParam("selarrrow");
 }
 
+var DOMAIN_URL = "https://www.yibuwangluo.cn";

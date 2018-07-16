@@ -209,6 +209,7 @@ public class HController extends RestfulController{
 			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
 			lcm.setName(brandEntity.getBrand()+" "+seriesEntity.getCarSerial()+" "+e.getCarName());
 			lcm.setPeriod(StringUtil.toString(e.getPeriods()));
+			lcm.setLabels(e.getLabels());
 			leaseList.add(lcm);
 		}
 
@@ -1363,5 +1364,37 @@ public class HController extends RestfulController{
 			renderJson(data, response);
 			return;
 		}
+	}
+	
+	@RequestMapping("/queryStoreOrNews")
+	public void queryStoreOrNews(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		ParamsDTO dto = ParamsDTO.getInstance(request);
+		ReturnData data = new ReturnData();
+		JSONObject json = new JSONObject();
+		String flg = dto.getTypeCd();
+		if(StringUtil.equals(flg, "1")) {
+			//车主故事
+			TStoryEntity storyEntity = storyService.queryObject(dto.getKey());
+			if(storyEntity!=null) {
+				json.put("detail", StringUtil.cutBodyHeader(storyEntity.getContent()));
+			}else {
+				json.put("detail", "");
+			}
+		}else if(StringUtil.equals(flg, "2")){
+			//资讯
+			TNewsEntity newsEntity = newsService.queryObject(dto.getKey());
+			if(newsEntity != null) {
+				json.put("detail", StringUtil.cutBodyHeader(newsEntity.getContent()));
+			}else {
+				json.put("detail", "");
+			}
+		}else {
+			json.put("detail", "");
+		}
+		
+		data.setData(json);
+		data.setCode(Constants.STATUS_CODE.SUCCESS);
+		data.setMessage("查询成功");
+		renderJson(data, response);
 	}
 }

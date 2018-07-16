@@ -10,8 +10,14 @@ public class LeaseCarListModel implements Serializable{
 	private String firstPayment;
 	private String monthPayment;
 	private String period;
+	private String labels;
 	
-	
+	public String getLabels() {
+		return labels;
+	}
+	public void setLabels(String labels) {
+		this.labels = labels;
+	}
 	public int getId() {
 		return id;
 	}

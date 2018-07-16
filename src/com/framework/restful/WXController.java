@@ -207,6 +207,7 @@ public class WXController extends RestfulController {
 			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
 			lcm.setName(brandEntity.getBrand()+" "+seriesEntity.getCarSerial()+" "+e.getCarName());
 			lcm.setPeriod(StringUtil.toString(e.getPeriods()));
+			lcm.setLabels(e.getLabels());
 			leaseList.add(lcm);
 		}
 

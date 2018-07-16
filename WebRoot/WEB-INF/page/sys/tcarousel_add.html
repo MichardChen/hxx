@@ -14,7 +14,7 @@
 		   		<a style="text-decoration: none;display: none;" target="_blank" id="icon">查看封面</a><input type="file" v-model="tCarousel.imgUrl" id="uFile" name="uFile" placeholder="请选择轮播图"/>
 		    </div>
 		</div>
-		<div class="form-group" style="display: none;">
+		<div class="form-group">
 		   	<div class="col-sm-2 control-label">跳转地址</div>
 		   	<div class="col-sm-10">
 		   		<input type="text" class="form-control" value="#" v-model="tCarousel.realUrl" id="realUrl" placeholder="若无跳转地址，请输入#"/>
@@ -68,5 +68,6 @@
 </div>
 
 <script src="${rc.contextPath}/js/tcarousel/tcarousel_add.js?_${date.systemTime}"></script>
+<script src="${rc.contextPath}/js/common.js?_${date.systemTime}"></script>
 </body>
 </html>
