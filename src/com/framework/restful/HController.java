@@ -239,7 +239,8 @@ public class HController extends RestfulController{
 			scl.setKilometers(StringUtil.toString(e.getKilomiters()));
 			scl.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
 			scl.setId(e.getId());
-			scl.setDate(e.getYear());
+			scl.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(), 0));
+			scl.setDate(DateUtil.formatCNYM(e.getYear()));
 			LocationCityEntity city = cityDao.queryObject(e.getCityId());
 			scl.setCity(city == null ? "" : city.getName());
 			secondList.add(scl);
@@ -621,8 +622,9 @@ public class HController extends RestfulController{
 			model = new ListModelLeaseCar();
 			model.setId(e.getId());
 			TBrandSeriesEntity brand = carSeriesService.queryObject(e.getCarSeriesId());
+			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
 			if(brand != null){
-				model.setBrand(brand.getCarSerial());
+				model.setBrand(brandEntity.getBrand()+brand.getCarSerial());
 			}else{
 				model.setBrand("");
 			}
@@ -668,8 +670,9 @@ public class HController extends RestfulController{
 			model = new ListModelSecondhandCar();
 			model.setId(e.getId());
 			TBrandSeriesEntity brand = carSeriesService.queryObject(e.getCarSeriesId());
+			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
 			if(brand != null){
-				model.setBrand(brand.getCarSerial());
+				model.setBrand(brandEntity.getBrand()+brand.getCarSerial());
 			}else{
 				model.setBrand("");
 			}
