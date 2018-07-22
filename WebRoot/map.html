@@ -7,7 +7,7 @@
 	href="https://cdn.bootcss.com/weui/1.1.2/style/weui.css" />
 <!--这是WEUI样式库文件自行官网下载使用-->
 <!--这是WEUI样式库文件自行官网下载使用-->
-<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 <style>
 	#container {width:100%; height: 180px; }  
 	#txt-color{color: #333333;font-size: 26px;}
@@ -28,8 +28,8 @@
 		<img alt="" id="serviceImg" width="100%">
 	</div>
 </body>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.4.7&key=39c9da3c4cfe10940be1b7bab3a845c5"></script> 
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.7&key=39c9da3c4cfe10940be1b7bab3a845c5"></script> 
 <!--调用JSSDK-->
 <script>
 	window.onload = function() {
@@ -43,14 +43,14 @@
 		    title: '厦门永翔群汽车贸易有限公司',
 		    icon: new AMap.Icon({  //复杂图标
 	            size: new AMap.Size(160, 129),//图标大小
-	            image: "http://www.yibuwangluo.cn/framework/statics/images/bt_navigation.png", //大图地址
+	            image: "https://www.yibuwangluo.cn/framework/statics/images/bt_navigation.png", //大图地址
 	            imageOffset: new AMap.Pixel(0, 0)//相对于大图的取图位置
 	        })
 		});
 		marker.on('click',onMarkerClick);
 		map.add(marker);
 		$.ajax({
-			url :   "http://www.yibuwangluo.cn/framework/hrest/getData1",
+			url:"https://www.yibuwangluo.cn/framework/hrest/getData1",
 			type : "get",
 			dataType : "json",
 			async : true,

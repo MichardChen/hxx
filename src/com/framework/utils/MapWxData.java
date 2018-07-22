@@ -13,7 +13,16 @@ public class MapWxData implements Serializable{
 	private String phone;
 	private String companyName;
 	private String customerServiceImg;
+	private String ticket;
 	
+	
+	
+	public String getTicket() {
+		return ticket;
+	}
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
+	}
 	public String getCustomerServiceImg() {
 		return customerServiceImg;
 	}

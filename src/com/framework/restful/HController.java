@@ -142,7 +142,7 @@ public class HController extends RestfulController{
 		JSONObject json = new JSONObject();
 		json.put("carousel", models);
 		// 以租代购、二手车、平行进口车横幅
-		TCarouselEntity entity = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.CAR_LEASE_IMAGE);
+		TCarouselEntity entity = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.H5_CAR_LEASE_IMAGE);
 		if (entity != null) {
 			CarouselModel m1 = new CarouselModel();
 			m1.setImgUrl(entity.getImgUrl());
@@ -151,7 +151,7 @@ public class HController extends RestfulController{
 		} else {
 			json.put("leaseCarImage", null);
 		}
-		TCarouselEntity entity1 = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.CAR_IMPORT_IMAGE);
+		TCarouselEntity entity1 = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.H5_CAR_IMPORT_IMAGE);
 		if (entity1 != null) {
 			CarouselModel m1 = new CarouselModel();
 			m1.setImgUrl(entity1.getImgUrl());
@@ -160,7 +160,7 @@ public class HController extends RestfulController{
 		} else {
 			json.put("importCarImage", null);
 		}
-		TCarouselEntity entity2 = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.CAR_SECONDHAND_IMAGE);
+		TCarouselEntity entity2 = carouselService.queryByTypeCd(Constants.CAROUSEL_TYPE.H5_CAR_SECONDHAND_IMAGE);
 		if (entity2 != null) {
 			CarouselModel m1 = new CarouselModel();
 			m1.setImgUrl(entity2.getImgUrl());
@@ -1078,8 +1078,9 @@ public class HController extends RestfulController{
 		}
 		
 		model.setLabels(car.getLabels());
-		model.setFirstPayment(StringUtil.formatCarPrice(car.getFinalPayment(),0));
+		model.setFirstPayment(StringUtil.formatCarPrice(car.getFirstPayment(),0));
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
+		model.setPeriods(StringUtil.toString(car.getPeriods()));
 		model.setContainTaxPrice(StringUtil.formatCarPrice(car.getCarTaxCost(), 0));
 		model.setDescUrl(StringUtil.cutBodyHeader(car.getContent()));
 		model.setYear(DateUtil.formatCNYM(car.getYear()));
@@ -1309,6 +1310,7 @@ public class HController extends RestfulController{
 			map.setTimestamp(map1.get("timestamp"));
 			map.setSignature(map1.get("signature"));
 			map.setAddress("厦门市翔安区马巷镇巷西路611号");
+			map.setTicket(ticket);
 			map.setCompanyName("厦门永翔群汽车贸易有限公司");
 			map.setEmailCode("3610000");
 			map.setPhone("0592-6597999");
