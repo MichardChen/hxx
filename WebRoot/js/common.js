@@ -73,4 +73,5 @@ function getSelectedRows() {
     return grid.getGridParam("selarrrow");
 }
 
-var DOMAIN_URL = "https://www.yibuwangluo.cn";
+//var DOMAIN_URL = "https://www.yibuwangluo.cn";
+var DOMAIN_URL = "https://www.huisouche8.com";

@@ -113,8 +113,8 @@ public class CommonController extends AbstractController {
 				String fileName = file.getName();
 				String[] names = fileName.split("\\.");
 				String uuid = UUID.randomUUID().toString();
-				File t = new File(Constants.FILE_HOST.DOCUMENT + uuid + "." + names[1]);
-				String url = Constants.HTTP_HOST.DOCUMENT + uuid + "." + names[1];
+				File t = new File(Constants.FILE_HOST.IMG + uuid + "." + names[1]);
+				String url = Constants.HOST.IMG + uuid + "." + names[1];
 				t.createNewFile();
 
 				fs.fileChannelCopy(file, t);
