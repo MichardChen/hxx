@@ -55,6 +55,11 @@
 		    </div>
 		</div>
 		<div class="form-group">
+		    <div class="col-sm-2 control-label" style="color:red;">36期</div>
+		   	<div class="col-sm-2">
+		    </div>
+		</div>
+		<div class="form-group">
 		   	<div class="col-sm-2 control-label">首付</div>
 		   	<div class="col-sm-2">
 		      <input type="number" class="form-control"  id="firstPayment" placeholder="请输入首付"/>
@@ -64,6 +69,87 @@
 		      <input type="number" class="form-control"  id="monthPayment" placeholder="请输入月供"/>
 		    </div>
 		</div>
+		<!--新增部分48期和1+3 -->
+		<div class="form-group">
+		    <div class="col-sm-2 control-label">备注</div>
+		   	<div class="col-sm-2">
+		      <input type="text" class="form-control"  id="mark3" placeholder="如：包含首年保险，购置税，服务费"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-2 control-label" style="color:red;">48期</div>
+		   	<div class="col-sm-2">
+		    </div>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-2 control-label">首付</div>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control"  id="firstPayment1" placeholder="请输入首付(单位：万元)"/>
+		    </div>
+		    <div class="col-sm-2 control-label">月供</div>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control"  id="monthPayment1" placeholder="请输入月供(单位：元)"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-2 control-label">备注</div>
+		   	<div class="col-sm-2">
+		      <input type="text" class="form-control"  id="mark1" placeholder="如：包含首年保险，购置税，服务费"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-2 control-label" style="color:red;">1+3</div>
+		   	<div class="col-sm-2">
+		    </div>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-2 control-label">首年首付</div>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control"  id="tfirstYearFirstPay" placeholder="请输入首付(单位：万元)"/>
+		    </div>
+		    <div class="col-sm-2 control-label">首年月供</div>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control"  id="tfirstYearMonthPayment" placeholder="请输入月供(单位：元)"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-2 control-label">一年后分期数</div>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control"  id="tperiods" placeholder="请输入分期数"/>
+		    </div>
+		    <div class="col-sm-2 control-label">一年后分期月供</div>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control"  id="tmonthPayment" placeholder="请输入月供(单位：元)"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		  	<div class="col-sm-2 control-label">尾款</div>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control"  id="finalPayment" placeholder="请输入尾款(单位：万)"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">购车支付费用(购车后返还)</div>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control"  id="realFirstPayment" placeholder="请输入购车支付费用(单位：万)"/>
+		    </div>
+		    <div class="col-sm-2 control-label">交车服务费用</div>
+		   	<div class="col-sm-2">
+		      <input type="number" class="form-control"  id="serviceFee" placeholder="请输入交车服务费用(单位：元)"/>
+		    </div>
+		</div>
+		<!-- 20180724新增 -->
+		<div class="form-group">
+		    <div class="col-sm-2 control-label">首页显示方案</div>
+		   	<div class="col-sm-2">
+		      	<select  class="form-control" id="showflg">
+		   			<option value="1">36期</option>
+		   			<option value="2">48期</option>
+		   			<option value="3">1+3</option>
+		   		</select>
+		    </div>
+		</div>
+		<!-- 新增完毕 -->
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">车龄</div>
 		   	<div class="col-sm-2">
@@ -128,12 +214,12 @@
 		   		</select>
 		    </div>
 		</div>
-		<div class="form-group" style="display: none;">
+		<!-- <div class="form-group" style="display: none;">
 		   	<div class="col-sm-2 control-label">尾款</div>
 		   	<div class="col-sm-2">
 		      <input type="number" class="form-control"  id="finalPayment" placeholder="请输入尾款"/>
 		    </div>
-		</div>
+		</div> -->
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">汽车详情</div>
 		   	<div class="col-sm-10">

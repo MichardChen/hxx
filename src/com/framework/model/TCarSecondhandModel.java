@@ -52,7 +52,129 @@ public class TCarSecondhandModel implements Serializable{
 	
 	private Integer flg;
 	
-	
+	//48期mark3
+		private String mark3;
+		//48期
+		private BigDecimal firstPayment1;
+		//48期月供
+		private BigDecimal monthPayment1;
+		//48期期数
+		private Integer periods1;
+		//48期备注
+		private String mark1;
+		//1+3首年首付
+		private BigDecimal tfirstYearFirstPay;
+		//1+3首年月供
+		private BigDecimal tfirstYearMonthPayment;
+		//1+3，一年后分期数
+		private Integer tperiods;
+		//1+3，一年后分期月供
+		private BigDecimal tmonthPayment;
+		//
+		private BigDecimal realFirstPayment;
+		//
+		private BigDecimal serviceFee;
+		////1+3，一年后尾款finalPayment
+		//列表显示那个方案
+		private int showFlg;
+		
+		
+
+	public String getMark3() {
+			return mark3;
+		}
+
+		public void setMark3(String mark3) {
+			this.mark3 = mark3;
+		}
+
+		public BigDecimal getFirstPayment1() {
+			return firstPayment1;
+		}
+
+		public void setFirstPayment1(BigDecimal firstPayment1) {
+			this.firstPayment1 = firstPayment1;
+		}
+
+		public BigDecimal getMonthPayment1() {
+			return monthPayment1;
+		}
+
+		public void setMonthPayment1(BigDecimal monthPayment1) {
+			this.monthPayment1 = monthPayment1;
+		}
+
+		public Integer getPeriods1() {
+			return periods1;
+		}
+
+		public void setPeriods1(Integer periods1) {
+			this.periods1 = periods1;
+		}
+
+		public String getMark1() {
+			return mark1;
+		}
+
+		public void setMark1(String mark1) {
+			this.mark1 = mark1;
+		}
+
+		public BigDecimal getTfirstYearFirstPay() {
+			return tfirstYearFirstPay;
+		}
+
+		public void setTfirstYearFirstPay(BigDecimal tfirstYearFirstPay) {
+			this.tfirstYearFirstPay = tfirstYearFirstPay;
+		}
+
+		public BigDecimal getTfirstYearMonthPayment() {
+			return tfirstYearMonthPayment;
+		}
+
+		public void setTfirstYearMonthPayment(BigDecimal tfirstYearMonthPayment) {
+			this.tfirstYearMonthPayment = tfirstYearMonthPayment;
+		}
+
+		public Integer getTperiods() {
+			return tperiods;
+		}
+
+		public void setTperiods(Integer tperiods) {
+			this.tperiods = tperiods;
+		}
+
+		public BigDecimal getTmonthPayment() {
+			return tmonthPayment;
+		}
+
+		public void setTmonthPayment(BigDecimal tmonthPayment) {
+			this.tmonthPayment = tmonthPayment;
+		}
+
+		public BigDecimal getRealFirstPayment() {
+			return realFirstPayment;
+		}
+
+		public void setRealFirstPayment(BigDecimal realFirstPayment) {
+			this.realFirstPayment = realFirstPayment;
+		}
+
+		public BigDecimal getServiceFee() {
+			return serviceFee;
+		}
+
+		public void setServiceFee(BigDecimal serviceFee) {
+			this.serviceFee = serviceFee;
+		}
+
+		public int getShowFlg() {
+			return showFlg;
+		}
+
+		public void setShowFlg(int showFlg) {
+			this.showFlg = showFlg;
+		}
 
 	public Integer getFlg() {
 		return flg;

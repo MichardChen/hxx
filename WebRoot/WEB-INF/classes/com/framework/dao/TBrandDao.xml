@@ -37,7 +37,7 @@
 	</select>
 	<select id="queryImportBrandList" resultType="com.framework.entity.TBrandEntity">
 		select * from t_brand where 1=1 and importflg=1 and flg=1
-		order by update_time desc,word asc
+		order by update_time desc,word asc limit 0,9
 	</select>
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_brand where 1=1

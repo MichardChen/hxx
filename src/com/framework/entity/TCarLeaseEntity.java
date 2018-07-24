@@ -95,6 +95,18 @@ public class TCarLeaseEntity implements Serializable {
 	
 	private String pcIcon;
 	
+	//新增字段
+	//列表显示那个方案
+	private int showFlg;
+	
+	
+	
+	public int getShowFlg() {
+		return showFlg;
+	}
+	public void setShowFlg(int showFlg) {
+		this.showFlg = showFlg;
+	}
 	public String getPcIcon() {
 		return pcIcon;
 	}

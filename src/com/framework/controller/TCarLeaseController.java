@@ -217,6 +217,8 @@ public class TCarLeaseController {
 		entity.setTmonthPayment(viewModel.getBigDecimal("tmonthPayment"));
 		entity.setFlg(viewModel.getInteger("flg"));
 		entity.setSalecount(viewModel.getInteger("salecount"));
+		//0824新增showFlg
+		entity.setShowFlg(viewModel.getInteger("showFlg"));
 		
 		//生成html
 		FileService fs=new FileService();
@@ -291,6 +293,7 @@ public class TCarLeaseController {
 		entity.setTmonthPayment(viewModel.getBigDecimal("tmonthPayment"));
 		entity.setSalecount(viewModel.getInteger("salecount"));
 		entity.setFlg(viewModel.getInteger("flg"));
+		entity.setShowFlg(viewModel.getInteger("showFlg"));
 		
 		//生成html
 		FileService fs=new FileService();

@@ -170,6 +170,20 @@ public class TCarSecondhandController {
 			model.setProvinceId(tc.getProvinceId());
 			model.setTitleLabel(tc.getTitleLabel());
 			model.setYear(tc.getYear());
+			//新增
+			model.setMark3(tc.getMark3());
+			model.setFirstPayment1(tc.getFirstPayment1());
+			model.setMonthPayment1(tc.getMonthPayment1());
+			model.setPeriods1(tc.getPeriods1());
+			model.setMark1(tc.getMark1());
+			model.setTfirstYearFirstPay(tc.getTfirstYearFirstPay());
+			model.setTfirstYearMonthPayment(tc.getTfirstYearMonthPayment());
+			model.setTperiods(tc.getTperiods());
+			model.setTmonthPayment(tc.getTmonthPayment());
+			model.setRealFirstPayment(tc.getRealFirstPayment());
+			model.setServiceFee(tc.getServiceFee());
+			model.setShowFlg(tc.getShowFlg());
+			
 		}
 		return R.ok().put("tCarSecondhand", model);
 	}
@@ -210,6 +224,20 @@ public class TCarSecondhandController {
 		entity.setPeriods(viewModel.getInteger("periods"));
 		entity.setFinalPayment(viewModel.getBigDecimal("finalPayment"));
 		entity.setFlg(viewModel.getInteger("flg"));
+		//新增
+		entity.setMark3(viewModel.getString("mark3"));
+		entity.setFirstPayment1(viewModel.getBigDecimal("finalPayment"));
+		entity.setMonthPayment1(viewModel.getBigDecimal("finalPayment"));
+		entity.setPeriods1(viewModel.getInteger("periods1"));
+		entity.setMark1(viewModel.getString("mark1"));
+		entity.setTfirstYearFirstPay(viewModel.getBigDecimal("tfirstYearFirstPay"));
+		entity.setTfirstYearMonthPayment(viewModel.getBigDecimal("tfirstYearMonthPayment"));
+		entity.setTperiods(viewModel.getInteger("tperiods"));
+		entity.setTmonthPayment(viewModel.getBigDecimal("tmonthPayment"));
+		entity.setRealFirstPayment(viewModel.getBigDecimal("realFirstPayment"));
+		entity.setServiceFee(viewModel.getBigDecimal("serviceFee"));
+		entity.setShowFlg(viewModel.getInteger("showFlg"));
+		
 		//生成html
 		FileService fs=new FileService();
 		//上传图片
@@ -279,6 +307,19 @@ public class TCarSecondhandController {
 		entity.setFinalPayment(viewModel.getBigDecimal("finalPayment"));
 		entity.setId(viewModel.getInteger("id"));
 		entity.setFlg(viewModel.getInteger("flg"));
+		
+		entity.setMark3(viewModel.getString("mark3"));
+		entity.setFirstPayment1(viewModel.getBigDecimal("finalPayment"));
+		entity.setMonthPayment1(viewModel.getBigDecimal("finalPayment"));
+		entity.setPeriods1(viewModel.getInteger("periods1"));
+		entity.setMark1(viewModel.getString("mark1"));
+		entity.setTfirstYearFirstPay(viewModel.getBigDecimal("tfirstYearFirstPay"));
+		entity.setTfirstYearMonthPayment(viewModel.getBigDecimal("tfirstYearMonthPayment"));
+		entity.setTperiods(viewModel.getInteger("tperiods"));
+		entity.setTmonthPayment(viewModel.getBigDecimal("tmonthPayment"));
+		entity.setRealFirstPayment(viewModel.getBigDecimal("realFirstPayment"));
+		entity.setServiceFee(viewModel.getBigDecimal("serviceFee"));
+		entity.setShowFlg(viewModel.getInteger("showFlg"));
 		
 		//生成html
 		FileService fs=new FileService();

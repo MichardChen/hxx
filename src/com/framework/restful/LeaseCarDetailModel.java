@@ -54,9 +54,32 @@ public class LeaseCarDetailModel implements Serializable{
 	private String companyMobile;
 	private String salecount;
 	private String gongyoutype;
+	private int flg1;
+	private int flg2;
+	private int flg3;
 	
 	
 	
+	
+	
+	public int getFlg1() {
+		return flg1;
+	}
+	public void setFlg1(int flg1) {
+		this.flg1 = flg1;
+	}
+	public int getFlg2() {
+		return flg2;
+	}
+	public void setFlg2(int flg2) {
+		this.flg2 = flg2;
+	}
+	public int getFlg3() {
+		return flg3;
+	}
+	public void setFlg3(int flg3) {
+		this.flg3 = flg3;
+	}
 	public String getGongyoutype() {
 		return gongyoutype;
 	}
