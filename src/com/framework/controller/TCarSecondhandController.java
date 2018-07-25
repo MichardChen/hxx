@@ -170,7 +170,7 @@ public class TCarSecondhandController {
 			model.setProvinceId(tc.getProvinceId());
 			model.setTitleLabel(tc.getTitleLabel());
 			model.setYear(tc.getYear());
-			//新增
+			//0724新增
 			model.setMark3(tc.getMark3());
 			model.setFirstPayment1(tc.getFirstPayment1());
 			model.setMonthPayment1(tc.getMonthPayment1());
@@ -241,15 +241,20 @@ public class TCarSecondhandController {
 		//生成html
 		FileService fs=new FileService();
 		//上传图片
-		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
-		if(StringUtil.isNoneBlank(logo)){
-			entity.setIcon(logo);
+		if(uploadFile != null){
+			String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+			if(StringUtil.isNoneBlank(logo)){
+				entity.setIcon(logo);
+			}
 		}
 		
+		
 		//pc图片
-		String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
-		if(StringUtil.isNoneBlank(logo1)){
-			entity.setPcIcon(logo1);
+		if(uploadFile1 != null){
+			String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+			if(StringUtil.isNoneBlank(logo1)){
+				entity.setPcIcon(logo1);
+			}
 		}
 		
 		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));
@@ -324,15 +329,20 @@ public class TCarSecondhandController {
 		//生成html
 		FileService fs=new FileService();
 		//上传图片
-		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
-		if(StringUtil.isNoneBlank(logo)){
-			entity.setIcon(logo);
+		if(uploadFile != null){
+			String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+			if(StringUtil.isNoneBlank(logo)){
+				entity.setIcon(logo);
+			}
 		}
 		
+		
 		//pc图片
-		String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
-		if(StringUtil.isNoneBlank(logo1)){
-			entity.setPcIcon(logo1);
+		if(uploadFile1 != null){
+			String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+			if(StringUtil.isNoneBlank(logo1)){
+				entity.setPcIcon(logo1);
+			}
 		}
 		
 		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));

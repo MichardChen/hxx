@@ -223,15 +223,20 @@ public class TCarLeaseController {
 		//生成html
 		FileService fs=new FileService();
 		//上传图片
-		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
-		if(StringUtil.isNoneBlank(logo)){
-			entity.setIcon(logo);
+		if(uploadFile != null){
+			String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+			if(StringUtil.isNoneBlank(logo)){
+				entity.setIcon(logo);
+			}
 		}
 		
+		
 		//pc封面
-		String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
-		if(StringUtil.isNoneBlank(logo1)){
-			entity.setPcIcon(logo1);
+		if(uploadFile1 != null){
+			String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+			if(StringUtil.isNoneBlank(logo1)){
+				entity.setPcIcon(logo1);
+			}
 		}
 		
 		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));
@@ -298,15 +303,19 @@ public class TCarLeaseController {
 		//生成html
 		FileService fs=new FileService();
 		//上传图片
-		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
-		if(StringUtil.isNoneBlank(logo)){
-			entity.setIcon(logo);
+		if(uploadFile != null){
+			String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+			if(StringUtil.isNoneBlank(logo)){
+				entity.setIcon(logo);
+			}
 		}
 		
 		//pc封面
-		String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
-		if(StringUtil.isNoneBlank(logo1)){
-			entity.setPcIcon(logo1);
+		if(uploadFile1 != null){
+			String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+			if(StringUtil.isNoneBlank(logo1)){
+				entity.setPcIcon(logo1);
+			}
 		}
 		
 		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));

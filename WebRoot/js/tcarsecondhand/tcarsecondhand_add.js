@@ -67,6 +67,19 @@ var vm = new Vue({
 	                $("#carColor").val(r.tCarSecondhand.carColor);
 	                $("#carCost").val(r.tCarSecondhand.carCost);
 	                $("#flg").val(r.tCarSecondhand.flg);
+	                //0724新增
+	                $("#mark3").val(r.tCarSecondhand.mark3);
+	                $("#firstPayment1").val(r.tCarSecondhand.firstPayment1);
+	                $("#monthPayment1").val(r.tCarSecondhand.monthPayment1);
+	                $("#periods1").val(r.tCarSecondhand.periods1);
+	                $("#mark1").val(r.tCarSecondhand.mark1);
+	                $("#tfirstYearFirstPay").val(r.tCarSecondhand.tfirstYearFirstPay);
+	                $("#tfirstYearMonthPayment").val(r.tCarSecondhand.tfirstYearMonthPayment);
+	                $("#tperiods").val(r.tCarSecondhand.tperiods);
+	                $("#tmonthPayment").val(r.tCarSecondhand.tmonthPayment);
+	                $("#realFirstPayment").val(r.tCarSecondhand.realFirstPayment);
+	                $("#serviceFee").val(r.tCarSecondhand.serviceFee);
+	                $("#showflg").val(r.tCarSecondhand.showFlg);
 	                
 	                $.get("../common/queryCity/"+r.tCarSecondhand.provinceId, function(rr){
 						var dr = eval('('+rr+')');
@@ -144,6 +157,7 @@ var vm = new Vue({
 				}
 			},
 		saveOrUpdate: function (event) {
+			
 			var cartId = $("#cartId").val();
 			
 			vm.tCarSecondhand.carName = $("#carName").val();
@@ -165,6 +179,19 @@ var vm = new Vue({
 			vm.tCarSecondhand.labels = $("#labels").val();
 			vm.tCarSecondhand.finalPayment = $("#finalPayment").val();
 			vm.tCarSecondhand.flg = $("#flg").val();
+			//0724新增
+			vm.tCarSecondhand.mark3 =  $("#mark3").val();
+			vm.tCarSecondhand.firstPayment1 =  $("#firstPayment1").val();
+			vm.tCarSecondhand.monthPayment1 =  $("#monthPayment1").val();
+			vm.tCarSecondhand.periods1 =  $("#periods1").val();
+			vm.tCarSecondhand.mark1 =  $("#mark1").val();
+			vm.tCarSecondhand.tfirstYearFirstPay =  $("#tfirstYearFirstPay").val();
+			vm.tCarSecondhand.tfirstYearMonthPayment =  $("#tfirstYearMonthPayment").val();
+			vm.tCarSecondhand.tperiods =  $("#tperiods").val();
+			vm.tCarSecondhand.tmonthPayment =  $("#tmonthPayment").val();
+			vm.tCarSecondhand.realFirstPayment =  $("#realFirstPayment").val();
+			vm.tCarSecondhand.serviceFee =  $("#serviceFee").val();
+			vm.tCarSecondhand.showFlg =  $("#showflg").val();
 			
 			if(cartId == "" || cartId == null){
 				//新增

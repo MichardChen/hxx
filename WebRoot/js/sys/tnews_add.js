@@ -47,6 +47,12 @@ var vm = new Vue({
 				}
 				var url = "../tnews/save";
 				var fileObj = document.getElementById("uFile").files[0];
+				
+				vm.tNews.newsTitle = $("#newsTitle").val();
+				vm.tNews.newsTypeCd = $("#newsTypeCd").val();
+				vm.tNews.hotFlg = $("#hotFlg").val();
+				vm.tNews.topFlg = $("#topFlg").val();
+				
 				vm.tNews.content = $("#content").summernote('code');
 				var formFile = new FormData();
 				formFile.append("uFile", fileObj); 
@@ -91,6 +97,12 @@ var vm = new Vue({
 				var url = "../tnews/update";
 				var fileObj = document.getElementById("uFile").files[0];
 				vm.tNews.content = $("#content").summernote('code');
+				
+				vm.tNews.newsTitle = $("#newsTitle").val();
+				vm.tNews.newsTypeCd = $("#newsTypeCd").val();
+				vm.tNews.hotFlg = $("#hotFlg").val();
+				vm.tNews.topFlg = $("#topFlg").val();
+				
 				vm.tNews.id=newsId;
 				var formFile = new FormData();
 				formFile.append("uFile", fileObj); 

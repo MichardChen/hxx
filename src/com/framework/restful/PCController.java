@@ -237,10 +237,26 @@ public class PCController extends RestfulController{
 			lcm = new PCLeaseCarListModel();
 			
 			lcm.setTitleLabel(e.getTitleLabel());
-			lcm.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(),0));
+			
+			if(e.getShowFlg()==1){
+				lcm.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(),0));
+				lcm.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
+			}
+			if(e.getShowFlg()==2){
+				lcm.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment1(),0));
+				lcm.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment1(),1));
+			}
+			if(e.getShowFlg()==3){
+				lcm.setFirstPayment(StringUtil.formatCarPrice(e.getTfirstYearFirstPay(),0));
+				lcm.setMonthPayment(StringUtil.formatCarPrice(e.getTfirstYearMonthPayment(),1));
+			}
+			
+			
 			lcm.setIcon(e.getIcon());
 			lcm.setId(e.getId());
-			lcm.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
+			
+			//lcm.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(),0));
+			//lcm.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
 			
 			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
 			TBrandEntity brandEntity = brandService.queryObject(e.getBrand());
@@ -284,8 +300,22 @@ public class PCController extends RestfulController{
 			scl.setBrand(brand);
 			scl.setName(e.getCarName());
 			scl.setKilometers(StringUtil.formatCarPrice(e.getKilomiters(),0)+"公里");
-			scl.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
-			scl.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(),0));
+			
+			if(e.getShowFlg()==1){
+				scl.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(), 0));
+				scl.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
+			}
+			if(e.getShowFlg()==2){
+				scl.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment1(), 0));
+				scl.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment1(),1));
+			}
+			if(e.getShowFlg()==3){
+				scl.setFirstPayment(StringUtil.formatCarPrice(e.getTfirstYearFirstPay(), 0));
+				scl.setMonthPayment(StringUtil.formatCarPrice(e.getTfirstYearMonthPayment(),1));
+			}
+			
+			//scl.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
+			//scl.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(),0));
 			scl.setId(e.getId());
 			scl.setLabel(e.getLabels());
 			scl.setDate(DateUtil.formatCNYM(e.getYear()));
@@ -384,8 +414,22 @@ public class PCController extends RestfulController{
 			model = new LeaseCarPCListModel();
 			model.setIcon(e.getIcon());
 			model.setId(e.getId());
-			model.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(), 0));
-			model.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(), 1));
+			
+			if(e.getShowFlg()==1){
+				model.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(),0));
+				model.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
+			}
+			if(e.getShowFlg()==2){
+				model.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment1(),0));
+				model.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment1(),1));
+			}
+			if(e.getShowFlg()==3){
+				model.setFirstPayment(StringUtil.formatCarPrice(e.getTfirstYearFirstPay(),0));
+				model.setMonthPayment(StringUtil.formatCarPrice(e.getTfirstYearMonthPayment(),1));
+			}
+			
+			//model.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(), 0));
+			//model.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(), 1));
 			model.setLabels(e.getLabels());
 			model.setName(e.getCarName());
 			model.setTitleLabel(e.getTitleLabel());
@@ -449,8 +493,21 @@ public class PCController extends RestfulController{
 			model = new SecondhandCarPCListModel();
 			model.setIcon(e.getIcon());
 			model.setId(e.getId());
-			model.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(), 0));
-			model.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(), 1));
+			
+			if(e.getShowFlg()==1){
+				model.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(), 0));
+				model.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(),1));
+			}
+			if(e.getShowFlg()==2){
+				model.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment1(), 0));
+				model.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment1(),1));
+			}
+			if(e.getShowFlg()==3){
+				model.setFirstPayment(StringUtil.formatCarPrice(e.getTfirstYearFirstPay(), 0));
+				model.setMonthPayment(StringUtil.formatCarPrice(e.getTfirstYearMonthPayment(),1));
+			}
+			//model.setFirstPayment(StringUtil.formatCarPrice(e.getFirstPayment(), 0));
+			//model.setMonthPayment(StringUtil.formatCarPrice(e.getMonthPayment(), 1));
 			model.setLabels(e.getTitleLabel());
 			model.setName(e.getCarName());
 			model.setKilomiters(StringUtil.toMoneyString(e.getKilomiters())+"公里");
@@ -1060,6 +1117,7 @@ public class PCController extends RestfulController{
 		icons.add(car.getPcIcon());
 		model.setIcons(icons);
 		model.setLabels(car.getLabels());
+		//36期首付和月供、备注、分期数
 		model.setFirstPayment(StringUtil.formatCarPrice(car.getFinalPayment(),0));
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
 		model.setContainTaxPrice(StringUtil.formatCarPrice(car.getCarTaxCost(), 0));
@@ -1067,6 +1125,38 @@ public class PCController extends RestfulController{
 		model.setYear(DateUtil.formatCNYM(car.getYear()));
 		model.setKilomiter(StringUtil.formatCarPrice(car.getKilomiters(), 0)+"公里");
 		LocationCityEntity city = cityDao.queryObject(car.getCityId());
+		
+		/////0724修改
+		//48期首付和月供、备注、分期数
+		model.setFirstPayment1(StringUtil.formatCarPrice(car.getFirstPayment1(),0));
+		model.setMonthPayment1(StringUtil.formatCarPrice(car.getMonthPayment1(), 1));
+		
+		//1+3首年首付、首年月供、一年后分期数、一年后分期月供
+		model.setTfirstYearFirstPay(StringUtil.formatCarPrice(car.getTfirstYearFirstPay(),0));
+		model.setTfirstYearMonthPayment(StringUtil.formatCarPrice(car.getTfirstYearMonthPayment(),1));
+		model.setTperiods(StringUtil.toString(car.getTperiods()));
+		model.setTmonthPayment(StringUtil.formatCarPrice(car.getTmonthPayment(),1));
+		model.setFinalPayment(StringUtil.formatCarPrice(car.getFinalPayment(), 0));
+		
+		model.setBuyPay(StringUtil.formatCarPrice(car.getRealFirstPayment(),0));
+		model.setServiceFee(StringUtil.formatCarPrice(car.getServiceFee(),1));
+		/////////////////
+		if(car.getFirstPayment() != null){
+			model.setFlg1(1);
+		}else{
+			model.setFlg1(0);
+		}
+		if(car.getFirstPayment1() != null){
+			model.setFlg2(1);
+		}else{
+			model.setFlg2(0);
+		}
+		if(car.getTfirstYearFirstPay() != null){
+			model.setFlg3(1);
+		}else{
+			model.setFlg3(0);
+		}
+		
 		if(city != null){
 			model.setCity(city.getName());
 		}

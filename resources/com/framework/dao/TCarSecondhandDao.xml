@@ -193,7 +193,19 @@
 			`desc_url`,
 			`flg`,
 			`content`,
-			`pc_icon`
+			`pc_icon`,
+			`mark3`,
+			`mark1`,
+			`first_payment1`,
+			`month_payment1`,
+			`period1`,
+			`tfirst_year_firstpay`,
+			`tfirst_year_month_payment`,
+			`tperiods`,
+			`tmonth_payment`,
+			`real_first_payment`,
+			`service_fee`,
+			`showflg`
 		)
 		values
 		(
@@ -225,7 +237,19 @@
 			#{descUrl},
 			#{flg},
 			#{content},
-			#{pcIcon}
+			#{pcIcon},
+			#{mark3},
+			#{mark1},
+			#{firstPayment1},
+			#{monthPayment1},
+			#{periods1},
+			#{tfirstYearFirstPay},
+			#{tfirstYearMonthPayment},
+			#{tperiods},
+			#{tmonthPayment},
+			#{realFirstPayment},
+			#{serviceFee},
+			#{showFlg}
 		)
 	</insert>
 	 
@@ -260,7 +284,20 @@
 			<if test="descUrl != null">`desc_url` = #{descUrl},</if>
 			<if test="content != null">`content` = #{content},</if>
 			<if test="flg != null">`flg` = #{flg},</if>
-			<if test="pcIcon != null">`pc_icon` = #{pcIcon}</if>
+			<if test="pcIcon != null">`pc_icon` = #{pcIcon},</if>
+		<!-- 0724新增 -->
+			<if test="mark3 != null">`mark3` = #{mark3},</if>
+			<if test="mark1 != null">`mark1` = #{mark1},</if>
+			<if test="firstPayment1 != null">`first_payment1` = #{firstPayment1},</if>
+			<if test="monthPayment1 != null">`month_payment1` = #{monthPayment1},</if>
+			<if test="periods1 != null">`period1` = #{periods1},</if>
+			<if test="tfirstYearFirstPay != null">`tfirst_year_firstpay` = #{tfirstYearFirstPay},</if>
+			<if test="tfirstYearMonthPayment != null">`tfirst_year_month_payment` = #{tfirstYearMonthPayment},</if>
+			<if test="tperiods != null">`tperiods` = #{tperiods},</if>
+			<if test="tmonthPayment != null">`tmonth_payment` = #{tmonthPayment},</if>
+			<if test="realFirstPayment != null">`real_first_payment` = #{realFirstPayment}, </if>
+			<if test="serviceFee != null">`service_fee` = #{serviceFee}, </if>
+			<if test="showFlg != null">`showflg` = #{showFlg}</if>
 		</set>
 		where id = #{id}
 	</update>

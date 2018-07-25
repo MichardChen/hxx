@@ -199,7 +199,8 @@
 			`salecount`,
 			`flg`,
 			`content`,
-			`pc_icon`
+			`pc_icon`,
+			`showflg`
 		)
 		values
 		(
@@ -240,7 +241,8 @@
 			#{salecount},
 			#{flg},
 			#{content},
-			#{pcIcon}
+			#{pcIcon},
+			#{showFlg}
 		)
 	</insert>
 	 
@@ -284,7 +286,8 @@
 			<if test="salecount != null">`salecount` = #{salecount},</if>
 			<if test="content != null">`content` = #{content},</if>
 			<if test="flg != null">`flg` = #{flg},</if>
-			<if test="pcIcon != null">`pc_icon` = #{pcIcon}</if>
+			<if test="pcIcon != null">`pc_icon` = #{pcIcon},</if>
+			<if test="showFlg != null">`showflg` = #{showFlg}</if>
 		</set>
 		where id = #{id}
 	</update>

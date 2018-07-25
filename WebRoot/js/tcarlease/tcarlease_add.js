@@ -54,6 +54,7 @@ var vm = new Vue({
 				$("#content").summernote('code', r.tCarLease.content);
 				$("#salecount").val(r.tCarLease.salecount);
 				$("#flg").val(r.tCarLease.flg);
+				$("#showflg").val(r.tCarLease.showFlg);
 				
 				$.get("../tbrandseries/queryBrandSeries/"+r.tCarLease.brand, function(rr){
 		            var dr =eval('('+rr+')');
@@ -122,6 +123,7 @@ var vm = new Vue({
 			vm.tCarLease.serviceFee = $("#serviceFee").val();
 			vm.tCarLease.salecount = $("#salecount").val();
 			vm.tCarLease.flg = $("#flg").val();
+			vm.tCarLease.showFlg=$("#showflg").val();
 			if(cartId == 0 || cartId == "" || cartId == null){
 				
 				//新增
