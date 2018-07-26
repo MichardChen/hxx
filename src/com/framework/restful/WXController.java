@@ -1091,9 +1091,9 @@ public class WXController extends RestfulController {
 			model.setCarSeriesName("");
 		}
 		List<String> icons = new ArrayList<>();
-		icons.add(car.getIcon());
-		icons.add(car.getIcon());
-		icons.add(car.getIcon());
+		icons.add(car.getPcIcon());
+		icons.add(car.getPcIcon());
+		icons.add(car.getPcIcon());
 		model.setIcons(icons);
 		model.setColors(car.getCarColor());
 		model.setReferenPrice(StringUtil.formatCarPrice(car.getNowPrice(),0));
@@ -1199,9 +1199,9 @@ public class WXController extends RestfulController {
 		}
 		
 		List<String> icons = new ArrayList<>();
-		icons.add(car.getIcon());
-		icons.add(car.getIcon());
-		icons.add(car.getIcon());
+		icons.add(car.getPcIcon());
+		icons.add(car.getPcIcon());
+		icons.add(car.getPcIcon());
 		model.setIcons(icons);
 		model.setLabels(car.getLabels());
 		model.setFirstPayment(StringUtil.formatCarPrice(car.getFirstPayment(),0));
@@ -1326,9 +1326,9 @@ public class WXController extends RestfulController {
 		}
 		
 		ArrayList<String> logos = new ArrayList<>();
-		logos.add(car.getIcon());
-		logos.add(car.getIcon());
-		logos.add(car.getIcon());
+		logos.add(car.getPcIcon());
+		logos.add(car.getPcIcon());
+		logos.add(car.getPcIcon());
 		model.setIcons(logos);
 		model.setFirmPrice(StringUtil.formatCarPrice(car.getFirmCost(),0));
 		model.setCarInfo(car.getCarTypeInfo());

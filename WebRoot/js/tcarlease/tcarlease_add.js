@@ -186,10 +186,10 @@ var vm = new Vue({
 					alert("请输入36期月供");
 					return;
 				}
-				if(!$("#mark1").val()){
+				/*if(!$("#mark1").val()){
 					alert("请输入36期备注，如：包含首年保险，购置税，服务费");
 					return;
-				}
+				}*/
 				if(!$("#firstPayment").val()){
 					alert("请输入48期首付");
 					return;
@@ -198,10 +198,10 @@ var vm = new Vue({
 					alert("请输入48期月供");
 					return;
 				}
-				if(!$("#mark").val()){
+			/*	if(!$("#mark").val()){
 					alert("请输入48期备注，如：包含首年保险，购置税，服务费");
 					return;
-				}
+				}*/
 				if(!$("#tfirstYearFirstPay").val()){
 					alert("请输入1+3首年首付");
 					return;
@@ -311,10 +311,10 @@ var vm = new Vue({
 					alert("请输入36期月供");
 					return;
 				}
-				if(!$("#mark1").val()){
+			/*	if(!$("#mark1").val()){
 					alert("请输入36期备注，如：包含首年保险，购置税，服务费");
 					return;
-				}
+				}*/
 				if(!$("#firstPayment").val()){
 					alert("请输入48期首付");
 					return;
@@ -323,10 +323,10 @@ var vm = new Vue({
 					alert("请输入48期月供");
 					return;
 				}
-				if(!$("#mark").val()){
+				/*if(!$("#mark").val()){
 					alert("请输入48期备注，如：包含首年保险，购置税，服务费");
 					return;
-				}
+				}*/
 				if(!$("#tfirstYearFirstPay").val()){
 					alert("请输入1+3首年首付");
 					return;

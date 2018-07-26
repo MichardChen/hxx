@@ -165,7 +165,7 @@ public class TNewsController {
 		String uuid = UUID.randomUUID().toString();
 		//生成html文件
 		try {
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.HTTPS_FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.HTTPS_FILE_HOST.NEWS+uuid+".html"),"utf-8"),true);
 			pw.println(htmlContent);
 			pw.close();
 		} catch (Exception e) {
@@ -176,7 +176,7 @@ public class TNewsController {
 		if(StringUtil.isNoneBlank(logo)){
 			story.setNewsLogo(logo);
 		}
-		String contentUrl = Constants.HTTPS_HOST.DOCUMENT+uuid+".html";
+		String contentUrl = Constants.HTTPS_HOST.NEWS+uuid+".html";
 		story.setContentUrl(contentUrl);
 		tNewsService.save(story);
 		return R.ok();
@@ -206,7 +206,7 @@ public class TNewsController {
 		String uuid = UUID.randomUUID().toString();
 		//生成html文件
 		try {
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.HTTPS_FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.HTTPS_FILE_HOST.NEWS+uuid+".html"),"utf-8"),true);
 			pw.println(htmlContent);
 			pw.close();
 		} catch (Exception e) {
@@ -217,7 +217,7 @@ public class TNewsController {
 		if(StringUtil.isNoneBlank(logo)){
 			story.setNewsLogo(logo);
 		}
-		String contentUrl = Constants.HTTPS_HOST.DOCUMENT+uuid+".html";
+		String contentUrl = Constants.HTTPS_HOST.NEWS+uuid+".html";
 		story.setContentUrl(contentUrl);
 		tNewsService.update(story);
 		return R.ok();

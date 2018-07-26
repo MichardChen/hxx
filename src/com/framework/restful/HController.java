@@ -1035,9 +1035,9 @@ public class HController extends RestfulController{
 			model.setCarSeriesName("");
 		}
 		List<String> icons = new ArrayList<>();
-		icons.add(car.getIcon());
-		icons.add(car.getIcon());
-		icons.add(car.getIcon());
+		icons.add(car.getPcIcon());
+		icons.add(car.getPcIcon());
+		icons.add(car.getPcIcon());
 		model.setIcons(icons);
 		model.setColors(car.getCarColor());
 		model.setReferenPrice(StringUtil.formatCarPrice(car.getNowPrice(),0));
@@ -1118,9 +1118,9 @@ public class HController extends RestfulController{
 			model.setCarName(car.getCarName());
 		}
 		List<String> icons = new ArrayList<>();
-		icons.add(car.getIcon());
-		icons.add(car.getIcon());
-		icons.add(car.getIcon());
+		icons.add(car.getPcIcon());
+		icons.add(car.getPcIcon());
+		icons.add(car.getPcIcon());
 		model.setIcons(icons);
 		TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
 		if(seriesEntity != null){
@@ -1157,7 +1157,6 @@ public class HController extends RestfulController{
 		if(city != null){
 			model.setCity(city.getName());
 		}
-		
 		
 		/////0724修改
 		//48期首付和月供、备注、分期数
@@ -1266,13 +1265,13 @@ public class HController extends RestfulController{
 		}
 		
 		ArrayList<String> logos = new ArrayList<>();
-		logos.add(car.getIcon());
-		logos.add(car.getIcon());
-		logos.add(car.getIcon());
+		logos.add(car.getPcIcon());
+		logos.add(car.getPcIcon());
+		logos.add(car.getPcIcon());
 		model.setIcons(logos);
 		model.setFirmPrice(StringUtil.formatCarPrice(car.getFirmCost(),0));
 		model.setCarInfo(car.getCarTypeInfo());
-		//48期首付和月供、备注、分期数
+		//36期首付和月供、备注、分期数
 		model.setFirstPayment(StringUtil.formatCarPrice(car.getFirstPayment(),0));
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
 		model.setMark(car.getMark());
@@ -1282,7 +1281,7 @@ public class HController extends RestfulController{
 		}else {
 			model.setFlg2(1);
 		}
-		//36期首付、月供、备注、分期数
+		//48期首付、月供、备注、分期数
 		model.setFirstPayment1(StringUtil.formatCarPrice(car.getFirstPayment1(),0));
 		model.setMonthPayment1(StringUtil.formatCarPrice(car.getMonthPayment1(), 1));
 		model.setMark1(car.getMark());
