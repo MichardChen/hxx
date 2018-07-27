@@ -1149,6 +1149,7 @@ public class HController extends RestfulController{
 		model.setFirstPayment(StringUtil.formatCarPrice(car.getFirstPayment(),0));
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
 		model.setPeriods(StringUtil.toString(car.getPeriods()));
+		model.setPeriods1(StringUtil.toString(car.getPeriod1()));
 		model.setContainTaxPrice(StringUtil.formatCarPrice(car.getCarTaxCost(), 0));
 		model.setDescUrl(StringUtil.cutBodyHeader(car.getContent()));
 		model.setYear(DateUtil.formatCNYM(car.getYear()));

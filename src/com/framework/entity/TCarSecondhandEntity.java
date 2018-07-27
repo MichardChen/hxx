@@ -85,7 +85,7 @@ public class TCarSecondhandEntity implements Serializable {
 	//48期月供
 	private BigDecimal monthPayment1;
 	//48期期数
-	private Integer periods1;
+	private Integer period1;
 	//48期备注
 	private String mark1;
 	//1+3首年首付
@@ -131,11 +131,12 @@ public class TCarSecondhandEntity implements Serializable {
 	public void setMonthPayment1(BigDecimal monthPayment1) {
 		this.monthPayment1 = monthPayment1;
 	}
-	public Integer getPeriods1() {
-		return periods1;
+	
+	public Integer getPeriod1() {
+		return period1;
 	}
-	public void setPeriods1(Integer periods1) {
-		this.periods1 = periods1;
+	public void setPeriod1(Integer period1) {
+		this.period1 = period1;
 	}
 	public String getMark1() {
 		return mark1;

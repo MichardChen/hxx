@@ -1119,6 +1119,7 @@ public class PCController extends RestfulController{
 		model.setLabels(car.getLabels());
 		//36期首付和月供、备注、分期数
 		model.setFirstPayment(StringUtil.formatCarPrice(car.getFinalPayment(),0));
+		model.setPeriods1(StringUtil.toString(car.getPeriod1()));
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
 		model.setContainTaxPrice(StringUtil.formatCarPrice(car.getCarTaxCost(), 0));
 		model.setDescUrl(StringUtil.cutBodyHeader(car.getContent()));

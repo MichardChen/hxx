@@ -174,7 +174,7 @@ public class TCarSecondhandController {
 			model.setMark3(tc.getMark3());
 			model.setFirstPayment1(tc.getFirstPayment1());
 			model.setMonthPayment1(tc.getMonthPayment1());
-			model.setPeriods1(tc.getPeriods1());
+			model.setPeriods1(tc.getPeriod1());
 			model.setMark1(tc.getMark1());
 			model.setTfirstYearFirstPay(tc.getTfirstYearFirstPay());
 			model.setTfirstYearMonthPayment(tc.getTfirstYearMonthPayment());
@@ -228,7 +228,7 @@ public class TCarSecondhandController {
 		entity.setMark3(viewModel.getString("mark3"));
 		entity.setFirstPayment1(viewModel.getBigDecimal("finalPayment"));
 		entity.setMonthPayment1(viewModel.getBigDecimal("finalPayment"));
-		entity.setPeriods1(viewModel.getInteger("periods1"));
+		entity.setPeriod1(viewModel.getInteger("periods1"));
 		entity.setMark1(viewModel.getString("mark1"));
 		entity.setTfirstYearFirstPay(viewModel.getBigDecimal("tfirstYearFirstPay"));
 		entity.setTfirstYearMonthPayment(viewModel.getBigDecimal("tfirstYearMonthPayment"));
@@ -316,7 +316,7 @@ public class TCarSecondhandController {
 		entity.setMark3(viewModel.getString("mark3"));
 		entity.setFirstPayment1(viewModel.getBigDecimal("finalPayment"));
 		entity.setMonthPayment1(viewModel.getBigDecimal("finalPayment"));
-		entity.setPeriods1(viewModel.getInteger("periods1"));
+		entity.setPeriod1(viewModel.getInteger("periods1"));
 		entity.setMark1(viewModel.getString("mark1"));
 		entity.setTfirstYearFirstPay(viewModel.getBigDecimal("tfirstYearFirstPay"));
 		entity.setTfirstYearMonthPayment(viewModel.getBigDecimal("tfirstYearMonthPayment"));
