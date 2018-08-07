@@ -231,14 +231,23 @@ var vm = new Vue({
 					alert("请选择汽车年限");
 					return;
 				}
-				if(!$("#firstPayment").val()){
+				if(!$("#realFirstPayment").val()){
+					alert("请输入购车支付费用");
+					return;
+				}
+				if(!$("#serviceFee").val()){
+					alert("请输入交车服务费用");
+					return;
+				}
+				
+				/*if(!$("#firstPayment").val()){
 					alert("请输入首付");
 					return;
 				}
 				if(!$("#monthPayment").val()){
 					alert("请输入月供");
 					return;
-				}
+				}*/
 				if(!$("#age").val()){
 					alert("请输入车龄");
 					return;
@@ -329,14 +338,23 @@ var vm = new Vue({
 					alert("请选择汽车年限");
 					return;
 				}
-				if(!$("#firstPayment").val()){
+				
+				if(!$("#realFirstPayment").val()){
+					alert("请输入购车支付费用");
+					return;
+				}
+				if(!$("#serviceFee").val()){
+					alert("请输入交车服务费用");
+					return;
+				}
+				/*if(!$("#firstPayment").val()){
 					alert("请输入首付");
 					return;
 				}
 				if(!$("#monthPayment").val()){
 					alert("请输入月供");
 					return;
-				}
+				}*/
 				if(!$("#age").val()){
 					alert("请输入车龄");
 					return;

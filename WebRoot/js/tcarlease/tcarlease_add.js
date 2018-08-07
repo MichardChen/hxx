@@ -178,31 +178,31 @@ var vm = new Vue({
 					alert("请输入标签");
 					return;
 				}
-				if(!$("#firstPayment1").val()){
+				/*if(!$("#firstPayment1").val()){
 					alert("请输入36期首付");
 					return;
 				}
 				if(!$("#monthPayment1").val()){
 					alert("请输入36期月供");
 					return;
-				}
+				}*/
 				/*if(!$("#mark1").val()){
 					alert("请输入36期备注，如：包含首年保险，购置税，服务费");
 					return;
 				}*/
-				if(!$("#firstPayment").val()){
+				/*if(!$("#firstPayment").val()){
 					alert("请输入48期首付");
 					return;
 				}
 				if(!$("#monthPayment").val()){
 					alert("请输入48期月供");
 					return;
-				}
+				}*/
 			/*	if(!$("#mark").val()){
 					alert("请输入48期备注，如：包含首年保险，购置税，服务费");
 					return;
 				}*/
-				if(!$("#tfirstYearFirstPay").val()){
+				/*if(!$("#tfirstYearFirstPay").val()){
 					alert("请输入1+3首年首付");
 					return;
 				}
@@ -221,13 +221,13 @@ var vm = new Vue({
 				if(!$("#finalPayment").val()){
 					alert("请输入1+3尾款");
 					return;
-				}
+				}*/
 				if(!$("#realFirstPayment").val()){
-					alert("请输入1+3购车支付费用");
+					alert("请输入购车支付费用");
 					return;
 				}
 				if(!$("#serviceFee").val()){
-					alert("请输入1+3交车服务费用");
+					alert("请输入交车服务费用");
 					return;
 				}
 				if(!$("#salecount").val()){
@@ -303,31 +303,31 @@ var vm = new Vue({
 					alert("请输入标签");
 					return;
 				}
-				if(!$("#firstPayment1").val()){
+				/*if(!$("#firstPayment1").val()){
 					alert("请输入36期首付");
 					return;
 				}
 				if(!$("#monthPayment1").val()){
 					alert("请输入36期月供");
 					return;
-				}
+				}*/
 			/*	if(!$("#mark1").val()){
 					alert("请输入36期备注，如：包含首年保险，购置税，服务费");
 					return;
 				}*/
-				if(!$("#firstPayment").val()){
+				/*if(!$("#firstPayment").val()){
 					alert("请输入48期首付");
 					return;
 				}
 				if(!$("#monthPayment").val()){
 					alert("请输入48期月供");
 					return;
-				}
+				}*/
 				/*if(!$("#mark").val()){
 					alert("请输入48期备注，如：包含首年保险，购置税，服务费");
 					return;
 				}*/
-				if(!$("#tfirstYearFirstPay").val()){
+				/*if(!$("#tfirstYearFirstPay").val()){
 					alert("请输入1+3首年首付");
 					return;
 				}
@@ -346,13 +346,13 @@ var vm = new Vue({
 				if(!$("#finalPayment").val()){
 					alert("请输入1+3尾款");
 					return;
-				}
+				}*/
 				if(!$("#realFirstPayment").val()){
-					alert("请输入1+3购车支付费用");
+					alert("请输入购车支付费用");
 					return;
 				}
 				if(!$("#serviceFee").val()){
-					alert("请输入1+3交车服务费用");
+					alert("请输入交车服务费用");
 					return;
 				}
 				if(!$("#salecount").val()){
