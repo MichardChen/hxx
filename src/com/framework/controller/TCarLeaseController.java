@@ -117,7 +117,7 @@ public class TCarLeaseController {
 			}
 			model.setFlg(entity.getFlg() == 1 ? "在售":"下架");
 			model.setMonthPayment(entity.getMonthPayment());
-			model.setFirstPayment(entity.getFinalPayment());
+			model.setFirstPayment(entity.getFirstPayment());
 			model.setDescUrl(entity.getDescUrl());
 			list.add(model);
 		}

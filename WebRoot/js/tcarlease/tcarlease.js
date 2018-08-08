@@ -9,8 +9,8 @@ function loadData(){
         	{ label: 'id', name: 'id', width: 50, key: true },
 			{ label: '品牌', name: 'brand', width: 80 }, 			
 			{ label: '车名', name: 'carName', width: 80 }, 			
-			{ label: '首付', name: 'firstPayment', width: 80 }, 			
-			{ label: '月供', name: 'monthPayment', width: 80 }, 			
+			/*{ label: '首付', name: 'firstPayment', width: 80 }, 			
+			{ label: '月供', name: 'monthPayment', width: 80 }, 	*/		
 			{ label: '车系', name: 'carSeriesId', width: 80 }, 			
 			{ label: '创建者', name: 'createBy', width: 80 }, 			
 			{ label: '创建时间', name: 'createTime', width: 80 }, 			

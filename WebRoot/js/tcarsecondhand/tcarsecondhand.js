@@ -10,8 +10,8 @@ $(function () {
 			{ label: '市', name: 'cityId', width: 80 }, 			
 			{ label: '公里数', name: 'kilomiters', width: 80 }, 			
 			{ label: '年份', name: 'year', width: 80 }, 			
-			{ label: '首付', name: 'firstPayment', width: 80 }, 			
-			{ label: '月供', name: 'monthPayment', width: 80 }, 			
+			/*{ label: '首付', name: 'firstPayment', width: 80 }, 			
+			{ label: '月供', name: 'monthPayment', width: 80 }, 		*/	
 			{ label: '创建者', name: 'createBy', width: 80 }, 			
 			{ label: '更新者', name: 'updateBy', width: 80 }, 			
 			{ label: '更新时间', name: 'updateTime', width: 80 }, 			
