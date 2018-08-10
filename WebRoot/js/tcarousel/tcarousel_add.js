@@ -47,7 +47,7 @@ var vm = new Vue({
 				
 				//判断小程序跳转地址是否是包含域名
 				if(typeCd=="040004" || typeCd=="040005" || typeCd=="040006" || typeCd=="040007"){
-					if(realUrl.indexOf(DOMAIN_URL) == -1){
+					if((realUrl != "#")&&(realUrl.indexOf(DOMAIN_URL) == -1)){
 						//不包含域名
 						alert("请正确输入跳转网址，小程序跳转网址必须以"+DOMAIN_URL+"开头");
 						return;
@@ -91,7 +91,7 @@ var vm = new Vue({
 				
 				//判断小程序跳转地址是否是包含域名
 				if(typeCd=="040004" || typeCd=="040005" || typeCd=="040006" || typeCd=="040007"){
-					if(realUrl.indexOf(DOMAIN_URL) == -1){
+					if((realUrl != "#")&&(realUrl.indexOf(DOMAIN_URL) == -1)){
 						//不包含域名
 						alert("请正确输入跳转网址，小程序跳转网址必须以"+DOMAIN_URL+"开头");
 						return;

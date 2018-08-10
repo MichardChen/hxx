@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,11 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
 import com.framework.dao.LocationCityDao;
+import com.framework.dao.TBrandDao;
 import com.framework.dao.TBrandSeriesDao;
+import com.framework.dao.TCarImportDao;
+import com.framework.dao.TCarLeaseDao;
+import com.framework.dao.TCarSecondhandDao;
 import com.framework.dao.TCodemstDao;
 import com.framework.dto.ParamsDTO;
 import com.framework.entity.LocationCityEntity;
@@ -123,6 +128,14 @@ public class HController extends RestfulController{
 	private TCartParamsService paramsService;
 	@Autowired
 	private TCartParam2Service params2Service;
+	@Autowired
+	private TCarImportDao carImportDao;
+	@Autowired
+	private TBrandDao brandDao;
+	@Autowired
+	private TCarLeaseDao carLeaseDao;
+	@Autowired
+	private TCarSecondhandDao carSecondhandDao;
 	
 
 	@RequestMapping("/index")
@@ -605,6 +618,12 @@ public class HController extends RestfulController{
 				if(updateRet != 0){
 					data.setCode(Constants.STATUS_CODE.SUCCESS);
 					data.setMessage("提交成功,我们会尽快处理您的反馈");
+					//给工作人员发短信
+					SysUserEntity userEntity = sysUserService.queryObject(Long.valueOf(dto.getEmployeeId()));
+					if(userEntity != null){
+						String name = "您有客户向你发出了关于"+dto.getQuestion()+"的咨询，联系方式("+dto.getName()+"："+dto.getMobile()+")，请尽快联系客户。";
+						ShortMessageUtil.sendsms(userEntity.getMobile(), name);
+					}
 					renderJson(data, response);
 				}else{
 					data.setCode(Constants.STATUS_CODE.FAIL);
@@ -901,6 +920,66 @@ public class HController extends RestfulController{
 			vertifyCodeService.updateExpireCode(vCode.getId(), DateUtil.getNowTimestamp());
 			data.setCode(Constants.STATUS_CODE.SUCCESS);
 			data.setMessage("提交成功,我们会尽快联系您");
+			//给工作人员发短信
+			int cartFlg = dto.getCartFlg();
+			SysUserEntity userEntity = sysUserService.queryObject(Long.valueOf(dto.getEmployeeId()));
+			String name = "";
+			if(cartFlg == 2){
+				//以租代购
+				TCarLeaseEntity e = carLeaseDao.queryObject(dto.getCartId());
+				if(entity != null){
+					TBrandEntity brandEntity = brandDao.queryObject(e.getBrand());
+					if(brandEntity != null){
+						name = brandEntity.getBrand();
+					}
+					TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
+					if(brandSeriesEntity != null){
+						name = name + brandSeriesEntity.getCarSerial();
+					}
+				}
+			}else if(cartFlg == 3){
+				//会淘车
+				TCarSecondhandEntity e = carSecondhandDao.queryObject(dto.getCartId());
+				if(entity != null){
+					TBrandEntity brandEntity = brandDao.queryObject(e.getBrand());
+					if(brandEntity != null){
+						name = brandEntity.getBrand();
+					}
+					TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
+					if(brandSeriesEntity != null){
+						name = name + brandSeriesEntity.getCarSerial();
+					}
+				}
+			}else if(cartFlg == 4){
+				//平行进口车
+				TCarImportEntity e = carImportDao.queryObject(dto.getCartId());
+				if(entity != null){
+					TBrandEntity brandEntity = brandDao.queryObject(e.getBrand());
+					if(brandEntity != null){
+						name = brandEntity.getBrand();
+					}
+					TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
+					if(brandSeriesEntity != null){
+						name = name + brandSeriesEntity.getCarSerial();
+					}
+				}
+			}
+			if(userEntity != null){
+				TCodemstEntity phone = codeMstDao.queryByCode("130001");
+				if(phone != null){
+					String[] phones = phone.getData2().split(",");
+					if(phones.length > 0){
+						Random random = new Random();
+						if(phones.length == 1){
+							name = "您有客户向你发出了关于"+name+"的咨询，联系方式("+dto.getName()+"："+phones[0]+")，请尽快联系客户。";
+							ShortMessageUtil.sendsms(userEntity.getMobile(), name);
+						}else{
+							name = "您有客户向你发出了关于"+name+"的咨询，联系方式("+dto.getName()+"："+phones[random.nextInt(phones.length)]+")，请尽快联系客户。";
+							ShortMessageUtil.sendsms(userEntity.getMobile(), name);
+						}
+					}
+				}
+			}
 			renderJson(data, response);
 			return;
 		}else{
