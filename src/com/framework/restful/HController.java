@@ -964,20 +964,19 @@ public class HController extends RestfulController{
 					}
 				}
 			}
-			if(userEntity != null){
-				TCodemstEntity phone = codeMstDao.queryByCode("130001");
-				if(phone != null){
-					String[] phones = phone.getData2().split(",");
-					if(phones.length > 0){
-						Random random = new Random();
-						if(phones.length == 1){
-							name = "您有客户向你发出了关于"+name+"的咨询，联系方式("+dto.getName()+"："+phones[0]+")，请尽快联系客户。";
-							ShortMessageUtil.sendsms(userEntity.getMobile(), name);
-						}else{
-							name = "您有客户向你发出了关于"+name+"的咨询，联系方式("+dto.getName()+"："+phones[random.nextInt(phones.length)]+")，请尽快联系客户。";
-							ShortMessageUtil.sendsms(userEntity.getMobile(), name);
-						}
+			TCodemstEntity phone = codeMstDao.queryByCode("130001");
+			if(phone != null){
+				String[] phones = phone.getData2().split(",");
+				if(phones.length > 0){
+					Random random = new Random();
+					if(phones.length == 1){
+						name = "您有客户向你发出了关于"+name+"的咨询，联系方式("+dto.getName()+"："+dto.getMobile()+")，请尽快联系客户。";
+						ShortMessageUtil.sendsms(phones[0], name);
+					}else{
+						name = "您有客户向你发出了关于"+name+"的咨询，联系方式("+dto.getName()+"："+dto.getMobile()+")，请尽快联系客户。";
+						ShortMessageUtil.sendsms(phones[random.nextInt(phones.length)], name);
 					}
+					
 				}
 			}
 			renderJson(data, response);
