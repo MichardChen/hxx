@@ -975,11 +975,7 @@ public class PCController extends RestfulController{
 		ImportCartDetailModel model = new ImportCartDetailModel();
 		model.setFavourMoney(StringUtil.formatCarPrice(car.getFavourMoney(), 0));
 		model.setCartId(car.getId());
-		List<String> icons = new ArrayList<>();
-		icons.add(car.getPcIcon());
-		icons.add(car.getPcIcon());
-		icons.add(car.getPcIcon());
-		model.setIcons(icons);
+		model.setIcons(StringUtil.splitImg(car.getPcIcon(), ","));
 		TBrandEntity brand = brandService.queryObject(car.getBrand());
 		if(brand != null){
 			TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
@@ -1111,11 +1107,7 @@ public class PCController extends RestfulController{
 		}else{
 			model.setCarSeriesName("");
 		}
-		List<String> icons = new ArrayList<>();
-		icons.add(car.getPcIcon());
-		icons.add(car.getPcIcon());
-		icons.add(car.getPcIcon());
-		model.setIcons(icons);
+		model.setIcons(StringUtil.splitImg(car.getPcIcon(), ","));
 		model.setLabels(car.getLabels());
 		//36期首付和月供、备注、分期数
 		model.setFirstPayment(StringUtil.formatCarPrice(car.getFinalPayment(),0));
@@ -1239,11 +1231,7 @@ public class PCController extends RestfulController{
 			model.setCarSeriesName("");
 		}
 		
-		ArrayList<String> logos = new ArrayList<>();
-		logos.add(car.getPcIcon());
-		logos.add(car.getPcIcon());
-		logos.add(car.getPcIcon());
-		model.setIcons(logos);
+		model.setIcons(StringUtil.splitImg(car.getPcIcon(), ","));
 		model.setFirmPrice(StringUtil.formatCarPrice(car.getFirmCost(),0));
 		model.setCarInfo(car.getCarTypeInfo());
 		//48期首付和月供、备注、分期数

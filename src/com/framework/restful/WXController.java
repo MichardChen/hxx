@@ -1169,11 +1169,7 @@ public class WXController extends RestfulController {
 		}else{
 			model.setCarSeriesName("");
 		}
-		List<String> icons = new ArrayList<>();
-		icons.add(car.getPcIcon());
-		icons.add(car.getPcIcon());
-		icons.add(car.getPcIcon());
-		model.setIcons(icons);
+		model.setIcons(StringUtil.splitImg(car.getPcIcon(), ","));
 		model.setColors(car.getCarColor());
 		model.setReferenPrice(StringUtil.formatCarPrice(car.getNowPrice(),0));
 		model.setMarketPrice(StringUtil.formatCarPrice(car.getMarketPrice(), 0));
@@ -1277,11 +1273,7 @@ public class WXController extends RestfulController {
 			model.setFlg3(0);
 		}
 		
-		List<String> icons = new ArrayList<>();
-		icons.add(car.getPcIcon());
-		icons.add(car.getPcIcon());
-		icons.add(car.getPcIcon());
-		model.setIcons(icons);
+		model.setIcons(StringUtil.splitImg(car.getPcIcon(), ","));
 		model.setLabels(car.getLabels());
 		model.setFirstPayment(StringUtil.formatCarPrice(car.getFirstPayment(),0));
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
@@ -1404,11 +1396,7 @@ public class WXController extends RestfulController {
 			model.setFlg3(0);
 		}
 		
-		ArrayList<String> logos = new ArrayList<>();
-		logos.add(car.getPcIcon());
-		logos.add(car.getPcIcon());
-		logos.add(car.getPcIcon());
-		model.setIcons(logos);
+		model.setIcons(StringUtil.splitImg(car.getPcIcon(), ","));
 		model.setFirmPrice(StringUtil.formatCarPrice(car.getFirmCost(),0));
 		model.setCarInfo(car.getCarTypeInfo());
 		//48期首付和月供、备注、分期数

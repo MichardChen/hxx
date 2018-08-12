@@ -5,11 +5,14 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.support.StaticApplicationContext;
 
 
 public class StringUtil extends StringUtils {
@@ -399,6 +402,19 @@ public class StringUtil extends StringUtils {
 		}
 		return "";
 	}
+
+	public static List<String> splitImg(String data,String split){
+		ArrayList<String> list = new ArrayList<>();
+		if(StringUtil.isNoneBlank(data)) {
+			String[] strs = data.split(",");
+			for(String str : strs) {
+				list.add(str);
+			}
+		}
+		return list;
+	}
+	
+	
 	
 	public static String formatMoney(BigDecimal money){
 		Double myNumber = Double.valueOf(toString(money));

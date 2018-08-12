@@ -1,6 +1,7 @@
 package com.framework.test;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Random;
 
 import com.alibaba.fastjson.JSONObject;
@@ -16,7 +17,7 @@ public class Test {
 	/*	ReturnData data = new ReturnData();
 		String d = "{\"code\":5600,\"message\":\"????\",\"data\":{\"imgUrl\":\"http://192.168.2.164:82/document/509463fa-61ba-42b7-a43c-e43a0bdef4f1.png\",\"imgName\":\"509463fa-61ba-42b7-a43c-e43a0bdef4f1.png\"}}";
 		JSONObject dd = JSONObject.parseObject(d);
-		JSONObject ddt = (JSONObject)dd.get("data");*/
+		JSONObject ddt = (JSONObject)dd.get("data");
 		BigDecimal data = new BigDecimal("1155.008");
 		System.out.println(StringUtil.formatCarPrice(data,0));
 		String n = "18250752939,15263";
@@ -30,6 +31,12 @@ public class Test {
 			}
 			
 			
+			
+		}*/
+		String dString = "https://www.baidu.com";
+		List<String> data = StringUtil.splitImg(dString, ",");
+		for(String d : data) {
+			System.out.println(d);
 		}
 	}
 

@@ -1112,11 +1112,8 @@ public class HController extends RestfulController{
 		}else{
 			model.setCarSeriesName("");
 		}
-		List<String> icons = new ArrayList<>();
-		icons.add(car.getPcIcon());
-		icons.add(car.getPcIcon());
-		icons.add(car.getPcIcon());
-		model.setIcons(icons);
+		
+		model.setIcons(StringUtil.splitImg(car.getPcIcon(), ","));
 		model.setColors(car.getCarColor());
 		model.setReferenPrice(StringUtil.formatCarPrice(car.getNowPrice(),0));
 		model.setMarketPrice(StringUtil.formatCarPrice(car.getMarketPrice(), 0));
@@ -1195,11 +1192,7 @@ public class HController extends RestfulController{
 		}else{
 			model.setCarName(car.getCarName());
 		}
-		List<String> icons = new ArrayList<>();
-		icons.add(car.getPcIcon());
-		icons.add(car.getPcIcon());
-		icons.add(car.getPcIcon());
-		model.setIcons(icons);
+		model.setIcons(StringUtil.splitImg(car.getPcIcon(), ","));
 		TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
 		if(seriesEntity != null){
 			model.setCarSeriesName(seriesEntity.getCarSerial());
@@ -1343,11 +1336,8 @@ public class HController extends RestfulController{
 			model.setFlg3(0);
 		}
 		
-		ArrayList<String> logos = new ArrayList<>();
-		logos.add(car.getPcIcon());
-		logos.add(car.getPcIcon());
-		logos.add(car.getPcIcon());
-		model.setIcons(logos);
+		//ArrayList<String> logos = new ArrayList<>();
+		model.setIcons(StringUtil.splitImg(car.getPcIcon(), ","));
 		model.setFirmPrice(StringUtil.formatCarPrice(car.getFirmCost(),0));
 		model.setCarInfo(car.getCarTypeInfo());
 		//36期首付和月供、备注、分期数

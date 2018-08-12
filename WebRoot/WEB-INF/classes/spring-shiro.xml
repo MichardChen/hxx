@@ -54,6 +54,7 @@
 	        	/captcha.jpg=anon
 	        	/pc/**=anon
 	        	/map.html=anon
+	        	/img.html=anon
 	        	/**=authc
 	        </value>
 	    </property>

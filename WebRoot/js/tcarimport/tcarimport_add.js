@@ -51,7 +51,10 @@ var vm = new Vue({
                 $("#favourMoney").val(r.tCarImport.favourMoney);
                 $("#icon").attr("href",r.tCarImport.icon);
 				$("#icon").show();
-				$("#pcIcon").attr("href",r.tCarImport.pcIcon);
+				//$("#pcIcon").attr("href",r.tCarImport.pcIcon);
+				$("#pcIcon").click(function(){
+					window.open("https://www.huisouche8.com/framework/img.html?url="+r.tCarImport.pcIcon);
+				});
 				$("#pcIcon").show();
 				$("#content").summernote('code', r.tCarImport.content);
                 $.get("../tbrandseries/queryBrandSeries/"+r.tCarImport.brand, function(rr){

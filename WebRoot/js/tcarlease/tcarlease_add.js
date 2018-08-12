@@ -49,7 +49,11 @@ var vm = new Vue({
                 $("#serviceFee").val(r.tCarLease.serviceFee);
                 $("#icon").attr("href",r.tCarLease.icon);
 				$("#icon").show();
-				$("#pcIcon").attr("href",r.tCarLease.pcIcon);
+				//$("#pcIcon").attr("href",r.tCarLease.pcIcon);
+				$("#pcIcon").click(function(){
+					window.open("https://www.huisouche8.com/framework/img.html?url="+r.tCarLease.pcIcon);
+				});
+				
 				$("#pcIcon").show();
 				$("#content").summernote('code', r.tCarLease.content);
 				$("#salecount").val(r.tCarLease.salecount);

@@ -53,7 +53,10 @@ var vm = new Vue({
                 $("#cartId").val(r.tCarSecondhand.id);
                 $("#icon").attr("href",r.tCarSecondhand.icon);
 				$("#icon").show();
-				$("#pcIcon").attr("href",r.tCarSecondhand.pcIcon);
+				//$("#pcIcon").attr("href",r.tCarSecondhand.pcIcon);
+				$("#pcIcon").click(function(){
+					window.open("https://www.huisouche8.com/framework/img.html?url="+r.tCarSecondhand.pcIcon);
+				});
 				$("#pcIcon").show();
 				$("#content").summernote('code', r.tCarSecondhand.content);
 				  $("#titleLabel").val(r.tCarSecondhand.titleLabel);
