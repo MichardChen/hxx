@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
@@ -136,7 +139,7 @@ public class TCarImportController {
 	@ResponseBody
 	@RequestMapping("/save")
 	@RequiresPermissions("tcarimport:save")
-	public R save(@RequestParam("tCarImport")String tCarImport,@RequestParam(value="uFile",required=false)MultipartFile uploadFile,@RequestParam(value="uFile1",required=false)MultipartFile uploadFile1){
+	public R save(HttpServletRequest request,@RequestParam("fileLength")int fileLength,@RequestParam("tCarImport")String tCarImport,@RequestParam(value="uFile",required=false)MultipartFile uploadFile){
 		
 		TCarImportEntity entity = new TCarImportEntity();
 		JSONObject viewModel = JSONObject.parseObject(tCarImport);
@@ -176,9 +179,21 @@ public class TCarImportController {
 		}
 		
 		//pc照片
-		String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
-		if(StringUtil.isNoneBlank(logo1)){
-			entity.setPcIcon(logo1);
+		String url = "";
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request; 
+		for(int i=0;i<fileLength;i++) {
+			MultipartFile f1 = multipartRequest.getFile("file"+i);
+			String logo1 = fs.upload(f1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+			if(StringUtil.isNoneBlank(logo1)){
+				if(i==0) {
+					url = logo1;
+				}else {
+					url = url + "," +logo1;
+				}
+			}
+		}
+		if(StringUtil.isNoneBlank(url)) {
+			entity.setPcIcon(url);
 		}
 		
 		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));
@@ -206,7 +221,7 @@ public class TCarImportController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("tcarimport:update")
-	public R update(@RequestParam("tCarImport")String tCarImport,@RequestParam(value="uFile",required=false)MultipartFile uploadFile,@RequestParam(value="uFile1",required=false)MultipartFile uploadFile1){
+	public R update(HttpServletRequest request,@RequestParam("fileLength")int fileLength,@RequestParam("tCarImport")String tCarImport,@RequestParam(value="uFile",required=false)MultipartFile uploadFile){
 		
 		TCarImportEntity entity = new TCarImportEntity();
 		JSONObject viewModel = JSONObject.parseObject(tCarImport);
@@ -241,9 +256,21 @@ public class TCarImportController {
 		}
 		
 		//pc图片
-		String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
-		if(StringUtil.isNoneBlank(logo1)){
-			entity.setPcIcon(logo1);
+		String url = "";
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request; 
+		for(int i=0;i<fileLength;i++) {
+			MultipartFile f1 = multipartRequest.getFile("file"+i);
+			String logo1 = fs.upload(f1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+			if(StringUtil.isNoneBlank(logo1)){
+				if(i==0) {
+					url = logo1;
+				}else {
+					url = url + "," +logo1;
+				}
+			}
+		}
+		if(StringUtil.isNoneBlank(url)) {
+			entity.setPcIcon(url);
 		}
 		
 		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));

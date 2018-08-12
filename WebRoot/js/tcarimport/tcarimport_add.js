@@ -95,7 +95,7 @@ var vm = new Vue({
 		},
 		saveOrUpdate: function (event) {
 			var fileObj = document.getElementById("uFile").files[0];
-			var fileObj1 = document.getElementById("uFile1").files[0];
+			var fileObj1 = document.getElementById("uFile1").files;
 			var cartId = $("#cartId").val();
 			
 			vm.tCarImport.carName = $("#carName").val();
@@ -189,7 +189,11 @@ var vm = new Vue({
 				var formFile = new FormData();
 				var url = "../tcarimport/save";
 				formFile.append("uFile", fileObj); 
-				formFile.append("uFile1", fileObj1); 
+				var fileLength = fileObj1.length;
+				formFile.append("fileLength",fileLength);
+				for(i=0;i<fileObj1.length;i++){    
+					formFile.append("file"+i, fileObj1[i]); //++++++++++  
+               } 
 				vm.tCarImport.content = $("#content").summernote('code');
 				formFile.append("tCarImport", JSON.stringify(vm.tCarImport));
 				$.ajax({
@@ -278,11 +282,15 @@ var vm = new Vue({
 					return;
 				}
 				var fileObj = document.getElementById("uFile").files[0];
-				var fileObj1 = document.getElementById("uFile1").files[0];
+				var fileObj1 = document.getElementById("uFile1").files;
 				var formFile = new FormData();
 				var url = "../tcarimport/update";
 				formFile.append("uFile", fileObj); 
-				formFile.append("uFile1", fileObj1); 
+				var fileLength = fileObj1.length;
+				formFile.append("fileLength",fileLength);
+				for(i=0;i<fileObj1.length;i++){    
+					formFile.append("file"+i, fileObj1[i]); //++++++++++  
+				}  
 				vm.tCarImport.id=cartId;
 				vm.tCarImport.content = $("#content").summernote('code');
 				formFile.append("tCarImport", JSON.stringify(vm.tCarImport));

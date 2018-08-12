@@ -128,7 +128,7 @@ var vm = new Vue({
 				
 				//新增
 				var fileObj = document.getElementById("uFile").files[0];
-				var fileObj1 = document.getElementById("uFile1").files[0];
+				var fileObj1 = document.getElementById("uFile1").files;
 				var formFile = new FormData();
 				if(!$("#carName").val()){
 					alert("请输入汽车名称");
@@ -237,7 +237,11 @@ var vm = new Vue({
 				
 				var url = "../tcarlease/save";
 				formFile.append("uFile", fileObj); 
-				formFile.append("uFile1",fileObj1);
+				var fileLength = fileObj1.length;
+				formFile.append("fileLength",fileLength);
+				for(i=0;i<fileObj1.length;i++){    
+					formFile.append("file"+i, fileObj1[i]); //++++++++++  
+               } 
 				vm.tCarLease.content = $("#content").summernote('code');
 				formFile.append("tCarLease", JSON.stringify(vm.tCarLease));
 				$.ajax({
@@ -261,7 +265,7 @@ var vm = new Vue({
 			}else{
 				//更新
 				var fileObj = document.getElementById("uFile").files[0];
-				var fileObj1 = document.getElementById("uFile1").files[0];
+				var fileObj1 = document.getElementById("uFile1").files;
 				if(!$("#carName").val()){
 					alert("请输入汽车名称");
 					return;
@@ -364,7 +368,11 @@ var vm = new Vue({
 				var formFile = new FormData();
 				var url = "../tcarlease/update";
 				formFile.append("uFile", fileObj); 
-				formFile.append("uFile1", fileObj1); 
+				var fileLength = fileObj1.length;
+				formFile.append("fileLength",fileLength);
+				for(i=0;i<fileObj1.length;i++){    
+					formFile.append("file"+i, fileObj1[i]); //++++++++++  
+				} 
 				vm.tCarLease.id=$("#cartId").val();
 				vm.tCarLease.content = $("#content").summernote('code');
 				formFile.append("tCarLease", JSON.stringify(vm.tCarLease));

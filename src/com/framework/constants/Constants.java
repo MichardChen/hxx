@@ -153,13 +153,17 @@ public interface Constants {
 	
 	public static interface HTTPS_FILE_HOST {
 		public static final String DOCUMENT = "D:\\apache-tomcat-7.0.69-ht\\webapps\\ROOT\\document\\";
-	}
+	}*/
 
 	public static interface FILE_HOST {
 		public static final String DOCUMENT = "D:\\upload\\document\\";
 		public static final String IMG = "D:\\upload\\img\\";
 	}
-	*/
+	
+/*	public static interface FILE_HOST {
+		public static final String DOCUMENT = "/home/data/document/";
+		public static final String IMG = "/home/data/img/";
+	}*/
 
 	//Linux服务器地址
 	public static interface HOST {
@@ -183,11 +187,6 @@ public interface Constants {
 		public static final String DOCUMENT = "/home/tomcat/apache-tomcat-8.0.30/webapps/ROOT/document/";
 		public static final String STORY = "/home/tomcat/apache-tomcat-8.0.30/webapps/ROOT/document/story/";
 		public static final String NEWS = "/home/tomcat/apache-tomcat-8.0.30/webapps/ROOT/document/news/";
-	}
-
-	public static interface FILE_HOST {
-		public static final String DOCUMENT = "/home/data/document/";
-		public static final String IMG = "/home/data/img/";
 	}
 
 

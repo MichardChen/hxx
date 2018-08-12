@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
@@ -194,7 +197,7 @@ public class TCarSecondhandController {
 	@ResponseBody
 	@RequestMapping("/save")
 	@RequiresPermissions("tcarsecondhand:save")
-	public R save(@RequestParam("tCarSecondhand")String tCarSecondhand,@RequestParam(value="uFile",required=false)MultipartFile uploadFile,@RequestParam(value="uFile1",required=false)MultipartFile uploadFile1){
+	public R save(HttpServletRequest request,@RequestParam("fileLength")int fileLength,@RequestParam("tCarSecondhand")String tCarSecondhand,@RequestParam(value="uFile",required=false)MultipartFile uploadFile){
 		
 		TCarSecondhandEntity entity = new TCarSecondhandEntity();
 		JSONObject viewModel = JSONObject.parseObject(tCarSecondhand);
@@ -250,11 +253,21 @@ public class TCarSecondhandController {
 		
 		
 		//pc图片
-		if(uploadFile1 != null){
-			String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		String url = "";
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request; 
+		for(int i=0;i<fileLength;i++) {
+			MultipartFile f1 = multipartRequest.getFile("file"+i);
+			String logo1 = fs.upload(f1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
 			if(StringUtil.isNoneBlank(logo1)){
-				entity.setPcIcon(logo1);
+				if(i==0) {
+					url = logo1;
+				}else {
+					url = url + "," +logo1;
+				}
 			}
+		}
+		if(StringUtil.isNoneBlank(url)) {
+			entity.setPcIcon(url);
 		}
 		
 		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));
@@ -282,7 +295,7 @@ public class TCarSecondhandController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("tcarsecondhand:update")
-	public R update(@RequestParam("tCarSecondhand")String tCarSecondhand,@RequestParam(value="uFile",required=false)MultipartFile uploadFile,@RequestParam(value="uFile1",required=false)MultipartFile uploadFile1){
+	public R update(HttpServletRequest request,@RequestParam("fileLength")int fileLength,@RequestParam("tCarSecondhand")String tCarSecondhand,@RequestParam(value="uFile",required=false)MultipartFile uploadFile){
 		TCarSecondhandEntity entity = new TCarSecondhandEntity();
 		JSONObject viewModel = JSONObject.parseObject(tCarSecondhand);
 		int userid = ShiroUtils.getUserId().intValue();
@@ -338,11 +351,21 @@ public class TCarSecondhandController {
 		
 		
 		//pc图片
-		if(uploadFile1 != null){
-			String logo1 = fs.upload(uploadFile1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		String url = "";
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)request; 
+		for(int i=0;i<fileLength;i++) {
+			MultipartFile f1 = multipartRequest.getFile("file"+i);
+			String logo1 = fs.upload(f1, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
 			if(StringUtil.isNoneBlank(logo1)){
-				entity.setPcIcon(logo1);
+				if(i==0) {
+					url = logo1;
+				}else {
+					url = url + "," +logo1;
+				}
 			}
+		}
+		if(StringUtil.isNoneBlank(url)) {
+			entity.setPcIcon(url);
 		}
 		
 		String htmlContent = StringUtil.formatHTML("", viewModel.getString("content"));

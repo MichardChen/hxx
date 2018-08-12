@@ -196,7 +196,7 @@ var vm = new Vue({
 			if(cartId == "" || cartId == null){
 				//新增
 				var fileObj = document.getElementById("uFile").files[0];
-				var fileObj1 = document.getElementById("uFile1").files[0];
+				var fileObj1 = document.getElementById("uFile1").files;
 				var formFile = new FormData();
 				
 				if(!$("#carName").val()){
@@ -286,7 +286,11 @@ var vm = new Vue({
 				}*/
 				var url = "../tcarsecondhand/save";
 				formFile.append("uFile", fileObj); 
-				formFile.append("uFile1",fileObj1);
+				var fileLength = fileObj1.length;
+				formFile.append("fileLength",fileLength);
+				for(i=0;i<fileObj1.length;i++){    
+					formFile.append("file"+i, fileObj1[i]); //++++++++++  
+               } 
 				vm.tCarSecondhand.content = $("#content").summernote('code');
 				formFile.append("tCarSecondhand", JSON.stringify(vm.tCarSecondhand));
 				$.ajax({
@@ -392,11 +396,17 @@ var vm = new Vue({
 					return;
 				}*/
 				var fileObj = document.getElementById("uFile").files[0];
-				var fileObj1 = document.getElementById("uFile1").files[0];
+				var fileObj1 = document.getElementById("uFile1").files;
 				var formFile = new FormData();
 				var url = "../tcarsecondhand/update";
 				formFile.append("uFile", fileObj); 
-				formFile.append("uFile1", fileObj1); 
+				
+				var fileLength = fileObj1.length;
+				formFile.append("fileLength",fileLength);
+				for(i=0;i<fileObj1.length;i++){    
+					formFile.append("file"+i, fileObj1[i]); //++++++++++  
+				}  
+				
 				vm.tCarSecondhand.id=cartId;
 				vm.tCarSecondhand.content = $("#content").summernote('code');
 				formFile.append("tCarSecondhand", JSON.stringify(vm.tCarSecondhand));
