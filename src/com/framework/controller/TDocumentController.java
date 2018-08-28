@@ -187,10 +187,10 @@ public class TDocumentController {
 		story.setUpdateTime(DateUtil.getNowTimestamp());
 		story.setTypeCd(viewModel.getString("typeCd"));
 		
-		int count = documentDao.queryDocumentCount(viewModel.getString("typeCd"),viewModel.getInteger("id"));
+		/*int count = documentDao.queryDocumentCount(viewModel.getString("typeCd"),viewModel.getInteger("id"));
 		if(count > 0){
 			return R.error("此文档已经添加，不能重复添加");
-		}
+		}*/
 		
 		story.setId(viewModel.getInteger("id"));
 		String htmlContent = StringUtil.formatHTML(viewModel.getString("title"), viewModel.getString("content"));
