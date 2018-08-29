@@ -219,6 +219,7 @@ public class TCarLeaseController {
 		entity.setTperiods(viewModel.getInteger("tperiods"));
 		entity.setTmonthPayment(viewModel.getBigDecimal("tmonthPayment"));
 		entity.setFlg(viewModel.getInteger("flg"));
+		entity.setCarLevelCd(viewModel.getString("carLevelCd"));
 		entity.setSalecount(viewModel.getInteger("salecount"));
 		//0824新增showFlg
 		entity.setShowFlg(viewModel.getInteger("showFlg"));
@@ -310,7 +311,7 @@ public class TCarLeaseController {
 		entity.setSalecount(viewModel.getInteger("salecount"));
 		entity.setFlg(viewModel.getInteger("flg"));
 		entity.setShowFlg(viewModel.getInteger("showFlg"));
-		
+		entity.setCarLevelCd(viewModel.getString("carLevelCd"));
 		//生成html
 		FileService fs=new FileService();
 		//上传图片

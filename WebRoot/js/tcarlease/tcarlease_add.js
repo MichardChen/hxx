@@ -58,6 +58,7 @@ var vm = new Vue({
 				$("#content").summernote('code', r.tCarLease.content);
 				$("#salecount").val(r.tCarLease.salecount);
 				$("#flg").val(r.tCarLease.flg);
+				$("#carLevelCd").val(r.tCarLease.carLevelCd);
 				$("#showflg").val(r.tCarLease.showFlg);
 				
 				$.get("../tbrandseries/queryBrandSeries/"+r.tCarLease.brand, function(rr){
@@ -127,6 +128,7 @@ var vm = new Vue({
 			vm.tCarLease.serviceFee = $("#serviceFee").val();
 			vm.tCarLease.salecount = $("#salecount").val();
 			vm.tCarLease.flg = $("#flg").val();
+			vm.tCarLease.carLevelCd = $("#carLevelCd").val();
 			vm.tCarLease.showFlg=$("#showflg").val();
 			if(cartId == 0 || cartId == "" || cartId == null){
 				
@@ -236,6 +238,10 @@ var vm = new Vue({
 				}
 				if(!$("#salecount").val()){
 					alert("请输入销量");
+					return;
+				}
+				if(!$("#carLevelCd").val()){
+					alert("请选择车型");
 					return;
 				}
 				
@@ -365,6 +371,10 @@ var vm = new Vue({
 				}
 				if(!$("#salecount").val()){
 					alert("请输入销量");
+					return;
+				}
+				if(!$("#carLevelCd").val()){
+					alert("请选择车型");
 					return;
 				}
 				vm.tCarLease.salecount = $("#salecount").val();

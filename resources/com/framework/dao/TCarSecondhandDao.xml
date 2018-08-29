@@ -30,16 +30,16 @@
 			and brand=#{brandId}
 		</if>
 		<if test="fromFirstPayment != null">
-			and first_payment&gt;=#{fromFirstPayment}
+			and (first_payment&gt;=#{fromFirstPayment} or first_payment1&gt;=#{fromFirstPayment} or tfirst_year_firstpay&gt;=#{fromFirstPayment})
 		</if>
 		<if test="toFirstPayment != null">
-			and first_payment&lt;=#{toFirstPayment}
+			and (first_payment&lt;=#{toFirstPayment} or first_payment1&lt;=#{toFirstPayment} or tfirst_year_firstpay&lt;=#{toFirstPayment})
 		</if>
 		<if test="fromMonthPayment != null">
-			and month_payment&gt;=#{fromMonthPayment}
+			and (month_payment&gt;=#{fromMonthPayment} or month_payment1&gt;=#{fromMonthPayment} or tfirst_year_month_payment&gt;=#{fromMonthPayment})
 		</if>
 		<if test="toMonthPayment != null">
-			and month_payment&lt;=#{toMonthPayment}
+			and (month_payment&lt;=#{toMonthPayment} or month_payment1&lt;=#{toMonthPayment} or tfirst_year_month_payment&lt;=#{toMonthPayment})
 		</if>
 		<if test="fromCarCost != null">
 			and car_cost&gt;=#{fromCarCost}
@@ -67,16 +67,16 @@
 			and car_series_id=#{brandSeriesId}
 		</if>
 		<if test="fromFirstPayment != null">
-			and first_payment&gt;=#{fromFirstPayment}
+			and (first_payment&gt;=#{fromFirstPayment} or first_payment1&gt;=#{fromFirstPayment} or tfirst_year_firstpay&gt;=#{fromFirstPayment})
 		</if>
 		<if test="toFirstPayment != null">
-			and first_payment&lt;=#{toFirstPayment}
+			and (first_payment&lt;=#{toFirstPayment} or first_payment1&lt;=#{toFirstPayment} or tfirst_year_firstpay&lt;=#{toFirstPayment})
 		</if>
 		<if test="fromMonthPayment != null">
-			and month_payment&gt;=#{fromMonthPayment}
+			and (month_payment&gt;=#{fromMonthPayment} or month_payment1&gt;=#{fromMonthPayment} or tfirst_year_month_payment&gt;=#{fromMonthPayment})
 		</if>
 		<if test="toMonthPayment != null">
-			and month_payment&lt;=#{toMonthPayment}
+			and (month_payment&lt;=#{toMonthPayment} or month_payment1&lt;=#{toMonthPayment} or tfirst_year_month_payment&lt;=#{toMonthPayment})
 		</if>
 		<if test="fromCarCost != null">
 			and car_cost&gt;=#{fromCarCost}
