@@ -161,13 +161,13 @@ public interface Constants {
 	}*/
 	
 	public static interface FILE_HOST {
-		public static final String DOCUMENT = "/home/data/document/";
+		public static final String DOCUMENT = "/home/tomcat/apache-tomcat-8.0.30/webapps/ROOT/document/";
 		public static final String IMG = "/home/data/img/";
 	}
 
 	//Linux服务器地址
 	public static interface HOST {
-		public static final String DOCUMENT = "https://www.huisouche8.com:88/document/";
+		public static final String DOCUMENT = "https://www.huisouche8.com/document/";
 		public static final String IMG = "http://www.huisouche8.com:88/img/";
 		public static final String MAP_URL = "https://www.huisouche8.com/framework/map.html";
 		//public static final String MAP_URL = "https://www.yibuwangluo.cn/framework/map.html";
