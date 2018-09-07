@@ -159,7 +159,7 @@ public class TDocumentController {
 		String uuid = UUID.randomUUID().toString();
 		//生成html文件
 		try {
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.HTTPS_FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
 			pw.println(htmlContent);
 			pw.close();
 		} catch (Exception e) {
@@ -200,7 +200,7 @@ public class TDocumentController {
 		String uuid = UUID.randomUUID().toString();
 		//生成html文件
 		try {
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.HTTPS_FILE_HOST.DOCUMENT+uuid+".html"),"utf-8"),true);
 			pw.println(htmlContent);
 			pw.close();
 		} catch (Exception e) {
