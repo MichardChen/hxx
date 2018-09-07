@@ -1353,7 +1353,7 @@ public class PCController extends RestfulController{
 		String[] objects = new String[mstList.size()];
 		for(int i=0;i<mstList.size();i++){
 			TCodemstEntity mst = mstList.get(i);
-			if(mst != null){
+			if((mst != null)&&(!StringUtil.equals(mst.getCode(), "120007"))){
 				objects[i]=mst.getCode();
 			}
 		}
