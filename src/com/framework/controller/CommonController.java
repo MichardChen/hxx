@@ -282,195 +282,195 @@ public class CommonController extends AbstractController {
 						}else if (i == 49) {
 							params.setBeitaiguige(getCellValue(modelCell));
 						}else if (i == 50) {
-							params.setZhujiashiqinang(getCellValue(modelCell));
+							params.setZhujiashiqinang(getCellValueText(modelCell));
 						}else if (i == 51) {
-							params.setFujiashiqinang(getCellValue(modelCell));
+							params.setFujiashiqinang(getCellValueText(modelCell));
 						}else if (i == 52) {
-							params.setQiancepaiqinang(getCellValue(modelCell));
+							params.setQiancepaiqinang(getCellValueText(modelCell));
 						}else if (i == 53) {
-							params.setHoucepaiqinang(getCellValue(modelCell));
+							params.setHoucepaiqinang(getCellValueText(modelCell));
 						}else if (i == 54) {
-							params.setQiantouqinang(getCellValue(modelCell));
+							params.setQiantouqinang(getCellValueText(modelCell));
 						}else if (i == 55) {
-							params.setHoutouqinang(getCellValue(modelCell));
+							params.setHoutouqinang(getCellValueText(modelCell));
 						}else if (i == 56) {
-							params.setQibuqinang(getCellValue(modelCell));
+							params.setQibuqinang(getCellValueText(modelCell));
 						}else if (i == 57) {
-							params.setTaiyajianceqinang(getCellValue(modelCell));
+							params.setTaiyajianceqinang(getCellValueText(modelCell));
 						}else if (i == 58) {
-							params.setLingtaiyajxxs(getCellValue(modelCell));
+							params.setLingtaiyajxxs(getCellValueText(modelCell));
 						}else if (i == 59) {
-							params.setAnquandaiweixts(getCellValue(modelCell));
+							params.setAnquandaiweixts(getCellValueText(modelCell));
 						}else if (i == 60) {
-							params.setErtongzuoyijiekou(getCellValue(modelCell));
+							params.setErtongzuoyijiekou(getCellValueText(modelCell));
 						}else if (i == 61) {
-							params.setFadongjifangdao(getCellValue(modelCell));
+							params.setFadongjifangdao(getCellValueText(modelCell));
 						}else if (i == 62) {
-							params.setCheneizhognkongsuo(getCellValue(modelCell));
+							params.setCheneizhognkongsuo(getCellValueText(modelCell));
 						}else if (i == 63) {
-							param2.setYaokongyaosi(getCellValue(modelCell));
+							param2.setYaokongyaosi(getCellValueText(modelCell));
 						}else if (i == 64) {
-							param2.setWuyaosiqidong(getCellValue(modelCell));
+							param2.setWuyaosiqidong(getCellValueText(modelCell));
 						}else if (i == 65) {
-							param2.setWuyaosixitong(getCellValue(modelCell));
+							param2.setWuyaosixitong(getCellValueText(modelCell));
 						}else if (i == 66) {
-							param2.setAbsbaosi(getCellValue(modelCell));
+							param2.setAbsbaosi(getCellValueText(modelCell));
 						}else if (i == 67) {
-							param2.setZhidonglifenpei(getCellValue(modelCell));
+							param2.setZhidonglifenpei(getCellValueText(modelCell));
 						} else if (i == 68) {
-							param2.setShachefuzhu(getCellValue(modelCell));
+							param2.setShachefuzhu(getCellValueText(modelCell));
 						} else if (i == 69) {
-							param2.setQianyinlikongzhi(getCellValue(modelCell));
+							param2.setQianyinlikongzhi(getCellValueText(modelCell));
 						} else if (i == 70) {
-							param2.setChenshenwending(getCellValue(modelCell));
+							param2.setChenshenwending(getCellValueText(modelCell));
 						} else if (i == 71) {
-							param2.setShangpofuzhu(getCellValue(modelCell));
+							param2.setShangpofuzhu(getCellValueText(modelCell));
 						} else if (i == 72) {
-							param2.setZidongzhuche(getCellValue(modelCell));
+							param2.setZidongzhuche(getCellValueText(modelCell));
 						}else if (i == 73) {
-							param2.setDuopohuanjiang(getCellValue(modelCell));
+							param2.setDuopohuanjiang(getCellValueText(modelCell));
 						}else if (i == 74) {
-							param2.setKebianxuanlinag(getCellValue(modelCell));
+							param2.setKebianxuanlinag(getCellValueText(modelCell));
 						}else if (i == 75) {
-							param2.setKongqixuanliang(getCellValue(modelCell));
+							param2.setKongqixuanliang(getCellValueText(modelCell));
 						}else if (i == 76) {
-							param2.setDiandongtianchuang(getCellValue(modelCell));
+							param2.setDiandongtianchuang(getCellValueText(modelCell));
 						}else if (i == 77) {
-							param2.setQuanjingtianchuan(getCellValue(modelCell));
+							param2.setQuanjingtianchuan(getCellValueText(modelCell));
 						}else if (i == 78) {
-							param2.setYundongwaiguantaojian(getCellValue(modelCell));
+							param2.setYundongwaiguantaojian(getCellValueText(modelCell));
 						}else if (i == 79) {
-							param2.setLvjinjinlunquan(getCellValue(modelCell));
+							param2.setLvjinjinlunquan(getCellValueText(modelCell));
 						}else if (i == 80) {
-							param2.setDiandongxihemen(getCellValue(modelCell));
+							param2.setDiandongxihemen(getCellValueText(modelCell));
 						}else if (i == 81) {
-							param2.setCehuamen(getCellValue(modelCell));
+							param2.setCehuamen(getCellValueText(modelCell));
 						}else if (i == 82) {
-							param2.setDiandonghoubeixiang(getCellValue(modelCell));
+							param2.setDiandonghoubeixiang(getCellValueText(modelCell));
 						}else if (i == 83) {
-							param2.setGanyinghoubeixiang(getCellValue(modelCell));
+							param2.setGanyinghoubeixiang(getCellValueText(modelCell));
 						}else if (i == 84) {
-							param2.setChedingxinglijia(getCellValue(modelCell));
+							param2.setChedingxinglijia(getCellValueText(modelCell));
 						}else if (i == 85) {
-							param2.setZhenpifangxiangpan(getCellValue(modelCell));
+							param2.setZhenpifangxiangpan(getCellValueText(modelCell));
 						}else if (i == 86) {
-							param2.setFangxiangpantiaojie(getCellValue(modelCell));
+							param2.setFangxiangpantiaojie(getCellValueText(modelCell));
 						}else if (i == 87) {
-							param2.setFangxiangpandiandong(getCellValue(modelCell));
+							param2.setFangxiangpandiandong(getCellValueText(modelCell));
 						}else if (i == 88) {
-							param2.setDuogongnengfangxiang(getCellValue(modelCell));
+							param2.setDuogongnengfangxiang(getCellValueText(modelCell));
 						}else if (i == 89) {
-							param2.setFxphuandang(getCellValue(modelCell));
+							param2.setFxphuandang(getCellValueText(modelCell));
 						}else if (i == 90) {
-							param2.setFxpjiare(getCellValue(modelCell));
+							param2.setFxpjiare(getCellValueText(modelCell));
 						}else if (i == 91) {
-							param2.setDignweixunhang(getCellValue(modelCell));
+							param2.setDignweixunhang(getCellValueText(modelCell));
 						}else if (i == 92) {
-							param2.setQianhouzhucheleida(getCellValue(modelCell));
+							param2.setQianhouzhucheleida(getCellValueText(modelCell));
 						}else if (i == 93) {
-							param2.setDaocheyingxiang(getCellValue(modelCell));
+							param2.setDaocheyingxiang(getCellValueText(modelCell));
 						}else if (i == 94) {
-							param2.setXingchediannao(getCellValue(modelCell));
+							param2.setXingchediannao(getCellValueText(modelCell));
 						}else if (i == 95) {
-							param2.setQuanyejingyibiaopan(getCellValue(modelCell));
+							param2.setQuanyejingyibiaopan(getCellValueText(modelCell));
 						}else if (i == 96) {
-							param2.setZuoyicaizhi(getCellValue(modelCell));
+							param2.setZuoyicaizhi(getCellValueText(modelCell));
 						}else if (i == 97) {
-							param2.setZuoyigaoditiaojie(getCellValue(modelCell));
+							param2.setZuoyigaoditiaojie(getCellValueText(modelCell));
 						}else if (i == 98) {
-							param2.setYaobuzhichengtiaojie(getCellValue(modelCell));
+							param2.setYaobuzhichengtiaojie(getCellValueText(modelCell));
 						}else if (i == 99) {
-							param2.setJuanbuzhichengtiaojie(getCellValue(modelCell));
+							param2.setJuanbuzhichengtiaojie(getCellValueText(modelCell));
 						}else if (i == 100) {
-							param2.setZhufujiashidiandong(getCellValue(modelCell));
+							param2.setZhufujiashidiandong(getCellValueText(modelCell));
 						}else if (i == 101) {
-							param2.setHoupaizuoyidiandong(getCellValue(modelCell));
+							param2.setHoupaizuoyidiandong(getCellValueText(modelCell));
 						}else if (i == 102) {
-							param2.setQianhouzuoyijiare(getCellValue(modelCell));
+							param2.setQianhouzuoyijiare(getCellValueText(modelCell));
 						}else if (i == 103) {
-							param2.setGpsdaohang(getCellValue(modelCell));
+							param2.setGpsdaohang(getCellValueText(modelCell));
 						}else if (i == 104) {
-							param2.setZhongkongtaicaise(getCellValue(modelCell));
+							param2.setZhongkongtaicaise(getCellValueText(modelCell));
 						}else if (i == 105) {
-							param2.setLanyachezai(getCellValue(modelCell));
+							param2.setLanyachezai(getCellValueText(modelCell));
 						}else if (i == 106) {
-							param2.setWaijieyinyuan(getCellValue(modelCell));
+							param2.setWaijieyinyuan(getCellValueText(modelCell));
 						}else if (i == 107) {
-							param2.setDuomeitixitong(getCellValue(modelCell));
+							param2.setDuomeitixitong(getCellValueText(modelCell));
 						}else if (i == 108) {
-							param2.setYangshengqishu(getCellValue(modelCell));
+							param2.setYangshengqishu(getCellValueText(modelCell));
 						}else if (i == 109) {
-							param2.setJinguangdeng(getCellValue(modelCell));
+							param2.setJinguangdeng(getCellValueText(modelCell));
 						}else if (i == 110) {
-							param2.setYuanguangdeng(getCellValue(modelCell));
+							param2.setYuanguangdeng(getCellValueText(modelCell));
 						}else if (i == 111) {
-							param2.setRijianxingchedeng(getCellValue(modelCell));
+							param2.setRijianxingchedeng(getCellValueText(modelCell));
 						}else if (i == 112) {
-							param2.setZishiyingyuanjindeng(getCellValue(modelCell));
+							param2.setZishiyingyuanjindeng(getCellValueText(modelCell));
 						}else if (i == 113) {
-							param2.setZidongtoudeng(getCellValue(modelCell));
+							param2.setZidongtoudeng(getCellValueText(modelCell));
 						}else if (i == 114) {
-							param2.setZxfuzhudeng(getCellValue(modelCell));
+							param2.setZxfuzhudeng(getCellValueText(modelCell));
 						}else if (i == 115) {
-							param2.setZxtoudeng(getCellValue(modelCell));
+							param2.setZxtoudeng(getCellValueText(modelCell));
 						}else if (i == 116) {
-							param2.setQianwudeng(getCellValue(modelCell));
+							param2.setQianwudeng(getCellValueText(modelCell));
 						}else if (i == 117) {
-							param2.setDadenggaoduketiao(getCellValue(modelCell));
+							param2.setDadenggaoduketiao(getCellValueText(modelCell));
 						}else if (i == 118) {
-							param2.setDadengqixizhuangzhi(getCellValue(modelCell));
+							param2.setDadengqixizhuangzhi(getCellValueText(modelCell));
 						}else if (i == 119) {
-							param2.setQiandiandongchechuan(getCellValue(modelCell));
+							param2.setQiandiandongchechuan(getCellValueText(modelCell));
 						}else if (i == 120) {
-							param2.setHoudiandongchechuan(getCellValue(modelCell));
+							param2.setHoudiandongchechuan(getCellValueText(modelCell));
 						}else if (i == 121) {
-							param2.setChechuanfangjia(getCellValue(modelCell));
+							param2.setChechuanfangjia(getCellValueText(modelCell));
 						}else if (i == 122) {
-							param2.setHoushijingdiandong(getCellValue(modelCell));
+							param2.setHoushijingdiandong(getCellValueText(modelCell));
 						}else if (i == 123) {
-							param2.setHoushijingjiare(getCellValue(modelCell));
+							param2.setHoushijingjiare(getCellValueText(modelCell));
 						}else if (i == 124) {
-							param2.setNeiwaihoushijing(getCellValue(modelCell));
+							param2.setNeiwaihoushijing(getCellValueText(modelCell));
 						}else if (i == 125) {
-							param2.setHoushijingdiandongzd(getCellValue(modelCell));
+							param2.setHoushijingdiandongzd(getCellValueText(modelCell));
 						}else if (i == 126) {
-							param2.setZybhuazhuangjing(getCellValue(modelCell));
+							param2.setZybhuazhuangjing(getCellValueText(modelCell));
 						}else if (i == 127) {
-							param2.setHouyushua(getCellValue(modelCell));
+							param2.setHouyushua(getCellValueText(modelCell));
 						}else if (i == 128) {
-							param2.setGanyingyushua(getCellValue(modelCell));
+							param2.setGanyingyushua(getCellValueText(modelCell));
 						}else if (i == 129) {
-							param2.setKongtiaokongzhitype(getCellValue(modelCell));
+							param2.setKongtiaokongzhitype(getCellValueText(modelCell));
 						}else if (i == 130) {
-							param2.setHoupaidulikongtiao(getCellValue(modelCell));
+							param2.setHoupaidulikongtiao(getCellValueText(modelCell));
 						}else if (i == 131) {
-							param2.setHouzuochufengkou(getCellValue(modelCell));
+							param2.setHouzuochufengkou(getCellValueText(modelCell));
 						}else if (i == 132) {
-							param2.setWendufenqu(getCellValue(modelCell));
+							param2.setWendufenqu(getCellValueText(modelCell));
 						}else if (i == 133) {
-							param2.setCheneikongqitj(getCellValue(modelCell));
+							param2.setCheneikongqitj(getCellValueText(modelCell));
 						}else if (i == 134) {
-							param2.setChezaibingxiang(getCellValue(modelCell));
+							param2.setChezaibingxiang(getCellValueText(modelCell));
 						}else if (i == 135) {
-							param2.setZidongbocheruwei(getCellValue(modelCell));
+							param2.setZidongbocheruwei(getCellValueText(modelCell));
 						}else if (i == 136) {
-							param2.setFadongjiqidong(getCellValue(modelCell));
+							param2.setFadongjiqidong(getCellValueText(modelCell));
 						}else if (i == 137) {
-							param2.setBingxianfuzhu(getCellValue(modelCell));
+							param2.setBingxianfuzhu(getCellValueText(modelCell));
 						}else if (i == 138) {
-							param2.setChedaopianli(getCellValue(modelCell));
+							param2.setChedaopianli(getCellValueText(modelCell));
 						}else if (i == 139) {
-							param2.setZhudongshache(getCellValue(modelCell));
+							param2.setZhudongshache(getCellValueText(modelCell));
 						}else if (i == 140) {
-							param2.setZhengtizhudong(getCellValue(modelCell));
+							param2.setZhengtizhudong(getCellValueText(modelCell));
 						}else if (i == 141) {
-							param2.setYeshixitong(getCellValue(modelCell));
+							param2.setYeshixitong(getCellValueText(modelCell));
 						}else if (i == 142) {
-							param2.setZhongkongyejing(getCellValue(modelCell));
+							param2.setZhongkongyejing(getCellValueText(modelCell));
 						}else if (i == 143) {
-							param2.setZishiyingxunhang(getCellValue(modelCell));
+							param2.setZishiyingxunhang(getCellValueText(modelCell));
 						}else if (i == 144) {
-							param2.setQuanjingshexiangtou(getCellValue(modelCell));
+							param2.setQuanjingshexiangtou(getCellValueText(modelCell));
 						}
 					}
 					param2.setCartTypeCd(request.getParameter("typeCd"));
@@ -532,6 +532,39 @@ public class CommonController extends AbstractController {
 
 		return ret; // 有必要自行trim
 	}
+	
+	public String getCellValueText(Cell cell) {
+		String ret;
+		switch (cell.getCellType()) {
+		case Cell.CELL_TYPE_BLANK:
+			ret = "";
+			break;
+		case Cell.CELL_TYPE_BOOLEAN:
+			ret = String.valueOf(cell.getBooleanCellValue());
+			break;
+		case Cell.CELL_TYPE_ERROR:
+			ret = null;
+			break;
+		case Cell.CELL_TYPE_FORMULA:
+			Workbook wb = cell.getSheet().getWorkbook();
+			CreationHelper crateHelper = wb.getCreationHelper();
+			FormulaEvaluator evaluator = crateHelper.createFormulaEvaluator();
+			ret = getCellValue(evaluator.evaluateInCell(cell));
+			break;
+		case Cell.CELL_TYPE_NUMERIC:
+			double data = cell.getNumericCellValue();
+			java.text.DecimalFormat myformat = new java.text.DecimalFormat("0");
+			ret = myformat.format(data);
+			break;
+		case Cell.CELL_TYPE_STRING:
+			ret = cell.getRichStringCellValue().getString();
+			break;
+		default:
+			ret = null;
+		}
+
+		return ret; // 有必要自行trim
+	}
 
 	public String getCellValueNew(Cell cell) {
 		String ret;
@@ -564,5 +597,10 @@ public class CommonController extends AbstractController {
 		}
 
 		return ret; // 有必要自行trim
+	}
+	
+	public static void main(String[] args){
+		java.text.DecimalFormat myformat = new java.text.DecimalFormat("0.00");
+		System.out.println(myformat.format(new Double("1")));
 	}
 }
