@@ -20,7 +20,7 @@
 	</select>
 	
 	<select id="queryListByTypeCd" resultType="com.framework.entity.TCarouselEntity">
-		select * from t_carousel where 1=1
+		select * from t_carousel where 1=1 and flg=1
 		<if test="typeCd != null">
 			and type_cd=#{typeCd}
 		</if>
@@ -28,7 +28,7 @@
 	</select>
 	
 	<select id="queryCarouselByTypeCd" resultType="com.framework.entity.TCarouselEntity">
-		select * from t_carousel where 1=1
+		select * from t_carousel where 1=1 and flg=1
 		<if test="typeCd != null">
 			and type_cd=#{typeCd}
 		</if>
