@@ -97,6 +97,15 @@ var vm = new Vue({
 				alert("请选择xls文件");
 				return;
 			}
+			
+			var filename = fileObj.name;
+			var index = filename.lastIndexOf(".");
+			var ext = filename.substr(index+1);
+			if(ext != "xls"){
+				alert("请选择xls文件");
+				return;
+			}
+			
 			formFile.append("uploadFile", fileObj); 
 			$.ajax({
 				type: "POST",

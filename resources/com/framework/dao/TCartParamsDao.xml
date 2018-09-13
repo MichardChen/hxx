@@ -227,7 +227,6 @@
 			<if test="ertongzuoyijiekou != null">`ertongzuoyijiekou` = #{ertongzuoyijiekou}, </if>
 			<if test="fadongjifangdao != null">`fadongjifangdao` = #{fadongjifangdao}, </if>
 			<if test="cheneizhognkongsuo != null">`cheneizhognkongsuo` = #{cheneizhognkongsuo}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}</if>
 			<if test="cartTypeCd != null">`cart_type_cd` = #{cartTypeCd}</if>
 		</set>

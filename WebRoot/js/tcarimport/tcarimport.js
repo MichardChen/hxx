@@ -91,6 +91,15 @@ var vm = new Vue({
 				alert("请选择xls文件");
 				return;
 			}
+			
+			var filename = fileObj.name;
+			var index = filename.lastIndexOf(".");
+			var ext = filename.substr(index+1);
+			if(ext != "xls"){
+				alert("请选择xls文件");
+				return;
+			}
+			
 			var url = "../common/uploadExcelFile";
 			formFile.append("typeCd","110003");
 			formFile.append("uploadFile", fileObj); 

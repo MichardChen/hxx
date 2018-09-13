@@ -41,6 +41,8 @@ var vm = new Vue({
 				var  url = "../tdocument/save";
 				vm.tDocument.content = $("#content").summernote('code');
 				var formFile = new FormData();
+				 vm.tDocument.title=$("#title").val();
+				 vm.tDocument.typeCd=$("#typeCd").val();
 				formFile.append("tDocument", JSON.stringify(vm.tDocument));
 				$.ajax({
 					type: "POST",
