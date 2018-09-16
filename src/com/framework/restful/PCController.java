@@ -1100,7 +1100,7 @@ public class PCController extends RestfulController{
 		}else{
 			model.setCarName(car.getCarName());
 		}
-		model.setPeriods(StringUtil.toString(car.getPeriods()));
+		
 		TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(car.getCarSeriesId());
 		if(seriesEntity != null){
 			model.setCarSeriesName(seriesEntity.getCarSerial());
@@ -1111,7 +1111,7 @@ public class PCController extends RestfulController{
 		model.setLabels(car.getLabels());
 		//36期首付和月供、备注、分期数
 		model.setFirstPayment(StringUtil.formatCarPrice(car.getFinalPayment(),0));
-		model.setPeriods1(StringUtil.toString(car.getPeriod1()));
+		model.setPeriods(StringUtil.toString(car.getPeriod1()));
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
 		model.setContainTaxPrice(StringUtil.formatCarPrice(car.getCarTaxCost(), 0));
 		model.setDescUrl(StringUtil.cutBodyHeader(car.getContent()));
@@ -1121,6 +1121,7 @@ public class PCController extends RestfulController{
 		
 		/////0724修改
 		//48期首付和月供、备注、分期数
+		model.setPeriods1(StringUtil.toString(car.getPeriods()));
 		model.setFirstPayment1(StringUtil.formatCarPrice(car.getFirstPayment1(),0));
 		model.setMonthPayment1(StringUtil.formatCarPrice(car.getMonthPayment1(), 1));
 		
@@ -1234,26 +1235,26 @@ public class PCController extends RestfulController{
 		model.setIcons(StringUtil.splitImg(car.getPcIcon(), ","));
 		model.setFirmPrice(StringUtil.formatCarPrice(car.getFirmCost(),0));
 		model.setCarInfo(car.getCarTypeInfo());
-		//48期首付和月供、备注、分期数
+		//36期首付和月供、备注、分期数
 		model.setFirstPayment(StringUtil.formatCarPrice(car.getFirstPayment(),0));
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
 		model.setMark(car.getMark());
-		model.setPeriods(car.getPeriods());
+		model.setPeriods(car.getPeriod1());
 		if(car.getFirstPayment() == null) {
-			model.setFlg2(0);
+			model.setFlg1(0);
 		}else {
-			model.setFlg2(1);
+			model.setFlg1(1);
 		}
 		
-		//36期首付、月供、备注、分期数
+		//48期首付、月供、备注、分期数
 		model.setFirstPayment1(StringUtil.formatCarPrice(car.getFirstPayment1(),0));
 		model.setMonthPayment1(StringUtil.formatCarPrice(car.getMonthPayment1(), 1));
 		model.setMark1(car.getMark());
 		model.setPeriods1(car.getPeriods());
 		if(car.getFirstPayment1() == null) {
-			model.setFlg1(0);
+			model.setFlg2(0);
 		}else {
-			model.setFlg1(1);
+			model.setFlg2(1);
 		}
 		//1+3首年首付、首年月供、一年后分期数、一年后分期月供
 		model.setTfirstYearFirstPay(StringUtil.formatCarPrice(car.getTfirstYearFirstPay(),0));
