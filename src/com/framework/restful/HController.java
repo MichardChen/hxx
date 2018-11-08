@@ -230,7 +230,7 @@ public class HController extends RestfulController{
 			if(e.getShowFlg()==3){
 				lcm.setFirstPayment(StringUtil.formatCarPrice(e.getTfirstYearFirstPay(),0));
 				lcm.setMonthPayment(StringUtil.formatCarPrice(e.getTfirstYearMonthPayment(),1));
-				lcm.setPeriod(StringUtil.toString(e.getPeriods1()));
+				lcm.setPeriod(StringUtil.toString(e.getTperiods()));
 			}
 			
 			TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObject(e.getCarSeriesId());
@@ -1345,32 +1345,20 @@ public class HController extends RestfulController{
 		model.setMonthPayment(StringUtil.formatCarPrice(car.getMonthPayment(), 1));
 		model.setMark(car.getMark());
 		model.setPeriods(car.getPeriods());
-		if(car.getFirstPayment()==null) {
-			model.setFlg2(0);
-		}else {
-			model.setFlg2(1);
-		}
+		
 		//48期首付、月供、备注、分期数
 		model.setFirstPayment1(StringUtil.formatCarPrice(car.getFirstPayment1(),0));
 		model.setMonthPayment1(StringUtil.formatCarPrice(car.getMonthPayment1(), 1));
 		model.setMark1(car.getMark());
 		model.setPeriods1(car.getPeriods());
-		if(car.getFirstPayment1()==null) {
-			model.setFlg1(0);
-		}else {
-			model.setFlg1(1);
-		}
+		
 		//1+3首年首付、首年月供、一年后分期数、一年后分期月供
 		model.setTfirstYearFirstPay(StringUtil.formatCarPrice(car.getTfirstYearFirstPay(),0));
 		model.setTfirstYearMonthPayment(StringUtil.formatCarPrice(car.getTfirstYearMonthPayment(),1));
 		model.setTperiods(car.getTperiods());
 		model.setTmonthPayment(StringUtil.formatCarPrice(car.getTmonthPayment(),1));
 		model.setFinalPayment(StringUtil.formatCarPrice(car.getFinalPayment(), 0));
-		if(car.getTfirstYearFirstPay() == null) {
-			model.setFlg3(0);
-		}else {
-			model.setFlg3(1);
-		}
+		
 		model.setBuyPay(StringUtil.formatCarPrice(car.getRealFirstPayment(),0));
 		model.setServiceFee(StringUtil.formatCarPrice(car.getServiceFee(),1));
 		//客服电话

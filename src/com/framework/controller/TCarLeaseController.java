@@ -211,7 +211,7 @@ public class TCarLeaseController {
 		entity.setMark(viewModel.getString("mark"));
 		entity.setFirstPayment1(viewModel.getBigDecimal("firstPayment1"));
 		entity.setMonthPayment1(viewModel.getBigDecimal("monthPayment1"));
-		entity.setPeriods1(36);
+		entity.setPeriod1(36);
 		entity.setPeriods(48);
 		entity.setMark1(viewModel.getString("mark1"));
 		entity.setTfirstYearFirstPay(viewModel.getBigDecimal("tfirstYearFirstPay"));
@@ -302,7 +302,7 @@ public class TCarLeaseController {
 		entity.setMark(viewModel.getString("mark"));
 		entity.setFirstPayment1(viewModel.getBigDecimal("firstPayment1"));
 		entity.setMonthPayment1(viewModel.getBigDecimal("monthPayment1"));
-		entity.setPeriods1(36);
+		entity.setPeriod1(36);
 		entity.setMark1(viewModel.getString("mark1"));
 		entity.setTfirstYearFirstPay(viewModel.getBigDecimal("tfirstYearFirstPay"));
 		entity.setTfirstYearMonthPayment(viewModel.getBigDecimal("tfirstYearMonthPayment"));

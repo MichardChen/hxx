@@ -232,7 +232,7 @@
 			#{mark},
 			#{firstPayment1},
 			#{monthPayment1},
-			#{periods1},
+			#{period1},
 			#{mark1},
 			#{tfirstYearFirstPay},
 			#{tfirstYearMonthPayment},
@@ -277,7 +277,7 @@
 			<if test="mark != null">`mark` = #{mark},</if>
 			<if test="firstPayment1 != null">`first_payment1` = #{firstPayment1},</if>
 			<if test="monthPayment1 != null">`month_payment1` = #{monthPayment1},</if>
-			<if test="periods1 != null">`period1` = #{periods1},</if>
+			<if test="period1 != null">`period1` = #{period1},</if>
 			<if test="mark1 != null">`mark1` = #{mark1},</if>
 			<if test="tfirstYearFirstPay != null">`tfirst_year_firstpay` = #{tfirstYearFirstPay},</if>
 			<if test="tfirstYearMonthPayment != null">`tfirst_year_month_payment` = #{tfirstYearMonthPayment},</if>
