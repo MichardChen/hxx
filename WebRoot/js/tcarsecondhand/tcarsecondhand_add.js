@@ -47,7 +47,7 @@ var vm = new Vue({
                 $("#carName").val(r.tCarSecondhand.carName);
                 $("#brand").val(r.tCarSecondhand.brand);
                 $("#carTaxCost").val(r.tCarSecondhand.carTaxCost);
-                $("#periods").val(r.tCarSecondhand.periods);
+              //  $("#periods").val(r.tCarSecondhand.periods);
                 $("#labels").val(r.tCarSecondhand.labels);
                 $("#finalPayment").val(r.tCarSecondhand.finalPayment);
                 $("#cartId").val(r.tCarSecondhand.id);
@@ -74,7 +74,7 @@ var vm = new Vue({
 	                $("#mark3").val(r.tCarSecondhand.mark3);
 	                $("#firstPayment1").val(r.tCarSecondhand.firstPayment1);
 	                $("#monthPayment1").val(r.tCarSecondhand.monthPayment1);
-	                $("#periods1").val(r.tCarSecondhand.periods1);
+	                //$("#periods1").val(r.tCarSecondhand.periods1);
 	                $("#mark1").val(r.tCarSecondhand.mark1);
 	                $("#tfirstYearFirstPay").val(r.tCarSecondhand.tfirstYearFirstPay);
 	                $("#tfirstYearMonthPayment").val(r.tCarSecondhand.tfirstYearMonthPayment);
@@ -178,7 +178,7 @@ var vm = new Vue({
 			vm.tCarSecondhand.titleLabel = $("#titleLabel").val();
 			vm.tCarSecondhand.carSeriesId = $("#series").val();
 			vm.tCarSecondhand.carTaxCost = $("#carTaxCost").val();
-			vm.tCarSecondhand.periods = $("#periods").val();
+			//vm.tCarSecondhand.periods = $("#periods").val();
 			vm.tCarSecondhand.labels = $("#labels").val();
 			vm.tCarSecondhand.finalPayment = $("#finalPayment").val();
 			vm.tCarSecondhand.flg = $("#flg").val();
@@ -186,7 +186,7 @@ var vm = new Vue({
 			vm.tCarSecondhand.mark3 =  $("#mark3").val();
 			vm.tCarSecondhand.firstPayment1 =  $("#firstPayment1").val();
 			vm.tCarSecondhand.monthPayment1 =  $("#monthPayment1").val();
-			vm.tCarSecondhand.periods1 =  $("#periods1").val();
+			//vm.tCarSecondhand.periods1 =  $("#periods1").val();
 			vm.tCarSecondhand.mark1 =  $("#mark1").val();
 			vm.tCarSecondhand.tfirstYearFirstPay =  $("#tfirstYearFirstPay").val();
 			vm.tCarSecondhand.tfirstYearMonthPayment =  $("#tfirstYearMonthPayment").val();
@@ -275,10 +275,10 @@ var vm = new Vue({
 					alert("请输入新车含税价");
 					return;
 				}
-				if(!$("#periods").val()){
+				/*if(!$("#periods").val()){
 					alert("请输入已使用年数");
 					return;
-				}
+				}*/
 				if(!$("#labels").val()){
 					alert("请输入标签");
 					return;
@@ -386,10 +386,10 @@ var vm = new Vue({
 					alert("请输入新车含税价");
 					return;
 				}
-				if(!$("#periods").val()){
+				/*if(!$("#periods").val()){
 					alert("请输入已使用年数");
 					return;
-				}
+				}*/
 				if(!$("#labels").val()){
 					alert("请输入标签");
 					return;

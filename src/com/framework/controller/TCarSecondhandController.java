@@ -224,14 +224,14 @@ public class TCarSecondhandController {
 		entity.setCarColor(viewModel.getString("carColor"));
 		entity.setFinalPayment(viewModel.getBigDecimal("finalPayment"));
 		entity.setLabels(viewModel.getString("labels"));
-		entity.setPeriods(viewModel.getInteger("periods"));
+		entity.setPeriods(36);
 		entity.setFinalPayment(viewModel.getBigDecimal("finalPayment"));
 		entity.setFlg(viewModel.getInteger("flg"));
 		//新增
 		entity.setMark3(viewModel.getString("mark3"));
 		entity.setFirstPayment1(viewModel.getBigDecimal("finalPayment"));
 		entity.setMonthPayment1(viewModel.getBigDecimal("finalPayment"));
-		entity.setPeriod1(viewModel.getInteger("periods1"));
+		entity.setPeriod1(48);
 		entity.setMark1(viewModel.getString("mark1"));
 		entity.setTfirstYearFirstPay(viewModel.getBigDecimal("tfirstYearFirstPay"));
 		entity.setTfirstYearMonthPayment(viewModel.getBigDecimal("tfirstYearMonthPayment"));
@@ -321,7 +321,7 @@ public class TCarSecondhandController {
 		entity.setCarColor(viewModel.getString("carColor"));
 		entity.setFinalPayment(viewModel.getBigDecimal("finalPayment"));
 		entity.setLabels(viewModel.getString("labels"));
-		entity.setPeriods(viewModel.getInteger("periods"));
+		entity.setPeriods(36);
 		entity.setFinalPayment(viewModel.getBigDecimal("finalPayment"));
 		entity.setId(viewModel.getInteger("id"));
 		entity.setFlg(viewModel.getInteger("flg"));
@@ -329,7 +329,7 @@ public class TCarSecondhandController {
 		entity.setMark3(viewModel.getString("mark3"));
 		entity.setFirstPayment1(viewModel.getBigDecimal("finalPayment"));
 		entity.setMonthPayment1(viewModel.getBigDecimal("finalPayment"));
-		entity.setPeriod1(viewModel.getInteger("periods1"));
+		entity.setPeriod1(48);
 		entity.setMark1(viewModel.getString("mark1"));
 		entity.setTfirstYearFirstPay(viewModel.getBigDecimal("tfirstYearFirstPay"));
 		entity.setTfirstYearMonthPayment(viewModel.getBigDecimal("tfirstYearMonthPayment"));
