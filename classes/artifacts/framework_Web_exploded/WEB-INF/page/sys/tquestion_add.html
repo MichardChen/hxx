@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+#parse("sys/header.html")
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+	<div class="panel-heading">{{title}}</div>
+	<form class="form-horizontal">
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">联系电话</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tQuestion.mobile}}</label>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">联系人</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tQuestion.linkMan}}</label>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">咨询汽车</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tQuestion.cartId}}</label>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">咨询内容</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tQuestion.question}}</label>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">处理人员</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tQuestion.employeeId}}</label>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">反馈时间</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tQuestion.createTime}}</label>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">处理时间</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tQuestion.updateTime}}</label>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">状态</div>
+		   	<div class="col-sm-10">
+		   			<select  class="form-control" v-model="tQuestion.status" name="status">
+			   			<option value="050001">待处理</option>
+			   			<option value="050002">已处理</option>
+			   		</select>
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-2 control-label"></div> 
+			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
+		</div>
+	</form>
+</div>
+
+<script src="${rc.contextPath}/js/tquestion/tquestion_add.js?_${date.systemTime}"></script>
+</body>
+</html>

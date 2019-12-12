@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TBrandDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TBrandEntity">
+		select * from t_brand where id = #{value}
+	</select>
+	<select id="queryObjectByName" resultType="com.framework.entity.TBrandEntity">
+		select * from t_brand where brand = #{name} limit 1
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TBrandEntity">
+		select * from t_brand 
+		where 1=1
+		<if test="queryBrand != null and queryBrand != ''">
+			and brand like "%${queryBrand}%"
+		</if>
+		order by flg desc,update_time desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	<select id="queryAllList" resultType="com.framework.entity.TBrandEntity">
+		select * from t_brand where 1=1
+		<if test="flg != null">
+			and flg=#{flg}
+		</if>
+		order by word asc
+	</select>
+	<select id="queryShowBrandList" resultType="com.framework.entity.TBrandEntity">
+		select * from t_brand where 1=1 and flg=1
+		<if test="showFlg != null">
+			and showflg=#{showFlg}
+		</if>
+		order by update_time desc,word asc limit 0,9
+	</select>
+	<select id="queryImportBrandList" resultType="com.framework.entity.TBrandEntity">
+		select * from t_brand where 1=1 and importflg=1 and flg=1
+		order by update_time desc,word asc limit 0,9
+	</select>
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_brand where 1=1
+		<if test="queryBrand != null and queryBrand != ''">
+			and brand like "%${queryBrand}%"
+		</if>
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TBrandEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_brand
+		(
+			`brand`, 
+			`brand_icon`, 
+			`create_by`, 
+			`update_by`, 
+			`create_time`, 
+			`update_time`,
+			`word`,
+			`flg`,
+			`showflg`,
+			`importflg`
+		)
+		values
+		(
+			#{brand}, 
+			#{brandIcon}, 
+			#{createBy}, 
+			#{updateBy}, 
+			#{createTime}, 
+			#{updateTime},
+			#{word},
+			#{flg},
+			#{showflg},
+			#{importflg}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TBrandEntity">
+		update t_brand 
+		<set>
+			<if test="brand != null">`brand` = #{brand}, </if>
+			<if test="brandIcon != null">`brand_icon` = #{brandIcon}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime},</if>
+			<if test="word != null">`word` = #{word},</if>
+			<if test="showflg != null">`showflg` = #{showflg},</if>
+			<if test="flg != null">`flg` = #{flg},</if>
+			<if test="importflg != null">`importflg` = #{importflg}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_brand where id = #{value}
+	</delete>
+	
+	<update id="deleteBatch">
+		update t_brand set flg=0 where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+</mapper>

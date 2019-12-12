@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+#parse("sys/header.html")
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+	<div class="panel-heading">{{title}}</div>
+	<form class="form-horizontal" style="width:100%;" enctype="multipart/form-data">
+		<div class="form-group">
+			<div class="col-sm-2 control-label">车名</div>
+		   	<div class="col-sm-3">
+		      <input type="text" class="form-control"  id="carName" placeholder="请输入车名"/>
+		    </div>
+		   	<div class="col-sm-2 control-label">品牌</div>
+		   	<div class="col-sm-3">
+		   		<select  class="form-control" id="brand" @change="selectBrand">
+		   			<option value="0">请选择汽车品牌</option>
+		   		</select>
+		    </div>
+		</div>
+		<div class="form-group">
+		   <div class="col-sm-2 control-label">封面图片(260x270px)</div>
+		   	<div class="col-sm-3">
+		      <a style="text-decoration: none;display: none;" target="_blank" id="icon">查看封面</a><input type="file" name="uFile" id="uFile" placeholder=""/>
+		    </div>
+		    <div class="col-sm-2 control-label">汽车详情图片(500x333px)</div>
+		   	<div class="col-sm-3">
+		      <a style="text-decoration: none;display: none;" target="_blank" id="pcIcon">查看封面</a><input type="file"  name="uFile1" id="uFile1" placeholder="" multiple="multiple"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">市场价</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="marketPrice" placeholder="请输入市场价(单位：万)"/>
+		    </div>
+		   	<div class="col-sm-2 control-label">参考价</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="nowPrice" placeholder="请输入参考价(单位：万)"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">最大节省</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control" id="maxSave" placeholder="请输入最大节省金额(单位：万)"/>
+		    </div>
+		    <div class="col-sm-2 control-label">凭预购单购买优惠金额</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="favourMoney" placeholder="请输入预购单优惠金额(单位：万)"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">备注</div>
+		   	<div class="col-sm-6">
+		      <input type="text" class="form-control"  id="mark" placeholder="请输入备注"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">车辆颜色</div>
+		   	<div class="col-sm-6">
+		      <input type="text" class="form-control"  id="carColor" placeholder="请输入颜色编号,用','隔开"/>
+		      <a href="http://link.fobshanghai.com/rgbcolor.htm" target="_blank" style="text-decoration: none;">查看颜色编号</a>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">优势条件</div>
+		   	<div class="col-sm-3">
+		      <input type="text" class="form-control"  id="favour" placeholder="请输入优势条件"/>
+		    </div>
+		   	<div class="col-sm-2 control-label">服务优势</div>
+		   	<div class="col-sm-3">
+		      <input type="text" class="form-control"  id="servicePiror" placeholder="请输入服务优势"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">热度</div>
+		   	<div class="col-sm-3">
+		      <input type="text" class="form-control"  id="hot" placeholder="请输入热度"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">标签</div>
+		   	<div class="col-sm-3">
+		      <input type="text" class="form-control"  id="labels" placeholder="请输入标签,以','隔开"/>
+		    </div>
+		   	<div class="col-sm-2 control-label">主标签</div>
+		   	<div class="col-sm-3">
+		      	<input type="text" class="form-control"  id="titleLabel" placeholder="请输入主标签"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">车辆级别</div>
+		   	<div class="col-sm-3">
+		   		<select  class="form-control"  id="carLevelCd">
+		   			<option value="060001">小型车</option>
+		   			<option value="060002">中型车</option>
+		   			<option value="060003">SUV</option>
+		   			<option value="060004">MPV</option>
+		   			<option value="060005">跑车</option>
+		   		</select>
+		    </div>
+		   	<div class="col-sm-2 control-label">车辆品类</div>
+		   	<div class="col-sm-3">
+		   		<select  class="form-control"  id="carClassCd">
+		   			<option value="070001">美规</option>
+		   			<option value="070002">加规</option>
+		   			<option value="070003">墨规</option>
+		   			<option value="070004">中规</option>
+		   			<option value="070005">欧规</option>
+		   		</select>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">车系</div>
+		   	<div class="col-sm-3">
+		      <select  class="form-control" id="series">
+		   			<option value="0">请选择车系</option>
+		   		</select>
+		    </div>
+		     <div class="col-sm-2 control-label">状态</div>
+		   	<div class="col-sm-3">
+		      	<select  class="form-control"  id="flg">
+		   			<option value="1">在售中</option>
+		   			<option value="0">下架中</option>
+		   		</select>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">汽车详情</div>
+		   	<div class="col-sm-10">
+		   		<textarea id="content" name="content" v-model="tCarImport.content" class="summernote">
+				</textarea>
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-2 control-label"></div> 
+			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
+		</div>
+		<input type="hidden" id="cartId"/>
+	</form>
+</div>
+<link rel="stylesheet" type="text/css" href="${rc.contextPath}/summernote/css/bootstrap.css">
+<link href="${rc.contextPath}/summernote/dist/summernote.css" rel="stylesheet"/>
+<script src="${rc.contextPath}/summernote/js/jquery.min.js"></script>
+<script src="${rc.contextPath}/summernote/js/bootstrap.min.js"></script>
+<script src="${rc.contextPath}/summernote/dist/summernote.js"></script>
+<script src="${rc.contextPath}/summernote/dist/lang/summernote-zh-CN.js"></script>    <!-- 中文-->
+<script src="${rc.contextPath}/js/sys/common.js"></script>
+<script src="${rc.contextPath}/js/tcarimport/tcarimport_add.js?_${date.systemTime}"></script>
+</body>
+</html>

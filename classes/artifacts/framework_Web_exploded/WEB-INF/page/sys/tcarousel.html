@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+#parse("sys/header.html")
+</head>
+<body>
+<div id="rrapp">
+	<div class="grid-btn">
+		<a class="btn btn-default" href="tcarousel_add.html">新增</a>
+		<button type="button"  class="btn btn-default" @click="update">修改</button>
+		<button type="button" class="btn btn-default" @click="del">删除</button>
+	</div>
+	<div class="grid-btn">
+		<select  class="form-control" id="type" style="display: inline-block;width: 200px;">
+		   			<option value="">请图片类型</option>
+		   			<option value="040001">店招</option>
+		   			<option value="040002">PC版首页轮播图</option>
+		   			<option value="040003">微信h5轮播图</option>
+		   			<option value="040004">小程序轮播图</option>
+		   			<option value="040005">小程序以租代购横幅</option>
+		   			<option value="040006">小程序二手车横幅</option>
+		   			<option value="040007">小程序平行进口车横幅</option>
+		   			<option value="040008">pc以租代购横幅</option>
+		   			<option value="040009">pc二手车横幅</option>
+		   			<option value="040010">pc平行进口横幅</option>
+		   			<option value="040011">微信h5以租代购横幅</option>
+		   			<option value="040012">微信h5二手车横幅</option>
+		   			<option value="040013">微信h5平行进口车横幅</option>
+		   			<option value="040014">平行进口车常见问题</option>
+		   			<option value="040015">会淘车购买须知</option>
+		   			<option value="040016">会淘车购买说明</option>
+		   			<option value="040017">惠搜车购买须知</option>
+		   			<option value="040018">惠搜车购买说明</option>
+		   			<option value="040019">惠车邦售后服务图片</option>
+		   			<!-- pc -->
+		   			<option value="040020">pc平行进口车常见问题</option>
+		   			<option value="040021">pc会淘车购买须知</option>
+		   			<option value="040022">pc会淘车购买说明</option>
+		   			<option value="040023">pc惠搜车购买须知</option>
+		   			<option value="040024">pc惠搜车购买说明</option>
+		   			<option value="040025">pc惠车邦售后服务图片</option>
+		</select>
+		<button type="button" class="btn btn-info" @click="search">查询</button>
+	</div>
+    <table id="jqGrid"></table>
+    <div id="jqGridPager"></div>
+</div>
+
+<script src="${rc.contextPath}/js/tcarousel/tcarousel.js?_${date.systemTime}"></script>
+</body>
+</html>

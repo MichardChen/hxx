@@ -1,20 +1,14 @@
 package com.framework.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.catalina.tribes.util.UUIDGenerator;
-import org.apache.commons.lang3.StringUtils;
+import com.alibaba.fastjson.JSONObject;
+import com.framework.constants.Constants;
+import com.framework.entity.LocationCityEntity;
+import com.framework.entity.LocationProvinceEntity;
+import com.framework.entity.TCartParam2Entity;
+import com.framework.entity.TCartParamsEntity;
+import com.framework.model.ImportParamsModel;
+import com.framework.service.*;
+import com.framework.utils.*;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -23,7 +17,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,26 +26,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import com.alibaba.fastjson.JSONObject;
-import com.framework.constants.Constants;
-import com.framework.entity.LocationCityEntity;
-import com.framework.entity.LocationProvinceEntity;
-import com.framework.entity.TBrandEntity;
-import com.framework.entity.TCartParam2Entity;
-import com.framework.entity.TCartParamsEntity;
-import com.framework.model.ImportParamsModel;
-import com.framework.service.FileService;
-import com.framework.service.LocationCityService;
-import com.framework.service.LocationProvinceService;
-import com.framework.service.ScheduleJobService;
-import com.framework.service.TCartParam2Service;
-import com.framework.service.TCartParamsService;
-import com.framework.utils.DateUtil;
-import com.framework.utils.ImageTools;
-import com.framework.utils.ImageZipUtil;
-import com.framework.utils.R;
-import com.framework.utils.ReturnData;
-import com.framework.utils.StringUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("common")

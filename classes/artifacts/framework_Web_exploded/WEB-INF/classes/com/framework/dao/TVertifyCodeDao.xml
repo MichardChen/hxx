@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TVertifyCodeDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TVertifyCodeEntity">
+		select * from t_vertify_code where id = #{value}
+	</select>
+	
+	<select id="queryCodeByMobile" resultType="com.framework.entity.TVertifyCodeEntity">
+		select * from t_vertify_code where mobile = #{mobile} and code_type_cd=#{typeCd}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TVertifyCodeEntity">
+		select * from t_vertify_code 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_vertify_code 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TVertifyCodeEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_vertify_code
+		(
+			`mobile`, 
+			`user_type_cd`, 
+			`code`, 
+			`expire_time`, 
+			`create_time`, 
+			`update_time`, 
+			`code_type_cd`
+		)
+		values
+		(
+			#{mobile}, 
+			#{userTypeCd}, 
+			#{code}, 
+			#{expireTime}, 
+			#{createTime}, 
+			#{updateTime}, 
+			#{codeTypeCd}
+		)
+	</insert>
+	<update id="updateExpireCode">
+			update t_vertify_code 
+		<set>
+			<if test="nowTime != null">`expire_time` = #{nowTime}, </if>
+			<if test="nowTime != null">`update_time` = #{nowTime}, </if>
+		</set>
+		where id = #{id}
+	</update>
+	<update id="update" parameterType="com.framework.entity.TVertifyCodeEntity">
+		update t_vertify_code 
+		<set>
+			<if test="mobile != null">`mobile` = #{mobile}, </if>
+			<if test="userTypeCd != null">`user_type_cd` = #{userTypeCd}, </if>
+			<if test="code != null">`code` = #{code}, </if>
+			<if test="expireTime != null">`expire_time` = #{expireTime}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="codeTypeCd != null">`code_type_cd` = #{codeTypeCd}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_vertify_code where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_vertify_code where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

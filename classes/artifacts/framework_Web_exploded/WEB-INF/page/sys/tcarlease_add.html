@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+#parse("sys/header.html")
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+	<div class="panel-heading">{{title}}</div>
+	<form class="form-horizontal" style="width:100%;" enctype="multipart/form-data">
+		<div class="form-group">
+			<div class="col-sm-2 control-label">汽车名称</div>
+		   	<div class="col-sm-3">
+		      <input type="text" class="form-control"  id="carName" placeholder="请输入汽车名称"/>
+		    </div>
+		    <div class="col-sm-2 control-label">品牌</div>
+		   	<div class="col-sm-3">
+		   		<select  class="form-control"  id="brand" @change="selectBrand">
+		   			<option value="0">请选择汽车品牌</option>
+		   		</select>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">封面图片(260x270px)</div>
+		   	<div class="col-sm-3">
+		   		<a style="text-decoration: none;display: none;" target="_blank" id="icon">查看封面</a><input type="file"  id="uFile" name="uFile" placeholder="请选择汽车图片"/>
+		    </div>
+		    <div class="col-sm-2 control-label">汽车详情图片(500x333px)</div>
+		   	<div class="col-sm-3">
+		   		<a style="text-decoration: none;display: none;" target="_blank" id="pcIcon">查看封面</a><input type="file"  id="uFile1" name="uFile1" placeholder="请选择汽车图片" multiple="multiple"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">车系</div>
+		   	<div class="col-sm-3">
+		   		<select  class="form-control"  id="series">
+		   			<option value="0">请选择车系</option>
+		   		</select>
+		    </div>
+		   <div class="col-sm-2 control-label">车价</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="carCost" placeholder="请输入车价(单位：万元)"/>
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-2 control-label">厂商指导价</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="firmCost" placeholder="请输入厂商指导价(单位：万元)"/>
+		    </div>
+		   	<div class="col-sm-2 control-label">车身颜色</div>
+		   	<div class="col-sm-3">
+		      <input type="text" class="form-control"  id="carColor" placeholder="请输入颜色编号,用','隔开"/>
+		      <a href="http://link.fobshanghai.com/rgbcolor.htm" target="_blank" style="text-decoration: none;">查看颜色编号</a>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">车辆信息</div>
+		   	<div class="col-sm-3">
+		      <input type="text" class="form-control"  id="carTypeInfo" placeholder="请输入车辆信息"/>
+		    </div>
+		    <div class="col-sm-2 control-label">先用年数</div>
+		   	<div class="col-sm-3">
+		      <input type="text" class="form-control"  id="year" placeholder="请输入先用年数"/>
+		    </div>
+		</div>
+		<div class="form-group">
+	 <div class="col-sm-2 control-label">主标签</div>
+		   	<div class="col-sm-3">
+		      <input type="text" class="form-control"  id="titleLabel" placeholder="请输入主标签"/>
+		    </div>
+		    <div class="col-sm-2 control-label">标签</div>
+		   	<div class="col-sm-3">
+		      <input type="text" class="form-control"  id="labels" placeholder="请输入标签,用','隔开"/>
+		    </div>
+		</div>
+			<div class="form-group">
+		    <div class="col-sm-2 control-label" style="color:red;">36期</div>
+		   	<div class="col-sm-3">
+		    </div>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-2 control-label">首付</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="firstPayment" placeholder="请输入首付(单位：万元)"/>
+		    </div>
+		    <div class="col-sm-2 control-label">月供</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="monthPayment" placeholder="请输入月供(单位：元)"/>
+		    </div>
+		</div>
+		<div class="form-group" style="display: none;">
+		    <div class="col-sm-2 control-label">备注</div>
+		   	<div class="col-sm-3">
+		      <input type="text" class="form-control"  id="mark" placeholder="如：包含首年保险，购置税，服务费"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-2 control-label" style="color:red;">48期</div>
+		   	<div class="col-sm-3">
+		    </div>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-2 control-label">首付</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="firstPayment1" placeholder="请输入首付(单位：万元)"/>
+		    </div>
+		    <div class="col-sm-2 control-label">月供</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="monthPayment1" placeholder="请输入月供(单位：元)"/>
+		    </div>
+		</div>
+		<div class="form-group" style="display: none;">
+		    <div class="col-sm-2 control-label">备注</div>
+		   	<div class="col-sm-3">
+		      <input type="text" class="form-control"  id="mark1" placeholder="如：包含首年保险，购置税，服务费"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-2 control-label" style="color:red;">1+3</div>
+		   	<div class="col-sm-3">
+		    </div>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-2 control-label">首年首付</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="tfirstYearFirstPay" placeholder="请输入首付(单位：万元)"/>
+		    </div>
+		    <div class="col-sm-2 control-label">首年月供</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="tfirstYearMonthPayment" placeholder="请输入月供(单位：元)"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		    <div class="col-sm-2 control-label">一年后分期数</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="tperiods" placeholder="请输入分期数"/>
+		    </div>
+		    <div class="col-sm-2 control-label">一年后分期月供</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="tmonthPayment" placeholder="请输入月供(单位：元)"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		  	<div class="col-sm-2 control-label">尾款</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="finalPayment" placeholder="请输入尾款(单位：万)"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">购车支付费用(购车后返还)</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="realFirstPayment" placeholder="请输入购车支付费用(单位：万)"/>
+		    </div>
+		    <div class="col-sm-2 control-label">交车服务费用</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control"  id="serviceFee" placeholder="请输入交车服务费用(单位：元)"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">销量</div>
+		   	<div class="col-sm-3">
+		      <input type="number" class="form-control" id="salecount" placeholder="请输入销量"/>
+		    </div>
+		    <div class="col-sm-2 control-label">状态</div>
+		   	<div class="col-sm-3">
+		      	<select  class="form-control"  id="flg">
+		   			<option value="1">在售中</option>
+		   			<option value="0">下架中</option>
+		   		</select>
+		    </div>
+		</div>
+		<!-- 20180724新增 -->
+		<div class="form-group">
+		    <div class="col-sm-2 control-label">首页显示方案</div>
+		   	<div class="col-sm-3">
+		      	<select  class="form-control" id="showflg">
+		   			<option value="1">36期</option>
+		   			<option value="2">48期</option>
+		   			<option value="3">1+3</option>
+		   		</select>
+		    </div>
+		    <div class="col-sm-2 control-label">车型</div>
+		   	<div class="col-sm-3">
+		   			<select  class="form-control"  id="carLevelCd">
+			   			<option value="060001">小型车</option>
+			   			<option value="060002">中型车</option>
+			   			<option value="060003">SUV</option>
+			   			<option value="060004">MPV</option>
+			   			<option value="060005">跑车</option>
+			   		</select>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">汽车详情</div>
+		   	<div class="col-sm-10">
+		   		<textarea id="content" name="content" id="content" class="summernote">
+				</textarea>
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-2 control-label"></div> 
+			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
+		</div>
+		<input type="hidden" id="cartId"/>
+	</form>
+</div>
+<link rel="stylesheet" type="text/css" href="${rc.contextPath}/summernote/css/bootstrap.css">
+<link href="${rc.contextPath}/summernote/dist/summernote.css" rel="stylesheet"/>
+<script src="${rc.contextPath}/summernote/js/jquery.min.js"></script>
+<script src="${rc.contextPath}/summernote/js/bootstrap.min.js"></script>
+<script src="${rc.contextPath}/summernote/dist/summernote.js"></script>
+<script src="${rc.contextPath}/summernote/dist/lang/summernote-zh-CN.js"></script>    <!-- 中文-->
+<script src="${rc.contextPath}/js/sys/common.js"></script>
+<script src="${rc.contextPath}/js/tcarlease/tcarlease_add.js?_${date.systemTime}"></script>
+</body>
+</html>
