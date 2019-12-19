@@ -18,4 +18,6 @@ public interface MemberService {
 	void update(Member member);
 
 	void deleteBatch(Long[] memberIds);
+
+	Member queryByMobile(String mobile);
 }

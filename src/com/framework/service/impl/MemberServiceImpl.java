@@ -45,4 +45,9 @@ public class MemberServiceImpl implements MemberService{
 	public void deleteBatch(Long[] memberIds) {
 		memberDao.deleteBatch(memberIds);
 	}
+
+	@Override
+	public Member queryByMobile(String mobile) {
+		return memberDao.queryByMobile(mobile);
+	}
 }

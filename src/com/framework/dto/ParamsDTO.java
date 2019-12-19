@@ -49,7 +49,7 @@ public class ParamsDTO implements Serializable {
 	private String typeCd;
 	private String brand;
 	private Integer cartFlg;
-	
+
 	public static ParamsDTO getInstance(HttpServletRequest request) {
 
 		dto = new ParamsDTO();
@@ -92,7 +92,7 @@ public class ParamsDTO implements Serializable {
 		dto.setKey(StringUtil.toInteger(request.getParameter("key")));
 		return dto;
 	}
-	
+
 	public int getKey() {
 		return key;
 	}

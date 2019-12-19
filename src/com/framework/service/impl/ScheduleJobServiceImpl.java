@@ -39,13 +39,13 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 	public void init() {
 		List<ScheduleJobEntity> scheduleJobList = schedulerJobDao.queryList(new HashMap<String, Object>());
 		for (ScheduleJobEntity scheduleJob : scheduleJobList) {
-			CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(scheduler, scheduleJob.getJobId());
+			/*CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(scheduler, scheduleJob.getJobId());
 			// 如果不存在，则创建
 			if (cronTrigger == null) {
 				ScheduleUtils.createScheduleJob(scheduler, scheduleJob);
 			} else {
 				ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);
-			}
+			}*/
 		}
 	}
 

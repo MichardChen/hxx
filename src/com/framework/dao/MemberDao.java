@@ -25,10 +25,11 @@ public interface MemberDao extends BaseDao<Member> {
 	 */
 	Member queryByMemberName(String membername);
 
+	Member queryByMobile(String mobile);
+
 	/**
 	 * 修改密码
 	 */
 	int updatePassword(Map<String, Object> map);
-	
-	
+
 }

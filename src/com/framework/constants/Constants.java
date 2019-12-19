@@ -51,20 +51,20 @@ public interface Constants {
 
 	/** 状态码 */
 	public static interface STATUS_CODE {
-		public static final String LOGIN_SUCCESS = "5606";
-		public static final String LOGIN_FAIL = "5607";
-		public static final String LOGIN_FAIL_ERROR_PWD = "560701";
-		public static final String LOGIN_FAIL_USER_NOT_EXIST = "560702";
-		public static final String USER_NOT_LOGIN = "560703";
-		public static final String USER_LOGIN_ANOTHER_DEVICE = "560704";
-		public static final String LOGIN_EXPIRE = "560705";
-		public static final String SUCCESS = "5600";
-		public static final String FAIL = "5700";
-		public static final String LOGIN_ANOTHER_PLACE = "5701";
-		public static final String ACCOUNT_MONEY_NOT_ENOUGH = "5702";
-		public static final String PAYPWD_ERROR = "5703";
-		public static final String IMAGE_UPLOAD_SUCCESS = "5610";
-		public static final String IMAGE_UPLOAD_FAIL = "5611";
+		public static final String SUCCESS = "2000";
+		public static final String FAIL = "4000";
+	}
+
+	public static interface LOGIN_STATUS_CODE{
+		public static final String LOGIN_SUCCESS = "2001";
+		public static final String LOGIN_FAIL = "4001";
+		public static final String LOGIN_FAIL_ERROR_PWD = "4002";
+		public static final String LOGIN_FAIL_USER_NOT_EXIST= "4003";
+		public static final String USER_NOT_LOGIN = "4004";
+		public static final String USER_LOGIN_ANOTHER_DEVICE = "4005";
+		public static final String LOGIN_EXPIRE = "4006";
+		public static final String LOGIN_ANOTHER_PLACE = "4007";
+		public static final String PAYPWD_ERROR = "4008";
 	}
 
 	/** 日期格式 */
@@ -161,16 +161,14 @@ public interface Constants {
 	}*/
 	
 	public static interface FILE_HOST {
-		public static final String DOCUMENT = "/home/tomcat/apache-tomcat-8.0.30/webapps/ROOT/document/";
+		public static final String DOCUMENT = "/home/tomcat7/tomcat7/webapps/ROOT/document/";
 		public static final String IMG = "/home/data/img/";
 	}
 
 	//Linux服务器地址
 	public static interface HOST {
-		public static final String DOCUMENT = "https://www.huisouche8.com/document/";
-		public static final String IMG = "http://www.huisouche8.com:88/img/";
-		public static final String MAP_URL = "https://www.huisouche8.com/framework/map.html";
-		//public static final String MAP_URL = "https://www.yibuwangluo.cn/framework/map.html";
+		public static final String DOCUMENT = "http://47.105.184.157/document/";
+		public static final String IMG = "http://47.105.184.157/img/";
 	}
 	
 	public static interface HTTPS_HOST {
@@ -196,59 +194,8 @@ public interface Constants {
 	}
 
 	public static interface CAROUSEL_TYPE {
-		// 店招
-		public static final String STORY_ZHAO = "040001";
-		// PC版轮播图
-		public static final String PC_INDEX = "040002";
-		// 微信轮播图
-		public static final String WX_INDEX = "040003";
-		// 小程序轮播图
-		public static final String XCX_INDEX = "040004";
-		// 小程序以租代购横幅
-		public static final String CAR_LEASE_IMAGE = "040005";
-		// 小程序二手车横幅
-		public static final String CAR_SECONDHAND_IMAGE = "040006";
-		// 小程序平行进口横幅
-		public static final String CAR_IMPORT_IMAGE = "040007";
-
-		// pc以租代购横幅
-		public static final String PC_CAR_LEASE_IMAGE = "040008";
-		// pc二手车横幅
-		public static final String PC_CAR_SECONDHAND_IMAGE = "040009";
-		// pc平行进口横幅
-		public static final String PC_CAR_IMPORT_IMAGE = "040010";
-
-		// h5以租代购横幅
-		public static final String H5_CAR_LEASE_IMAGE = "040011";
-		// h5二手车横幅
-		public static final String H5_CAR_SECONDHAND_IMAGE = "040012";
-		// h5平行进口横幅
-		public static final String H5_CAR_IMPORT_IMAGE = "040013";
-		// 平行进口车常见问题
-		public static final String IMPORT_CAR_OFTENQUESTION = "040014";
-		// 会淘车购买须知
-		public static final String SECONDHAND_CAR_BUYKONW = "040015";
-		// 会淘车购买说明
-		public static final String SECONDHAND_CAR_BUYMARK = "040016";
-		// 以租代购购买须知
-		public static final String LEASE_CAR_BUYKONW = "040017";
-		// 以租代购购买说明
-		public static final String LEASE_CAR_BUYMARK = "040018";
-		//惠车邦售后服务图片
-		public static final String AFTER_SALE = "040019";
-		//pc
-		//PC平行进口车常见问题
-		public static final String PC_IMPORT_CAR_OFTENQUESTION = "040020";
-		//PC会淘车购买须知
-		public static final String PC_SECONDHAND_CAR_BUYKONW = "040021";
-		//PC会淘车购买说明
-		public static final String PC_SECONDHAND_CAR_BUYMARK = "040022";
-		//PC以租代购购买须知
-		public static final String PC_LEASE_CAR_BUYKONW = "040023";
-		//PC以租代购购买说明
-		public static final String PC_LEASE_CAR_BUYMARK = "040024";
-		//PC惠车邦售后服务图片
-		public static final String PC_AFTER_SALE = "040025";
+		//首页轮播图
+		public static final String INDEX_CAROUSEL = "040001";
 	}
 
 	public static interface SHORT_MESSAGE_TYPE {
@@ -326,5 +273,38 @@ public interface Constants {
 		public static final String CONTACT_US = "120005";
 		public static final String BUYCART_PRODUCE = "120003";
 		public static final String PCODE = "120000";
+	}
+
+	public static interface APP_VERSION{
+		public static final String ANDROID = "140001";
+		public static final String IOS = "140002";
+	}
+
+	/**
+	 * 用户审核状态
+	 */
+	public static interface MEMBER_STATUS{
+		public static final String NOT_REVIEW = "150001";
+		public static final String STAY_REVIRE = "150002";
+		public static final String REVIEW_PASS = "150003";
+		public static final String REVIEW_FAIL = "150004";
+	}
+
+	/**
+	 * 用户类型/用户等级
+	 */
+	public static interface MEMBER_GRADE{
+		//个人
+		public static final String PERSON = "160001";
+		//企业
+		public static final String COMPANY = "160002";
+	}
+
+	/**
+	 * 短信类型
+	 */
+	public static interface SHORT_MSG_TYPE{
+		public static final String REGISTER = "170001";
+		public static final String FORGET_PASSWORD = "170002";
 	}
 }

@@ -48,6 +48,7 @@
 	        	/wxrest/**=anon
 	        	/hrest/**=anon
 	        	/pcrest/**=anon
+				/apprest/**=anon
 	        	/common/**=anon
 	        	/login.html=anon
 	        	/sys/login=anon

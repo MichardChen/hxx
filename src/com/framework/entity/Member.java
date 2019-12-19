@@ -7,50 +7,90 @@ import java.sql.Timestamp;
 public class Member implements Serializable{
 
 	private int id;
-	
+
 	private String mobile;
-	
+
 	private String userPwd;
-	
+
 	private String name;
-	
+
 	private String nickName;
-	
+
 	private String memberGradeCd;
-	
+
 	private int points;
-	
+
 	private BigDecimal moneys;
-	
+
 	private Timestamp createTime;
-	
+
 	private Timestamp updateTime;
-	
+
 	private String icon;
-	
+
 	private int sex;
-	
+
 	private String status;
-	
+
 	private int familiarity;
-	
+
 	private String openAccountFlg;
-	
+
 	private String qq;
-	
+
 	private String wx;
-	
+
 	private String payPwd;
-	
+
 	private String idCode;
-	
+
 	private int storeId;
-	
+
 	private String idCardNo;
-	
+
 	private String idCardImg;
-	
+
 	private String roleCd;
+
+	private String idCardReverseImg;
+
+	private String handIdcardImg;
+
+	private String businessImg;
+
+	private String userTypeCd;
+
+	public String getUserTypeCd() {
+		return userTypeCd;
+	}
+
+	public void setUserTypeCd(String userTypeCd) {
+		this.userTypeCd = userTypeCd;
+	}
+
+	public String getIdCardReverseImg() {
+		return idCardReverseImg;
+	}
+
+	public void setIdCardReverseImg(String idCardReverseImg) {
+		this.idCardReverseImg = idCardReverseImg;
+	}
+
+	public String getHandIdcardImg() {
+		return handIdcardImg;
+	}
+
+	public void setHandIdcardImg(String handIdcardImg) {
+		this.handIdcardImg = handIdcardImg;
+	}
+
+	public String getBusinessImg() {
+		return businessImg;
+	}
+
+	public void setBusinessImg(String businessImg) {
+		this.businessImg = businessImg;
+	}
 
 	public int getId() {
 		return id;

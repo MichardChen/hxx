@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.framework.dao.UserTokenDao">
+    <select id="queryPlatToken" resultType="com.framework.entity.UserToken">
+        select * from user_token where user_id = #{userId} and user_type_cd = #{userTypeCd} and platform = #{platform} and token = #{token}
+    </select>
+    <select id="queryToken" resultType="com.framework.entity.UserToken">
+        select * from user_token where user_id = #{userId} and user_type_cd = #{userTypeCd} and platform = #{platform}
+    </select>
+    <insert id="save" parameterType="com.framework.entity.UserToken" useGeneratedKeys="true" keyProperty="id">
+        insert into user_token
+        (
+            `user_id`,
+            `token`,
+            `platform`,
+            `user_type_cd`,
+            `create_time`,
+            `update_time`,
+            `expire_time`
+        )
+        values
+        (
+            #{userId},
+            #{token},
+            #{platform},
+            #{userTypeCd},
+            #{createTime},
+            #{updateTime},
+            #{expireTime}
+        )
+    </insert>
+    <update id="update" parameterType="com.framework.entity.UserToken">
+        update user_token
+        <set>
+            <if test="token != null">`token` = #{token}, </if>
+            <if test="platform != null">`platform` = #{platform}, </if>
+            <if test="userTypeCd != null">`user_type_cd` = #{userTypeCd}, </if>
+            <if test="updateTime != null">`update_time` = #{updateTime}</if>
+            <if test="expireTime != null">`expire_time` = #{expireTime}</if>
+        </set>
+        where user_id = #{userId} and user_type_cd = #{userTypeCd}
+    </update>
+</mapper>

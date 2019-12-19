@@ -40,6 +40,10 @@
 	<select id="queryByMemberName" resultType="com.framework.entity.Member">
 		select * from t_member where name = #{membername}
 	</select>
+
+	<select id="queryByMobile" resultType="com.framework.entity.Member">
+		select * from t_member where mobile = #{mobile}
+	</select>
 	
 	<insert id="save" parameterType="com.framework.entity.Member" useGeneratedKeys="true" keyProperty="id">
 		insert into t_member
@@ -64,8 +68,13 @@
 			<if test="name != null">`name` = #{name}, </if>
 			<if test="nickName != null">`nick_name` = #{nickName}, </if>
 			<if test="moneys != null">`moneys` = #{moneys}, </if>
+			<if test="idCardImg != null">`id_card_img` = #{idCardImg}, </if>
+			<if test="idCardReverseImg != null">`id_card_reverse_img` = #{idCardReverseImg}, </if>
+			<if test="handIdcardImg != null">`hand_idcard_img` = #{handIdcardImg}, </if>
+			<if test="businessImg != null">`business_img` = #{businessImg}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
 		</set>
-		where id = #{id}
+		where id = #{id} or mobile = #{mobile}
 	</update>
 	
 	<update id="updatePassword" parameterType="map">
