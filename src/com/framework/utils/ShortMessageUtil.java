@@ -30,7 +30,11 @@ public class ShortMessageUtil {
     }
     
 	public static int sendsms(String mobile,String content) throws Exception {
-		HttpClient httpClient = new HttpClient(); 
+    	System.out.println("=============短信发送====================");
+		System.out.println("内容："+content);
+		System.out.println("手机号："+mobile);
+    	return 0;
+		/*HttpClient httpClient = new HttpClient();
 		PostMethod postMethod = new PostMethod("http://api.1cloudsp.com/api/send");  
 		postMethod.getParams().setContentCharset("UTF-8");
 		postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
@@ -52,6 +56,6 @@ public class ShortMessageUtil {
 				
 		};
 		postMethod.setRequestBody(data);
-		return httpClient.executeMethod(postMethod);
+		return httpClient.executeMethod(postMethod);*/
 	}
 }

@@ -59,7 +59,6 @@
 			<if test="userTypeCd != null">`user_type_cd` = #{userTypeCd}, </if>
 			<if test="code != null">`code` = #{code}, </if>
 			<if test="expireTime != null">`expire_time` = #{expireTime}, </if>
-			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
 			<if test="codeTypeCd != null">`code_type_cd` = #{codeTypeCd}</if>
 		</set>

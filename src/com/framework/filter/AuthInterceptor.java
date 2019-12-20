@@ -1,6 +1,7 @@
 package com.framework.filter;
 
 import com.framework.constants.Constants;
+import com.framework.dto.FishDTO;
 import com.framework.dto.UserDTO;
 import com.framework.entity.Member;
 import com.framework.entity.UserToken;
@@ -36,6 +37,8 @@ public class AuthInterceptor implements HandlerInterceptor {
         boolean handleResult = true;
         String token = request.getHeader("token");
         String platForm = request.getParameter("platform");
+        FishDTO fishDTO = FishDTO.getInstance(request);
+        fishDTO.setToken(token);
 
         UserDTO userDTO = UserDTO.getInstance(request);
         ReturnData data = new ReturnData();

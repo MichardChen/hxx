@@ -5,38 +5,38 @@
 	<select id="queryObject" resultType="com.framework.entity.Member">
 		select * from t_member where id = #{value}
 	</select>
-	
+
 	<select id="queryList" resultType="com.framework.entity.Member">
 		select * from t_member where 1=1
-		 <if test="mobile != null and mobile.trim() != ''">
-			and mobile like concat('%', #{mobile}, '%') 
+		<if test="mobile != null and mobile.trim() != ''">
+			and mobile like concat('%', #{mobile}, '%')
 		</if>
-		 order by id desc
+		order by id desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+
 	<select id="queryTotal" resultType="int">
 		select count(*) from t_member
 	</select>
-	
+
 	<!-- 查询用户的所有权限 -->
 	<select id="queryAllPerms" resultType="String">
-		select m.perms from sys_user_role ur 
-			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
-			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id 
+		select m.perms from sys_user_role ur
+								LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id
+								LEFT JOIN sys_menu m on rm.menu_id = m.menu_id
 		where ur.user_id = #{userId}
 	</select>
-	
-	<!-- 查询用户的所有菜单ID --> 
+
+	<!-- 查询用户的所有菜单ID -->
 	<select id="queryAllMenuId" resultType="Long">
-		select m.menu_id from sys_user_role ur 
-			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
-			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id 
+		select m.menu_id from sys_user_role ur
+								  LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id
+								  LEFT JOIN sys_menu m on rm.menu_id = m.menu_id
 		where ur.user_id = #{memberId}
 	</select>
-	
+
 	<select id="queryByMemberName" resultType="com.framework.entity.Member">
 		select * from t_member where name = #{membername}
 	</select>
@@ -44,27 +44,71 @@
 	<select id="queryByMobile" resultType="com.framework.entity.Member">
 		select * from t_member where mobile = #{mobile}
 	</select>
-	
+
 	<insert id="save" parameterType="com.framework.entity.Member" useGeneratedKeys="true" keyProperty="id">
 		insert into t_member
 		(
-			`mobile`, 
-			`moneys`, 
-			`sex`, 
-			`nick_name`
+			`mobile`,
+			`moneys`,
+			`sex`,
+			`nick_name`,
+			`userpwd`,
+			`name`,
+			`member_grade_cd`,
+			`points`,
+			`create_time`,
+			`update_time`,
+			`icon`,
+			`status`,
+			`familiarity`,
+			`open_account_flg`,
+			`qq`,
+			`wx`,
+			`paypwd`,
+			`id_code`,
+			`store_id`,
+			`id_card_no`,
+			`id_card_img`,
+			`role_cd`,
+			`id_card_reverse_img`,
+			`hand_idcard_img`,
+			`business_img`,
+			`user_type_cd`
 		)
 		values
 		(
-			#{mobile}, 
-			#{moneys}, 
-			#{sex}, 
-			#{nickName}
+			#{mobile},
+			#{moneys},
+			#{sex},
+			#{nickName},
+			#{userPwd},
+			#{name},
+			#{memberGradeCd},
+			#{points},
+			#{createTime},
+			#{updateTime},
+			#{icon},
+			#{status},
+			#{familiarity},
+			#{openAccountFlg},
+			#{qq},
+			#{wx},
+			#{payPwd},
+			#{idCode},
+			#{storeId},
+			#{idCardNo},
+			#{idCardImg},
+			#{roleCd},
+			#{idCardReverseImg},
+			#{handIdcardImg},
+			#{businessImg},
+			#{userTypeCd}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="com.framework.entity.Member">
-		update t_member 
-		<set> 
+		update t_member
+		<set>
 			<if test="name != null">`name` = #{name}, </if>
 			<if test="nickName != null">`nick_name` = #{nickName}, </if>
 			<if test="moneys != null">`moneys` = #{moneys}, </if>
@@ -76,14 +120,14 @@
 		</set>
 		where id = #{id} or mobile = #{mobile}
 	</update>
-	
+
 	<update id="updatePassword" parameterType="map">
-		update t_member set `userpwd` = #{userPwd} 
-			where id = #{id}
+		update t_member set `userpwd` = #{userPwd}
+		where id = #{id}
 	</update>
-	
+
 	<delete id="deleteBatch">
-		delete from t_member where id in 
+		delete from t_member where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>

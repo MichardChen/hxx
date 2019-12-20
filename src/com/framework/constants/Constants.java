@@ -198,13 +198,6 @@ public interface Constants {
 		public static final String INDEX_CAROUSEL = "040001";
 	}
 
-	public static interface SHORT_MESSAGE_TYPE {
-		public static final String REGISTER = "200001";
-		public static final String FORGET_REGISTER_PWD = "200002";
-		public static final String FORGET_PAY_PWD = "200003";
-		public static final String SUMBIT_QUESTION = "200004";
-	}
-
 	// 车型
 	public static interface CAR_TYPE {
 		public static final String SMALL = "060001";

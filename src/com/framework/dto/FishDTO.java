@@ -26,6 +26,8 @@ public class FishDTO implements Serializable {
     private String md5Mobile;
     private String shortMsgTypeCd;
     private String userPwd;
+    private String token;
+    private String oldPwd;
 
 
 
@@ -50,7 +52,24 @@ public class FishDTO implements Serializable {
         dto.setMd5Mobile(request.getParameter("md5Mobile"));
         dto.setShortMsgTypeCd(request.getParameter("shortMsgTypeCd"));
         dto.setUserPwd(request.getParameter("userPwd"));
+        dto.setOldPwd(request.getParameter("oldPwd"));
         return dto;
+    }
+
+    public String getOldPwd() {
+        return oldPwd;
+    }
+
+    public void setOldPwd(String oldPwd) {
+        this.oldPwd = oldPwd;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getUserPwd() {

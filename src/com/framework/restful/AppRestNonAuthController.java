@@ -120,6 +120,18 @@ public class AppRestNonAuthController extends RestfulController {
     }
 
     /**
+     * 登录
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/login")
+    public void login(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.login(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
      * 注册
      * @param request
      * @param response
@@ -128,6 +140,18 @@ public class AppRestNonAuthController extends RestfulController {
     @PostMapping("/register")
     public void register(HttpServletRequest request, HttpServletResponse response) throws Exception {
         renderJson(restfulService.register(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 保存忘记密码
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/saveForgetPwd")
+    public void saveForgetPwd(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.saveForgetPwd(FishDTO.getInstance(request)), response);
         return;
     }
 

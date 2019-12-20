@@ -44,4 +44,28 @@ public class AppRestAuthController extends RestfulController{
         renderJson(restfulService.getPersonData(FishDTO.getInstance(request)), response);
         return;
     }
+
+    /**
+     * 退出
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/logout")
+    public void logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.logout(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 修改密码
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/modifyPwd")
+    public void modifyPwd(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.modifyPwd(FishDTO.getInstance(request)), response);
+        return;
+    }
 }

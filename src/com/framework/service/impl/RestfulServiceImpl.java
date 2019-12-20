@@ -165,9 +165,8 @@ public class RestfulServiceImpl implements RestfulService {
     public ReturnData getCheckCode(FishDTO dto) {
         ReturnData data = new ReturnData();
         String mobile = dto.getMobile();
-        String salt = "j8!@9ACIj##dk";
-        String encryMobile = Md5Crypt.md5Crypt(mobile.getBytes(), salt);
-        if (!encryMobile.equals(dto.getMd5Mobile()) || dto.getShortMsgTypeCd() == null) {
+        String encryMobile = MD5Utils.getSaltMD5(mobile);
+        if (!MD5Utils.getSaltverifyMD5(mobile, encryMobile) || dto.getShortMsgTypeCd() == null) {
             //非法发送短信
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("发送失败");
@@ -218,6 +217,7 @@ public class RestfulServiceImpl implements RestfulService {
         if (vCode == null) {
             vertifyCodeDao.save(entity);
         } else {
+            entity.setId(vc.getId());
             vertifyCodeDao.update(entity);
         }
         //发送短信
@@ -247,8 +247,8 @@ public class RestfulServiceImpl implements RestfulService {
         String code = dto.getCode();
         String token = TextUtil.generateUUID();
         //获取验证码有效时间
-        TVertifyCodeEntity vCode = vertifyCodeDao.queryCodeByMobile(mobile,Constants.SHORT_MESSAGE_TYPE.REGISTER);
-        Timestamp expireTime = vCode == null ? null : (Timestamp)vCode.getExpireTime();
+        TVertifyCodeEntity vCode = vertifyCodeDao.queryCodeByMobile(mobile,Constants.SHORT_MSG_TYPE.REGISTER);
+        Timestamp expireTime = vCode == null ? null : vCode.getExpireTime();
         Timestamp now = DateUtil.getNowTimestamp();
         Member member = memberDao.queryByMobile(mobile);
         if(member != null){
@@ -304,8 +304,8 @@ public class RestfulServiceImpl implements RestfulService {
                 UserToken userToken = new UserToken();
                 userToken.setCreateTime(DateUtil.getNowTimestamp());
                 userToken.setUpdateTime(DateUtil.getNowTimestamp());
-                //一个月后失效
-                userToken.setExpireTime(new Timestamp(System.currentTimeMillis()+30*24*60*60*1000));
+                //一个月后失效,这里使用加的方法，会导致超出int的范围，导致溢出。所以要加L
+                userToken.setExpireTime(new Timestamp(DateUtil.getNowTimestamp().getTime() + 30 * 24 * 60 * 60 * 1000L));
                 userToken.setPlatform(dto.getPlatform());
                 userToken.setUserId(m.getId());
                 userToken.setToken(token);
@@ -325,7 +325,7 @@ public class RestfulServiceImpl implements RestfulService {
                 at.setToken(token);
                 at.setUpdateTime(DateUtil.getNowTimestamp());
                 //一个月后失效
-                at.setExpireTime(new Timestamp(System.currentTimeMillis()+30*24*60*60*1000));
+                at.setExpireTime(new Timestamp(DateUtil.getNowTimestamp().getTime() + 30 * 24 * 60 * 60 * 1000L));
                 int ret = userTokenDao.update(at);
                 if(ret != 0){
                     data.setCode(Constants.STATUS_CODE.SUCCESS);
@@ -386,11 +386,14 @@ public class RestfulServiceImpl implements RestfulService {
         }
         if(at == null){
             userToken.setToken(token);
-            userToken.setExpireTime(new Timestamp(System.currentTimeMillis()+30*24*60*60*1000));
+            userToken.setExpireTime(new Timestamp(System.currentTimeMillis()+30*24*60*60*1000L));
             userToken.setPlatform(platForm);
             userToken.setCreateTime(new Timestamp(System.currentTimeMillis()));
             tokensave = userTokenDao.save(userToken);
             if(tokensave != 0){
+                JSONObject map = new JSONObject();
+                map.put("token", token);
+                data.setData(map);
                 data.setCode(Constants.STATUS_CODE.SUCCESS);
                 data.setMessage("登录成功");
             }else{
@@ -399,10 +402,13 @@ public class RestfulServiceImpl implements RestfulService {
             }
         }else{
             userToken.setToken(token);
-            userToken.setExpireTime(new Timestamp(System.currentTimeMillis()+30*24*60*60*1000));
+            userToken.setExpireTime(new Timestamp(System.currentTimeMillis()+30*24*60*60*1000L));
             userToken.setPlatform(platForm);
             int ret = userTokenDao.update(userToken);
             if(ret != 0){
+                JSONObject map = new JSONObject();
+                map.put("token", token);
+                data.setData(map);
                 data.setCode(Constants.STATUS_CODE.SUCCESS);
                 data.setMessage("登录成功");
                 return data;
@@ -413,9 +419,126 @@ public class RestfulServiceImpl implements RestfulService {
             }
 
         }
-        JSONObject map = new JSONObject();
-        map.put("token", token);
-        data.setData(map);
         return data;
+    }
+
+    /**
+     * 退出功能
+     * @param dto
+     * @return
+     */
+    @Override
+    public ReturnData logout(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        Member member = memberDao.queryByMobile(dto.getMobile());
+		if(member == null){
+			data.setCode(Constants.STATUS_CODE.FAIL);
+			data.setMessage("对不起，用户不存在");
+			return data;
+		}
+
+        UserToken updateToken = new UserToken();
+        updateToken.setUserId(member.getId());
+        updateToken.setToken("");
+        updateToken.setPlatform(dto.getPlatform());
+        updateToken.setUpdateTime(DateUtil.getNowTimestamp());
+        updateToken.setExpireTime(DateUtil.getNowTimestamp());
+        updateToken.setUserTypeCd(dto.getUserTypeCd());
+        int ret = userTokenDao.update(updateToken);
+        if(ret != 0){
+            data.setCode(Constants.STATUS_CODE.SUCCESS);
+            data.setMessage("退出成功");
+        }else{
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("退出失败");
+        }
+        return data;
+    }
+
+    /**
+     * 修改密码
+     * @param dto
+     * @return
+     */
+    @Override
+    public ReturnData modifyPwd(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        Member member = memberDao.queryByMobile(dto.getMobile());
+        if(member == null){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，用户不存在");
+            return data;
+        }
+        if(!StringUtil.equals(member.getUserPwd(), dto.getOldPwd())){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，旧密码错误");
+            return data;
+        }
+        //保存密码
+        Map<String,Object> map = new HashMap<>();
+        map.put("id",member.getId());
+        map.put("userPwd",dto.getUserPwd());
+        int ret = memberDao.updatePassword(map);
+        if(ret != 0){
+            data.setCode(Constants.STATUS_CODE.SUCCESS);
+            data.setMessage("密码修改成功");
+        }else{
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("密码修改失败");
+        }
+        return data;
+    }
+
+    /**
+     * 保存忘记密码
+     * @param dto
+     * @return
+     */
+    @Override
+    public ReturnData saveForgetPwd(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        Member member = memberDao.queryByMobile(dto.getMobile());
+        if(member == null){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，用户不存在");
+            return data;
+        }
+        TVertifyCodeEntity vCode = vertifyCodeDao.queryCodeByMobile(dto.getMobile(),Constants.SHORT_MSG_TYPE.FORGET_PASSWORD);
+        if(vCode == null){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("请重新获取验证码");
+            return data;
+        }
+        if(!StringUtil.equals(dto.getCode(), vCode.getCode())){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("请输入正确的验证码");
+            return data;
+        }
+
+        //判断验证码是不是过期
+        Timestamp expireTime = (Timestamp)vCode.getExpireTime();
+        Timestamp now = DateUtil.getNowTimestamp();
+        if((expireTime != null)&&(now.after(expireTime))){
+            //true，就是过期了
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("验证码过期了，请重新获取");
+            return data;
+        }else{
+            //把验证码设置为过期
+            vertifyCodeDao.updateExpireCode(vCode.getId(),now);
+            //保存密码
+            Map<String,Object> map = new HashMap<>();
+            map.put("id",member.getId());
+            map.put("userPwd",dto.getUserPwd());
+            int ret = memberDao.updatePassword(map);
+            if(ret != 0){
+                data.setCode(Constants.STATUS_CODE.SUCCESS);
+                data.setMessage("密码保存成功");
+            }else{
+                data.setCode(Constants.STATUS_CODE.FAIL);
+                data.setMessage("密码修改失败");
+            }
+            return data;
+        }
     }
 }

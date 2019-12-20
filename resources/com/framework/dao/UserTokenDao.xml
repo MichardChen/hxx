@@ -33,7 +33,7 @@
         update user_token
         <set>
             <if test="token != null">`token` = #{token}, </if>
-            <if test="updateTime != null">`update_time` = #{updateTime}</if>
+            <if test="updateTime != null">`update_time` = #{updateTime},</if>
             <if test="expireTime != null">`expire_time` = #{expireTime}</if>
         </set>
         where user_id = #{userId} and user_type_cd = #{userTypeCd} and platform = #{platform}

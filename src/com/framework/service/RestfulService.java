@@ -20,4 +20,10 @@ public interface RestfulService {
     public ReturnData register(FishDTO dto);
 
     public ReturnData login(FishDTO dto);
+
+    public ReturnData logout(FishDTO dto);
+
+    public ReturnData modifyPwd(FishDTO dto);
+
+    public ReturnData saveForgetPwd(FishDTO dto);
 }
