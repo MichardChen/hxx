@@ -11,6 +11,9 @@
 		 <if test="mobile != null and mobile.trim() != ''">
 			and mobile like concat('%', #{mobile}, '%') 
 		</if>
+		<if test="name != null and name.trim() != ''">
+			and name like concat('%', #{name}, '%')
+		</if>
 		 order by id desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}

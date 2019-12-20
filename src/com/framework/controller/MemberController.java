@@ -23,10 +23,9 @@ import com.framework.utils.R;
 import com.framework.utils.RRException;
 
 /**
- * 系统菜单
- * @author R & D
- * @email 908350381@qq.com
- * @date 2016年10月27日 下午9:58:15
+ * 用户管理
+ * @author Chenwx
+ * @date 2019年12月18日 下午9:58:15
  */
 @RestController
 @RequestMapping("/basic/member")
@@ -46,52 +45,18 @@ public class MemberController extends AbstractController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("basic:member:list")
-	public R list(Integer page, Integer limit,String mobile,String userTypeCd) {
+	public R list(Integer page, Integer limit,String mobile,String name) {
+		//设置查询参数
 		Map<String, Object> map = new HashMap<>();
 		map.put("mobile", mobile);
+		map.put("name", name);
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
-		map.put("userTypeCd", userTypeCd);
-
 		// 查询列表数据
 		List<Member> menuList = memberService.queryList(map);
 		int total = memberService.queryTotal(map);
-
 		PageUtils pageUtil = new PageUtils(menuList, total, limit, page);
-
 		return R.ok().put("page", pageUtil);
-	}
-
-	/**
-	 * 选择菜单(添加、修改菜单)
-	 */
-	@RequestMapping("/select")
-	@RequiresPermissions("sys:menu:select")
-	public R select(){
-		// 查询列表数据
-		List<SysMenuEntity> menuList = sysMenuService.queryNotButtonList();
-
-		// 添加顶级菜单
-		SysMenuEntity root = new SysMenuEntity();
-		root.setMenuId(0L);
-		root.setName("一级菜单");
-		root.setParentId(-1L);
-		root.setOpen(true);
-		menuList.add(root);
-
-		return R.ok().put("menuList", menuList);
-	}
-
-	/**
-	 * 角色授权菜单
-	 */
-	@RequestMapping("/perms")
-	@RequiresPermissions("sys:menu:perms")
-	public R perms() {
-		// 查询列表数据
-		List<SysMenuEntity> menuList = sysMenuService.queryList(new HashMap<String, Object>());
-
-		return R.ok().put("menuList", menuList);
 	}
 
 	/**
@@ -130,14 +95,44 @@ public class MemberController extends AbstractController {
 	@RequestMapping("/delete")
 	@RequiresPermissions("basic:member:delete")
 	public R delete(@RequestBody Long[] memberIds) {
-		for (Long memberId : memberIds) {
-			if (memberId.longValue() <= 28) {
-				return R.error("系统菜单，不能删除");
-			}
+		if(memberIds!=null && memberIds.length>0){
+			memberService.deleteBatch(memberIds);
+		} else {
+			return R.error("没有需要删除的用户信息！");
 		}
-		memberService.deleteBatch(memberIds);
-
 		return R.ok();
+	}
+
+	/**
+	 * 选择菜单(添加、修改菜单)
+	 */
+	@RequestMapping("/select")
+	@RequiresPermissions("sys:menu:select")
+	public R select(){
+		// 查询列表数据
+		List<SysMenuEntity> menuList = sysMenuService.queryNotButtonList();
+
+		// 添加顶级菜单
+		SysMenuEntity root = new SysMenuEntity();
+		root.setMenuId(0L);
+		root.setName("一级菜单");
+		root.setParentId(-1L);
+		root.setOpen(true);
+		menuList.add(root);
+
+		return R.ok().put("menuList", menuList);
+	}
+
+	/**
+	 * 角色授权菜单
+	 */
+	@RequestMapping("/perms")
+	@RequiresPermissions("sys:menu:perms")
+	public R perms() {
+		// 查询列表数据
+		List<SysMenuEntity> menuList = sysMenuService.queryList(new HashMap<String, Object>());
+
+		return R.ok().put("menuList", menuList);
 	}
 
 	/**

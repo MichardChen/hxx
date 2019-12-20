@@ -63,7 +63,7 @@ var vm = new Vue({
 				    success: function(r){
 						if(r.code == 0){
 							alert('操作成功', function(index){
-								$("#jqGrid").trigger("reloadGrid");
+								$("#jqGrid").triNgger("reloadGrid");
 							});
 						}else{
 							alert(r.msg);
@@ -74,7 +74,7 @@ var vm = new Vue({
 		},
 		query:function(){
 			$("#jqGrid").jqGrid('setGridParam',{
-                postData:{'mobile': vm.mobile,'userTypeCd':vm.userTypeCd},
+                postData:{'mobile': vm.mobile,'name':vm.name},
                 page:1 
             }).trigger("reloadGrid");
 		}
