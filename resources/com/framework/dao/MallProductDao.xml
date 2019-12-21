@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.framework.dao.MallProductDao">
+    <insert id="save" parameterType="com.framework.entity.MallProduct" useGeneratedKeys="true" keyProperty="id">
+        insert into mall_products
+        (
+            `logos`,
+            `detail_logo`,
+            `need_points`,
+            `product_detail`,
+            `product_title`,
+            `mark`,
+            `product_type_cd`,
+            `user_type_cd`,
+            `create_time`,
+            `update_time`,
+            `price`,
+            `quality`
+        )
+        values
+        (
+            #{logos},
+            #{detailLogo},
+            #{needPoints},
+            #{productDetail},
+            #{productTitle},
+            #{mark},
+            #{productTypeCd},
+            #{userTypeCd},
+            #{createTime},
+            #{updateTime},
+            #{price},
+            #{quality}
+        )
+    </insert>
+</mapper>

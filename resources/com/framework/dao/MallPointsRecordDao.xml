@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.framework.dao.MallPointsRecordDao">
+    <insert id="save" parameterType="com.framework.entity.MallPointsRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into mall_points_record
+        (
+            `user_type_cd`,
+            `user_id`,
+            `operate_type_cd`,
+            `point`,
+            `mark`,
+            `create_time`,
+            `update_time`
+        )
+        values
+        (
+            #{userTypeCd},
+            #{userId},
+            #{operateTypeCd},
+            #{point},
+            #{mark},
+            #{createTime},
+            #{updateTime}
+        )
+    </insert>
+</mapper>

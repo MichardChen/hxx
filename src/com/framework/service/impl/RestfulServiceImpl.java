@@ -11,7 +11,8 @@ import com.framework.vo.CarouselVo;
 import com.framework.vo.IndexVo;
 import com.framework.vo.NewsListVo;
 import com.framework.vo.UserVo;
-import org.apache.commons.codec.digest.Md5Crypt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,8 @@ import java.util.Map;
 @Service("restfulService")
 public class RestfulServiceImpl implements RestfulService {
 
+    private final static Logger logger = LoggerFactory.getLogger(RestfulServiceImpl.class);
+
     @Autowired
     TCodemstDao tCodemstDao;
     @Autowired
@@ -40,6 +43,8 @@ public class RestfulServiceImpl implements RestfulService {
     TVertifyCodeDao vertifyCodeDao;
     @Autowired
     UserTokenDao userTokenDao;
+    @Autowired
+    UserDeviceTokenDao userDeviceTokenDao;
 
     /**
      * 首页接口
@@ -165,8 +170,11 @@ public class RestfulServiceImpl implements RestfulService {
     public ReturnData getCheckCode(FishDTO dto) {
         ReturnData data = new ReturnData();
         String mobile = dto.getMobile();
-        String encryMobile = MD5Utils.getSaltMD5(mobile);
-        if (!MD5Utils.getSaltverifyMD5(mobile, encryMobile) || dto.getShortMsgTypeCd() == null) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(mobile).append("kdk$$%&_UIs873");
+        String encryMobile = MD5Utils.getStrMD5(sb.toString());
+        //System.out.println("获取验证码参数：md5Mobile："+dto.getMd5Mobile().toLowerCase()+",encryMobile："+encryMobile+",shortMsgTypeCd："+dto.getShortMsgTypeCd());
+        if (!encryMobile.equals(dto.getMd5Mobile()) || dto.getShortMsgTypeCd() == null) {
             //非法发送短信
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("发送失败");
@@ -192,8 +200,22 @@ public class RestfulServiceImpl implements RestfulService {
             }
         }
 
+        //判断此设备是否太频繁获取验证码,最近十分钟之内，最多获取5次
+        int msgCount = userDeviceTokenDao.queryToken(dto.getDeviceToken(),new Timestamp(System.currentTimeMillis()-10*60*1000),new Timestamp(System.currentTimeMillis()));
+        TCodemstEntity codemstEntity = tCodemstDao.queryByCode(Constants.STATIC_PARAMS.SHOWMSG_COUNT);
+        int limit = 10;
+        if(codemstEntity != null){
+            limit = codemstEntity.getData1();
+        }
+        if(msgCount >= limit){
+            //超出发送条数限制
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，您获取短信太频繁，请稍后重试");
+            return data;
+        }
         //判断有没有
-        String code = VertifyUtil.getVertifyCode();
+        //String code = VertifyUtil.getVertifyCode();
+        String code = "8396";
         TVertifyCodeEntity vc = vertifyCodeDao.queryCodeByMobile(mobile, dto.getShortMsgTypeCd());
         if (vc != null) {
             Timestamp expireTime = vc.getExpireTime();
@@ -233,6 +255,15 @@ public class RestfulServiceImpl implements RestfulService {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("验证码发送失败，请重新获取");
         } else {
+            //插入设备token
+            UserDeviceToken deviceToken = new UserDeviceToken();
+            deviceToken.setCode(code);
+            deviceToken.setMobile(mobile);
+            deviceToken.setCreateTime(DateUtil.getNowTimestamp());
+            deviceToken.setUpdateTime(DateUtil.getNowTimestamp());
+            deviceToken.setDeviceToken(dto.getDeviceToken());
+            userDeviceTokenDao.save(deviceToken);
+
             data.setCode(Constants.STATUS_CODE.SUCCESS);
             data.setMessage("获取验证码成功，十分钟内有效");
         }

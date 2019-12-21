@@ -300,4 +300,8 @@ public interface Constants {
 		public static final String REGISTER = "170001";
 		public static final String FORGET_PASSWORD = "170002";
 	}
+
+	public static interface STATIC_PARAMS{
+		public static final String SHOWMSG_COUNT = "180001";
+	}
 }

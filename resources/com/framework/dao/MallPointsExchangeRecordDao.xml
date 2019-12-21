@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.framework.dao.MallPointsExchangeRecordDao">
+    <insert id="save" parameterType="com.framework.entity.MallPointsExchangeRecord" useGeneratedKeys="true" keyProperty="id">
+        insert into user_device_token
+        (
+            `user_type_cd`,
+            `user_id`,
+            `product_id`,
+            `mark`,
+            `address`,
+            `status`,
+            `logistic`,
+            `create_time`,
+            `update_time`,
+            `points`,
+            `quality`,
+            `moneys`,
+            `buy_type_cd`,
+        )
+        values
+        (
+            #{userTypeCd},
+            #{userId},
+            #{productId},
+            #{mark},
+            #{address},
+            #{status},
+            #{logistic},
+            #{createTime},
+            #{updateTime},
+            #{points},
+            #{quality},
+            #{moneys},
+            #{buyTypeCd}
+        )
+    </insert>
+</mapper>
