@@ -40,8 +40,8 @@ public interface Constants {
 
 	/** 用户类型 */
 	public static interface USER_TYPE {
-		public static final String USER_TYPE_CLIENT = "010001";
-		public static final String PLATFORM_USER = "010002";
+		public static final String USER_TYPE_CLIENT = "1001";
+		public static final String PLATFORM_USER = "1002";
 	}
 
 	/** 消息 */
