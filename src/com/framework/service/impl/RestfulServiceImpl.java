@@ -45,6 +45,8 @@ public class RestfulServiceImpl implements RestfulService {
     UserTokenDao userTokenDao;
     @Autowired
     UserDeviceTokenDao userDeviceTokenDao;
+    @Autowired
+    MallProductDao mallProductDao;
 
     /**
      * 首页接口
@@ -571,5 +573,23 @@ public class RestfulServiceImpl implements RestfulService {
             }
             return data;
         }
+    }
+
+    /**
+     * 积分商城首页
+     * @param dto
+     * @return
+     */
+    @Override
+    public ReturnData getMallIndex(FishDTO dto) {
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("offset", (dto.getPageNum() - 1) * dto.getPageSize());
+        map.put("limit", dto.getPageSize());
+        List<MallProduct> list = mallProductDao.queryList(map);
+        for(MallProduct product : list){
+
+        }
+        return null;
     }
 }

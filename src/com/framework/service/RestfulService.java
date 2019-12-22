@@ -26,4 +26,6 @@ public interface RestfulService {
     public ReturnData modifyPwd(FishDTO dto);
 
     public ReturnData saveForgetPwd(FishDTO dto);
+
+    public ReturnData getMallIndex(FishDTO dto);
 }

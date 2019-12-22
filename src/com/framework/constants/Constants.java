@@ -161,13 +161,13 @@ public interface Constants {
 	}*/
 	
 	public static interface FILE_HOST {
-		public static final String DOCUMENT = "/home/tomcat7/tomcat7/webapps/ROOT/document/";
-		public static final String IMG = "/home/data/img/";
+		public static final String DOCUMENT = "/var/www/html/file/";
+		public static final String IMG = "/var/www/html/img/";
 	}
 
 	//Linux服务器地址
 	public static interface HOST {
-		public static final String DOCUMENT = "http://47.105.184.157/document/";
+		public static final String DOCUMENT = "http://47.105.184.157/file/";
 		public static final String IMG = "http://47.105.184.157/img/";
 	}
 	
