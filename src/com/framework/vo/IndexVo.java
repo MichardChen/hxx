@@ -20,5 +20,35 @@ public class IndexVo implements Serializable {
     private String isoUrl;
     private String androidUrl;
 
+    public String getAndroidVersion() {
+        return androidVersion;
+    }
 
+    public void setAndroidVersion(String androidVersion) {
+        this.androidVersion = androidVersion;
+    }
+
+    public String getIosVersion() {
+        return iosVersion;
+    }
+
+    public void setIosVersion(String iosVersion) {
+        this.iosVersion = iosVersion;
+    }
+
+    public String getIsoUrl() {
+        return isoUrl;
+    }
+
+    public void setIsoUrl(String isoUrl) {
+        this.isoUrl = isoUrl;
+    }
+
+    public String getAndroidUrl() {
+        return androidUrl;
+    }
+
+    public void setAndroidUrl(String androidUrl) {
+        this.androidUrl = androidUrl;
+    }
 }

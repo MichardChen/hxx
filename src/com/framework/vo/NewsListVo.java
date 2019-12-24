@@ -20,5 +20,35 @@ public class NewsListVo implements Serializable {
     private String createTime;
     private String url;
 
+    public String getNewsLogo() {
+        return newsLogo;
+    }
 
+    public void setNewsLogo(String newsLogo) {
+        this.newsLogo = newsLogo;
+    }
+
+    public String getNewsTitle() {
+        return newsTitle;
+    }
+
+    public void setNewsTitle(String newsTitle) {
+        this.newsTitle = newsTitle;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

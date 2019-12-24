@@ -63,38 +63,6 @@ public class MemberController extends AbstractController {
 	}
 
 	/**
-	 * 选择菜单(添加、修改菜单)
-	 */
-	@RequestMapping("/select")
-	@RequiresPermissions("sys:menu:select")
-	public R select(){
-		// 查询列表数据
-		List<SysMenuEntity> menuList = sysMenuService.queryNotButtonList();
-
-		// 添加顶级菜单
-		SysMenuEntity root = new SysMenuEntity();
-		root.setMenuId(0L);
-		root.setName("一级菜单");
-		root.setParentId(-1L);
-		root.setOpen(true);
-		menuList.add(root);
-
-		return R.ok().put("menuList", menuList);
-	}
-
-	/**
-	 * 角色授权菜单
-	 */
-	@RequestMapping("/perms")
-	@RequiresPermissions("sys:menu:perms")
-	public R perms() {
-		// 查询列表数据
-		List<SysMenuEntity> menuList = sysMenuService.queryList(new HashMap<String, Object>());
-
-		return R.ok().put("menuList", menuList);
-	}
-
-	/**
 	 * 用户信息
 	 */
 	@RequestMapping("/info/{memberId}")
@@ -138,6 +106,38 @@ public class MemberController extends AbstractController {
 		memberService.deleteBatch(memberIds);
 
 		return R.ok();
+	}
+
+	/**
+	 * 选择菜单(添加、修改菜单)
+	 */
+	@RequestMapping("/select")
+	@RequiresPermissions("sys:menu:select")
+	public R select(){
+		// 查询列表数据
+		List<SysMenuEntity> menuList = sysMenuService.queryNotButtonList();
+
+		// 添加顶级菜单
+		SysMenuEntity root = new SysMenuEntity();
+		root.setMenuId(0L);
+		root.setName("一级菜单");
+		root.setParentId(-1L);
+		root.setOpen(true);
+		menuList.add(root);
+
+		return R.ok().put("menuList", menuList);
+	}
+
+	/**
+	 * 角色授权菜单
+	 */
+	@RequestMapping("/perms")
+	@RequiresPermissions("sys:menu:perms")
+	public R perms() {
+		// 查询列表数据
+		List<SysMenuEntity> menuList = sysMenuService.queryList(new HashMap<String, Object>());
+
+		return R.ok().put("menuList", menuList);
 	}
 
 	/**
