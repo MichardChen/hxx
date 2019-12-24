@@ -7,36 +7,54 @@
 <body>
 <div class="panel panel-default" id="rrapp" v-cloak>
 	<div class="panel-heading">{{title}}</div>
-	<form class="form-horizontal">
+	<form class="form-horizontal_member">
 		<div class="form-group">
-			<div class="col-sm-2 control-label">性别</div> 
-			<label class="radio-inline">
-			  <input type="radio" name="sex" value="0" v-model="member.sex"/> 女
-			</label>
-			<label class="radio-inline">
-			  <input type="radio" name="sex" value="1" v-model="member.sex"/> 男
-			</label>
+			<label class="control-label col-sm-1">用户名</label>
+			<div class="col-sm-4">
+				<input class="form-control" v-model="member.name" type="text" placeholder="请输入用户名" />
+			</div>
+			<label class="control-label col-sm-1">昵称</label>
+			<div class="col-sm-4">
+				<input class="form-control" type="text" v-model="member.nickName" placeholder="请输入昵称" />
+			</div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label"> 昵称</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="member.nickName" placeholder=""/>
-		    </div>
+			<label class="control-label col-sm-1">性别</label>
+			<div class="col-sm-4">
+				<label class="radio-inline">
+					<input type="radio" name="sex" value="0" v-model="member.sex"/> 女
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="sex" value="1" v-model="member.sex"/> 男
+				</label>
+			</div>
+			<label class="control-label col-sm-1">密码</label>
+			<div class="col-sm-4">
+				<input class="form-control" type="text" v-model="member.userPwd" />
+			</div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label">注册号码</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="member.mobile" placeholder=""/>
-		    </div>
+			<label class="control-label col-sm-1">注册号码</label>
+			<div class="col-sm-4">
+				<input class="form-control" v-model="member.mobile" type="text" placeholder="请输入注册号码" />
+			</div>
+			<label class="control-label col-sm-1">账号金额</label>
+			<div class="col-sm-4">
+				<input class="form-control" type="text" v-model="member.moneys" placeholder="请输入账号金额" />
+			</div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label">账号金额</div>
-		   	<div class="col-sm-10">
-		      <input type="text" class="form-control" v-model="member.moneys" placeholder="账号金额"/>
-		    </div>
+			<label class="control-label col-sm-1">积分</label>
+			<div class="col-sm-4">
+				<input class="form-control" v-model="member.points" type="text" />
+			</div>
+			<label class="control-label col-sm-1">用户等级</label>
+			<div class="col-sm-4">
+				<input class="form-control" type="text" v-model="member.memberGradeCd" />
+			</div>
 		</div>
-		<div class="form-group">
-			<div class="col-sm-2 control-label"></div> 
+		<div class="form-submit">
+			<div class="col-sm-2 control-label"></div>
 			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
 			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
 		</div>
