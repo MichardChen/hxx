@@ -33,4 +33,17 @@
             #{quality}
         )
     </insert>
+    <select id="queryList" resultType="com.framework.entity.MallProduct">
+        select * from mall_products
+        order by update_time desc
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+    <select id="queryObject" resultType="com.framework.entity.MallProduct">
+        select * from mall_products where id = #{id}
+    </select>
+    <update id="updateQuality">
+        update mall_products set quality = quality - #{quality} where id = #{productId}
+    </update>
 </mapper>

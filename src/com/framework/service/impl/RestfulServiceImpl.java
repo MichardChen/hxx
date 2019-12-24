@@ -7,14 +7,12 @@ import com.framework.dto.FishDTO;
 import com.framework.entity.*;
 import com.framework.service.RestfulService;
 import com.framework.utils.*;
-import com.framework.vo.CarouselVo;
-import com.framework.vo.IndexVo;
-import com.framework.vo.NewsListVo;
-import com.framework.vo.UserVo;
+import com.framework.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -47,6 +45,8 @@ public class RestfulServiceImpl implements RestfulService {
     UserDeviceTokenDao userDeviceTokenDao;
     @Autowired
     MallProductDao mallProductDao;
+    @Autowired
+    MallPointsRecordDao mallPointsRecordDao;
 
     /**
      * 首页接口
@@ -583,13 +583,124 @@ public class RestfulServiceImpl implements RestfulService {
     @Override
     public ReturnData getMallIndex(FishDTO dto) {
 
+        ReturnData data = new ReturnData();
         Map<String, Object> map = new HashMap<>();
         map.put("offset", (dto.getPageNum() - 1) * dto.getPageSize());
         map.put("limit", dto.getPageSize());
         List<MallProduct> list = mallProductDao.queryList(map);
+        MallProductVo vo = null;
+        List<MallProductVo> mallProductList = new ArrayList<>();
         for(MallProduct product : list){
-
+            vo = new MallProductVo();
+            vo.setProductId(product.getId());
+            vo.setProductLogo(product.getLogos());
+            vo.setPoints(product.getNeedPoints());
+            vo.setProductName(product.getProductTitle());
+            mallProductList.add(vo);
         }
-        return null;
+        Member member = memberDao.queryByMobile(dto.getMobile());
+        if(member == null){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("查询失败，用户不存在");
+            return data;
+        }
+        JSONObject object = new JSONObject();
+        object.put("mallProductList",mallProductList);
+        object.put("points",member.getPoints());
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        data.setMessage("查询成功");
+        data.setData(object);
+        return data;
+    }
+
+    /**
+     * 商品详情
+     * @param dto
+     * @return
+     */
+    @Override
+    public ReturnData getMallProductDetail(FishDTO dto) {
+
+        ReturnData data = new ReturnData();
+        int productId = dto.getProductId();
+        if(productId == 0){
+            data.setMessage("对不起，商品不存在");
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            return data;
+        }
+        MallProduct product = mallProductDao.queryObject(productId);
+        JSONObject object = new JSONObject();
+        object.put("productDetail",product);
+        data.setData(object);
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        data.setMessage("查询成功");
+        return data;
+    }
+
+    @Transactional
+    @Override
+    public ReturnData exchangePoints(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        int productId = dto.getProductId();
+        int productNum = dto.getProductNum();
+        MallProduct product = mallProductDao.queryObject(productId);
+        if(product == null){
+            data.setMessage("对不起，商品不存在");
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            return data;
+        }
+        int needPoints = product.getNeedPoints();
+        int allNeedPoints = needPoints * productNum;
+        Member member = memberDao.queryByMobile(dto.getMobile());
+        if(member == null){
+            data.setMessage("对不起，您的账号不存在");
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            return data;
+        }
+        int userPoint = member.getPoints();
+        if(userPoint < allNeedPoints){
+            data.setMessage("对不起，您的积分不足");
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            return data;
+        }
+        if(productNum > product.getQuality()){
+            data.setMessage("对不起，商品库存不足");
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            return data;
+        }
+        //积分够，扣积分，扣商品数量
+        int pointsRet = memberDao.updatePoints(allNeedPoints,member.getId());
+        if(pointsRet != 0){
+            int qualityRet = mallProductDao.updateQuality(productId,productNum);
+            if(qualityRet != 0){
+                //添加兑换记录
+                MallPointsRecord record = new MallPointsRecord();
+                record.setCreateTime(DateUtil.getNowTimestamp());
+                record.setUpdateTime(DateUtil.getNowTimestamp());
+                record.setMark("兑换商品ID："+productId+"，数量："+productNum+"，消耗积分："+allNeedPoints);
+                record.setPoint("-"+allNeedPoints);
+                record.setUserId(member.getId());
+                record.setUserTypeCd(Constants.USER_TYPE.USER_TYPE_CLIENT);
+                record.setOperateTypeCd(Constants.OPERATE_TYPE.EXCHANGE_PRODUCT);
+                int recordRet = mallPointsRecordDao.save(record);
+                if(recordRet != 0){
+                    data.setMessage("恭喜您，兑换成功，待平台处理");
+                    data.setCode(Constants.STATUS_CODE.SUCCESS);
+                    return data;
+                }else{
+                    data.setMessage("对不起，兑换失败");
+                    data.setCode(Constants.STATUS_CODE.FAIL);
+                    return data;
+                }
+            }else{
+                data.setMessage("对不起，兑换失败");
+                data.setCode(Constants.STATUS_CODE.FAIL);
+                return data;
+            }
+        }else{
+            data.setMessage("对不起，兑换失败");
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            return data;
+        }
     }
 }

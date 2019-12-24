@@ -126,6 +126,11 @@
 		where id = #{id}
 	</update>
 
+	<update id="updatePoints">
+		update t_member set `points` = `points` - #{points}
+		where id = #{memberId}
+	</update>
+
 	<delete id="deleteBatch">
 		delete from t_member where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">

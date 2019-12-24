@@ -153,7 +153,43 @@ public class AppRestAuthController extends RestfulController{
      */
     @PostMapping("/getMallIndex")
     public void getMallIndex(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        renderJson(restfulService.modifyPwd(FishDTO.getInstance(request)), response);
+        renderJson(restfulService.getMallIndex(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 查看商品详情
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/getMallProductDetail")
+    public void getMallProductDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.getMallProductDetail(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 兑换
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/exchangePoints")
+    public void exchangePoints(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.exchangePoints(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 兑换记录
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/getExchangeRecords")
+    public void getExchangeRecords(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.exchangePoints(FishDTO.getInstance(request)), response);
         return;
     }
 }

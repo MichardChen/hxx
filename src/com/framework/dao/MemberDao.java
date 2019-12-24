@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.framework.entity.Member;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 用户表
@@ -31,5 +32,10 @@ public interface MemberDao extends BaseDao<Member> {
 	 * 修改密码
 	 */
 	int updatePassword(Map<String, Object> map);
+
+	/**
+	 * 修改积分
+	 */
+	int updatePoints(@Param("points")int points,@Param("memberId")int memberId);
 
 }

@@ -28,4 +28,8 @@ public interface RestfulService {
     public ReturnData saveForgetPwd(FishDTO dto);
 
     public ReturnData getMallIndex(FishDTO dto);
+
+    public ReturnData getMallProductDetail(FishDTO dto);
+
+    public ReturnData exchangePoints(FishDTO dto);
 }

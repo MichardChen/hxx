@@ -32,6 +32,16 @@ public class MallProduct implements Serializable{
 	
 	private int quality;
 
+	//新增产品详情的url
+	private String productDetailUrl;
+
+	public String getProductDetailUrl() {
+		return productDetailUrl;
+	}
+
+	public void setProductDetailUrl(String productDetailUrl) {
+		this.productDetailUrl = productDetailUrl;
+	}
 
 	public int getId() {
 		return id;
