@@ -29,6 +29,8 @@ public class FishDTO implements Serializable {
     private String token;
     private String oldPwd;
     private String deviceToken;
+    private int productId;
+    private int productNum;
 
 
 
@@ -55,7 +57,25 @@ public class FishDTO implements Serializable {
         dto.setUserPwd(request.getParameter("userPwd"));
         dto.setOldPwd(request.getParameter("oldPwd"));
         dto.setDeviceToken(request.getParameter("deviceToken"));
+        dto.setProductId(StringUtil.toInteger(request.getParameter("productId")));
+        dto.setProductNum(StringUtil.toInteger(request.getParameter("productNum")));
         return dto;
+    }
+
+    public int getProductNum() {
+        return productNum;
+    }
+
+    public void setProductNum(int productNum) {
+        this.productNum = productNum;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public String getDeviceToken() {

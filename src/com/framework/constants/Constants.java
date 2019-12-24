@@ -301,7 +301,14 @@ public interface Constants {
 		public static final String FORGET_PASSWORD = "170002";
 	}
 
+	/**
+	 * 常量设置
+	 */
 	public static interface STATIC_PARAMS{
 		public static final String SHOWMSG_COUNT = "180001";
+	}
+
+	public static interface OPERATE_TYPE{
+		public static final String EXCHANGE_PRODUCT = "190001";
 	}
 }
