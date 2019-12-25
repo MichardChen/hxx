@@ -38,4 +38,20 @@ public interface MemberDao extends BaseDao<Member> {
 	 */
 	int updatePoints(@Param("points")int points,@Param("memberId")int memberId);
 
+	/**
+	 * 修改昵称
+	 * @param nickName
+	 * @param memberId
+	 * @return
+	 */
+	int updateNickName(@Param("nickName")String nickName,@Param("memberId")int memberId);
+
+	/**
+	 * 更改头像
+	 * @param icon
+	 * @param memberId
+	 * @return
+	 */
+	int updateIcon(@Param("icon")String icon,@Param("memberId")int memberId);
+
 }

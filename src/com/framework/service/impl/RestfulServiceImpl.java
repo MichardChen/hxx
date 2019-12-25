@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +48,8 @@ public class RestfulServiceImpl implements RestfulService {
     MallProductDao mallProductDao;
     @Autowired
     MallPointsRecordDao mallPointsRecordDao;
+    @Autowired
+    MallPointsExchangeRecordDao exchangeRecordDao;
 
     /**
      * 首页接口
@@ -583,6 +586,7 @@ public class RestfulServiceImpl implements RestfulService {
     @Override
     public ReturnData getMallIndex(FishDTO dto) {
 
+        System.out.println("===============================ceshi==============");
         ReturnData data = new ReturnData();
         Map<String, Object> map = new HashMap<>();
         map.put("offset", (dto.getPageNum() - 1) * dto.getPageSize());
@@ -631,6 +635,8 @@ public class RestfulServiceImpl implements RestfulService {
         MallProduct product = mallProductDao.queryObject(productId);
         JSONObject object = new JSONObject();
         object.put("productDetail",product);
+        //获取发货时间及快递相关
+        object.put("expressRelateUrl","https://www.sf-express.com/cn/sc/");
         data.setData(object);
         data.setCode(Constants.STATUS_CODE.SUCCESS);
         data.setMessage("查询成功");
@@ -657,6 +663,11 @@ public class RestfulServiceImpl implements RestfulService {
             data.setCode(Constants.STATUS_CODE.FAIL);
             return data;
         }
+        if(!Constants.MEMBER_STATUS.REVIEW_PASS.equals(member.getStatus())){
+            data.setMessage("对不起，您的账号还未认证通过，暂时不能兑换");
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            return data;
+        }
         int userPoint = member.getPoints();
         if(userPoint < allNeedPoints){
             data.setMessage("对不起，您的积分不足");
@@ -673,7 +684,7 @@ public class RestfulServiceImpl implements RestfulService {
         if(pointsRet != 0){
             int qualityRet = mallProductDao.updateQuality(productId,productNum);
             if(qualityRet != 0){
-                //添加兑换记录
+                //添加积分记录
                 MallPointsRecord record = new MallPointsRecord();
                 record.setCreateTime(DateUtil.getNowTimestamp());
                 record.setUpdateTime(DateUtil.getNowTimestamp());
@@ -683,7 +694,24 @@ public class RestfulServiceImpl implements RestfulService {
                 record.setUserTypeCd(Constants.USER_TYPE.USER_TYPE_CLIENT);
                 record.setOperateTypeCd(Constants.OPERATE_TYPE.EXCHANGE_PRODUCT);
                 int recordRet = mallPointsRecordDao.save(record);
-                if(recordRet != 0){
+                //插入兑换记录
+                MallPointsExchangeRecord exchangeRecord = new MallPointsExchangeRecord();
+                exchangeRecord.setBuyTypeCd(Constants.BUY_TYPE.POINTS);
+                exchangeRecord.setCreateTime(DateUtil.getNowTimestamp());
+                exchangeRecord.setUpdateTime(DateUtil.getNowTimestamp());
+                exchangeRecord.setMark("积分兑换");
+                exchangeRecord.setMoneys(new BigDecimal("0"));
+                exchangeRecord.setPoints(allNeedPoints);
+                exchangeRecord.setProductId(productId);
+                exchangeRecord.setQuality(productNum);
+                exchangeRecord.setUserId(member.getId());
+                exchangeRecord.setStatus(Constants.EXCHANGE_STATUS.STAY_REVIEW);
+                exchangeRecord.setUserTypeCd(dto.getUserTypeCd());
+                exchangeRecord.setAddress(dto.getAddress());
+                exchangeRecord.setReceiveMobile(dto.getReceiveMobile());
+                exchangeRecord.setReceiveName(dto.getReceivePerson());
+                int exchangeRecordRet = exchangeRecordDao.save(exchangeRecord);
+                if(recordRet != 0 && exchangeRecordRet != 0){
                     data.setMessage("恭喜您，兑换成功，待平台处理");
                     data.setCode(Constants.STATUS_CODE.SUCCESS);
                     return data;
@@ -700,6 +728,122 @@ public class RestfulServiceImpl implements RestfulService {
         }else{
             data.setMessage("对不起，兑换失败");
             data.setCode(Constants.STATUS_CODE.FAIL);
+            return data;
+        }
+    }
+
+    /**
+     * 获取兑换记录
+     * @param dto
+     * @return
+     */
+    @Override
+    public ReturnData getExchangeRecords(FishDTO dto) {
+
+        String mobile = dto.getMobile();
+        ReturnData data = new ReturnData();
+        Member member = memberDao.queryByMobile(mobile);
+        if(member == null){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，您的账号不存在");
+            return data;
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("offset", (dto.getPageNum() - 1) * dto.getPageSize());
+        map.put("limit", dto.getPageSize());
+        map.put("userId",member.getId());
+        List<MallPointsExchangeRecord> list = exchangeRecordDao.queryList(map);
+        MallPointsExchangeRecordVo vo = null;
+        List<MallPointsExchangeRecordVo> voList = new ArrayList<>();
+        for(MallPointsExchangeRecord record : list){
+            vo = new MallPointsExchangeRecordVo();
+            vo.setExchangeId(record.getId());
+            MallProduct product = mallProductDao.queryObject(record.getProductId());
+            if(product != null){
+                vo.setTitle(product.getProductTitle());
+            }
+            vo.setCreateTime(DateUtil.formatTimestampForDate(record.getCreateTime()));
+            vo.setPoints(record.getPoints());
+            voList.add(vo);
+        }
+        JSONObject object = new JSONObject();
+        object.put("exchageList",voList);
+        data.setData(object);
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        data.setMessage("查询成功");
+        return data;
+    }
+
+    /**
+     * 获取兑换详情
+     * @param dto
+     * @return
+     */
+    @Override
+    public ReturnData getExchangeDetail(FishDTO dto) {
+
+        ReturnData data = new ReturnData();
+        int exchangeId = dto.getKey();
+        MallPointsExchangeRecord exchangeRecord = exchangeRecordDao.queryObject(exchangeId);
+        if(exchangeRecord == null){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，兑换记录不存在");
+            return data;
+        }
+
+        MallProduct product = mallProductDao.queryObject(exchangeRecord.getProductId());
+        MallPointsExchangeRecordVo vo = new MallPointsExchangeRecordVo();
+        if(product != null){
+            vo.setTitle(product.getProductTitle());
+        }
+        vo.setCreateTime(DateUtil.formatTimestampForDate(exchangeRecord.getCreateTime()));
+        vo.setPoints(exchangeRecord.getPoints());
+        vo.setAddress(exchangeRecord.getAddress());
+        vo.setLogistic(exchangeRecord.getLogistic());
+        vo.setMark(exchangeRecord.getMark());
+        vo.setMoneys(StringUtil.toString(exchangeRecord.getMoneys()));
+        vo.setStatus(exchangeRecord.getStatus());
+        vo.setReceiveMobile(exchangeRecord.getReceiveMobile());
+        vo.setReceivePerson(exchangeRecord.getReceiveName());
+        vo.setExpressRelateUrl("https://www.sf-express.com/cn/sc/");
+        vo.setExchageTime(DateUtil.formatTimestampForDate(exchangeRecord.getCreateTime()));
+
+        JSONObject object = new JSONObject();
+        object.put("exchageDetail",vo);
+        data.setData(object);
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        data.setMessage("查询成功");
+        return data;
+    }
+
+    /**
+     * 修改昵称
+     * @param dto
+     * @return
+     */
+    @Override
+    public ReturnData modifyNickName(FishDTO dto) {
+
+        ReturnData data = new ReturnData();
+        if(StringUtil.isBlank(dto.getNickName())){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，昵称不能为空");
+            return data;
+        }
+        Member member = memberDao.queryByMobile(dto.getMobile());
+        if(member == null){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，您的账号不存在");
+            return data;
+        }
+        int ret = memberDao.updateNickName(dto.getNickName(),member.getId());
+        if(ret != 0){
+            data.setCode(Constants.STATUS_CODE.SUCCESS);
+            data.setMessage("修改成功");
+            return data;
+        }else{
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("修改失败");
             return data;
         }
     }

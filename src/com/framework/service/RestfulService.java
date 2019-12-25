@@ -32,4 +32,10 @@ public interface RestfulService {
     public ReturnData getMallProductDetail(FishDTO dto);
 
     public ReturnData exchangePoints(FishDTO dto);
+
+    public ReturnData getExchangeRecords(FishDTO dto);
+
+    public ReturnData getExchangeDetail(FishDTO dto);
+
+    public ReturnData modifyNickName(FishDTO dto);
 }

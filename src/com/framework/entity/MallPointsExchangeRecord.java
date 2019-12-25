@@ -34,6 +34,25 @@ public class MallPointsExchangeRecord implements Serializable{
 	
 	private String buyTypeCd;
 
+	private String receiveName;
+	private String receiveMobile;
+
+	public String getReceiveName() {
+		return receiveName;
+	}
+
+	public void setReceiveName(String receiveName) {
+		this.receiveName = receiveName;
+	}
+
+	public String getReceiveMobile() {
+		return receiveMobile;
+	}
+
+	public void setReceiveMobile(String receiveMobile) {
+		this.receiveMobile = receiveMobile;
+	}
+
 	public int getId() {
 		return id;
 	}

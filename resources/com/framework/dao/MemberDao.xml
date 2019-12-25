@@ -120,6 +120,8 @@
 			<if test="handIdcardImg != null">`hand_idcard_img` = #{handIdcardImg}, </if>
 			<if test="businessImg != null">`business_img` = #{businessImg}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="memberGradeCd != null">`member_grade_cd` = #{memberGradeCd}, </if>
 		</set>
 		where id = #{id} or mobile = #{mobile}
 	</update>
@@ -133,7 +135,14 @@
 		update t_member set `points` = `points` - #{points}
 		where id = #{memberId}
 	</update>
-
+	<update id="updateNickName">
+		update t_member set `nick_name` = #{nickName}
+		where id = #{memberId}
+	</update>
+	<update id="updateIcon">
+		update t_member set `icon` = #{icon}
+		where id = #{memberId}
+	</update>
 	<delete id="deleteBatch">
 		delete from t_member where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">

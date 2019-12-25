@@ -163,12 +163,14 @@ public interface Constants {
 	public static interface FILE_HOST {
 		public static final String DOCUMENT = "/var/www/html/file/";
 		public static final String IMG = "/var/www/html/img/";
+		public static final String ICON = "/var/www/html/icon/";
 	}
 
 	//Linux服务器地址
 	public static interface HOST {
 		public static final String DOCUMENT = "http://47.105.184.157/file/";
 		public static final String IMG = "http://47.105.184.157/img/";
+		public static final String ICON = "http://47.105.184.157/icon/";
 	}
 	
 	public static interface HTTPS_HOST {
@@ -308,7 +310,26 @@ public interface Constants {
 		public static final String SHOWMSG_COUNT = "180001";
 	}
 
+	/**
+	 * 积分操作类型
+	 */
 	public static interface OPERATE_TYPE{
 		public static final String EXCHANGE_PRODUCT = "190001";
+	}
+
+	/**
+	 * 兑换状态
+	 */
+	public static interface EXCHANGE_STATUS{
+		public static final String STAY_REVIEW = "200001";
+		public static final String HANDLED = "200002";
+	}
+
+	/**
+	 * 商品购买类型
+	 */
+	public static interface BUY_TYPE{
+		public static final String POINTS = "210001";
+		public static final String YLPAY = "210002";
 	}
 }

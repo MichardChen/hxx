@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.framework.dao.MallPointsExchangeRecordDao">
     <insert id="save" parameterType="com.framework.entity.MallPointsExchangeRecord" useGeneratedKeys="true" keyProperty="id">
-        insert into user_device_token
+        insert into mall_points_exchange_record
         (
             `user_type_cd`,
             `user_id`,
@@ -17,6 +17,8 @@
             `quality`,
             `moneys`,
             `buy_type_cd`,
+            `receive_name`,
+            `receive_mobile`
         )
         values
         (
@@ -32,7 +34,19 @@
             #{points},
             #{quality},
             #{moneys},
-            #{buyTypeCd}
+            #{buyTypeCd},
+            #{receiveName},
+            #{receiveMobile}
         )
     </insert>
+    <select id="queryList" resultType="com.framework.entity.MallPointsExchangeRecord">
+        select * from mall_points_exchange_record where user_id = #{userId}
+        order by update_time desc
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+    <select id="queryObject" resultType="com.framework.entity.MallPointsExchangeRecord">
+        select * from mall_points_exchange_record where id = #{value}
+    </select>
 </mapper>

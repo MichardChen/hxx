@@ -2,6 +2,7 @@ package com.framework.restful;
 
 import com.alibaba.fastjson.JSONObject;
 import com.framework.constants.Constants;
+import com.framework.dao.MemberDao;
 import com.framework.dto.FishDTO;
 import com.framework.dto.ParamsDTO;
 import com.framework.entity.Member;
@@ -23,8 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 需要token验证的controller
@@ -39,6 +38,8 @@ public class AppRestAuthController extends RestfulController{
     RestfulService restfulService;
     @Autowired
     MemberService memberService;
+    @Autowired
+    MemberDao memberDao;
 
     //在线咨询
     @RequestMapping("/index")
@@ -97,7 +98,16 @@ public class AppRestAuthController extends RestfulController{
             ,HttpServletRequest request
             ,HttpServletResponse response) throws Exception{
 
+        ReturnData data = new ReturnData();
         FishDTO dto = FishDTO.getInstance(request);
+
+        Member m = memberDao.queryByMobile(dto.getMobile());
+        if(m == null){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，用户不存在");
+            renderJson(data,response);
+            return;
+        }
         //个人还是企业
         String memberGradeCd = dto.getMemberGradeCd();
         UserVo userVo = new UserVo();
@@ -132,10 +142,10 @@ public class AppRestAuthController extends RestfulController{
         userVo.setStatus(member.getStatus());
         member.setUpdateTime(DateUtil.getNowTimestamp());
         member.setMobile(dto.getMobile());
+        member.setMemberGradeCd(memberGradeCd);
 
         //更新用户数据
         memberService.update(member);
-        ReturnData data = new ReturnData();
         JSONObject map = new JSONObject();
         map.put("userVo",userVo);
         data.setData(map);
@@ -189,7 +199,74 @@ public class AppRestAuthController extends RestfulController{
      */
     @PostMapping("/getExchangeRecords")
     public void getExchangeRecords(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        renderJson(restfulService.exchangePoints(FishDTO.getInstance(request)), response);
+        renderJson(restfulService.getExchangeRecords(FishDTO.getInstance(request)), response);
         return;
+    }
+
+    /**
+     * 兑换记录详情
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/getExchangeDetail")
+    public void getExchangeDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.getExchangeDetail(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 修改昵称
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/modifyNickName")
+    public void modifyNickName(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.modifyNickName(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 修改头像
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/modifyIcon")
+    public void modifyIcon(@RequestParam(value = "iconFile", required = false) MultipartFile iconFile
+                            ,HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        FishDTO dto = FishDTO.getInstance(request);
+        ReturnData data = new ReturnData();
+        Member m = memberDao.queryByMobile(dto.getMobile());
+        if(m == null){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，用户不存在");
+            renderJson(data,response);
+            return;
+        }
+
+        FileService fs = new FileService();
+        String url = fs.upload(iconFile, Constants.FILE_HOST.ICON, Constants.HOST.ICON);
+        if (StringUtil.isNoneBlank(url)) {
+            int ret = memberDao.updateIcon(url,m.getId());
+            if(ret != 0){
+                data.setCode(Constants.STATUS_CODE.SUCCESS);
+                data.setMessage("更新成功");
+                renderJson(data,response);
+                return;
+            }else{
+                data.setCode(Constants.STATUS_CODE.FAIL);
+                data.setMessage("更新失败");
+                renderJson(data,response);
+                return;
+            }
+        }else{
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("更新失败");
+            renderJson(data,response);
+            return;
+        }
     }
 }

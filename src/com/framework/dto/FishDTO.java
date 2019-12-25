@@ -31,11 +31,16 @@ public class FishDTO implements Serializable {
     private String deviceToken;
     private int productId;
     private int productNum;
+    private String receivePerson;
+    private String receiveMobile;
+    private String address;
+    private String nickName;
 
 
 
-    public static FishDTO getInstance(HttpServletRequest request) {
+    public static FishDTO getInstance(HttpServletRequest request) throws Exception{
 
+        request.setCharacterEncoding("UTF-8");
         dto = new FishDTO();
         dto.setProvinceId(StringUtil.toInteger(request.getParameter("provinceId")));
         dto.setCityId(StringUtil.toInteger(request.getParameter("cityId")));
@@ -59,7 +64,51 @@ public class FishDTO implements Serializable {
         dto.setDeviceToken(request.getParameter("deviceToken"));
         dto.setProductId(StringUtil.toInteger(request.getParameter("productId")));
         dto.setProductNum(StringUtil.toInteger(request.getParameter("productNum")));
-        return dto;
+        if(StringUtil.isNoneBlank(request.getParameter("receivePerson"))){
+            dto.setReceivePerson(new String(request.getParameter("receivePerson").getBytes("iso-8859-1"), "utf-8"));
+        }
+        if(StringUtil.isNoneBlank(request.getParameter("receiveMobile"))){
+            dto.setReceiveMobile(new String(request.getParameter("receiveMobile").getBytes("iso-8859-1"), "utf-8"));
+        }
+        if(StringUtil.isNoneBlank(request.getParameter("address"))){
+            dto.setAddress(new String(request.getParameter("address").getBytes("iso-8859-1"), "utf-8"));
+        }
+        if(StringUtil.isNoneBlank(request.getParameter("nickName"))){
+            dto.setNickName(new String(request.getParameter("nickName").getBytes("iso-8859-1"), "utf-8"));
+        }
+         return dto;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getReceivePerson() {
+        return receivePerson;
+    }
+
+    public void setReceivePerson(String receivePerson) {
+        this.receivePerson = receivePerson;
+    }
+
+    public String getReceiveMobile() {
+        return receiveMobile;
+    }
+
+    public void setReceiveMobile(String receiveMobile) {
+        this.receiveMobile = receiveMobile;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getProductNum() {

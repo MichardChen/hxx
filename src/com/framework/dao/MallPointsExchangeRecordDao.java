@@ -7,4 +7,6 @@ import com.framework.entity.MallPointsExchangeRecord;
  * @date 2019/12/21 0021
  */
 public interface MallPointsExchangeRecordDao extends BaseDao<MallPointsExchangeRecord> {
+
+    int save(MallPointsExchangeRecord record);
 }
