@@ -154,6 +154,7 @@ public class RestfulServiceImpl implements RestfulService {
         userVo.setHandIdCardImgUrl(member.getHandIdcardImg());
         userVo.setBusinessImgUrl(member.getBusinessImg());
         userVo.setHeaderImgUrl(member.getIcon());
+        userVo.setMemberGradeCd(member.getMemberGradeCd());
         userVo.setStatus(member.getStatus());
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("userData", userVo);

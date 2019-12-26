@@ -143,6 +143,7 @@ public class AppRestAuthController extends RestfulController{
         member.setUpdateTime(DateUtil.getNowTimestamp());
         member.setMobile(dto.getMobile());
         member.setMemberGradeCd(memberGradeCd);
+        userVo.setMemberGradeCd(dto.getMemberGradeCd());
 
         //更新用户数据
         memberService.update(member);

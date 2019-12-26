@@ -315,6 +315,7 @@ public interface Constants {
 	 */
 	public static interface OPERATE_TYPE{
 		public static final String EXCHANGE_PRODUCT = "190001";
+		public static final String REGISTER = "190002";
 	}
 
 	/**
