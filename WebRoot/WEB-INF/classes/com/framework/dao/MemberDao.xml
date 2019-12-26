@@ -120,6 +120,8 @@
 			<if test="handIdcardImg != null">`hand_idcard_img` = #{handIdcardImg}, </if>
 			<if test="businessImg != null">`business_img` = #{businessImg}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="memberGradeCd != null">`member_grade_cd` = #{memberGradeCd}, </if>
 		</set>
 		where id = #{id} or mobile = #{mobile}
 	</update>
