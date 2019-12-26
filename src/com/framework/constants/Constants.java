@@ -279,6 +279,7 @@ public interface Constants {
 	 * 用户审核状态
 	 */
 	public static interface MEMBER_STATUS{
+//		未认证、待审核、审核通过、审核失败
 		public static final String NOT_REVIEW = "150001";
 		public static final String STAY_REVIRE = "150002";
 		public static final String REVIEW_PASS = "150003";
