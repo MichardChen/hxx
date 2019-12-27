@@ -174,19 +174,19 @@ public interface Constants {
 	}
 	
 	public static interface HTTPS_HOST {
-		public static final String DOCUMENT = "https://www.huisouche8.com/document/";
-		public static final String STORY = "https://www.huisouche8.com/document/story/";
-		public static final String NEWS = "https://www.huisouche8.com/document/news/";
+		public static final String DOCUMENT = "http://47.105.184.157/file/document/";
+		public static final String STORY = "http://47.105.184.157/file/story/";
+		public static final String NEWS = "http://47.105.184.157/file/news/";
 	}
 
 	public static interface HTTP_HOST {
-		public static final String DOCUMENT = "https://www.huisouche8.com:88/document/";
+		public static final String DOCUMENT = "http://47.105.184.157/file/document/";
 	}
 	
 	public static interface HTTPS_FILE_HOST {
-		public static final String DOCUMENT = "/home/tomcat/apache-tomcat-8.0.30/webapps/ROOT/document/";
-		public static final String STORY = "/home/tomcat/apache-tomcat-8.0.30/webapps/ROOT/document/story/";
-		public static final String NEWS = "/home/tomcat/apache-tomcat-8.0.30/webapps/ROOT/document/news/";
+		public static final String DOCUMENT = "/var/www/html/file/document/";
+		public static final String STORY = "/var/www/html/file/story/";
+		public static final String NEWS = "/var/www/html/file/news/";
 	}
 
 

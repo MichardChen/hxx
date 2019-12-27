@@ -16,34 +16,45 @@ import java.util.Date;
 public class TFinanceEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	//
+	//ID
 	private Integer id;
-	//
+	//产品图标
 	private String icon;
-	//
+	//产品名称
 	private String name;
-	//
+	//最低费率
 	private String lowRate;
-	//
+	//最低贷款金额
 	private String lowRefund;
-	//
+	//期限
 	private String timeDistance;
-	//
+	//标准
 	private String standard;
-	//
+	//创建者
 	private Integer createBy;
-	//
+	//创建时间
 	private Timestamp createTime;
-	//
+	//更新者
 	private Integer updateBy;
-	//
+	//更新时间
 	private Timestamp updateTime;
-	//
+	//产品详情
+	private String content;
+	//产品详情url
 	private String descUrl;
-	//
+	//产品状态
 	private String status;
-	//
+	//产品标题
 	private String title;
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

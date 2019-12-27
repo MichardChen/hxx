@@ -7,34 +7,35 @@ import java.sql.Timestamp;
 public class MallPointsExchangeRecord implements Serializable{
 
 	private int id;
-	
+	//用户类型
 	private String userTypeCd;
-	
+	//用户ID
 	private int userId;
-	
+	//产品ID
 	private int productId;
-	
+	//备注
 	private String mark;
-	
+	//状态
 	private String status;
-	
+	//地址
 	private String address;
-	
+	//物流
 	private String logistic;
-	
+	//创建时间
 	private Timestamp createTime;
-	
+	//更新时间
 	private Timestamp updateTime;
-	
+	//消耗积分
 	private int points;
-	
+	//兑换数量
 	private int quality;
-	
+	//消耗金额
 	private BigDecimal moneys;
-	
+	//兑换类型
 	private String buyTypeCd;
-
+	//收件人
 	private String receiveName;
+	//电话号码
 	private String receiveMobile;
 
 	public String getReceiveName() {

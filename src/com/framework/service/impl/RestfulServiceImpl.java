@@ -808,6 +808,7 @@ public class RestfulServiceImpl implements RestfulService {
         vo.setReceivePerson(exchangeRecord.getReceiveName());
         vo.setExpressRelateUrl("https://www.sf-express.com/cn/sc/");
         vo.setExchageTime(DateUtil.formatTimestampForDate(exchangeRecord.getCreateTime()));
+        vo.setQuality(exchangeRecord.getQuality());
 
         JSONObject object = new JSONObject();
         object.put("exchageDetail",vo);

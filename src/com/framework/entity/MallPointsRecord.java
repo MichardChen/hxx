@@ -6,19 +6,19 @@ import java.sql.Timestamp;
 public class MallPointsRecord implements Serializable{
 
 	private int id;
-	
+	//用户类型
 	private String userTypeCd;
-	
+	//用户ID
 	private int userId;
-	
+	//操作类型(注册积分、下单积分)
 	private String operateTypeCd;
-	
+	//备注
 	private String mark;
-	
+	//获得积分
 	private String point;
-	
+	//创建时间
 	private Timestamp createTime;
-	
+	//更新时间
 	private Timestamp updateTime;
 
 	public int getId() {
