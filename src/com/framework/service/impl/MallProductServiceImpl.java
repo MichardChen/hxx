@@ -1,5 +1,6 @@
 package com.framework.service.impl;
 
+import com.framework.constants.Constants;
 import com.framework.dao.MallProductDao;
 import com.framework.entity.MallProduct;
 import com.framework.entity.Member;
@@ -73,7 +74,7 @@ public class MallProductServiceImpl implements MallProductService {
 	 */
 	@Override
 	public void offLoading(int productId) {
-		mallProductDao.updateStatus(productId, "1001");
+		mallProductDao.updateStatus(productId, Constants.MALL_STATUS.OFF_LOADING);
 	}
 
 }

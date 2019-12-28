@@ -344,4 +344,14 @@ public interface Constants {
 		/** 已下架*/
 		public static final String OFF_LOADING = "220002";
 	}
+
+	/**
+	 * 产品类型
+	 */
+	public static interface PRODUCT_TYPE{
+		/** 实体产品*/
+		public static final String PHYSICAL = "230001";
+		/** 虚拟产品*/
+		public static final String VIRTUAL = "230002";
+	}
 }

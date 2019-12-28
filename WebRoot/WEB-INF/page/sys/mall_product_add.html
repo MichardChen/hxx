@@ -7,121 +7,87 @@
 <body>
 <div class="panel panel-default" id="rrapp" v-cloak>
 	<div class="panel-heading">{{title}}</div>
-	<form class="form-horizontal_member">
+	<form class="form-horizontal_mall_product">
 		<div class="form-group">
-			<label class="control-label col-sm-1">用户名</label>
-			<div class="col-sm-4">
-				<input class="form-control" v-model="member.name" type="text" placeholder="请输入用户名" readOnly="true"/>
-			</div>
-			<label class="control-label col-sm-1">昵称</label>
-			<div class="col-sm-4">
-				<input class="form-control" type="text" v-model="member.nickName" placeholder="请输入昵称" readOnly="true"/>
+			<label class="control-label col-sm-1">产品名称</label>
+			<div class="col-sm-10">
+				<input class="form-control" v-model="mallProduct.productTitle" type="text" placeholder="请输入产品名称" />
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-1">性别</label>
+			<label class="control-label col-sm-1">产品详情主图片</label>
 			<div class="col-sm-4">
-				<label class="radio-inline">
-					<input type="radio" name="sex" value="0" v-model="member.sex" disabled/> 女
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="sex" value="1" v-model="member.sex" disabled/> 男
-				</label>
+				<input class="form-control" type="text" v-model="mallProduct.detailLogo"/>
 			</div>
-			<label class="control-label col-sm-1">身份证号</label>
+			<label class="control-label col-sm-1">产品logo</label>
 			<div class="col-sm-4">
-				<input class="form-control" type="text" v-model="member.idCardNo" readOnly="true"/>
+				<input class="form-control" type="text" v-model="mallProduct.logos"/>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-1">注册号码</label>
+			<label class="control-label col-sm-1">价格</label>
 			<div class="col-sm-4">
-				<input class="form-control" v-model="member.mobile" type="text" placeholder="请输入注册号码" readOnly="true"/>
+				<input class="form-control" v-model="mallProduct.price" type="text" placeholder="请输入价格" />
 			</div>
-			<label class="control-label col-sm-1">账号金额</label>
+			<label class="control-label col-sm-1">库存</label>
 			<div class="col-sm-4">
-				<input class="form-control" type="text" v-model="member.moneys" placeholder="请输入账号金额" readOnly="true"/>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-1">积分</label>
-			<div class="col-sm-4">
-				<input class="form-control" v-model="member.points" type="text" readOnly="true"/>
-			</div>
-			<label class="control-label col-sm-1">用户等级</label>
-			<div class="col-sm-4">
-				<input class="form-control" type="text" v-model="member.memberGradeCd" />
+				<input class="form-control" type="text" v-model="mallProduct.quality" placeholder="请输入库存" />
 			</div>
 		</div>
 		<div class="form-group">
+			<label class="control-label col-sm-1">所需兑换积分</label>
+			<div class="col-sm-4">
+				<input class="form-control" v-model="mallProduct.needPoints" type="text" />
+			</div>
 			<label class="control-label col-sm-1">状态</label>
 			<div class="col-sm-4">
-				<select class="form-control" v-model="member.status">
-					<option value="150001">未认证</option>
-					<option value="150002">待审核</option>
-					<option value="150003">审核通过</option>
-					<option value="150004">审核失败</option>
+				<select class="form-control" v-model="mallProduct.status">
+					<option value="220001">正常</option>
+					<option value="220002">已下架</option>
 				</select>
 			</div>
-			<label class="control-label col-sm-1">熟识程度</label>
-			<div class="col-sm-4">
-				<input class="form-control" type="text" v-model="member.familiarity" />
-			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-1">QQ</label>
+			<label class="control-label col-sm-1">产品类型</label>
 			<div class="col-sm-4">
-				<input class="form-control" v-model="member.qq" type="text" readOnly="true"/>
-			</div>
-			<label class="control-label col-sm-1">微信</label>
-			<div class="col-sm-4">
-				<input class="form-control" type="text" v-model="member.wx" readOnly="true"/>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-1">角色等级</label>
-			<div class="col-sm-4">
-				<input class="form-control" type="text" v-model="member.roleCd" />
+				<select class="form-control" v-model="mallProduct.productTypeCd">
+					<option value="230001" >实体产品</option>
+					<option value="230002">虚拟产品</option>
+				</select>
 			</div>
 			<label class="control-label col-sm-1">用户类型</label>
 			<div class="col-sm-4">
-				<select class="form-control" v-model="member.userTypeCd">
-					<option value="160001">个人</option>
-					<option value="160002">企业</option>
+				<select class="form-control" v-model="mallProduct.userTypeCd">
+					<option value="1001" >个人</option>
+					<option value="1002">企业</option>
 				</select>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-1">用户头像</label>
+			<label class="control-label col-sm-1">创建时间</label>
 			<div class="col-sm-4">
-				<img :src="member.icon" alt="图片" class="img-thumbnail">
+				<input class="form-control" v-model="mallProduct.createTime" type="text"
+					   readonly="true" id="mall_createTime"/>
 			</div>
-			<label class="control-label col-sm-1">营业执照</label>
+			<label class="control-label col-sm-1">更新时间</label>
 			<div class="col-sm-4">
-				<img :src="member.businessImg" alt="图片" class="img-thumbnail">
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-1">身份证正面</label>
-			<div class="col-sm-4">
-				<img :src="member.idCardImg" alt="图片" class="img-thumbnail">
-			</div>
-			<label class="control-label col-sm-1">身份证反面</label>
-			<div class="col-sm-4">
-				<img :src="member.idCardReverseImg" alt="图片" class="img-thumbnail">
+				<input class="form-control" v-model="mallProduct.updateTime" type="text"
+					   readonly="true" id="mall_updateTime"/>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-1">手持身份证照</label>
-			<div class="col-sm-4">
-				<img :src="member.handIdcardImg" alt="图片" class="img-thumbnail">
+			<label class="control-label col-sm-1">产品详情</label>
+			<div class="col-sm-10">
+				<textarea v-model="mallProduct.productDetail" id="productDetail" class="summernote"></textarea>
 			</div>
 		</div>
-		<input class="hidden" type="text" v-model="member.userPwd" /><!--密码-->
-		<input class="hidden" v-model="member.openAccountFlg" type="text" /><!--是否开户-->
-		<input class="hidden" type="text" v-model="member.payPwd" /><!--支付密码-->
-		<input class="hidden" v-model="member.storeId" type="text"/><!--商店ID-->
-		<input class="hidden" v-model="member.idCode" type="text" /><!--识别码-->
+		<div class="form-group">
+			<label class="control-label col-sm-1">备注</label>
+			<div class="col-sm-10">
+				<textarea v-model="mallProduct.mark" class="form-control" rows="3"></textarea>
+			</div>
+		</div>
+		<input class="hidden" type="text" v-model="mallProduct.productDetailUrl" /><!--产品详情url-->
 		<div class="form-submit">
 			<div class="col-sm-2 control-label"></div>
 			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
@@ -129,12 +95,13 @@
 		</div>
 	</form>
 </div>
-
-<!-- 
-<div id="menuLayer" style="display: none;padding:10px;">
-	<ul id="menuTree" class="ztree"></ul>
-</div>
- -->
 <script src="${rc.contextPath}/js/mall/mall_product_add.js?_${date.systemTime}"></script>
+<link rel="stylesheet" type="text/css" href="${rc.contextPath}/summernote/css/bootstrap.css">
+<link href="${rc.contextPath}/summernote/dist/summernote.css" rel="stylesheet"/>
+<script src="${rc.contextPath}/summernote/js/jquery.min.js"></script>
+<script src="${rc.contextPath}/summernote/js/bootstrap.min.js"></script>
+<script src="${rc.contextPath}/summernote/dist/summernote.js"></script>
+<script src="${rc.contextPath}/summernote/dist/lang/summernote-zh-CN.js"></script>    <!-- 中文-->
+<script src="${rc.contextPath}/js/sys/common.js"></script>
 </body>
 </html>

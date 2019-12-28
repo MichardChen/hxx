@@ -41,11 +41,37 @@
         <if test="productTitle != null and productTitle.trim() != ''">
             and product_title like concat('%', #{productTitle}, '%')
         </if>
+        <if test="status != null and status.trim() != ''">
+            and status = #{status}
+        </if>
+        <if test="price != null">
+            and price = #{price}
+        </if>
         order by update_time desc
         <if test="offset != null and limit != null">
             limit #{offset}, #{limit}
         </if>
     </select>
+
+    <update id="update" parameterType="com.framework.entity.MallProduct">
+        update mall_products
+        <set>
+            <if test="productTitle != null">`product_title` = #{productTitle}, </if>
+            <if test="detailLogo != null">`detail_logo` = #{detailLogo}, </if>
+            <if test="logos != null">`logos` = #{logos}, </if>
+            <if test="needPoints != null">`need_points` = #{needPoints}, </if>
+            <if test="productDetail != null">`product_detail` = #{productDetail}, </if>
+            <if test="mark != null">`mark` = #{mark}, </if>
+            <if test="productTypeCd != null">`product_type_cd` = #{productTypeCd}, </if>
+            <if test="userTypeCd != null">`user_type_cd` = #{userTypeCd}, </if>
+            <if test="updateTime != null">`update_time` = #{updateTime}, </if>
+            <if test="price != null">`price` = #{price}, </if>
+            <if test="quality != null">`quality` = #{quality}, </if>
+            <if test="productDetailUrl != null">`product_detail` = #{productDetailUrl}, </if>
+            <if test="status != null">`status` = #{status}, </if>
+        </set>
+        where id = #{id}
+    </update>
 
     <select id="queryTotal" resultType="int">
 		select count(*) from mall_products

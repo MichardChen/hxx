@@ -9,7 +9,7 @@ import com.framework.utils.Constant.MenuType;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
 import com.framework.utils.RRException;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,11 +37,13 @@ public class MallProductController extends AbstractController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("mall:list")
-	public R list(Integer page, Integer limit,String productTitle,String price) {
+	public R list(Integer page, Integer limit,String productTitle,String price, String status) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
 		map.put("productTitle", productTitle);
+		map.put("price", StringUtils.isNotBlank(price)? new BigDecimal(price):null);
+		map.put("status", status);
 
 		// 查询列表数据
 		List<MallProduct> menuList = mallProductService.queryList(map);
@@ -54,11 +57,11 @@ public class MallProductController extends AbstractController {
 	/**
 	 * 商品信息
 	 */
-	@RequestMapping("/info/{MallProductId}")
+	@RequestMapping("/info/{productId}")
 	@RequiresPermissions("mall:info")
-	public R info(@PathVariable("MallProductId") Long MallProductId) {
-		MallProduct MallProduct = mallProductService.queryObject(MallProductId);
-		return R.ok().put("MallProduct", MallProduct);
+	public R info(@PathVariable("productId") Long productId) {
+		MallProduct MallProduct = mallProductService.queryObject(productId);
+		return R.ok().put("mallProduct", MallProduct);
 	}
 
 	/**
@@ -86,13 +89,11 @@ public class MallProductController extends AbstractController {
 	 */
 	@RequestMapping("/delete")
 	@RequiresPermissions("mall:delete")
-	public R delete(@RequestBody Long[] MallProductIds) {
-		for (Long MallProductId : MallProductIds) {
-			if (MallProductId.longValue() <= 28) {
-				return R.error("系统菜单，不能删除");
-			}
+	public R delete(@RequestBody Long[] mallProductIds) {
+		if(mallProductIds == null || mallProductIds.length<1){
+			return R.error("ID不能为空");
 		}
-		mallProductService.deleteBatch(MallProductIds);
+		mallProductService.deleteBatch(mallProductIds);
 		return R.ok();
 	}
 
@@ -101,11 +102,11 @@ public class MallProductController extends AbstractController {
 	 */
 	@RequestMapping("/off")
 	@RequiresPermissions("mall:off:loading")
-	public R offLoading(@PathVariable("productId") Integer productId) {
-		if(productId == null){
+	public R offLoading(@RequestBody String productId) {
+		if(StringUtils.isBlank(productId)){
 			return R.error("ID不能为空");
 		}
-		mallProductService.offLoading(productId);
+		mallProductService.offLoading(Integer.parseInt(productId));
 		return R.ok();
 	}
 }
