@@ -15,7 +15,8 @@
             `create_time`,
             `update_time`,
             `price`,
-            `quality`
+            `quality`,
+            `status`
         )
         values
         (
@@ -30,20 +31,35 @@
             #{createTime},
             #{updateTime},
             #{price},
-            #{quality}
+            #{quality},
+            #{status}
         )
     </insert>
+
     <select id="queryList" resultType="com.framework.entity.MallProduct">
-        select * from mall_products
+        select * from mall_products where 1=1
+        <if test="productTitle != null and productTitle.trim() != ''">
+            and product_title like concat('%', #{productTitle}, '%')
+        </if>
         order by update_time desc
         <if test="offset != null and limit != null">
             limit #{offset}, #{limit}
         </if>
     </select>
+
+    <select id="queryTotal" resultType="int">
+		select count(*) from mall_products
+	</select>
+
     <select id="queryObject" resultType="com.framework.entity.MallProduct">
         select * from mall_products where id = #{id}
     </select>
+
     <update id="updateQuality">
         update mall_products set quality = quality - #{quality} where id = #{productId}
+    </update>
+
+    <update id="updateStatus">
+        update mall_products set status = #{status} where id = #{productId}
     </update>
 </mapper>

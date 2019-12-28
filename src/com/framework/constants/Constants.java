@@ -334,4 +334,14 @@ public interface Constants {
 		public static final String POINTS = "210001";
 		public static final String YLPAY = "210002";
 	}
+
+	/**
+	 * 商品状态
+	 */
+	public static interface MALL_STATUS{
+		/** 正常*/
+		public static final String NORMAL = "220001";
+		/** 已下架*/
+		public static final String OFF_LOADING = "220002";
+	}
 }

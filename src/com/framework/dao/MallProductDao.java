@@ -16,4 +16,12 @@ public interface MallProductDao extends BaseDao<MallProduct>{
      * @return
      */
     int updateQuality(@Param("productId")int productId,@Param("quality")int quality);
+
+    /**
+     * 更新商品状态
+     * @param productId
+     * @param status
+     * @return
+     */
+    int updateStatus(@Param("productId")int productId,@Param("status")String status);
 }

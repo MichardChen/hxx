@@ -31,9 +31,18 @@ public class MallProduct implements Serializable{
 	private BigDecimal price;
 	//库存
 	private int quality;
-
 	//新增产品详情的url
 	private String productDetailUrl;
+	//状态 见常量 MALL_STATUS 值
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public String getProductDetailUrl() {
 		return productDetailUrl;
