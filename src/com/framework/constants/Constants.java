@@ -177,6 +177,7 @@ public interface Constants {
 		public static final String DOCUMENT = "http://47.105.184.157/file/document/";
 		public static final String STORY = "http://47.105.184.157/file/story/";
 		public static final String NEWS = "http://47.105.184.157/file/news/";
+		public static final String MALL_PRODUCT = "http://47.105.184.157/file/mallProduct/";
 	}
 
 	public static interface HTTP_HOST {
@@ -187,6 +188,7 @@ public interface Constants {
 		public static final String DOCUMENT = "/var/www/html/file/document/";
 		public static final String STORY = "/var/www/html/file/story/";
 		public static final String NEWS = "/var/www/html/file/news/";
+		public static final String MALL_PRODUCT = "/var/www/html/file/mallProduct/";
 	}
 
 

@@ -22,44 +22,72 @@ var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		title:"新增商品",
-		mallProduct:{}
+		mallProduct:{
+			"detailLogo": null,
+			"logos": null,
+			"createTime": null,
+			"updateTime": null
+		}
 	},
 	created: function() {
 		//加载完界面
 		$.get("../sys/menu/perms", function(r){
-			if(mallId != null){
+			if(mallId && mallId != null){
 				vm.title = "修改商品";
 				vm.getMallProduct(mallId);
 			} else {
-				$("#mall_createTime").val(new Date().format("yyyy-MM-dd hh:mm:ss"));
-				$("#mall_updateTime").val(new Date().format("yyyy-MM-dd hh:mm:ss"));
+				vm.mallProduct.createTime = new Date().format("yyyy-MM-dd hh:mm:ss");
+				vm.mallProduct.updateTime = new Date().format("yyyy-MM-dd hh:mm:ss");
 			}
 		});
     },
 	methods: {
 		getMallProduct: function(mallId){
             $.get("../mall/info/"+mallId, function(res){
-				var resObj = JSON.parse(res);
+				var resObj;
+				if(typeof res.mallProduct === 'undefined'){
+					resObj = JSON.parse(res);
+				} else {
+					resObj = res.mallProduct;
+				}
             	vm.mallProduct = resObj.mallProduct;
 				$("#productDetail").summernote('code', resObj.mallProduct.productDetail);
+				//产品详情主图片
+				$("#detailLogoIcon").attr("href",resObj.mallProduct.detailLogo);
+				// $("#detailLogoIcon").show();
+				//产品logo
+				$("#logosIcon").attr("href",resObj.mallProduct.logos);
+				// $("#logosIcon").show();
     		});
 		},
 		saveOrUpdate: function (event) {
 			var url = vm.mallProduct.id == null ? "../mall/save" : "../mall/update";
 			vm.mallProduct.productDetail = $("#productDetail").val();
+			var detailLogoObj = document.getElementById("detailLogo").files[0];
+			var logosObj = document.getElementById("logos").files[0];
+			var formFile = new FormData();
+			// formFile.append("detailLogoFile", detailLogoObj);
+			// formFile.append("logosFile", logosObj);
+			formFile.append("mallProduct", JSON.stringify(vm.mallProduct));
 			$.ajax({
 				type: "POST",
 			    url: url,
-			    data: JSON.stringify(vm.mallProduct),
-				contentType: "application/json",
+				data: formFile,
+				processData: false,
+				contentType: false,
 			    success: function(res){
-					var resObj = JSON.parse(res);
-			    	if(resObj.code === 0){
+					var resObj;
+					if(typeof res.code === 'undefined'){
+						resObj = JSON.parse(res);
+					} else {
+						resObj = res;
+					}
+					if(resObj.code === 0){
 						alert('操作成功', function(index){
 							vm.back();
 						});
 					}else{
-						alert(r.msg);
+						alert(resObj.msg);
 					}
 				}
 			});
@@ -69,21 +97,7 @@ var vm = new Vue({
 		}
 	}
 });
-Date.prototype.format = function (fmt) {
-	var o = {
-		"M+": this.getMonth() + 1, //月份
-		"d+": this.getDate(), //日
-		"h+": this.getHours(), //小时
-		"m+": this.getMinutes(), //分
-		"s+": this.getSeconds(), //秒
-		"q+": Math.floor((this.getMonth() + 3) / 3), //季度
-		"S": this.getMilliseconds() //毫秒
-	};
-	if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-	for (var k in o)
-		if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-	return fmt;
-}
+
 //选择图片时把图片上传到服务器再读取服务器指定的存储位置显示在富文本区域内
 function sendFile(files, editor, $editable) {
 	var $files = $(files);
@@ -106,7 +120,11 @@ function sendFile(files, editor, $editable) {
 			// 成功时调用方法，后端返回json数据
 			success: function (data) {
 				var temp = eval('('+data+')');
-				$('.summernote').summernote('insertImage',temp.data.imgUrl);
+				if(typeof editor!=undefined && editor){
+					vm.mallProduct[editor] = temp.data.imgUrl;
+				} else {
+					$('.summernote').summernote('insertImage',temp.data.imgUrl);
+				}
 			},
 			// ajax请求失败时处理
 			error: function () {
@@ -114,6 +132,16 @@ function sendFile(files, editor, $editable) {
 			}
 		});
 	});
+}
+
+function uploadDetailLogo(obj){
+	var files = obj.files;
+	sendFile(files, "detailLogo")
+}
+
+function uploadLogos(obj){
+	var files = obj.files;
+	sendFile(files, "logos")
 }
 
 $(function () {
@@ -142,4 +170,33 @@ $(function () {
 			}
 		}
 	});
+
+	// $('form').bootstrapValidator({
+	// 	message: 'This value is not valid',
+	// 	feedbackIcons: {
+	// 		valid: 'glyphicon glyphicon-ok',
+	// 		invalid: 'glyphicon glyphicon-remove',
+	// 		validating: 'glyphicon glyphicon-refresh'
+	// 	},
+	// 	fields: {
+	// 		productTitle: {
+	// 			message: '用户名验证失败',
+	// 			validators: {
+	// 				notEmpty: {
+	// 					message: '用户名不能为空'
+	// 				}
+	// 			}
+	// 		}
+	// 		// email: {
+	// 		// 	validators: {
+	// 		// 		notEmpty: {
+	// 		// 			message: '邮箱不能为空'
+	// 		// 		},
+	// 		// 		emailAddress: {
+	// 		// 			message: '邮箱地址格式有误'
+	// 		// 		}
+	// 		// 	}
+	// 		// }
+	// 	}
+	// });
 });

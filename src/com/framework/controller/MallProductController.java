@@ -1,26 +1,27 @@
 package com.framework.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.framework.constants.Constants;
 import com.framework.entity.MallProduct;
-import com.framework.entity.SysMenuEntity;
+import com.framework.service.FileService;
 import com.framework.service.MallProductService;
-import com.framework.service.SysMenuService;
-import com.framework.service.SysUserService;
-import com.framework.utils.Constant.MenuType;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
-import com.framework.utils.RRException;
+import com.framework.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 商城商品
@@ -69,9 +70,41 @@ public class MallProductController extends AbstractController {
 	 */
 	@RequestMapping("/save")
 	@RequiresPermissions("mall:save")
-	public R save(@RequestBody MallProduct MallProduct) {
-		mallProductService.save(MallProduct);
+	public R save(@RequestParam("mallProduct")String mallProduct) {
+		MallProduct model = new MallProduct();
+		model = JSON.parseObject(mallProduct, MallProduct.class);
+		//处理图片logo及生成详情html
+		try{
+			dealHtml(model);
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			return R.error(ex.getMessage());
+		}
+		mallProductService.save(model);
 		return R.ok();
+	}
+
+	/**
+	 * 处理生成详情html
+	 * @param mallProduct
+	 */
+	public void dealHtml(MallProduct mallProduct) throws Exception{
+		//生成html文件
+		String uuid = UUID.randomUUID().toString();
+		String htmlContent = StringUtil.formatHTML(mallProduct.getProductTitle(), mallProduct.getProductDetail());
+		String host = "F:\\var\\www\\html\\file\\mallProduct";
+		PrintWriter pw = new PrintWriter(new OutputStreamWriter(
+				new FileOutputStream(host + uuid + ".html"),"utf-8"),true);
+		pw.println(htmlContent);
+		pw.close();
+		String contentUrl = host + uuid + ".html";
+
+//		PrintWriter pw = new PrintWriter(new OutputStreamWriter(
+//				new FileOutputStream(Constants.HTTPS_FILE_HOST.MALL_PRODUCT + uuid + ".html"),"utf-8"),true);
+//		pw.println(htmlContent);
+//		pw.close();
+//		String contentUrl = Constants.HTTPS_HOST.MALL_PRODUCT + uuid + ".html";
+		mallProduct.setProductDetailUrl(contentUrl);
 	}
 
 	/**
@@ -79,8 +112,17 @@ public class MallProductController extends AbstractController {
 	 */
 	@RequestMapping("/update")
 	@RequiresPermissions("mall:update")
-	public R update(@RequestBody MallProduct MallProduct) {
-		mallProductService.update(MallProduct);
+	public R update(@RequestParam("mallProduct")String mallProduct) {
+		MallProduct model = new MallProduct();
+		model = JSON.parseObject(mallProduct, MallProduct.class);
+		//处理图片logo及生成详情html
+		try{
+			dealHtml(model);
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			return R.error(ex.getMessage());
+		}
+		mallProductService.update(model);
 		return R.ok();
 	}
 

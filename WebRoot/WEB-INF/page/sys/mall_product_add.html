@@ -9,37 +9,39 @@
 	<div class="panel-heading">{{title}}</div>
 	<form class="form-horizontal_mall_product">
 		<div class="form-group">
-			<label class="control-label col-sm-1">产品名称</label>
+			<label class="control-label col-sm-1"><span style="color: red">*</span>产品名称</label>
 			<div class="col-sm-10">
-				<input class="form-control" v-model="mallProduct.productTitle" type="text" placeholder="请输入产品名称" />
+				<input class="form-control" name="productTitle" v-model="mallProduct.productTitle" type="text" placeholder="请输入产品名称" />
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-1">产品详情主图片</label>
+			<label class="control-label col-sm-1"><span style="color: red">*</span>产品详情主图片</label>
 			<div class="col-sm-4">
-				<input class="form-control" type="text" v-model="mallProduct.detailLogo"/>
+				<img :src="mallProduct.detailLogo" id="detailLogoIcon" class="img-thumbnail" />
+				<input type="file" id="detailLogo"  onchange="uploadDetailLogo(this)" placeholder="请选择产品详情主图片"/>
 			</div>
-			<label class="control-label col-sm-1">产品logo</label>
+			<label class="control-label col-sm-1"><span style="color: red">*</span>产品logo</label>
 			<div class="col-sm-4">
-				<input class="form-control" type="text" v-model="mallProduct.logos"/>
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-1">价格</label>
-			<div class="col-sm-4">
-				<input class="form-control" v-model="mallProduct.price" type="text" placeholder="请输入价格" />
-			</div>
-			<label class="control-label col-sm-1">库存</label>
-			<div class="col-sm-4">
-				<input class="form-control" type="text" v-model="mallProduct.quality" placeholder="请输入库存" />
+				<img :src="mallProduct.logos" id="logosIcon" class="img-thumbnail" />
+				<input type="file"  id="logos" placeholder="请选择产品logo" onchange="uploadLogos(this)" />
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-1">所需兑换积分</label>
+			<label class="control-label col-sm-1"><span style="color: red">*</span>价格</label>
 			<div class="col-sm-4">
-				<input class="form-control" v-model="mallProduct.needPoints" type="text" />
+				<input class="form-control" v-model="mallProduct.price" type="number" placeholder="请输入价格" />
 			</div>
-			<label class="control-label col-sm-1">状态</label>
+			<label class="control-label col-sm-1"><span style="color: red">*</span>库存</label>
+			<div class="col-sm-4">
+				<input class="form-control" type="number" v-model="mallProduct.quality" placeholder="请输入库存" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-1"><span style="color: red">*</span>所需兑换积分</label>
+			<div class="col-sm-4">
+				<input class="form-control" v-model="mallProduct.needPoints" type="number" />
+			</div>
+			<label class="control-label col-sm-1"><span style="color: red">*</span>状态</label>
 			<div class="col-sm-4">
 				<select class="form-control" v-model="mallProduct.status">
 					<option value="220001">正常</option>
@@ -48,14 +50,14 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-1">产品类型</label>
+			<label class="control-label col-sm-1"><span style="color: red">*</span>产品类型</label>
 			<div class="col-sm-4">
 				<select class="form-control" v-model="mallProduct.productTypeCd">
 					<option value="230001" >实体产品</option>
 					<option value="230002">虚拟产品</option>
 				</select>
 			</div>
-			<label class="control-label col-sm-1">用户类型</label>
+			<label class="control-label col-sm-1"><span style="color: red">*</span>用户类型</label>
 			<div class="col-sm-4">
 				<select class="form-control" v-model="mallProduct.userTypeCd">
 					<option value="1001" >个人</option>
@@ -76,7 +78,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-1">产品详情</label>
+			<label class="control-label col-sm-1"><span style="color: red">*</span>产品详情</label>
 			<div class="col-sm-10">
 				<textarea v-model="mallProduct.productDetail" id="productDetail" class="summernote"></textarea>
 			</div>

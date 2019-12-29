@@ -16,7 +16,8 @@
             `update_time`,
             `price`,
             `quality`,
-            `status`
+            `status`,
+            `product_detail_url`
         )
         values
         (
@@ -32,7 +33,8 @@
             #{updateTime},
             #{price},
             #{quality},
-            #{status}
+            #{status},
+            #{productDetailUrl}
         )
     </insert>
 
@@ -67,7 +69,7 @@
             <if test="updateTime != null">`update_time` = #{updateTime}, </if>
             <if test="price != null">`price` = #{price}, </if>
             <if test="quality != null">`quality` = #{quality}, </if>
-            <if test="productDetailUrl != null">`product_detail` = #{productDetailUrl}, </if>
+            <if test="productDetailUrl != null">`product_detail_url` = #{productDetailUrl}, </if>
             <if test="status != null">`status` = #{status}, </if>
         </set>
         where id = #{id}
@@ -88,4 +90,11 @@
     <update id="updateStatus">
         update mall_products set status = #{status} where id = #{productId}
     </update>
+
+    <delete id="deleteBatch">
+        delete from mall_products where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>
