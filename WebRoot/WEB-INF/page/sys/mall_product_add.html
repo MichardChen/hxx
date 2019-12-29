@@ -11,14 +11,14 @@
 		<div class="form-group">
 			<label class="control-label col-sm-1"><span style="color: red">*</span>产品名称</label>
 			<div class="col-sm-10">
-				<input class="form-control" name="productTitle" v-model="mallProduct.productTitle" type="text" placeholder="请输入产品名称" />
+				<input class="form-control" v-model="mallProduct.productTitle" type="text" placeholder="请输入产品名称"/>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="control-label col-sm-1"><span style="color: red">*</span>产品详情主图片</label>
 			<div class="col-sm-4">
 				<img :src="mallProduct.detailLogo" id="detailLogoIcon" class="img-thumbnail" />
-				<input type="file" id="detailLogo"  onchange="uploadDetailLogo(this)" placeholder="请选择产品详情主图片"/>
+				<input type="file" id="detailLogoInput" onchange="uploadDetailLogo(this)" placeholder="请选择产品详情主图片"/>
 			</div>
 			<label class="control-label col-sm-1"><span style="color: red">*</span>产品logo</label>
 			<div class="col-sm-4">
@@ -43,7 +43,7 @@
 			</div>
 			<label class="control-label col-sm-1"><span style="color: red">*</span>状态</label>
 			<div class="col-sm-4">
-				<select class="form-control" v-model="mallProduct.status">
+				<select class="form-control" v-model="mallProduct.status" >
 					<option value="220001">正常</option>
 					<option value="220002">已下架</option>
 				</select>
@@ -52,14 +52,14 @@
 		<div class="form-group">
 			<label class="control-label col-sm-1"><span style="color: red">*</span>产品类型</label>
 			<div class="col-sm-4">
-				<select class="form-control" v-model="mallProduct.productTypeCd">
+				<select class="form-control" v-model="mallProduct.productTypeCd" >
 					<option value="230001" >实体产品</option>
 					<option value="230002">虚拟产品</option>
 				</select>
 			</div>
 			<label class="control-label col-sm-1"><span style="color: red">*</span>用户类型</label>
 			<div class="col-sm-4">
-				<select class="form-control" v-model="mallProduct.userTypeCd">
+				<select class="form-control" v-model="mallProduct.userTypeCd" >
 					<option value="1001" >个人</option>
 					<option value="1002">企业</option>
 				</select>
@@ -100,10 +100,8 @@
 <script src="${rc.contextPath}/js/mall/mall_product_add.js?_${date.systemTime}"></script>
 <link rel="stylesheet" type="text/css" href="${rc.contextPath}/summernote/css/bootstrap.css">
 <link href="${rc.contextPath}/summernote/dist/summernote.css" rel="stylesheet"/>
-<script src="${rc.contextPath}/summernote/js/jquery.min.js"></script>
 <script src="${rc.contextPath}/summernote/js/bootstrap.min.js"></script>
 <script src="${rc.contextPath}/summernote/dist/summernote.js"></script>
 <script src="${rc.contextPath}/summernote/dist/lang/summernote-zh-CN.js"></script>    <!-- 中文-->
-<script src="${rc.contextPath}/js/sys/common.js"></script>
 </body>
 </html>

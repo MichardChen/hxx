@@ -21,7 +21,7 @@ $(function () {
 				}
 			},
 			// { label: '产品类型', name: 'productTypeCd', width: 100 },
-			// { label: '用户类型', name: 'userTypeCd', width: 80},
+			{ label: '详情url', name: 'productDetailUrl', width: 80, hidden: true},
 			{ label: '创建时间', name: 'createTime', width: 120}
 		],
 		// shrinkToFit: false,
@@ -111,6 +111,15 @@ var vm = new Vue({
 					}
 				});
 			});
+		},
+		show:function(event){
+			var rowKey = getSelectedRow();
+			if(rowKey == null){
+				return ;
+			}
+			var rowData = $( "#jqGrid" ).getRowData(rowKey);
+			debugger
+			window.open(rowData.productDetailUrl);
 		},
 		query:function(){
 			$("#jqGrid").jqGrid('setGridParam',{
