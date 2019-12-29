@@ -92,18 +92,18 @@ public class MallProductController extends AbstractController {
 		//生成html文件
 		String uuid = UUID.randomUUID().toString();
 		String htmlContent = StringUtil.formatHTML(mallProduct.getProductTitle(), mallProduct.getProductDetail());
-		String host = "F:\\var\\www\\html\\file\\mallProduct";
-		PrintWriter pw = new PrintWriter(new OutputStreamWriter(
-				new FileOutputStream(host + uuid + ".html"),"utf-8"),true);
-		pw.println(htmlContent);
-		pw.close();
-		String contentUrl = host + uuid + ".html";
-
+//		String host = "F:\\var\\www\\html\\file\\mallProduct";
 //		PrintWriter pw = new PrintWriter(new OutputStreamWriter(
-//				new FileOutputStream(Constants.HTTPS_FILE_HOST.MALL_PRODUCT + uuid + ".html"),"utf-8"),true);
+//				new FileOutputStream(host + uuid + ".html"),"utf-8"),true);
 //		pw.println(htmlContent);
 //		pw.close();
-//		String contentUrl = Constants.HTTPS_HOST.MALL_PRODUCT + uuid + ".html";
+//		String contentUrl = host + uuid + ".html";
+
+		PrintWriter pw = new PrintWriter(new OutputStreamWriter(
+				new FileOutputStream(Constants.HTTPS_FILE_HOST.MALL_PRODUCT + uuid + ".html"),"utf-8"),true);
+		pw.println(htmlContent);
+		pw.close();
+		String contentUrl = Constants.HTTPS_HOST.MALL_PRODUCT + uuid + ".html";
 		mallProduct.setProductDetailUrl(contentUrl);
 	}
 
