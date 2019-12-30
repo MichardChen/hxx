@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>编辑商品</title>
+#parse("sys/header.html")
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+	<div class="panel-heading">{{title}}</div>
+	<form class="form-horizontal_mall_product">
+		<div class="form-group">
+			<label class="control-label col-sm-1"><span style="color: red">*</span>产品名称</label>
+			<div class="col-sm-10">
+				<input class="form-control" v-model="mallProduct.productTitle" type="text" placeholder="请输入产品名称"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-1"><span style="color: red">*</span>产品详情主图片</label>
+			<div class="col-sm-4">
+				<img :src="mallProduct.detailLogo" id="detailLogoIcon" class="img-thumbnail" />
+				<input type="file" id="detailLogoInput" onchange="uploadDetailLogo(this)" placeholder="请选择产品详情主图片"/>
+			</div>
+			<label class="control-label col-sm-1"><span style="color: red">*</span>产品logo</label>
+			<div class="col-sm-4">
+				<img :src="mallProduct.logos" id="logosIcon" class="img-thumbnail" />
+				<input type="file"  id="logos" placeholder="请选择产品logo" onchange="uploadLogos(this)" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-1"><span style="color: red">*</span>价格</label>
+			<div class="col-sm-4">
+				<input class="form-control" v-model="mallProduct.price" type="number" placeholder="请输入价格" />
+			</div>
+			<label class="control-label col-sm-1"><span style="color: red">*</span>库存</label>
+			<div class="col-sm-4">
+				<input class="form-control" type="number" v-model="mallProduct.quality" placeholder="请输入库存" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-1"><span style="color: red">*</span>所需兑换积分</label>
+			<div class="col-sm-4">
+				<input class="form-control" v-model="mallProduct.needPoints" type="number" />
+			</div>
+			<label class="control-label col-sm-1"><span style="color: red">*</span>状态</label>
+			<div class="col-sm-4">
+				<select class="form-control" v-model="mallProduct.status" >
+					<option value="220001">正常</option>
+					<option value="220002">已下架</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-1"><span style="color: red">*</span>产品类型</label>
+			<div class="col-sm-4">
+				<select class="form-control" v-model="mallProduct.productTypeCd" >
+					<option value="230001" >实体产品</option>
+					<option value="230002">虚拟产品</option>
+				</select>
+			</div>
+			<label class="control-label col-sm-1"><span style="color: red">*</span>用户类型</label>
+			<div class="col-sm-4">
+				<select class="form-control" v-model="mallProduct.userTypeCd" >
+					<option value="1001" >个人</option>
+					<option value="1002">企业</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-1">创建时间</label>
+			<div class="col-sm-4">
+				<input class="form-control" v-model="mallProduct.createTime" type="text"
+					   readonly="true" id="mall_createTime"/>
+			</div>
+			<label class="control-label col-sm-1">更新时间</label>
+			<div class="col-sm-4">
+				<input class="form-control" v-model="mallProduct.updateTime" type="text"
+					   readonly="true" id="mall_updateTime"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-1"><span style="color: red">*</span>产品详情</label>
+			<div class="col-sm-10">
+				<textarea v-model="mallProduct.productDetail" id="productDetail" class="summernote"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-sm-1">备注</label>
+			<div class="col-sm-10">
+				<textarea v-model="mallProduct.mark" class="form-control" rows="3"></textarea>
+			</div>
+		</div>
+		<input class="hidden" type="text" v-model="mallProduct.productDetailUrl" /><!--产品详情url-->
+		<div class="form-submit">
+			<div class="col-sm-2 control-label"></div>
+			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
+		</div>
+	</form>
+</div>
+<script src="${rc.contextPath}/js/mall/mall_points_add.js?_${date.systemTime}"></script>
+</body>
+</html>

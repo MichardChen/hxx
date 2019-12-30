@@ -1,0 +1,35 @@
+package com.framework.service;
+
+import com.framework.entity.MallPointsExchangeRecord;
+import com.framework.entity.MallPointsExchangeRecord;
+
+import java.util.List;
+import java.util.Map;
+
+public interface MallExchangeService {
+
+	MallPointsExchangeRecord queryObject(Long id);
+
+	List<MallPointsExchangeRecord> queryList(Map<String, Object> map);
+
+	int queryTotal(Map<String, Object> map);
+
+	/**
+	 * 新增
+	 * @param record
+	 */
+	void save(MallPointsExchangeRecord record);
+
+	/**
+	 * 修改
+	 * @param record
+	 */
+	void update(MallPointsExchangeRecord record);
+
+	/**
+	 *批量删除
+	 * @param recordIds
+	 */
+	void deleteBatch(Long[] recordIds);
+
+}
