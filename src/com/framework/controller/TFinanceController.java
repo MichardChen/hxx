@@ -1,9 +1,9 @@
 package com.framework.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.util.*;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,6 +122,7 @@ public class TFinanceController {
 			model.setStandard(tFinance.getStandard());
 			model.setTimeDistance(tFinance.getTimeDistance());
 			model.setStatus(tFinance.getStatus());
+			model.setContent(tFinance.getContent());
 		}
 		return R.ok().put("tFinance", model);
 	}
@@ -144,13 +145,29 @@ public class TFinanceController {
 		story.setUpdateTime(DateUtil.getNowTimestamp());
 		story.setLowRate(viewModel.getString("lowRate"));
 		story.setLowRefund(viewModel.getString("lowRefund"));
-		story.setStandard(viewModel.getString("standard"));
+		//story.setStandard(viewModel.getString("standard"));
 		story.setTimeDistance(viewModel.getString("timeDistance"));
 		story.setTitle(viewModel.getString("title"));
 		story.setStatus(viewModel.getString("status"));
+
+		//生成html
+		String htmlContent = StringUtil.formatHTML(viewModel.getString("name"), viewModel.getString("content"));
+		story.setContent(htmlContent);
 		//生成html
 		FileService fs=new FileService();
-		
+		String uuid = UUID.randomUUID().toString();
+		//生成html文件
+		try {
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.HTTPS_FILE_HOST.FINANCE+uuid+".html"),"utf-8"),true);
+			pw.println(htmlContent);
+			pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String contentUrl = Constants.HTTPS_HOST.FINANCE+uuid+".html";
+		story.setDescUrl(contentUrl);
+
 		//上传图片
 		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
 		if(StringUtil.isNoneBlank(logo)){
@@ -182,7 +199,24 @@ public class TFinanceController {
 		story.setStatus(viewModel.getString("status"));
 		//生成html
 		FileService fs=new FileService();
-		
+
+		//生成html
+		String htmlContent = StringUtil.formatHTML(viewModel.getString("name"), viewModel.getString("content"));
+		story.setContent(htmlContent);
+		//生成html
+		String uuid = UUID.randomUUID().toString();
+		//生成html文件
+		try {
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(Constants.HTTPS_FILE_HOST.FINANCE+uuid+".html"),"utf-8"),true);
+			pw.println(htmlContent);
+			pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String contentUrl = Constants.HTTPS_HOST.FINANCE+uuid+".html";
+		story.setDescUrl(contentUrl);
+
 		//上传图片
 		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
 		if(StringUtil.isNoneBlank(logo)){

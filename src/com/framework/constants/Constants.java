@@ -178,6 +178,7 @@ public interface Constants {
 		public static final String STORY = "http://47.105.184.157/file/story/";
 		public static final String NEWS = "http://47.105.184.157/file/news/";
 		public static final String MALL_PRODUCT = "http://47.105.184.157/file/mallProduct/";
+		public static final String FINANCE = "http://47.105.184.157/file/finance/";
 	}
 
 	public static interface HTTP_HOST {
@@ -189,9 +190,13 @@ public interface Constants {
 		public static final String STORY = "/var/www/html/file/story/";
 		public static final String NEWS = "/var/www/html/file/news/";
 		public static final String MALL_PRODUCT = "/var/www/html/file/mallProduct/";
+		public static final String FINANCE = "/var/www/html/file/finance/";
 	}
 
 
+	/**
+	 * 反馈状态
+	 */
 	public static interface FEEDBACK_STATUS {
 		public static final String HANDLE = "050002";
 		public static final String STAY_HANDLE = "050001";
@@ -356,4 +361,22 @@ public interface Constants {
 		/** 虚拟产品*/
 		public static final String VIRTUAL = "230002";
 	}
+
+	/**
+	 * 金融产品类型
+	 */
+	public static interface FINANCE_TYPE{
+
+		/**融易多*/
+		public static final String LYD = "240001";
+		/**银行委托贷款*/
+		public static final String BANK = "240002";
+		/**保理*/
+		public static final String BAOLI = "240003";
+		/**供应链金融*/
+		public static final String GONGYINGLIAN = "240004";
+		/**农村合作社*/
+		public static final String NONGCUNHZS = "240005";
+	}
+
 }

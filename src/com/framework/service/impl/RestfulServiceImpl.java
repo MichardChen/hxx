@@ -50,6 +50,12 @@ public class RestfulServiceImpl implements RestfulService {
     MallPointsRecordDao mallPointsRecordDao;
     @Autowired
     MallPointsExchangeRecordDao exchangeRecordDao;
+    @Autowired
+    TQuestionDao tQuestionDao;
+    @Autowired
+    TFinanceDao tFinanceDao;
+    @Autowired
+    TFinanceCommitDao tFinanceCommitDao;
 
     /**
      * 首页接口
@@ -848,5 +854,135 @@ public class RestfulServiceImpl implements RestfulService {
             data.setMessage("修改失败");
             return data;
         }
+    }
+
+    @Override
+    public ReturnData saveFeedback(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        if(StringUtil.isBlank(dto.getValue())){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，留言内容不能为空");
+            return data;
+        }
+        Member member = memberDao.queryByMobile(dto.getMobile());
+        if(member == null){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，您的账号不存在");
+            return data;
+        }
+        TQuestionEntity question = new TQuestionEntity();
+        question.setQuestion(dto.getValue());
+        question.setLinkMan(member.getNickName());
+        question.setMobile(dto.getMobile());
+        question.setCreateTime(DateUtil.getNowTimestamp());
+        question.setStatus(Constants.FEEDBACK_STATUS.STAY_HANDLE);
+        int ret = tQuestionDao.save(question);
+        if(ret != 0){
+            data.setCode(Constants.STATUS_CODE.SUCCESS);
+            data.setMessage("提交成功，感谢您的宝贵意见，我们将尽快处理");
+            return data;
+        }else{
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("提交失败");
+            return data;
+        }
+    }
+
+    @Override
+    public ReturnData getFinanceList(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        Map<String, Object> map = new HashMap<>();
+        map.put("offset", (dto.getPageNum() - 1) * dto.getPageSize());
+        map.put("limit", dto.getPageSize());
+        map.put("typeCd",dto.getTypeCd());
+        map.put("status",1);
+        List<TFinanceEntity> list = tFinanceDao.queryList(map);
+        List<FinanceVo> voList = new ArrayList<>();
+        FinanceVo vo = null;
+        for(TFinanceEntity entity : list){
+            vo = new FinanceVo();
+            vo.setId(entity.getId());
+            vo.setFinanceName(entity.getName());
+            vo.setLogo(entity.getIcon());
+            vo.setRate(entity.getLowRate());
+            vo.setRefund(entity.getLowRefund());
+            voList.add(vo);
+        }
+        data.setMessage("查询成功");
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        JSONObject dataMap = new JSONObject();
+        dataMap.put("financeList",voList);
+        data.setData(dataMap);
+        return data;
+    }
+
+    @Override
+    public ReturnData getFinanceDetail(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        TFinanceEntity entity = tFinanceDao.queryObject(dto.getKey());
+        FinanceDetailVo detailVo = new FinanceDetailVo();
+        if(entity != null){
+            detailVo.setId(entity.getId());
+            detailVo.setFinanceName(entity.getName());
+            detailVo.setLogo(entity.getIcon());
+            detailVo.setRate(entity.getLowRate());
+            detailVo.setRefund(entity.getLowRefund());
+            detailVo.setTimeDistance(entity.getTimeDistance());
+            detailVo.setContentUrl(entity.getDescUrl());
+        }
+        //查找客服电话
+        JSONObject json = new JSONObject();
+        TCodemstEntity phoneEntity = tCodemstDao.queryByCode(Constants.TEL_TYPE.KEFU);
+        if(phoneEntity != null){
+            json.put("phone",phoneEntity.getData2());
+        }else{
+            json.put("phone","");
+        }
+        json.put("financeDetail",detailVo);
+        data.setData(json);
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        data.setMessage("查询成功");
+        return data;
+    }
+
+    @Override
+    public ReturnData applyFinance(FishDTO dto) {
+
+        ReturnData data = new ReturnData();
+        TFinanceEntity entity = tFinanceDao.queryObject(dto.getKey());
+        if(entity == null){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，此产品已下架");
+            return data;
+        }
+        Member member = memberDao.queryByMobile(dto.getMobile());
+        if(member == null){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，此用户不存在");
+            return data;
+        }
+        if(!Constants.MEMBER_STATUS.REVIEW_PASS.equals(member.getStatus())){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，您还未进行认证，请先认证资料");
+            return data;
+        }
+        TFinanceCommitEntity commitEntity = new TFinanceCommitEntity();
+        commitEntity.setFinanceId(entity.getId());
+        commitEntity.setCreateTime(DateUtil.getNowTimestamp());
+        commitEntity.setUpdateTime(DateUtil.getNowTimestamp());
+        commitEntity.setStatus(Constants.FEEDBACK_STATUS.STAY_HANDLE);
+        commitEntity.setMark("金融产品申请");
+        commitEntity.setMobile(dto.getMobile());
+        commitEntity.setIdcardNo(member.getIdCardNo());
+        commitEntity.setName(member.getNickName());
+        int ret = tFinanceCommitDao.save(commitEntity);
+        if(ret == 0){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，申请失败");
+        }else{
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("恭喜您申请成功，待平台工作人员联系您");
+        }
+        return data;
     }
 }

@@ -110,7 +110,7 @@ public class TQuestionController {
 			}else{
 				model.setEmployeeId(StringUtil.STRING_BLANK);
 			}
-			int userid = data.getUpdateBy();
+			int userid = data.getUpdateBy() == null ? 0 : data.getUpdateBy();
 			SysUserEntity uadmin = userDao.queryObject(userid);
 			if(uadmin != null){
 				model.setUpdateBy(uadmin.getUsername());
@@ -141,61 +141,6 @@ public class TQuestionController {
 		TQuestionEntity tQuestion = tQuestionService.queryObject(id);
 		TQuestionModel model = new TQuestionModel();
 		if(tQuestion != null){
-			//model.setCartId(tQuestion.getCartId());
-			int cartFlg = tQuestion.getCartflg();
-			if(cartFlg == 2){
-				//以租代购
-				TCarLeaseEntity entity = carLeaseDao.queryObject(tQuestion.getCartId());
-				if(entity != null){
-					String name = "【以租代购】";
-					TBrandEntity brandEntity = brandDao.queryObject(entity.getBrand());
-					if(brandEntity != null){
-						name = brandEntity.getBrand();
-					}
-					TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObject(entity.getCarSeriesId());
-					if(brandSeriesEntity != null){
-						name = name + brandSeriesEntity.getCarSerial();
-					}
-					model.setCartId(name + " " +entity.getCarName());
-				}else{
-					model.setCartId("");
-				}
-			}else if(cartFlg == 3){
-				//会淘车
-				TCarSecondhandEntity entity = carSecondhandDao.queryObject(tQuestion.getCartId());
-				if(entity != null){
-					String name = "【会淘车】";
-					TBrandEntity brandEntity = brandDao.queryObject(entity.getBrand());
-					if(brandEntity != null){
-						name = brandEntity.getBrand();
-					}
-					TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObject(entity.getCarSeriesId());
-					if(brandSeriesEntity != null){
-						name = name + brandSeriesEntity.getCarSerial();
-					}
-					model.setCartId(name + " " +entity.getCarName());
-				}else{
-					model.setCartId("");
-				}
-			}else if(cartFlg == 4){
-				//平行进口车
-				TCarImportEntity entity = carImportDao.queryObject(tQuestion.getCartId());
-				if(entity != null){
-					String name = "【平行进口车】";
-					TBrandEntity brandEntity = brandDao.queryObject(entity.getBrand());
-					if(brandEntity != null){
-						name = brandEntity.getBrand();
-					}
-					TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObject(entity.getCarSeriesId());
-					if(brandSeriesEntity != null){
-						name = name + brandSeriesEntity.getCarSerial();
-					}
-					model.setCartId(name + " " +entity.getCarName());
-				}else{
-					model.setCartId("");
-				}
-			}
-			
 			model.setCreateTime(StringUtil.toString(tQuestion.getCreateTime()));
 			
 			SysUserEntity userEntity = userDao.queryObject(tQuestion.getEmployeeId());

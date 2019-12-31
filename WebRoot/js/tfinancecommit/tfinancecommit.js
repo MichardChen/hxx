@@ -4,10 +4,10 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: '申请产品', name: 'financeId', width: 80 }, 			
-			{ label: '汽车品牌', name: 'brandId', width: 80 }, 			
+			/*{ label: '汽车品牌', name: 'brandId', width: 80 },
 			{ label: '车系', name: 'brandSeriesId', width: 80 }, 			
 			{ label: '所在省份', name: 'provinceId', width: 80 }, 			
-			{ label: '所在城市', name: 'cityId', width: 80 }, 			
+			{ label: '所在城市', name: 'cityId', width: 80 }, 		*/
 			{ label: '申请人', name: 'name', width: 80 }, 			
 			{ label: '手机号码', name: 'mobile', width: 80 }, 			
 			{ label: '申请时间', name: 'createTime', width: 80 }, 			

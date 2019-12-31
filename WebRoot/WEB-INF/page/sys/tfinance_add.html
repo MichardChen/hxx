@@ -9,7 +9,7 @@
 	<div class="panel-heading">{{title}}</div>
 	<form class="form-horizontal" enctype="multipart/form-data" style="width: 100%;">
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label">产品名称</div>
+		   	<div class="col-sm-2 control-label">金融产品名称</div>
 		   	<div class="col-sm-10">
 		      <input type="text" class="form-control"  id="name" placeholder="请输入产品名称"/>
 		    </div>
@@ -21,15 +21,15 @@
 		    </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label">最低首付比例</div>
+		   	<div class="col-sm-2 control-label">贷款费率</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control"  id="lowRate" placeholder="请输入最低首付比例"/>
+		      <input type="text" class="form-control"  id="lowRate" placeholder="请输入贷款费率"/>
 		    </div>
 		</div>
 		<div class="form-group">
-		   	<div class="col-sm-2 control-label">最低贷款额</div>
+		   	<div class="col-sm-2 control-label">贷款额度</div>
 		   	<div class="col-sm-10">
-		      <input type="text" class="form-control"  id="lowRefund" placeholder="请输入最低贷款额"/>
+		      <input type="text" class="form-control"  id="lowRefund" placeholder="请输入贷款额度"/>
 		    </div>
 		</div>
 		<div class="form-group">
@@ -38,12 +38,12 @@
 		      <input type="text" class="form-control"  id="timeDistance" placeholder="请输入贷款期限"/>
 		    </div>
 		</div>
-		<div class="form-group">
+		<!--<div class="form-group">
 		   	<div class="col-sm-2 control-label">申请提交材料及二手车准入标准</div>
 		   	<div class="col-sm-10">
 		      <input type="text" class="form-control"  id="standard" placeholder="请输入准入标准"/>
 		    </div>
-		</div>
+		</div>-->
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">状态</div>
 		   	<div class="col-sm-10">
@@ -54,6 +54,13 @@
 		    </div>
 		</div>
 		<div class="form-group">
+			<div class="col-sm-2 control-label">方案详情</div>
+			<div class="col-sm-10">
+					<textarea id="content" name="content" id="content" class="summernote">
+					</textarea>
+			</div>
+		</div>
+		<div class="form-group">
 			<div class="col-sm-2 control-label"></div> 
 			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
 			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
@@ -61,6 +68,12 @@
 		<input type="hidden" id="financeId"/>
 	</form>
 </div>
+<link rel="stylesheet" type="text/css" href="${rc.contextPath}/summernote/css/bootstrap.css">
+<link href="${rc.contextPath}/summernote/dist/summernote.css" rel="stylesheet"/>
+<script src="${rc.contextPath}/summernote/js/jquery.min.js"></script>
+<script src="${rc.contextPath}/summernote/js/bootstrap.min.js"></script>
+<script src="${rc.contextPath}/summernote/dist/summernote.js"></script>
+<script src="${rc.contextPath}/summernote/dist/lang/summernote-zh-CN.js"></script>    <!-- 中文-->
 <script src="${rc.contextPath}/js/tfinance/tfinance_add.js?_${date.systemTime}"></script>
 <script src="${rc.contextPath}/js/sys/common.js"></script>
 </body>

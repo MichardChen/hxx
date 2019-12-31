@@ -19,6 +19,8 @@ public class TFinanceModel implements Serializable{
 	private String standard;
 	
 	private String status;
+
+	private String content;
 	
 	
 	public String getStatus() {
@@ -71,6 +73,11 @@ public class TFinanceModel implements Serializable{
 		this.standard = standard;
 	}
 
-	
+	public String getContent() {
+		return content;
+	}
 
+	public void setContent(String content) {
+		this.content = content;
+	}
 }

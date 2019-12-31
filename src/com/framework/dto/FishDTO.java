@@ -35,6 +35,8 @@ public class FishDTO implements Serializable {
     private String receiveMobile;
     private String address;
     private String nickName;
+    private String value;
+    private String typeCd;
 
 
 
@@ -76,7 +78,27 @@ public class FishDTO implements Serializable {
         if(StringUtil.isNoneBlank(request.getParameter("nickName"))){
             dto.setNickName(new String(request.getParameter("nickName").getBytes("iso-8859-1"), "utf-8"));
         }
+        if(StringUtil.isNoneBlank(request.getParameter("value"))){
+            dto.setValue(new String(request.getParameter("value").getBytes("iso-8859-1"), "utf-8"));
+        }
+        dto.setTypeCd(request.getParameter("typeCd"));
          return dto;
+    }
+
+    public String getTypeCd() {
+        return typeCd;
+    }
+
+    public void setTypeCd(String typeCd) {
+        this.typeCd = typeCd;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String getNickName() {
@@ -294,4 +316,6 @@ public class FishDTO implements Serializable {
     public void setSex(int sex) {
         this.sex = sex;
     }
+
+
 }

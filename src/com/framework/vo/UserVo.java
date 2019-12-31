@@ -1,16 +1,9 @@
 package com.framework.vo;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * @author ChenDang
  * @date 2019/12/18 0018
  */
-@Data
-@Setter
-@Getter
 public class UserVo {
 
     private String idCardImgUrl;

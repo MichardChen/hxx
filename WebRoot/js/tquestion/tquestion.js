@@ -6,7 +6,7 @@ $(function () {
 			{ label: '联系电话', name: 'mobile', width: 50 }, 			
 			{ label: '联系人', name: 'linkMan', width: 50 }, 			
 			{ label: '咨询内容', name: 'question', width: 120 }, 			
-			{ label: '销售经理', name: 'employeeId', width: 50 }, 
+			/*{ label: '销售经理', name: 'employeeId', width: 50 }, */
 			{ label: '反馈时间', name: 'createTime', width: 80 }, 
 			{ label: '处理者', name: 'updateBy', width: 50 }, 
 			/*{ label: '处理时间', name: 'updateTime', width: 80 }, */

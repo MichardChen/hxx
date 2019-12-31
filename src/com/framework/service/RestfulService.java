@@ -38,4 +38,12 @@ public interface RestfulService {
     public ReturnData getExchangeDetail(FishDTO dto);
 
     public ReturnData modifyNickName(FishDTO dto);
+
+    public ReturnData saveFeedback(FishDTO dto);
+
+    public ReturnData getFinanceList(FishDTO dto);
+
+    public ReturnData getFinanceDetail(FishDTO dto);
+
+    public ReturnData applyFinance(FishDTO dto);
 }

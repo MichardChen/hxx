@@ -1,18 +1,11 @@
 package com.framework.vo;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.Serializable;
 
 /**
  * @author ChenDang
  * @date 2019/12/24 0024
  */
-@Data
-@Setter
-@Getter
 public class MallPointsExchangeRecordVo implements Serializable {
 
     private int exchangeId;
