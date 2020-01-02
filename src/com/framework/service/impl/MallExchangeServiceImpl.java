@@ -3,6 +3,7 @@ package com.framework.service.impl;
 import com.framework.dao.MallPointsExchangeRecordDao;
 import com.framework.entity.MallPointsExchangeRecord;
 import com.framework.service.MallExchangeService;
+import com.framework.vo.MallExchangeRecordVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,16 @@ public class MallExchangeServiceImpl implements MallExchangeService {
 	@Override
 	public List<MallPointsExchangeRecord> queryList(Map<String, Object> map) {
 		return mallExchangeDao.queryList(map);
+	}
+
+	@Override
+	public List<MallExchangeRecordVo> queryAllList(Map<String, Object> map) {
+		return mallExchangeDao.queryAllList(map);
+	}
+
+	@Override
+	public int queryAllTotal(Map<String, Object> map) {
+		return mallExchangeDao.queryAllTotal(map);
 	}
 
 	@Override

@@ -6,6 +6,56 @@
 		select count(*) from mall_points_exchange_record
 	</select>
 
+    <select id="queryAllTotal" resultType="int">
+		select count(*) from mall_points_exchange_record t
+        inner join t_member u on u.id = t.user_id
+        inner join mall_products p on p.id = t.product_id
+        where 1=1
+        <!-- 用户名-->
+        <if test="userName != null and userName.trim() != ''">
+            and u.name like concat('%', #{userName}, '%')
+        </if>
+        <!-- 产品名称-->
+        <if test="productTitle != null and productTitle.trim() != ''">
+            and p.product_title like concat('%', #{productTitle}, '%')
+        </if>
+        <!-- 兑换类型-->
+        <if test="buyTypeCd != null and buyTypeCd.trim() != ''">
+            and t.buy_type_cd = #{buyTypeCd}
+        </if>
+        <!-- 状态-->
+        <if test="status != null and status.trim() != ''">
+            and t.status = #{status}
+        </if>
+	</select>
+
+    <select id="queryAllList" resultType="com.framework.vo.MallExchangeRecordVo">
+        select t.*, u.name,p.product_title from mall_points_exchange_record t
+        inner join t_member u on u.id = t.user_id
+        inner join mall_products p on p.id = t.product_id
+        where 1=1
+        <!-- 用户名-->
+        <if test="userName != null and userName.trim() != ''">
+            and u.name like concat('%', #{userName}, '%')
+        </if>
+        <!-- 产品名称-->
+        <if test="productTitle != null and productTitle.trim() != ''">
+            and p.product_title like concat('%', #{productTitle}, '%')
+        </if>
+        <!-- 兑换类型-->
+        <if test="buyTypeCd != null and buyTypeCd.trim() != ''">
+            and t.buy_type_cd = #{buyTypeCd}
+        </if>
+        <!-- 状态-->
+        <if test="status != null and status.trim() != ''">
+            and t.status = #{status}
+        </if>
+        order by create_time desc
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
     <insert id="save" parameterType="com.framework.entity.MallPointsExchangeRecord" useGeneratedKeys="true" keyProperty="id">
         insert into mall_points_exchange_record
         (
