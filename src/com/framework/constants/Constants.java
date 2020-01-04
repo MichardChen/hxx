@@ -1,7 +1,5 @@
 package com.framework.constants;
 
-import org.slf4j.impl.StaticMDCBinder;
-
 /**
  * 系统常量
  * 
@@ -330,8 +328,8 @@ public interface Constants {
 	 * 兑换状态
 	 */
 	public static interface EXCHANGE_STATUS{
-		public static final String STAY_REVIEW = "200001";
-		public static final String HANDLED = "200002";
+		public static final String STAY_REVIEW = "200001";//待审核
+		public static final String HANDLED = "200002";//已处理
 	}
 
 	/**
