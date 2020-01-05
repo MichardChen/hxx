@@ -30,7 +30,7 @@
 	</select>
 
     <select id="queryAllList" resultType="com.framework.vo.MallExchangeRecordVo">
-        select t.*, u.name,p.product_title from mall_points_exchange_record t
+        select t.*, u.name as userName,p.product_title as productTitle from mall_points_exchange_record t
         inner join t_member u on u.id = t.user_id
         inner join mall_products p on p.id = t.product_id
         where 1=1
@@ -104,4 +104,24 @@
     <select id="queryObject" resultType="com.framework.entity.MallPointsExchangeRecord">
         select * from mall_points_exchange_record where id = #{value}
     </select>
+
+    <select id="queryVoObject" resultType="com.framework.vo.MallExchangeRecordVo">
+        select t.*, u.name as userName,p.product_title as productTitle from mall_points_exchange_record t
+        inner join t_member u on u.id = t.user_id
+        inner join mall_products p on p.id = t.product_id
+        where t.id = #{id}
+    </select>
+
+    <!-- 更新物流及收货人信息 -->
+    <update id="updateReceiveInfo" parameterType="com.framework.entity.MallPointsExchangeRecord">
+        update mall_points_exchange_record
+        <set>
+            `status` = #{status},
+            `receive_name` = #{receiveName},
+            `receive_mobile` = #{receiveMobile},
+            `logistic` = #{logistic},
+            `mark` = #{mark}
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

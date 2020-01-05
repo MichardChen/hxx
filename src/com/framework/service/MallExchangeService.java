@@ -10,6 +10,8 @@ public interface MallExchangeService {
 
 	MallPointsExchangeRecord queryObject(Long id);
 
+	MallExchangeRecordVo queryVoObject(Long id);
+
 	List<MallPointsExchangeRecord> queryList(Map<String, Object> map);
 
 	/**
@@ -28,6 +30,12 @@ public interface MallExchangeService {
 	 * @param record
 	 */
 	void save(MallPointsExchangeRecord record);
+
+	/**
+	 * 更新物流及收货人信息
+	 * @param record
+	 */
+	void updateReceiveInfo(MallPointsExchangeRecord record);
 
 	/**
 	 * 修改
