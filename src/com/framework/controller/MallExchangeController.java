@@ -31,11 +31,11 @@ public class MallExchangeController extends AbstractController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("mall:exchange:list")
-	public R list(Integer page, Integer limit,String productTitle,String buyTypeCd, String userName, String status) {
+	public R list(Integer page, Integer limit,String productTitle,String receiveName, String userName, String status) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
-		map.put("buyTypeCd", buyTypeCd);
+		map.put("receiveName", receiveName);
 		map.put("productTitle", productTitle);
 		map.put("userName", userName);
 		map.put("status", status);

@@ -24,21 +24,8 @@ $(function () {
 			{ label: '地址', name: 'address', width: 80, hidden: true},
 			{ label: '消耗积分', name: 'points', width: 75 },
 			{ label: '兑换数量', name: 'quality', width: 75 },
-			{ label: '消耗金额', name: 'moneys', width: 75 },
-			{ label: '兑换类型', name: 'buyTypeCd', width: 80,
-				formatter: function(cellvalue, options, rowObject){
-					if(typeof cellvalue !=="undefined" && cellvalue){
-						if(cellvalue == "210001"){
-							return "积分兑换";
-						} else if(cellvalue == "210002"){
-							return "银联支付";
-						}
-					}
-					return cellvalue;
-				}
-			},
-			{ label: '收件人', name: 'receiveName', width: 75, hidden: true },
-			{ label: '电话号码', name: 'receiveMobile', width: 95, hidden: true },
+			{ label: '收件人', name: 'receiveName', width: 75 },
+			{ label: '电话号码', name: 'receiveMobile', width: 95 },
 			{ label: '创建时间', name: 'createTime', width: 130}
 		],
 		viewrecords: true,
@@ -74,7 +61,7 @@ var vm = new Vue({
 		productTitle: null,
 		userName: null,
 		status: null,
-		buyTypeCd: null
+		receiveName: null
 	},
 	methods: {
 		update: function (event) {
@@ -137,7 +124,7 @@ var vm = new Vue({
 		},
 		query:function(){
 			$("#jqGrid").jqGrid('setGridParam',{
-                postData:{'productTitle': vm.productTitle,'userName':vm.price, 'buyTypeCd': vm.buyTypeCd, 'status': vm.status},
+                postData:{'productTitle': vm.productTitle,'userName':vm.price, 'receiveName': vm.receiveName, 'status': vm.status},
                 page:1 
             }).trigger("reloadGrid");
 		}
