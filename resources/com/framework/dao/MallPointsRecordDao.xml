@@ -36,4 +36,28 @@
             #{updateTime}
         )
     </insert>
+
+    <select id="queryAllTotal" resultType="int">
+        select count(*) from mall_points_record t
+        inner join t_member u on u.id = t.user_id
+        where 1=1
+        <!-- 用户名-->
+        <if test="userName != null and userName.trim() != ''">
+            and u.name like concat('%', #{userName}, '%')
+        </if>
+    </select>
+
+    <select id="queryAllList" resultType="com.framework.vo.MallPointsListVo">
+        select t.*, u.name as userName from mall_points_record t
+        inner join t_member u on u.id = t.user_id
+        where 1=1
+        <!-- 用户名-->
+        <if test="userName != null and userName.trim() != ''">
+            and u.name like concat('%', #{userName}, '%')
+        </if>
+        order by create_time desc
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
 </mapper>

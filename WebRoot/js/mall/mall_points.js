@@ -4,26 +4,15 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: 'ID', name: 'id', width: 45, key: true, hidden: true},
-			{ label: '用户类型', name: 'userTypeCd', width: 75,
-				formatter: function(cellvalue, options, rowObject){
-					if(typeof cellvalue !=='undefined' && cellvalue){
-						if(cellvalue == "1001"){
-							return "个人";
-						} else {
-							return "企业";
-						}
-					}
-					return cellvalue;
-				}
-			},
-			{ label: '用户ID', name: 'userId', width: 75 },
+			{ label: '用户ID', name: 'userId', width: 75, hidden: true},
+			{ label: '用户名', name: 'userName', width: 100 },
 			{ label: '操作类型', name: 'operateTypeCd', width: 90,
 				formatter: function(cellvalue, options, rowObject){
 					if(typeof cellvalue !=='undefined' && cellvalue){
 						if(cellvalue == "190001"){
-							return "兑换商品";
+							return "下单积分";
 						} else {
-							return "注册";
+							return "注册积分";
 						}
 					}
 					return cellvalue;
@@ -33,8 +22,6 @@ $(function () {
 			{ label: '获得积分', name: 'point', width: 75 },
 			{ label: '创建时间', name: 'createTime', width: 120}
 		],
-		// shrinkToFit: false,
-		// autoScroll: true,
 		viewrecords: true,
         height: 400,
         rowNum: 10,
@@ -65,28 +52,26 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
-		productTitle: null,
-		price: null,
-		status: null
+		userName: null
 	},
 	methods: {
-		update: function (event) {
-			var mallId = getSelectedRow();
-			if(mallId == null){
+		view: function (event) {
+			var modelId = getSelectedRow();
+			if(modelId == null){
 				return ;
 			}
-			location.href = "mall_product_add.html?mallId="+mallId;
+			location.href = "mall_points_view.html?modelId="+modelId;
 		},
 		del: function (event) {
-			var mallId = getSelectedRows();
-			if(mallId == null){
+			var modelId = getSelectedRows();
+			if(modelId == null){
 				return ;
 			}
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: "../mall/delete",
-				    data: JSON.stringify(mallId),
+				    url: "../mall/points/delete",
+				    data: JSON.stringify(modelId),
 				    success: function(r){
 						if(r.code == 0){
 							alert('操作成功', function(index){
@@ -99,40 +84,9 @@ var vm = new Vue({
 				});
 			});
 		},
-		offLoading: function (event) {
-			var mallId = getSelectedRows();
-			if(mallId == null){
-				return ;
-			}
-			confirm('确定要下架改商品吗？', function(){
-				$.ajax({
-					type: "POST",
-					url: "../mall/off",
-					data: JSON.stringify(mallId[0]),
-					success: function(r){
-						if(r.code == 0){
-							alert('操作成功', function(index){
-								$("#jqGrid").trigger("reloadGrid");
-							});
-						}else{
-							alert(r.msg);
-						}
-					}
-				});
-			});
-		},
-		show:function(event){
-			var rowKey = getSelectedRow();
-			if(rowKey == null){
-				return ;
-			}
-			var rowData = $( "#jqGrid" ).getRowData(rowKey);
-			debugger
-			window.open(rowData.productDetailUrl);
-		},
 		query:function(){
 			$("#jqGrid").jqGrid('setGridParam',{
-                postData:{'productTitle': vm.productTitle,'price':vm.price, 'status': vm.status},
+                postData:{'userName': vm.userName},
                 page:1 
             }).trigger("reloadGrid");
 		}

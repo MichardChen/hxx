@@ -1,6 +1,7 @@
 package com.framework.service;
 
 import com.framework.entity.MallPointsRecord;
+import com.framework.vo.MallPointsListVo;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,21 @@ public interface MallPointsService {
 
 	List<MallPointsRecord> queryList(Map<String, Object> map);
 
+	/**
+	 * 获取后台列表数据
+	 * @param map
+	 * @return
+	 */
+	List<MallPointsListVo> queryAllList(Map<String, Object> map);
+
 	int queryTotal(Map<String, Object> map);
+
+	/**
+	 * 获取后台列表查询总数
+	 * @param map
+	 * @return
+	 */
+	int queryAllTotal(Map<String, Object> map);
 
 	/**
 	 * 新增

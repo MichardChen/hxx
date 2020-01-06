@@ -3,6 +3,7 @@ package com.framework.service.impl;
 import com.framework.dao.MallPointsRecordDao;
 import com.framework.entity.MallPointsRecord;
 import com.framework.service.MallPointsService;
+import com.framework.vo.MallPointsListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +31,18 @@ public class MallPointsServiceImpl implements MallPointsService {
 	}
 
 	@Override
+	public List<MallPointsListVo> queryAllList(Map<String, Object> map) {
+		return mallPointsDao.queryAllList(map);
+	}
+
+	@Override
 	public int queryTotal(Map<String, Object> map) {
 		return mallPointsDao.queryTotal(map);
+	}
+
+	@Override
+	public int queryAllTotal(Map<String, Object> map) {
+		return mallPointsDao.queryAllTotal(map);
 	}
 
 	/**
