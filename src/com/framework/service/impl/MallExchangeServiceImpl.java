@@ -25,6 +25,11 @@ public class MallExchangeServiceImpl implements MallExchangeService {
 	}
 
 	@Override
+	public MallExchangeRecordVo queryVoObject(Long id) {
+		return mallExchangeDao.queryVoObject(id);
+	}
+
+	@Override
 	public List<MallPointsExchangeRecord> queryList(Map<String, Object> map) {
 		return mallExchangeDao.queryList(map);
 	}
@@ -54,6 +59,11 @@ public class MallExchangeServiceImpl implements MallExchangeService {
 		record.setCreateTime(cueerntTime);
 		record.setUpdateTime(cueerntTime);
 		mallExchangeDao.save(record);
+	}
+
+	@Override
+	public void updateReceiveInfo(MallPointsExchangeRecord record) {
+		mallExchangeDao.updateReceiveInfo(record);
 	}
 
 	/**

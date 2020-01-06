@@ -78,29 +78,29 @@ var vm = new Vue({
 	},
 	methods: {
 		update: function (event) {
-			var exchangeId = getSelectedRow();
-			if(exchangeId == null){
+			var modelId = getSelectedRow();
+			if(modelId == null){
 				return ;
 			}
-			location.href = "mall_exchange_edit.html?exchangeId="+exchangeId;
+			location.href = "mall_exchange_edit.html?modelId="+modelId+"&viewType=edit";
 		},
 		view: function(event){
-			var exchangeId = getSelectedRow();
-			if(exchangeId == null){
+			var modelId = getSelectedRow();
+			if(modelId == null){
 				return ;
 			}
-			location.href = "mall_exchange_view.html?exchangeId="+exchangeId;
+			location.href = "mall_exchange_view.html?modelId="+modelId+"&viewType=view";
 		},
 		del: function (event) {
-			var exchangeId = getSelectedRows();
-			if(exchangeId == null){
+			var modelId = getSelectedRows();
+			if(modelId == null){
 				return ;
 			}
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
 				    url: "../mall/delete",
-				    data: JSON.stringify(exchangeId),
+				    data: JSON.stringify(modelId),
 				    success: function(r){
 						if(r.code == 0){
 							alert('操作成功', function(index){
@@ -114,15 +114,15 @@ var vm = new Vue({
 			});
 		},
 		offLoading: function (event) {
-			var exchangeId = getSelectedRows();
-			if(exchangeId == null){
+			var modelId = getSelectedRows();
+			if(modelId == null){
 				return ;
 			}
 			confirm('确定要下架改商品吗？', function(){
 				$.ajax({
 					type: "POST",
 					url: "../mall/off",
-					data: JSON.stringify(exchangeId[0]),
+					data: JSON.stringify(modelId[0]),
 					success: function(r){
 						if(r.code == 0){
 							alert('操作成功', function(index){
@@ -134,15 +134,6 @@ var vm = new Vue({
 					}
 				});
 			});
-		},
-		show:function(event){
-			var rowKey = getSelectedRow();
-			if(rowKey == null){
-				return ;
-			}
-			var rowData = $( "#jqGrid" ).getRowData(rowKey);
-			debugger
-			window.open(rowData.productDetailUrl);
 		},
 		query:function(){
 			$("#jqGrid").jqGrid('setGridParam',{

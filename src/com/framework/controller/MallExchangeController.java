@@ -50,11 +50,11 @@ public class MallExchangeController extends AbstractController {
 	/**
 	 * 详情信息
 	 */
-	@RequestMapping("/info/{productId}")
+	@RequestMapping("/info/{id}")
 	@RequiresPermissions("mall:exchange:info")
-	public R info(@PathVariable("productId") Long productId) {
-		MallPointsExchangeRecord record = mallExchangeService.queryObject(productId);
-		return R.ok().put("record", record);
+	public R info(@PathVariable("id") Long id) {
+		MallExchangeRecordVo record = mallExchangeService.queryVoObject(id);
+		return R.ok().put("model", record);
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class MallExchangeController extends AbstractController {
 	@RequestMapping("/update")
 	@RequiresPermissions("mall:exchange:update")
 	public R update(@RequestBody MallPointsExchangeRecord record) {
-		mallExchangeService.update(record);
+		mallExchangeService.updateReceiveInfo(record);
 		return R.ok();
 	}
 
