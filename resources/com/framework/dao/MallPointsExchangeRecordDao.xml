@@ -19,9 +19,9 @@
         <if test="productTitle != null and productTitle.trim() != ''">
             and p.product_title like concat('%', #{productTitle}, '%')
         </if>
-        <!-- 兑换类型-->
-        <if test="buyTypeCd != null and buyTypeCd.trim() != ''">
-            and t.buy_type_cd = #{buyTypeCd}
+        <!-- 收件人-->
+        <if test="receiveName != null and receiveName.trim() != ''">
+            and t.receive_name like concat('%', #{receiveName}, '%')
         </if>
         <!-- 状态-->
         <if test="status != null and status.trim() != ''">
@@ -42,9 +42,9 @@
         <if test="productTitle != null and productTitle.trim() != ''">
             and p.product_title like concat('%', #{productTitle}, '%')
         </if>
-        <!-- 兑换类型-->
-        <if test="buyTypeCd != null and buyTypeCd.trim() != ''">
-            and t.buy_type_cd = #{buyTypeCd}
+        <!-- 收件人-->
+        <if test="receiveName != null and receiveName.trim() != ''">
+            and t.receive_name like concat('%', #{receiveName}, '%')
         </if>
         <!-- 状态-->
         <if test="status != null and status.trim() != ''">

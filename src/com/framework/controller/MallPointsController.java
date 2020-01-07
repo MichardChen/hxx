@@ -1,27 +1,20 @@
 package com.framework.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.framework.constants.Constants;
-import com.framework.entity.MallPointsRecord;
 import com.framework.entity.MallPointsRecord;
 import com.framework.service.MallPointsService;
-import com.framework.service.MallProductService;
 import com.framework.utils.PageUtils;
 import com.framework.utils.R;
-import com.framework.utils.StringUtil;
-import org.apache.commons.lang3.StringUtils;
+import com.framework.vo.MallPointsListVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * 商城积分记录
@@ -38,14 +31,15 @@ public class MallPointsController extends AbstractController {
 	 */
 	@RequestMapping("/list")
 	@RequiresPermissions("mall:points:list")
-	public R list(Integer page, Integer limit,String productTitle,String price, String status) {
+	public R list(Integer page, Integer limit,String userName) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
+		map.put("userName", userName);
 
 		// 查询列表数据
-		List<MallPointsRecord> menuList = mallPointsService.queryList(map);
-		int total = mallPointsService.queryTotal(map);
+		List<MallPointsListVo> menuList = mallPointsService.queryAllList(map);
+		int total = mallPointsService.queryAllTotal(map);
 		PageUtils pageUtil = new PageUtils(menuList, total, limit, page);
 		return R.ok().put("page", pageUtil);
 	}
