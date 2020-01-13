@@ -1,11 +1,9 @@
 package com.framework.controller;
 
+import com.framework.constants.Constants;
 import com.framework.entity.TraceSourceEntity;
 import com.framework.service.TraceSourceService;
-import com.framework.utils.PageUtils;
-import com.framework.utils.R;
-import com.framework.utils.ShiroUtils;
-import com.framework.utils.StringUtil;
+import com.framework.utils.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +28,7 @@ import java.util.*;
 public class TraceSourceController {
 	@Autowired
 	private TraceSourceService traceSourceService;
-	
+
 	/**
 	 * 列表
 	 */
@@ -41,17 +39,17 @@ public class TraceSourceController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
-		
+
 		//查询列表数据
 		List<TraceSourceEntity> tTraceSourceList = traceSourceService.queryList(map);
 		int total = traceSourceService.queryTotal(map);
-		
+
 		PageUtils pageUtil = new PageUtils(tTraceSourceList, total, limit, page);
-		
+
 		return R.ok().put("page", pageUtil);
 	}
-	
-	
+
+
 	/**
 	 * 信息
 	 */
@@ -62,7 +60,7 @@ public class TraceSourceController {
 		TraceSourceEntity traceSource = traceSourceService.queryObject(id);
 		return R.ok().put("traceSource", traceSource);
 	}
-	
+
 	/**
 	 * 保存
 	 */
@@ -91,21 +89,31 @@ public class TraceSourceController {
 	 */
 	public void dealHtml(TraceSourceEntity traceSource) throws Exception{
 		//生成html文件
-		String uuid = UUID.randomUUID().toString();
+		String uuid = UUID.randomUUID().toString().replaceAll("-","");
 		String htmlContent = StringUtil.formatHTML(traceSource.getOrderNo(), traceSource.getContent());
-		String host = "F:\\var\\www\\html\\file\\mallProduct";
-		PrintWriter pw = new PrintWriter(new OutputStreamWriter(
-				new FileOutputStream(host + uuid + ".html"),"utf-8"),true);
-		pw.println(htmlContent);
-		pw.close();
-		String contentUrl = host + uuid + ".html";
-
+		String host = "F:\\var\\www\\html\\file\\mallProduct\\";
 //		PrintWriter pw = new PrintWriter(new OutputStreamWriter(
-//				new FileOutputStream(Constants.HTTPS_FILE_HOST.MALL_PRODUCT + uuid + ".html"),"utf-8"),true);
+//				new FileOutputStream(host + uuid + ".html"),"utf-8"),true);
 //		pw.println(htmlContent);
 //		pw.close();
-//		String contentUrl = Constants.HTTPS_HOST.MALL_PRODUCT + uuid + ".html";
+//		String contentUrl = host + uuid + ".html";
+		if(traceSource.getId() != null){
+			TraceSourceEntity entity = traceSourceService.queryObject(traceSource.getId());
+			uuid = entity.getContentUrl().substring(entity.getContentUrl().indexOf(/*Constants.HTTPS_HOST.TRACE_SOURCE*/host));
+		}
+		String contentUrl = Constants.HTTPS_HOST.TRACE_SOURCE + uuid + ".html";//访问url
+		String qrCodeUrl = Constants.HTTPS_HOST.TRACE_SOURCE + uuid + ".png";//二维码访问路径
+		//生成二维码
+		boolean codeFlag = Zxing.orCode(contentUrl, Constants.HTTPS_FILE_HOST.TRACE_SOURCE + uuid + ".png");
+//		boolean codeFlag = Zxing.orCode(contentUrl, host + uuid + ".png");
+		PrintWriter pw = new PrintWriter(new OutputStreamWriter(
+				new FileOutputStream(Constants.HTTPS_FILE_HOST.TRACE_SOURCE + uuid + ".html"),"utf-8"),true);
+		pw.println(htmlContent);
+		pw.close();
+		//html访问路径
 		traceSource.setContentUrl(contentUrl);
+		//二维码访问路径
+		traceSource.setQrCodeUrl(Constants.HTTPS_HOST.TRACE_SOURCE + uuid + ".png");
 	}
 
 	/**
@@ -127,7 +135,7 @@ public class TraceSourceController {
 		traceSourceService.update(traceSource);
 		return R.ok();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -138,5 +146,5 @@ public class TraceSourceController {
 		traceSourceService.deleteBatch(ids);
 		return R.ok();
 	}
-	
+
 }

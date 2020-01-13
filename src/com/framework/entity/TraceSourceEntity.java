@@ -32,6 +32,16 @@ public class TraceSourceEntity implements Serializable {
 	private int createBy;
 	//修改人id
 	private int updateBy;
+	//二维码地址
+	private String qrCodeUrl;
+
+	public String getQrCodeUrl() {
+		return qrCodeUrl;
+	}
+
+	public void setQrCodeUrl(String qrCodeUrl) {
+		this.qrCodeUrl = qrCodeUrl;
+	}
 
 	public int getCreateBy() {
 		return createBy;

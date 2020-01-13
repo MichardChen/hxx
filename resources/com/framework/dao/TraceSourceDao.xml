@@ -8,16 +8,16 @@
 	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TraceSourceEntity">
-		select * from t_trace_source 
+		select * from t_trace_source
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
+
+	<select id="queryTotal" resultType="int">
 		select count(*) from t_trace_source 
 	</select>
-	 
+
 	<insert id="save" parameterType="com.framework.entity.TraceSourceEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into t_trace_source
 		(
@@ -25,39 +25,42 @@
 			`order_type_cd`, 
 			`content`, 
 			`content_url`, 
-			`create_time`, 
+			`qr_code_url`,
+			`create_time`,
 			`update_time`
 		)
 		values
 		(
-			#{orderNo}, 
-			#{orderTypeCd}, 
-			#{content}, 
-			#{contentUrl}, 
-			#{createTime}, 
+			#{orderNo},
+			#{orderTypeCd},
+			#{content},
+			#{contentUrl},
+			#{qrCodeUrl},
+			#{createTime},
 			#{updateTime}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="com.framework.entity.TraceSourceEntity">
-		update t_trace_source 
+		update t_trace_source
 		<set>
 			<if test="orderNo != null">`order_no` = #{orderNo}, </if>
 			<if test="orderTypeCd != null">`order_type_cd` = #{orderTypeCd}, </if>
 			<if test="content != null">`content` = #{content}, </if>
 			<if test="contentUrl != null">`content_url` = #{contentUrl}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
-			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+			<if test="updateTime != null">`update_time` = #{updateTime},</if>
+			<if test="qrCodeUrl != null">`qr_code_url` = #{qrCodeUrl}</if>
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="delete">
 		delete from t_trace_source where id = #{value}
 	</delete>
-	
+
 	<delete id="deleteBatch">
-		delete from t_trace_source where id in 
+		delete from t_trace_source where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
