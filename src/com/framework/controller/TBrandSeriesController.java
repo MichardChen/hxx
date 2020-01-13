@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.framework.constants.Constants;
+import com.framework.service.FileService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +30,7 @@ import com.framework.utils.PageUtils;
 import com.framework.utils.R;
 import com.framework.utils.ShiroUtils;
 import com.framework.utils.StringUtil;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -130,6 +133,7 @@ public class TBrandSeriesController {
 			model.setCarSerial(tBrandSeries.getCarSerial());
 			model.setId(tBrandSeries.getId());
 			model.setFlg(tBrandSeries.getFlg());
+			model.setBrandIcon(tBrandSeries.getSeriesIcon());
 		}
 		return R.ok().put("tBrandSeries", model);
 	}
@@ -140,7 +144,7 @@ public class TBrandSeriesController {
 	@ResponseBody
 	@RequestMapping("/save")
 	@RequiresPermissions("tbrandseries:save")
-	public R save(@RequestParam("tBrandSeries") String tBrandSeries)throws Exception{
+	public R save(@RequestParam("tBrandSeries") String tBrandSeries,@RequestParam(value = "uFile", required = false) MultipartFile uploadFile)throws Exception{
 		
 		TBrandSeriesEntity bs = new TBrandSeriesEntity();
 		int userid = ShiroUtils.getUserId().intValue();
@@ -152,6 +156,14 @@ public class TBrandSeriesController {
 		TBrandSeriesEntity seriesEntity = tBrandSeriesService.queryObjectByName(viewModel.getString("carSerial"));
 		if(seriesEntity != null){
 			return R.error("此车系已存在，不能重复添加");
+		}
+
+		// 生成html
+		FileService fs = new FileService();
+		// 上传图片
+		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if (StringUtil.isNoneBlank(logo)) {
+			bs.setSeriesIcon(logo);
 		}
 		bs.setBrandId(viewModel.getInteger("brandId"));
 		bs.setCarSerial(viewModel.getString("carSerial"));
@@ -171,7 +183,7 @@ public class TBrandSeriesController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("tbrandseries:update")
-	public R update(@RequestParam("tBrandSeries") String tBrandSeries) throws Exception{
+	public R update(@RequestParam("tBrandSeries") String tBrandSeries,@RequestParam(value = "uFile", required = false) MultipartFile uploadFile) throws Exception{
 		
 		TBrandSeriesEntity bs = new TBrandSeriesEntity();
 		int userid = ShiroUtils.getUserId().intValue();
@@ -189,6 +201,14 @@ public class TBrandSeriesController {
 		TBrandSeriesEntity seriesEntity = tBrandSeriesService.queryObjectByName(viewModel.getString("carSerial"));
 		if((seriesEntity != null)&&(seriesEntity.getId() != viewModel.getInteger("id"))){
 			return R.error("此车系已存在，不能重复添加");
+		}
+
+		// 生成html
+		FileService fs = new FileService();
+		// 上传图片
+		String logo = fs.upload(uploadFile, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+		if (StringUtil.isNoneBlank(logo)) {
+			bs.setSeriesIcon(logo);
 		}
 		
 		bs.setId(viewModel.getInteger("id"));

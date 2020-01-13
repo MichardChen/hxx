@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TFishBuyDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TFishBuyEntity">
+		select * from t_fish_buy where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TFishBuyEntity">
+		select * from t_fish_buy 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_fish_buy 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TFishBuyEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_fish_buy
+		(
+			`order_no`, 
+			`product_type`,
+			`main_type`, 
+			`size`, 
+			`unit`, 
+			`price`, 
+			`weight`, 
+			`create_time`, 
+			`update_time`, 
+			`provice`,
+			`city`,
+			`latest_time`, 
+			`mark`, 
+			`img`,
+			`update_mark`,
+			`update_by`,
+			`status`,
+			`labels`,
+			`member_id`
+		)
+		values
+		(
+			#{orderNo}, 
+			#{productType},
+			#{mainType}, 
+			#{size}, 
+			#{unit}, 
+			#{price}, 
+			#{weight}, 
+			#{createTime}, 
+			#{updateTime}, 
+			#{provice},
+			#{city},
+			#{latestTime}, 
+			#{mark}, 
+			#{img},
+		 	#{updateMark},
+			#{updateBy},
+			#{status},
+			#{labels},
+			#{memberId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TFishBuyEntity">
+		update t_fish_buy 
+		<set>
+			<if test="orderNo != null">`order_no` = #{orderNo}, </if>
+			<if test="productType != null">`product_type` = #{productType}, </if>
+			<if test="mainType != null">`main_type` = #{mainType}, </if>
+			<if test="size != null">`size` = #{size}, </if>
+			<if test="unit != null">`unit` = #{unit}, </if>
+			<if test="price != null">`price` = #{price}, </if>
+			<if test="weight != null">`weight` = #{weight}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="provice != null">`provice` = #{provice}, </if>
+			<if test="city != null">`city` = #{city}, </if>
+			<if test="latestTime != null">`latest_time` = #{latestTime}, </if>
+			<if test="mark != null">`mark` = #{mark}, </if>
+			<if test="img != null">`img` = #{img}, </if>
+			<if test="updateMark != null">`update_mark` = #{updateMark}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="labels != null">`labels` = #{labels}, </if>
+			<if test="memberId != null">`member_id` = #{memberId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_fish_buy where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_fish_buy where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

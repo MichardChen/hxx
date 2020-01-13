@@ -46,4 +46,16 @@ public interface RestfulService {
     public ReturnData getFinanceDetail(FishDTO dto);
 
     public ReturnData applyFinance(FishDTO dto);
+
+    public ReturnData getInsuranceList(FishDTO dto);
+
+    public ReturnData getInsuranceDetail(FishDTO dto);
+
+    public ReturnData applyInsurance(FishDTO dto);
+
+    public ReturnData getAppConstantDatas(FishDTO dto);
+
+    public ReturnData saveSupplyInfo(FishDTO dto);
+
+    public ReturnData querySupplyList(FishDTO dto);
 }

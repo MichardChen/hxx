@@ -3,8 +3,8 @@ $(function () {
         url: '../tbrandseries/list?queryBrand=0',
         datatype: "json",
         colModel: [			
-			{ label: '汽车品牌', name: 'brandId', width: 80 }, 			
-			{ label: '车系', name: 'carSerial', width: 80 },
+			{ label: '生鲜种类名称', name: 'brandId', width: 80 },
+			{ label: '生鲜名称', name: 'carSerial', width: 80 },
 			{ label: '是否上架', name: 'flg', width: 80 },
 			{ label: '创建者', name: 'createBy', width: 80 }, 	
 			{ label: '创建时间', name: 'createTime', width: 80 }, 	

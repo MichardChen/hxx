@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+#parse("sys/header.html")
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+	<div class="panel-heading">{{title}}</div>
+	<form class="form-horizontal">
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">申请产品</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tInsuranceCommit.financeId}}</label>
+		    </div>
+		</div>
+		<div class="form-group" style="display:none;">
+		   	<div class="col-sm-2 control-label">汽车品牌</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tInsuranceCommit.brandId}}</label>
+		    </div>
+		</div>
+		<div class="form-group"  style="display:none;">
+		   	<div class="col-sm-2 control-label">车系</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tInsuranceCommit.brandSeriesId}}</label>
+		    </div>
+		</div>
+		<div class="form-group"  style="display:none;">
+		   	<div class="col-sm-2 control-label">所在省份</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tInsuranceCommit.provinceId}}</label>
+		    </div>
+		</div>
+		<div class="form-group"  style="display:none;">
+		   	<div class="col-sm-2 control-label">所在城市</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tInsuranceCommit.cityId}}</label>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">申请人</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tInsuranceCommit.name}}</label>
+		    </div>
+		</div>
+		<div class="form-group"  style="display:none;">
+		   	<div class="col-sm-2 control-label">年龄</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tInsuranceCommit.age}}</label>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">身份证号码</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tInsuranceCommit.idcardNo}}</label>
+		    </div>
+		</div>
+		<div class="form-group"  style="display:none;">
+		   	<div class="col-sm-2 control-label">性别</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tInsuranceCommit.sex}}</label>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">手机号码</div>
+		   	<div class="col-sm-10 text-label">
+		   		<label style="height: inherit;">{{tInsuranceCommit.mobile}}</label>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"> 补充说明</div>
+		   	<div class="col-sm-10 text-label">
+		      <input type="text" class="form-control" v-model="tInsuranceCommit.mark" placeholder=""/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">申请状态</div>
+		   	<div class="col-sm-10">
+		   			<select  class="form-control" v-model="tInsuranceCommit.status" id="status">
+		   			<option value="050001">待处理</option>
+		   			<option value="050002">已处理</option>
+		   			</select>
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-2 control-label"></div> 
+			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
+		</div>
+		<input type="hidden" id="insuranceId" v-model="tInsuranceCommit.id"/>
+	</form>
+</div>
+
+<script src="${rc.contextPath}/js/tinsurancecommit/tinsurancecommit_add.js?_${date.systemTime}"></script>
+</body>
+</html>

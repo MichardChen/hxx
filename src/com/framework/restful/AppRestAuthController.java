@@ -10,10 +10,7 @@ import com.framework.entity.TQuestionEntity;
 import com.framework.service.FileService;
 import com.framework.service.MemberService;
 import com.framework.service.RestfulService;
-import com.framework.utils.BeanUtils;
-import com.framework.utils.DateUtil;
-import com.framework.utils.ReturnData;
-import com.framework.utils.StringUtil;
+import com.framework.utils.*;
 import com.framework.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -318,4 +315,80 @@ public class AppRestAuthController extends RestfulController{
         renderJson(restfulService.applyFinance(FishDTO.getInstance(request)), response);
         return;
     }
+
+    /**
+     * 保险列表
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/getInsuranceList")
+    public void getInsuranceList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.getInsuranceList(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 保险产品详情
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/getInsuranceDetail")
+    public void getInsuranceDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.getInsuranceDetail(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 申请保险产品
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/applyInsurance")
+    public void applyInsurance(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.applyInsurance(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 发布供应
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/saveSupplyInfo")
+    public void saveSupplyInfo(HttpServletRequest request, HttpServletResponse response,
+                               @RequestParam(value = "imgFiles", required = false) MultipartFile[] imgFiles) throws Exception {
+
+        FishDTO dto = FishDTO.getInstance(request);
+        // 生成html
+        FileService fs = new FileService();
+        String logo = "";
+        //多文件上传
+        for(MultipartFile file : imgFiles){
+            String url = fs.upload(file, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+            logo = logo + "," + url;
+        }
+
+        if (StringUtil.isNoneBlank(logo)) {
+            dto.setUrl(logo);
+        }
+        renderJson(restfulService.saveSupplyInfo(dto), response);
+        return;
+    }
+
+    /**
+     * 供应大厅/供应列表
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/querySupplyList")
+    public void querySupplyList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.querySupplyList(FishDTO.getInstance(request)), response);
+        return;
+    }
+
 }

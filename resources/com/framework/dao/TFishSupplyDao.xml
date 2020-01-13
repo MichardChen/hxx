@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TFishSupplyDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TFishSupplyEntity">
+		select * from t_fish_supply where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TFishSupplyEntity">
+		select * from t_fish_supply 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	<select id="querySupplyList" resultType="com.framework.entity.TFishSupplyEntity">
+		select * from t_fish_supply where 1=1
+	  	<if test="mark != null and mark != '' and mark !='null'">
+			and (product_type like concat('%', #{mark}, '%') or
+			main_type like concat('%', #{mark}, '%') or
+			size like concat('%', #{mark}, '%') or
+			unit like concat('%', #{mark}, '%') or
+			price like concat('%', #{mark}, '%') or
+			weight like concat('%', #{mark}, '%') or
+			create_time like concat('%', #{mark}, '%') or
+			provice like concat('%', #{mark}, '%') or
+			city like concat('%', #{mark}, '%') or
+			labels like concat('%', #{mark}, '%') or
+			latest_time like concat('%', #{mark}, '%'))
+		</if>
+		<if test="productType != null and productType != '' and productType != 'null'">
+		    and product_type = #{productType}
+		</if>
+		<if test="province != null and province != '' and province != 'null'">
+			and provice = #{province}
+		</if>
+		<if test="city != null and city != '' and city != null">
+			and city = #{city}
+		</if>
+		<if test="mainType != null and mainType != '' and mainType != 'null'">
+			and main_type = #{mainType}
+		</if>
+
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_fish_supply 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TFishSupplyEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_fish_supply
+		(
+			`order_no`, 
+			`product_type`,
+			`main_type`, 
+			`size`, 
+			`unit`, 
+			`price`, 
+			`weight`, 
+			`create_time`, 
+			`update_time`, 
+			`provice`,
+			`city`,
+			`latest_time`, 
+			`mark`, 
+			`img`,
+			`update_mark`,
+			`status`,
+			`labels`,
+			`member_id`
+		)
+		values
+		(
+			#{orderNo}, 
+			#{productType},
+			#{mainType}, 
+			#{size}, 
+			#{unit}, 
+			#{price}, 
+			#{weight}, 
+			#{createTime}, 
+			#{updateTime}, 
+			#{provice},
+			#{city},
+			#{latestTime}, 
+			#{mark}, 
+			#{img},
+		 	#{updateMark},
+			#{status},
+			#{labels},
+			#{memberId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TFishSupplyEntity">
+		update t_fish_supply 
+		<set>
+			<if test="orderNo != null">`order_no` = #{orderNo}, </if>
+			<if test="productType != null">`product_type` = #{productType}, </if>
+			<if test="mainType != null">`main_type` = #{mainType}, </if>
+			<if test="size != null">`size` = #{size}, </if>
+			<if test="unit != null">`unit` = #{unit}, </if>
+			<if test="price != null">`price` = #{price}, </if>
+			<if test="weight != null">`weight` = #{weight}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="provice != null">`provice` = #{provice}, </if>
+			<if test="city != null">`city` = #{city}, </if>
+			<if test="latestTime != null">`latest_time` = #{latestTime}, </if>
+			<if test="mark != null">`mark` = #{mark}, </if>
+			<if test="img != null">`img` = #{img}, </if>
+			<if test="updateMark != null">`update_mark` = #{updateMark}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="labels != null">`labels` = #{labels}, </if>
+			<if test="memberId != null">`member_id` = #{memberId}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_fish_supply where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_fish_supply where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -47,6 +47,26 @@ public class TFinanceEntity implements Serializable {
 	//产品标题
 	private String title;
 
+	private String typeCd;
+
+	private String labels;
+
+	public String getLabels() {
+		return labels;
+	}
+
+	public void setLabels(String labels) {
+		this.labels = labels;
+	}
+
+	public String getTypeCd() {
+		return typeCd;
+	}
+
+	public void setTypeCd(String typeCd) {
+		this.typeCd = typeCd;
+	}
+
 	public String getContent() {
 		return content;
 	}

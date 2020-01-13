@@ -3,7 +3,7 @@ $(function () {
         url: '../tfinancecommit/list?date=',
         datatype: "json",
         colModel: [			
-			{ label: '申请产品', name: 'financeId', width: 80 }, 			
+			{ label: '申请金融产品', name: 'financeId', width: 80 }, 			
 			/*{ label: '汽车品牌', name: 'brandId', width: 80 },
 			{ label: '车系', name: 'brandSeriesId', width: 80 }, 			
 			{ label: '所在省份', name: 'provinceId', width: 80 }, 			

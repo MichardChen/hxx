@@ -22,6 +22,8 @@ var vm = new Vue({
                 //$("#standard").val(json.tFinance.standard);
                 $("#financeId").val(json.tFinance.id);
                 $("#status").val(json.tFinance.status);
+                $("#typeCd").val(json.tFinance.typeCd);
+                $("#labels").val(json.tFinance.labels);
                 $("#content").summernote('code', json.tFinance.content);
 				$("#icon").attr("href",json.tFinance.icon);
 				$("#icon").show();
@@ -36,6 +38,10 @@ var vm = new Vue({
 				var formFile = new FormData();
                 if(!$("#name").val()){
                     alert("请输入产品名称");
+                    return;
+                }
+                if(!$("#labels").val()){
+                    alert("请输入产品标签");
                     return;
                 }
                 if(!$("#uFile").val()){
@@ -68,6 +74,8 @@ var vm = new Vue({
 				vm.tFinance.timeDistance=$("#timeDistance").val();
 				//vm.tFinance.standard=$("#standard").val();
 				vm.tFinance.status=$("#status").val();
+				vm.tFinance.typeCd=$("#typeCd").val();
+                vm.tFinance.labels=$("#labels").val();
                 vm.tFinance.content=$("#content").summernote('code');
 				formFile.append("uFile", fileObj); 
 				formFile.append("tFinance", JSON.stringify(vm.tFinance));
@@ -96,10 +104,14 @@ var vm = new Vue({
 					alert("请输入产品名称");
 					return;
 				}
-                if(!$("#uFile").val()){
-                    alert("请选择封面图片");
+                if(!$("#labels").val()){
+                    alert("请输入产品标签");
                     return;
                 }
+                /*if(!$("#uFile").val()){
+                    alert("请选择封面图片");
+                    return;
+                }*/
 				if(!$("#lowRate").val()){
 					alert("请输入费率");
 					return;
@@ -128,6 +140,8 @@ var vm = new Vue({
 				vm.tFinance.timeDistance=$("#timeDistance").val();
 				//vm.tFinance.standard=$("#standard").val();
 				vm.tFinance.status=$("#status").val();
+                vm.tFinance.typeCd=$("#typeCd").val();
+                vm.tFinance.labels=$("#labels").val();
                 vm.tFinance.content=$("#content").summernote('code');
 				formFile.append("tFinance", JSON.stringify(vm.tFinance));
 				$.ajax({

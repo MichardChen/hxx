@@ -2,6 +2,7 @@ package com.framework.dao;
 
 import java.util.List;
 
+import com.framework.restful.BrandSeriesVo;
 import org.apache.ibatis.annotations.Param;
 
 import com.framework.entity.TBrandEntity;
@@ -22,4 +23,6 @@ public interface TBrandDao extends BaseDao<TBrandEntity> {
 	List<TBrandEntity> queryImportBrandList(@Param("importFlg")Integer importFlg);
 	
 	TBrandEntity queryObjectByName(@Param("name")String name);
+
+	List<BrandSeriesVo> queryAllBrandSeries();
 }

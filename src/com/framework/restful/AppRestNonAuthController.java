@@ -88,4 +88,16 @@ public class AppRestNonAuthController extends RestfulController {
         return;
     }
 
+    /**
+     * 获取app用版本控制的数据
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/getAppConstantDatas")
+    public void getAppConstantDatas(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.getAppConstantDatas(FishDTO.getInstance(request)), response);
+        return;
+    }
+
 }

@@ -13,6 +13,15 @@ public class FinanceVo implements Serializable {
     private String financeName;
     private String rate;
     private String refund;
+    private String timeDistance;
+
+    public String getTimeDistance() {
+        return timeDistance;
+    }
+
+    public void setTimeDistance(String timeDistance) {
+        this.timeDistance = timeDistance;
+    }
 
     public int getId() {
         return id;

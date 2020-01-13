@@ -21,8 +21,27 @@ public class TFinanceModel implements Serializable{
 	private String status;
 
 	private String content;
-	
-	
+
+	private String typeCd;
+
+	private String labels;
+
+	public String getLabels() {
+		return labels;
+	}
+
+	public void setLabels(String labels) {
+		this.labels = labels;
+	}
+
+	public String getTypeCd() {
+		return typeCd;
+	}
+
+	public void setTypeCd(String typeCd) {
+		this.typeCd = typeCd;
+	}
+
 	public String getStatus() {
 		return status;
 	}

@@ -3,6 +3,7 @@ package com.framework.dao;
 import java.util.List;
 
 import com.framework.entity.LocationProvinceEntity;
+import com.framework.vo.ProvinceCityVo;
 
 /**
  * 
@@ -14,4 +15,6 @@ import com.framework.entity.LocationProvinceEntity;
 public interface LocationProvinceDao extends BaseDao<LocationProvinceEntity> {
 	
 	List<LocationProvinceEntity> queryAllList();
+
+	List<ProvinceCityVo> queryAllProviceCity();
 }

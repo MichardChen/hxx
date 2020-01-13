@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.framework.dao.*;
+import com.framework.entity.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,18 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.framework.dao.LocationCityDao;
-import com.framework.dao.LocationProvinceDao;
-import com.framework.dao.SysUserDao;
-import com.framework.dao.TCodemstDao;
-import com.framework.entity.LocationCityEntity;
-import com.framework.entity.LocationProvinceEntity;
-import com.framework.entity.SysUserEntity;
-import com.framework.entity.TBrandEntity;
-import com.framework.entity.TBrandSeriesEntity;
-import com.framework.entity.TCodemstEntity;
-import com.framework.entity.TFinanceCommitEntity;
-import com.framework.entity.TFinanceEntity;
 import com.framework.model.FinanceCommitDetailModel;
 import com.framework.model.FinanceCommitListModel;
 import com.framework.service.TBrandSeriesService;
@@ -69,6 +59,8 @@ public class TFinanceCommitController {
 	private LocationCityDao cityDao;
 	@Autowired
 	private LocationProvinceDao provinceDao;
+	@Autowired
+	private MemberDao memberDao;
 	
 	@RequestMapping("/tfinancecommit.html")
 	public String list(){
@@ -107,7 +99,10 @@ public class TFinanceCommitController {
 			m.setName(e.getName());
 			m.setCreateTime(DateUtil.format(e.getCreateTime()));
 			m.setUpdateTime(DateUtil.format(e.getUpdateTime()));
-			m.setSex(e.getSex() == 1 ? "男":"女");
+			if(e.getSex() != null){
+				m.setSex(e.getSex() == 1 ? "男":"女");
+			}
+
 			LocationCityEntity city = cityDao.queryObject(e.getCityId());
 			if(city != null){
 				m.setCityId(city.getName());
@@ -171,10 +166,14 @@ public class TFinanceCommitController {
 			m.setIdcardNo(e.getIdcardNo());
 			m.setMark(e.getMark());
 			m.setMobile(e.getMobile());
+			Member member = memberDao.queryByMobile(e.getMobile());
+			if(member!=null){
+				m.setIdcardNo(member.getIdCardNo());
+			}
 			m.setName(e.getName());
 			m.setCreateTime(DateUtil.format(e.getCreateTime()));
 			m.setUpdateTime(DateUtil.format(e.getUpdateTime()));
-			m.setSex(e.getSex() == 1 ? "男":"女");
+			//m.setSex(e.getSex() == 1 ? "男":"女");
 			LocationCityEntity city = cityDao.queryObject(e.getCityId());
 			if(city != null){
 				m.setCityId(city.getName());

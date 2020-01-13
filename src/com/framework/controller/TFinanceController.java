@@ -123,6 +123,7 @@ public class TFinanceController {
 			model.setTimeDistance(tFinance.getTimeDistance());
 			model.setStatus(tFinance.getStatus());
 			model.setContent(tFinance.getContent());
+			model.setTypeCd(tFinance.getTypeCd());
 		}
 		return R.ok().put("tFinance", model);
 	}
@@ -149,6 +150,8 @@ public class TFinanceController {
 		story.setTimeDistance(viewModel.getString("timeDistance"));
 		story.setTitle(viewModel.getString("title"));
 		story.setStatus(viewModel.getString("status"));
+		story.setTypeCd(viewModel.getString("typeCd"));
+		story.setLabels(viewModel.getString("labels"));
 
 		//生成html
 		String htmlContent = StringUtil.formatHTML(viewModel.getString("name"), viewModel.getString("content"));
@@ -197,6 +200,8 @@ public class TFinanceController {
 		story.setTitle(viewModel.getString("title"));
 		story.setId(viewModel.getInteger("id"));
 		story.setStatus(viewModel.getString("status"));
+		story.setTypeCd(viewModel.getString("typeCd"));
+		story.setLabels(viewModel.getString("labels"));
 		//生成html
 		FileService fs=new FileService();
 

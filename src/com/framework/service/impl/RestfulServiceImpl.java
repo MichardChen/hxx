@@ -5,6 +5,8 @@ import com.framework.constants.Constants;
 import com.framework.dao.*;
 import com.framework.dto.FishDTO;
 import com.framework.entity.*;
+import com.framework.restful.BrandSeriesVo;
+import com.framework.service.CommonService;
 import com.framework.service.RestfulService;
 import com.framework.utils.*;
 import com.framework.vo.*;
@@ -16,10 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author ChenDang
@@ -56,6 +56,22 @@ public class RestfulServiceImpl implements RestfulService {
     TFinanceDao tFinanceDao;
     @Autowired
     TFinanceCommitDao tFinanceCommitDao;
+    @Autowired
+    TInsuranceDao tInsuranceDao;
+    @Autowired
+    TInsuranceCommitDao tInsuranceCommitDao;
+    @Autowired
+    LocationProvinceDao provinceDao;
+    @Autowired
+    TBrandDao tBrandDao;
+    @Autowired
+    TFishSupplyDao supplyDao;
+    @Autowired
+    TFishBuyDao buyDao;
+    @Autowired
+    CommonService commonService;
+    @Autowired
+    TBrandSeriesDao brandSeriesDao;
 
     /**
      * 首页接口
@@ -213,13 +229,13 @@ public class RestfulServiceImpl implements RestfulService {
         }
 
         //判断此设备是否太频繁获取验证码,最近十分钟之内，最多获取5次
-        int msgCount = userDeviceTokenDao.queryToken(dto.getDeviceToken(),new Timestamp(System.currentTimeMillis()-10*60*1000),new Timestamp(System.currentTimeMillis()));
+        int msgCount = userDeviceTokenDao.queryToken(dto.getDeviceToken(), new Timestamp(System.currentTimeMillis() - 10 * 60 * 1000), new Timestamp(System.currentTimeMillis()));
         TCodemstEntity codemstEntity = tCodemstDao.queryByCode(Constants.STATIC_PARAMS.SHOWMSG_COUNT);
         int limit = 10;
-        if(codemstEntity != null){
+        if (codemstEntity != null) {
             limit = codemstEntity.getData1();
         }
-        if(msgCount >= limit){
+        if (msgCount >= limit) {
             //超出发送条数限制
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，您获取短信太频繁，请稍后重试");
@@ -246,7 +262,7 @@ public class RestfulServiceImpl implements RestfulService {
         entity.setCreateTime(new Timestamp(System.currentTimeMillis()));
         entity.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         entity.setCodeTypeCd(dto.getShortMsgTypeCd());
-        entity.setExpireTime(new Timestamp(System.currentTimeMillis()+10*60*1000));
+        entity.setExpireTime(new Timestamp(System.currentTimeMillis() + 10 * 60 * 1000));
         TVertifyCodeEntity vCode = vertifyCodeDao.queryCodeByMobile(mobile, dto.getShortMsgTypeCd());
         if (vCode == null) {
             vertifyCodeDao.save(entity);
@@ -290,33 +306,33 @@ public class RestfulServiceImpl implements RestfulService {
         String code = dto.getCode();
         String token = TextUtil.generateUUID();
         //获取验证码有效时间
-        TVertifyCodeEntity vCode = vertifyCodeDao.queryCodeByMobile(mobile,Constants.SHORT_MSG_TYPE.REGISTER);
+        TVertifyCodeEntity vCode = vertifyCodeDao.queryCodeByMobile(mobile, Constants.SHORT_MSG_TYPE.REGISTER);
         Timestamp expireTime = vCode == null ? null : vCode.getExpireTime();
         Timestamp now = DateUtil.getNowTimestamp();
         Member member = memberDao.queryByMobile(mobile);
-        if(member != null){
+        if (member != null) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，您的手机号码已经注册了");
             return data;
         }
 
-        if(expireTime == null){
+        if (expireTime == null) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，您还没有获取验证码");
             return data;
         }
 
-        if((expireTime != null)&&(now.after(expireTime))){
+        if ((expireTime != null) && (now.after(expireTime))) {
             //true，就是过期了
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("验证码过期了，请重新获取");
             return data;
         }
 
-        if((expireTime != null) && (expireTime.after(now))){
+        if ((expireTime != null) && (expireTime.after(now))) {
             //没有过期，获取数据库验证码
             String dcode = vCode.getCode();
-            if(!StringUtil.equals(code, dcode)){
+            if (!StringUtil.equals(code, dcode)) {
                 //验证码错误
                 data.setCode(Constants.STATUS_CODE.FAIL);
                 data.setMessage("请输入正确的验证码");
@@ -333,16 +349,16 @@ public class RestfulServiceImpl implements RestfulService {
         registerMember.setUserTypeCd(dto.getUserTypeCd());
 
         int id = memberDao.save(registerMember);
-        if(id != 0){
+        if (id != 0) {
             //注册成功
             Member m = memberDao.queryByMobile(mobile);
             JSONObject map = new JSONObject();
             map.put("token", token);
-            vertifyCodeDao.updateExpireCode(vCode.getId(),DateUtil.getNowTimestamp());
+            vertifyCodeDao.updateExpireCode(vCode.getId(), DateUtil.getNowTimestamp());
             //保存token
-            UserToken at = userTokenDao.queryToken(m.getId(),dto.getUserTypeCd(),dto.getPlatform());
+            UserToken at = userTokenDao.queryToken(m.getId(), dto.getUserTypeCd(), dto.getPlatform());
             int tokensave = 0;
-            if(at == null){
+            if (at == null) {
                 //没有token，需要新建
                 UserToken userToken = new UserToken();
                 userToken.setCreateTime(DateUtil.getNowTimestamp());
@@ -354,33 +370,33 @@ public class RestfulServiceImpl implements RestfulService {
                 userToken.setToken(token);
                 userToken.setUserTypeCd(dto.getUserTypeCd());
                 tokensave = userTokenDao.save(userToken);
-                if(tokensave != 0){
+                if (tokensave != 0) {
                     data.setCode(Constants.STATUS_CODE.SUCCESS);
                     data.setMessage("注册成功");
                     data.setData(map);
                     return data;
-                }else{
+                } else {
                     data.setCode(Constants.STATUS_CODE.FAIL);
                     data.setMessage("注册失败");
                     return data;
                 }
-            }else{
+            } else {
                 at.setToken(token);
                 at.setUpdateTime(DateUtil.getNowTimestamp());
                 //一个月后失效
                 at.setExpireTime(new Timestamp(DateUtil.getNowTimestamp().getTime() + 30 * 24 * 60 * 60 * 1000L));
                 int ret = userTokenDao.update(at);
-                if(ret != 0){
+                if (ret != 0) {
                     data.setCode(Constants.STATUS_CODE.SUCCESS);
                     data.setMessage("注册成功");
                     data.setData(map);
-                }else{
+                } else {
                     data.setCode(Constants.STATUS_CODE.FAIL);
                     data.setMessage("注册失败");
                 }
                 return data;
             }
-        }else{
+        } else {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("注册失败");
             return data;
@@ -391,12 +407,12 @@ public class RestfulServiceImpl implements RestfulService {
     public ReturnData login(FishDTO dto) {
         ReturnData data = new ReturnData();
         Member member = memberDao.queryByMobile(dto.getMobile());
-        if(member == null){
+        if (member == null) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，您的账号尚未注册");
             return data;
         }
-        if(!StringUtil.equals(member.getUserPwd(), dto.getUserPwd())){
+        if (!StringUtil.equals(member.getUserPwd(), dto.getUserPwd())) {
             data.setMessage("对不起，密码错误");
             data.setCode(Constants.STATUS_CODE.FAIL);
             return data;
@@ -405,7 +421,7 @@ public class RestfulServiceImpl implements RestfulService {
         //保存token
         int userId = member.getId();
         String platForm = dto.getPlatform();
-        UserToken at = userTokenDao.queryToken(userId, dto.getUserTypeCd(),platForm);
+        UserToken at = userTokenDao.queryToken(userId, dto.getUserTypeCd(), platForm);
         int tokensave = 0;
         String token = TextUtil.generateUUID();
         UserToken userToken = new UserToken();
@@ -413,49 +429,49 @@ public class RestfulServiceImpl implements RestfulService {
         userToken.setUserTypeCd(dto.getUserTypeCd());
         userToken.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         //更新token
-        if(StringUtil.equals(platForm, Constants.PLATFORM.ANDROID)){
+        if (StringUtil.equals(platForm, Constants.PLATFORM.ANDROID)) {
             //如果是安卓登录，则把ios的token置空
             userToken.setToken("");
             userToken.setExpireTime(new Timestamp(System.currentTimeMillis()));
-            userToken.setPlatform( Constants.PLATFORM.IOS);
+            userToken.setPlatform(Constants.PLATFORM.IOS);
             userTokenDao.update(userToken);
         }
-        if(StringUtil.equals(platForm, Constants.PLATFORM.IOS)){
+        if (StringUtil.equals(platForm, Constants.PLATFORM.IOS)) {
             //如果是ios，则把安卓token置空
             userToken.setToken("");
             userToken.setExpireTime(new Timestamp(System.currentTimeMillis()));
-            userToken.setPlatform( Constants.PLATFORM.ANDROID);
+            userToken.setPlatform(Constants.PLATFORM.ANDROID);
             userTokenDao.update(userToken);
         }
-        if(at == null){
+        if (at == null) {
             userToken.setToken(token);
-            userToken.setExpireTime(new Timestamp(System.currentTimeMillis()+30*24*60*60*1000L));
+            userToken.setExpireTime(new Timestamp(System.currentTimeMillis() + 30 * 24 * 60 * 60 * 1000L));
             userToken.setPlatform(platForm);
             userToken.setCreateTime(new Timestamp(System.currentTimeMillis()));
             tokensave = userTokenDao.save(userToken);
-            if(tokensave != 0){
+            if (tokensave != 0) {
                 JSONObject map = new JSONObject();
                 map.put("token", token);
                 data.setData(map);
                 data.setCode(Constants.STATUS_CODE.SUCCESS);
                 data.setMessage("登录成功");
-            }else{
+            } else {
                 data.setCode(Constants.STATUS_CODE.FAIL);
                 data.setMessage("登录失败");
             }
-        }else{
+        } else {
             userToken.setToken(token);
-            userToken.setExpireTime(new Timestamp(System.currentTimeMillis()+30*24*60*60*1000L));
+            userToken.setExpireTime(new Timestamp(System.currentTimeMillis() + 30 * 24 * 60 * 60 * 1000L));
             userToken.setPlatform(platForm);
             int ret = userTokenDao.update(userToken);
-            if(ret != 0){
+            if (ret != 0) {
                 JSONObject map = new JSONObject();
                 map.put("token", token);
                 data.setData(map);
                 data.setCode(Constants.STATUS_CODE.SUCCESS);
                 data.setMessage("登录成功");
                 return data;
-            }else{
+            } else {
                 data.setCode(Constants.STATUS_CODE.FAIL);
                 data.setMessage("登录失败");
                 return data;
@@ -467,6 +483,7 @@ public class RestfulServiceImpl implements RestfulService {
 
     /**
      * 退出功能
+     *
      * @param dto
      * @return
      */
@@ -474,11 +491,11 @@ public class RestfulServiceImpl implements RestfulService {
     public ReturnData logout(FishDTO dto) {
         ReturnData data = new ReturnData();
         Member member = memberDao.queryByMobile(dto.getMobile());
-		if(member == null){
-			data.setCode(Constants.STATUS_CODE.FAIL);
-			data.setMessage("对不起，用户不存在");
-			return data;
-		}
+        if (member == null) {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，用户不存在");
+            return data;
+        }
 
         UserToken updateToken = new UserToken();
         updateToken.setUserId(member.getId());
@@ -488,10 +505,10 @@ public class RestfulServiceImpl implements RestfulService {
         updateToken.setExpireTime(DateUtil.getNowTimestamp());
         updateToken.setUserTypeCd(dto.getUserTypeCd());
         int ret = userTokenDao.update(updateToken);
-        if(ret != 0){
+        if (ret != 0) {
             data.setCode(Constants.STATUS_CODE.SUCCESS);
             data.setMessage("退出成功");
-        }else{
+        } else {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("退出失败");
         }
@@ -500,6 +517,7 @@ public class RestfulServiceImpl implements RestfulService {
 
     /**
      * 修改密码
+     *
      * @param dto
      * @return
      */
@@ -507,25 +525,25 @@ public class RestfulServiceImpl implements RestfulService {
     public ReturnData modifyPwd(FishDTO dto) {
         ReturnData data = new ReturnData();
         Member member = memberDao.queryByMobile(dto.getMobile());
-        if(member == null){
+        if (member == null) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，用户不存在");
             return data;
         }
-        if(!StringUtil.equals(member.getUserPwd(), dto.getOldPwd())){
+        if (!StringUtil.equals(member.getUserPwd(), dto.getOldPwd())) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，旧密码错误");
             return data;
         }
         //保存密码
-        Map<String,Object> map = new HashMap<>();
-        map.put("id",member.getId());
-        map.put("userPwd",dto.getUserPwd());
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", member.getId());
+        map.put("userPwd", dto.getUserPwd());
         int ret = memberDao.updatePassword(map);
-        if(ret != 0){
+        if (ret != 0) {
             data.setCode(Constants.STATUS_CODE.SUCCESS);
             data.setMessage("密码修改成功");
-        }else{
+        } else {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("密码修改失败");
         }
@@ -534,6 +552,7 @@ public class RestfulServiceImpl implements RestfulService {
 
     /**
      * 保存忘记密码
+     *
      * @param dto
      * @return
      */
@@ -541,43 +560,43 @@ public class RestfulServiceImpl implements RestfulService {
     public ReturnData saveForgetPwd(FishDTO dto) {
         ReturnData data = new ReturnData();
         Member member = memberDao.queryByMobile(dto.getMobile());
-        if(member == null){
+        if (member == null) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，用户不存在");
             return data;
         }
-        TVertifyCodeEntity vCode = vertifyCodeDao.queryCodeByMobile(dto.getMobile(),Constants.SHORT_MSG_TYPE.FORGET_PASSWORD);
-        if(vCode == null){
+        TVertifyCodeEntity vCode = vertifyCodeDao.queryCodeByMobile(dto.getMobile(), Constants.SHORT_MSG_TYPE.FORGET_PASSWORD);
+        if (vCode == null) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("请重新获取验证码");
             return data;
         }
-        if(!StringUtil.equals(dto.getCode(), vCode.getCode())){
+        if (!StringUtil.equals(dto.getCode(), vCode.getCode())) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("请输入正确的验证码");
             return data;
         }
 
         //判断验证码是不是过期
-        Timestamp expireTime = (Timestamp)vCode.getExpireTime();
+        Timestamp expireTime = (Timestamp) vCode.getExpireTime();
         Timestamp now = DateUtil.getNowTimestamp();
-        if((expireTime != null)&&(now.after(expireTime))){
+        if ((expireTime != null) && (now.after(expireTime))) {
             //true，就是过期了
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("验证码过期了，请重新获取");
             return data;
-        }else{
+        } else {
             //把验证码设置为过期
-            vertifyCodeDao.updateExpireCode(vCode.getId(),now);
+            vertifyCodeDao.updateExpireCode(vCode.getId(), now);
             //保存密码
-            Map<String,Object> map = new HashMap<>();
-            map.put("id",member.getId());
-            map.put("userPwd",dto.getUserPwd());
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", member.getId());
+            map.put("userPwd", dto.getUserPwd());
             int ret = memberDao.updatePassword(map);
-            if(ret != 0){
+            if (ret != 0) {
                 data.setCode(Constants.STATUS_CODE.SUCCESS);
                 data.setMessage("密码保存成功");
-            }else{
+            } else {
                 data.setCode(Constants.STATUS_CODE.FAIL);
                 data.setMessage("密码修改失败");
             }
@@ -587,6 +606,7 @@ public class RestfulServiceImpl implements RestfulService {
 
     /**
      * 积分商城首页
+     *
      * @param dto
      * @return
      */
@@ -601,7 +621,7 @@ public class RestfulServiceImpl implements RestfulService {
         List<MallProduct> list = mallProductDao.queryList(map);
         MallProductVo vo = null;
         List<MallProductVo> mallProductList = new ArrayList<>();
-        for(MallProduct product : list){
+        for (MallProduct product : list) {
             vo = new MallProductVo();
             vo.setProductId(product.getId());
             vo.setProductLogo(product.getLogos());
@@ -610,14 +630,14 @@ public class RestfulServiceImpl implements RestfulService {
             mallProductList.add(vo);
         }
         Member member = memberDao.queryByMobile(dto.getMobile());
-        if(member == null){
+        if (member == null) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("查询失败，用户不存在");
             return data;
         }
         JSONObject object = new JSONObject();
-        object.put("mallProductList",mallProductList);
-        object.put("points",member.getPoints());
+        object.put("mallProductList", mallProductList);
+        object.put("points", member.getPoints());
         data.setCode(Constants.STATUS_CODE.SUCCESS);
         data.setMessage("查询成功");
         data.setData(object);
@@ -626,6 +646,7 @@ public class RestfulServiceImpl implements RestfulService {
 
     /**
      * 商品详情
+     *
      * @param dto
      * @return
      */
@@ -634,16 +655,16 @@ public class RestfulServiceImpl implements RestfulService {
 
         ReturnData data = new ReturnData();
         int productId = dto.getProductId();
-        if(productId == 0){
+        if (productId == 0) {
             data.setMessage("对不起，商品不存在");
             data.setCode(Constants.STATUS_CODE.FAIL);
             return data;
         }
         MallProduct product = mallProductDao.queryObject(productId);
         JSONObject object = new JSONObject();
-        object.put("productDetail",product);
+        object.put("productDetail", product);
         //获取发货时间及快递相关
-        object.put("expressRelateUrl","https://www.sf-express.com/cn/sc/");
+        object.put("expressRelateUrl", "https://www.sf-express.com/cn/sc/");
         data.setData(object);
         data.setCode(Constants.STATUS_CODE.SUCCESS);
         data.setMessage("查询成功");
@@ -657,7 +678,7 @@ public class RestfulServiceImpl implements RestfulService {
         int productId = dto.getProductId();
         int productNum = dto.getProductNum();
         MallProduct product = mallProductDao.queryObject(productId);
-        if(product == null){
+        if (product == null) {
             data.setMessage("对不起，商品不存在");
             data.setCode(Constants.STATUS_CODE.FAIL);
             return data;
@@ -665,38 +686,38 @@ public class RestfulServiceImpl implements RestfulService {
         int needPoints = product.getNeedPoints();
         int allNeedPoints = needPoints * productNum;
         Member member = memberDao.queryByMobile(dto.getMobile());
-        if(member == null){
+        if (member == null) {
             data.setMessage("对不起，您的账号不存在");
             data.setCode(Constants.STATUS_CODE.FAIL);
             return data;
         }
-        if(!Constants.MEMBER_STATUS.REVIEW_PASS.equals(member.getStatus())){
+        if (!Constants.MEMBER_STATUS.REVIEW_PASS.equals(member.getStatus())) {
             data.setMessage("对不起，您的账号还未认证通过，暂时不能兑换");
             data.setCode(Constants.STATUS_CODE.FAIL);
             return data;
         }
         int userPoint = member.getPoints();
-        if(userPoint < allNeedPoints){
+        if (userPoint < allNeedPoints) {
             data.setMessage("对不起，您的积分不足");
             data.setCode(Constants.STATUS_CODE.FAIL);
             return data;
         }
-        if(productNum > product.getQuality()){
+        if (productNum > product.getQuality()) {
             data.setMessage("对不起，商品库存不足");
             data.setCode(Constants.STATUS_CODE.FAIL);
             return data;
         }
         //积分够，扣积分，扣商品数量
-        int pointsRet = memberDao.updatePoints(allNeedPoints,member.getId());
-        if(pointsRet != 0){
-            int qualityRet = mallProductDao.updateQuality(productId,productNum);
-            if(qualityRet != 0){
+        int pointsRet = memberDao.updatePoints(allNeedPoints, member.getId());
+        if (pointsRet != 0) {
+            int qualityRet = mallProductDao.updateQuality(productId, productNum);
+            if (qualityRet != 0) {
                 //添加积分记录
                 MallPointsRecord record = new MallPointsRecord();
                 record.setCreateTime(DateUtil.getNowTimestamp());
                 record.setUpdateTime(DateUtil.getNowTimestamp());
-                record.setMark("兑换商品ID："+productId+"，数量："+productNum+"，消耗积分："+allNeedPoints);
-                record.setPoint("-"+allNeedPoints);
+                record.setMark("兑换商品ID：" + productId + "，数量：" + productNum + "，消耗积分：" + allNeedPoints);
+                record.setPoint("-" + allNeedPoints);
                 record.setUserId(member.getId());
                 record.setUserTypeCd(Constants.USER_TYPE.USER_TYPE_CLIENT);
                 record.setOperateTypeCd(Constants.OPERATE_TYPE.EXCHANGE_PRODUCT);
@@ -718,21 +739,21 @@ public class RestfulServiceImpl implements RestfulService {
                 exchangeRecord.setReceiveMobile(dto.getReceiveMobile());
                 exchangeRecord.setReceiveName(dto.getReceivePerson());
                 int exchangeRecordRet = exchangeRecordDao.save(exchangeRecord);
-                if(recordRet != 0 && exchangeRecordRet != 0){
+                if (recordRet != 0 && exchangeRecordRet != 0) {
                     data.setMessage("恭喜您，兑换成功，待平台处理");
                     data.setCode(Constants.STATUS_CODE.SUCCESS);
                     return data;
-                }else{
+                } else {
                     data.setMessage("对不起，兑换失败");
                     data.setCode(Constants.STATUS_CODE.FAIL);
                     return data;
                 }
-            }else{
+            } else {
                 data.setMessage("对不起，兑换失败");
                 data.setCode(Constants.STATUS_CODE.FAIL);
                 return data;
             }
-        }else{
+        } else {
             data.setMessage("对不起，兑换失败");
             data.setCode(Constants.STATUS_CODE.FAIL);
             return data;
@@ -741,6 +762,7 @@ public class RestfulServiceImpl implements RestfulService {
 
     /**
      * 获取兑换记录
+     *
      * @param dto
      * @return
      */
@@ -750,7 +772,7 @@ public class RestfulServiceImpl implements RestfulService {
         String mobile = dto.getMobile();
         ReturnData data = new ReturnData();
         Member member = memberDao.queryByMobile(mobile);
-        if(member == null){
+        if (member == null) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，您的账号不存在");
             return data;
@@ -758,15 +780,15 @@ public class RestfulServiceImpl implements RestfulService {
         Map<String, Object> map = new HashMap<>();
         map.put("offset", (dto.getPageNum() - 1) * dto.getPageSize());
         map.put("limit", dto.getPageSize());
-        map.put("userId",member.getId());
+        map.put("userId", member.getId());
         List<MallPointsExchangeRecord> list = exchangeRecordDao.queryList(map);
         MallPointsExchangeRecordVo vo = null;
         List<MallPointsExchangeRecordVo> voList = new ArrayList<>();
-        for(MallPointsExchangeRecord record : list){
+        for (MallPointsExchangeRecord record : list) {
             vo = new MallPointsExchangeRecordVo();
             vo.setExchangeId(record.getId());
             MallProduct product = mallProductDao.queryObject(record.getProductId());
-            if(product != null){
+            if (product != null) {
                 vo.setTitle(product.getProductTitle());
             }
             vo.setCreateTime(DateUtil.formatTimestampForDate(record.getCreateTime()));
@@ -774,7 +796,7 @@ public class RestfulServiceImpl implements RestfulService {
             voList.add(vo);
         }
         JSONObject object = new JSONObject();
-        object.put("exchageList",voList);
+        object.put("exchageList", voList);
         data.setData(object);
         data.setCode(Constants.STATUS_CODE.SUCCESS);
         data.setMessage("查询成功");
@@ -783,6 +805,7 @@ public class RestfulServiceImpl implements RestfulService {
 
     /**
      * 获取兑换详情
+     *
      * @param dto
      * @return
      */
@@ -792,7 +815,7 @@ public class RestfulServiceImpl implements RestfulService {
         ReturnData data = new ReturnData();
         int exchangeId = dto.getKey();
         MallPointsExchangeRecord exchangeRecord = exchangeRecordDao.queryObject(exchangeId);
-        if(exchangeRecord == null){
+        if (exchangeRecord == null) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，兑换记录不存在");
             return data;
@@ -800,7 +823,7 @@ public class RestfulServiceImpl implements RestfulService {
 
         MallProduct product = mallProductDao.queryObject(exchangeRecord.getProductId());
         MallPointsExchangeRecordVo vo = new MallPointsExchangeRecordVo();
-        if(product != null){
+        if (product != null) {
             vo.setTitle(product.getProductTitle());
         }
         vo.setCreateTime(DateUtil.formatTimestampForDate(exchangeRecord.getCreateTime()));
@@ -817,7 +840,7 @@ public class RestfulServiceImpl implements RestfulService {
         vo.setQuality(exchangeRecord.getQuality());
 
         JSONObject object = new JSONObject();
-        object.put("exchageDetail",vo);
+        object.put("exchageDetail", vo);
         data.setData(object);
         data.setCode(Constants.STATUS_CODE.SUCCESS);
         data.setMessage("查询成功");
@@ -826,6 +849,7 @@ public class RestfulServiceImpl implements RestfulService {
 
     /**
      * 修改昵称
+     *
      * @param dto
      * @return
      */
@@ -833,23 +857,23 @@ public class RestfulServiceImpl implements RestfulService {
     public ReturnData modifyNickName(FishDTO dto) {
 
         ReturnData data = new ReturnData();
-        if(StringUtil.isBlank(dto.getNickName())){
+        if (StringUtil.isBlank(dto.getNickName())) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，昵称不能为空");
             return data;
         }
         Member member = memberDao.queryByMobile(dto.getMobile());
-        if(member == null){
+        if (member == null) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，您的账号不存在");
             return data;
         }
-        int ret = memberDao.updateNickName(dto.getNickName(),member.getId());
-        if(ret != 0){
+        int ret = memberDao.updateNickName(dto.getNickName(), member.getId());
+        if (ret != 0) {
             data.setCode(Constants.STATUS_CODE.SUCCESS);
             data.setMessage("修改成功");
             return data;
-        }else{
+        } else {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("修改失败");
             return data;
@@ -859,13 +883,13 @@ public class RestfulServiceImpl implements RestfulService {
     @Override
     public ReturnData saveFeedback(FishDTO dto) {
         ReturnData data = new ReturnData();
-        if(StringUtil.isBlank(dto.getValue())){
+        if (StringUtil.isBlank(dto.getValue())) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，留言内容不能为空");
             return data;
         }
         Member member = memberDao.queryByMobile(dto.getMobile());
-        if(member == null){
+        if (member == null) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，您的账号不存在");
             return data;
@@ -877,11 +901,11 @@ public class RestfulServiceImpl implements RestfulService {
         question.setCreateTime(DateUtil.getNowTimestamp());
         question.setStatus(Constants.FEEDBACK_STATUS.STAY_HANDLE);
         int ret = tQuestionDao.save(question);
-        if(ret != 0){
+        if (ret != 0) {
             data.setCode(Constants.STATUS_CODE.SUCCESS);
             data.setMessage("提交成功，感谢您的宝贵意见，我们将尽快处理");
             return data;
-        }else{
+        } else {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("提交失败");
             return data;
@@ -894,24 +918,25 @@ public class RestfulServiceImpl implements RestfulService {
         Map<String, Object> map = new HashMap<>();
         map.put("offset", (dto.getPageNum() - 1) * dto.getPageSize());
         map.put("limit", dto.getPageSize());
-        map.put("typeCd",dto.getTypeCd());
-        map.put("status",1);
+        map.put("typeCd", dto.getTypeCd());
+        map.put("status", 1);
         List<TFinanceEntity> list = tFinanceDao.queryList(map);
         List<FinanceVo> voList = new ArrayList<>();
         FinanceVo vo = null;
-        for(TFinanceEntity entity : list){
+        for (TFinanceEntity entity : list) {
             vo = new FinanceVo();
             vo.setId(entity.getId());
             vo.setFinanceName(entity.getName());
             vo.setLogo(entity.getIcon());
             vo.setRate(entity.getLowRate());
             vo.setRefund(entity.getLowRefund());
+            vo.setTimeDistance(entity.getTimeDistance());
             voList.add(vo);
         }
         data.setMessage("查询成功");
         data.setCode(Constants.STATUS_CODE.SUCCESS);
         JSONObject dataMap = new JSONObject();
-        dataMap.put("financeList",voList);
+        dataMap.put("financeList", voList);
         data.setData(dataMap);
         return data;
     }
@@ -921,7 +946,7 @@ public class RestfulServiceImpl implements RestfulService {
         ReturnData data = new ReturnData();
         TFinanceEntity entity = tFinanceDao.queryObject(dto.getKey());
         FinanceDetailVo detailVo = new FinanceDetailVo();
-        if(entity != null){
+        if (entity != null) {
             detailVo.setId(entity.getId());
             detailVo.setFinanceName(entity.getName());
             detailVo.setLogo(entity.getIcon());
@@ -933,12 +958,23 @@ public class RestfulServiceImpl implements RestfulService {
         //查找客服电话
         JSONObject json = new JSONObject();
         TCodemstEntity phoneEntity = tCodemstDao.queryByCode(Constants.TEL_TYPE.KEFU);
-        if(phoneEntity != null){
-            json.put("phone",phoneEntity.getData2());
-        }else{
-            json.put("phone","");
+        if (phoneEntity != null) {
+            json.put("phone", phoneEntity.getData2());
+        } else {
+            json.put("phone", "");
         }
-        json.put("financeDetail",detailVo);
+
+        List<String> labelList = new ArrayList<>();
+        String labels = entity.getLabels();
+        if (StringUtil.isNoneBlank(labels)) {
+            String[] labelArray = labels.split(",");
+            for (String label : labelArray) {
+                labelList.add(label);
+            }
+        }
+
+        json.put("labels", labelList);
+        json.put("financeDetail", detailVo);
         data.setData(json);
         data.setCode(Constants.STATUS_CODE.SUCCESS);
         data.setMessage("查询成功");
@@ -950,18 +986,18 @@ public class RestfulServiceImpl implements RestfulService {
 
         ReturnData data = new ReturnData();
         TFinanceEntity entity = tFinanceDao.queryObject(dto.getKey());
-        if(entity == null){
+        if (entity == null) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，此产品已下架");
             return data;
         }
         Member member = memberDao.queryByMobile(dto.getMobile());
-        if(member == null){
+        if (member == null) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，此用户不存在");
             return data;
         }
-        if(!Constants.MEMBER_STATUS.REVIEW_PASS.equals(member.getStatus())){
+        if (!Constants.MEMBER_STATUS.REVIEW_PASS.equals(member.getStatus())) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，您还未进行认证，请先认证资料");
             return data;
@@ -976,13 +1012,347 @@ public class RestfulServiceImpl implements RestfulService {
         commitEntity.setIdcardNo(member.getIdCardNo());
         commitEntity.setName(member.getNickName());
         int ret = tFinanceCommitDao.save(commitEntity);
-        if(ret == 0){
+        if (ret == 0) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，申请失败");
-        }else{
-            data.setCode(Constants.STATUS_CODE.FAIL);
+        } else {
+            data.setCode(Constants.STATUS_CODE.SUCCESS);
             data.setMessage("恭喜您申请成功，待平台工作人员联系您");
         }
+        return data;
+    }
+
+    @Override
+    public ReturnData getInsuranceList(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        Map<String, Object> map = new HashMap<>();
+        map.put("offset", (dto.getPageNum() - 1) * dto.getPageSize());
+        map.put("limit", dto.getPageSize());
+        map.put("typeCd", dto.getTypeCd());
+        map.put("status", 1);
+        List<TInsuranceEntity> list = tInsuranceDao.queryList(map);
+        List<InsuranceVo> voList = new ArrayList<>();
+        InsuranceVo vo = null;
+        for (TInsuranceEntity entity : list) {
+            vo = new InsuranceVo();
+            vo.setId(entity.getId());
+            vo.setInsuranceName(entity.getName());
+            vo.setLogo(entity.getIcon());
+            vo.setTimeDistance(entity.getTimeDistance());
+            vo.setRefund(entity.getLowRefund());
+            voList.add(vo);
+        }
+        data.setMessage("查询成功");
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        JSONObject dataMap = new JSONObject();
+        dataMap.put("insuranceList", voList);
+        data.setData(dataMap);
+        return data;
+    }
+
+    @Override
+    public ReturnData getInsuranceDetail(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        TInsuranceEntity entity = tInsuranceDao.queryObject(dto.getKey());
+        InsuranceDetailVo detailVo = new InsuranceDetailVo();
+        if (entity != null) {
+            detailVo.setId(entity.getId());
+            detailVo.setInsuranceName(entity.getName());
+            detailVo.setLogo(entity.getIcon());
+            detailVo.setTimeDistance(entity.getTimeDistance());
+            detailVo.setRefund(entity.getLowRefund());
+            detailVo.setContentUrl(entity.getDescUrl());
+        }
+        //查找客服电话
+        JSONObject json = new JSONObject();
+        TCodemstEntity phoneEntity = tCodemstDao.queryByCode(Constants.TEL_TYPE.KEFU);
+        if (phoneEntity != null) {
+            json.put("phone", phoneEntity.getData2());
+        } else {
+            json.put("phone", "");
+        }
+
+        List<String> labelList = new ArrayList<>();
+        String labels = entity.getLabels();
+        if (StringUtil.isNoneBlank(labels)) {
+            String[] labelArray = labels.split(",");
+            for (String label : labelArray) {
+                labelList.add(label);
+            }
+        }
+
+        json.put("labels", labelList);
+        json.put("insuranceDetail", detailVo);
+        data.setData(json);
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        data.setMessage("查询成功");
+        return data;
+    }
+
+    @Override
+    public ReturnData applyInsurance(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        TInsuranceEntity entity = tInsuranceDao.queryObject(dto.getKey());
+        if (entity == null) {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，此产品已下架");
+            return data;
+        }
+        Member member = memberDao.queryByMobile(dto.getMobile());
+        if (member == null) {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，此用户不存在");
+            return data;
+        }
+        if (!Constants.MEMBER_STATUS.REVIEW_PASS.equals(member.getStatus())) {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，您还未进行认证，请先认证资料");
+            return data;
+        }
+        TInsuranceCommitEntity commitEntity = new TInsuranceCommitEntity();
+        commitEntity.setFinanceId(entity.getId());
+        commitEntity.setCreateTime(DateUtil.getNowTimestamp());
+        commitEntity.setUpdateTime(DateUtil.getNowTimestamp());
+        commitEntity.setStatus(Constants.FEEDBACK_STATUS.STAY_HANDLE);
+        commitEntity.setMark("保险产品申请");
+        commitEntity.setMobile(dto.getMobile());
+        commitEntity.setIdcardNo(member.getIdCardNo());
+        commitEntity.setName(member.getNickName());
+        int ret = tInsuranceCommitDao.save(commitEntity);
+        if (ret == 0) {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，申请失败");
+        } else {
+            data.setCode(Constants.STATUS_CODE.SUCCESS);
+            data.setMessage("恭喜您申请成功，待平台工作人员联系您");
+        }
+        return data;
+    }
+
+    @Override
+    public ReturnData getAppConstantDatas(FishDTO dto) {
+
+        //Map<Integer,List<ProvinceCityVo>> cityMap = new HashMap<>();
+        //Map<Integer,List<BrandSeriesVo>> brandMap = new HashMap<>();
+        List<ProvinceCityVo> list = provinceDao.queryAllProviceCity();
+        List<BrandSeriesVo> brandSeriesVos = tBrandDao.queryAllBrandSeries();
+        List<String> fishTypeList = tCodemstDao.queryNamesByPcode("260000");
+        /*for(ProvinceCityVo vo : list){
+            if(cityMap.containsKey(vo.getProvinceId())){
+                //map集合包含key
+                List<ProvinceCityVo> cityList = cityMap.get(vo.getProvinceId());
+                cityList.add(vo);
+            }else{
+                //map集合不包含key
+                List<ProvinceCityVo> cityList = new ArrayList<>();
+                cityList.add(vo);
+                cityMap.put(vo.getProvinceId(),cityList);
+            }
+        }
+
+        for(BrandSeriesVo vo : brandSeriesVos){
+            if(brandMap.containsKey(vo.getBrandId())){
+                //map集合包含key
+                List<BrandSeriesVo> brandList = brandMap.get(vo.getBrandId());
+                brandList.add(vo);
+            }else{
+                //map集合不包含key
+                List<BrandSeriesVo> brandList = new ArrayList<>();
+                brandList.add(vo);
+                brandMap.put(vo.getBrandId(),brandList);
+            }
+        }*/
+
+        ReturnData data = new ReturnData();
+        JSONObject json = new JSONObject();
+        if(Constants.PLATFORM.ANDROID.equals(dto.getPlatform())){
+            json.put("cityList", list);
+            json.put("fishList", brandSeriesVos);
+            json.put("fishTypeList", fishTypeList);
+        }else{
+            //苹果
+            //省市数据
+            List<ParentVo> cityList = new ArrayList<>();
+            Map<Integer,ParentVo> cityMap = new HashMap<>();
+            for(ProvinceCityVo vo : list){
+                if(cityMap.containsKey(vo.getProvinceId())){
+                    //如果包含
+                    ParentVo parentVo = cityMap.get(vo.getProvinceId());
+                    List<ChildVo> childVos = parentVo.getChilds();
+                    ChildVo childVo = new ChildVo();
+                    childVo.setChildId(vo.getCityId());
+                    childVo.setChildName(vo.getCityName());
+                    childVos.add(childVo);
+                }else{
+                    //不包含
+                    ParentVo parentVo = new ParentVo();
+                    parentVo.setParentId(vo.getProvinceId());
+                    parentVo.setParentName(vo.getProvinceName());
+                    List<ChildVo> childVos = new ArrayList<>();
+                    ChildVo childVo = new ChildVo();
+                    childVo.setChildId(vo.getCityId());
+                    childVo.setChildName(vo.getCityName());
+                    childVos.add(childVo);
+                    parentVo.setChilds(childVos);
+                    cityMap.put(vo.getProvinceId(),parentVo);
+                }
+            }
+            for(Map.Entry<Integer, ParentVo> entry : cityMap.entrySet()){
+                cityList.add(entry.getValue());
+            }
+            //鱼类种类
+            List<ParentVo> fishList = new ArrayList<>();
+            Map<Integer,ParentVo> fishMap = new HashMap<>();
+            for(BrandSeriesVo vo : brandSeriesVos){
+                if(fishMap.containsKey(vo.getBrandId())){
+                    //如果包含
+                    ParentVo parentVo = fishMap.get(vo.getBrandId());
+                    List<ChildVo> childVos = parentVo.getChilds();
+                    ChildVo childVo = new ChildVo();
+                    childVo.setChildId(vo.getSeriesId());
+                    childVo.setChildName(vo.getSeriesName());
+                    childVos.add(childVo);
+                }else{
+                    //不包含
+                    ParentVo parentVo = new ParentVo();
+                    parentVo.setParentId(vo.getBrandId());
+                    parentVo.setParentName(vo.getBrandName());
+                    List<ChildVo> childVos = new ArrayList<>();
+                    ChildVo childVo = new ChildVo();
+                    childVo.setChildId(vo.getSeriesId());
+                    childVo.setChildName(vo.getSeriesName());
+                    childVos.add(childVo);
+                    parentVo.setChilds(childVos);
+                    fishMap.put(vo.getBrandId(),parentVo);
+                }
+            }
+
+            for(Map.Entry<Integer, ParentVo> entry : fishMap.entrySet()){
+                fishList.add(entry.getValue());
+            }
+
+            json.put("cityList", cityList);
+            json.put("fishList", fishList);
+            json.put("fishTypeList", fishTypeList);
+        }
+
+        TCodemstEntity dataVersion = tCodemstDao.queryByCode("180002");
+        if (dataVersion != null) {
+            json.put("dataVersion", dataVersion.getData1());
+        } else {
+            json.put("dataVersion", "");
+        }
+        data.setData(json);
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        data.setMessage("查询成功");
+        return data;
+    }
+
+    @Transactional
+    @Override
+    public ReturnData saveSupplyInfo(FishDTO dto) {
+
+        ReturnData data = new ReturnData();
+        Member member = memberDao.queryByMobile(dto.getMobile());
+        if (member == null) {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，此用户不存在");
+            return data;
+        }
+        if (!Constants.MEMBER_STATUS.REVIEW_PASS.equals(member.getStatus())) {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，您还未进行认证，请先认证资料");
+            return data;
+        }
+        TFishSupplyEntity entity = new TFishSupplyEntity();
+        entity.setOrderNo("G"+getOrderIdByTime());
+        entity.setProductType(dto.getTypeCd());
+        entity.setMainType(dto.getMainType());
+        entity.setImg(dto.getUrl());
+        entity.setSize(dto.getSize());
+        entity.setUnit(dto.getUnit());
+        entity.setPrice(dto.getPrice());
+        entity.setWeight(dto.getSupply());
+        entity.setCreateTime(DateUtil.getNowTimestamp());
+        entity.setUpdateTime(DateUtil.getNowTimestamp());
+        entity.setProvice(dto.getProvince());
+        entity.setCity(dto.getCity());
+        entity.setMark(dto.getMark());
+        entity.setMemberId(member.getId());
+        entity.setLatestTime(dto.getLatestTime());
+        entity.setStatus(Constants.ORDER_STUTUS.STAY_REVIEW);
+        int ret = supplyDao.save(entity);
+        if(ret != 0){
+            commonService.saveOrderStatus(0,entity.getOrderNo()
+                                         ,Constants.ORDER_TYPE.SUPPLY
+                                         ,Constants.ORDER_STUTUS.STAY_REVIEW,"",entity.toString());
+
+            data.setCode(Constants.STATUS_CODE.SUCCESS);
+            data.setMessage("发布成功，待平台审核");
+            return data;
+        }else{
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("发布失败，请重新发布");
+            return data;
+        }
+    }
+
+
+    public String getOrderIdByTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String newDate = sdf.format(new Date());
+        String result = "";
+        Random random = new Random();
+        for (int i = 0; i < 3; i++) {
+            result += random.nextInt(10);
+        }
+        return newDate + result;
+    }
+
+    @Override
+    public ReturnData querySupplyList(FishDTO dto) {
+
+        ReturnData data = new ReturnData();
+        Map<String, Object> map = new HashMap<>();
+        map.put("offset", (dto.getPageNum() - 1) * dto.getPageSize());
+        map.put("limit", dto.getPageSize());
+        map.put("mark",dto.getMark());
+        map.put("productType",dto.getTypeCd());
+        map.put("province",dto.getProvince());
+        map.put("city",dto.getCity());
+        map.put("mainType",dto.getMainType());
+        List<TFishSupplyEntity> supplyEntities = supplyDao.querySupplyList(map);
+        List<SupplyListVo> supplyList = new ArrayList<>();
+
+        for(TFishSupplyEntity entity : supplyEntities){
+            SupplyListVo vo = new SupplyListVo();
+            vo.setId(entity.getId());
+            vo.setCity(entity.getCity());
+            vo.setCreateDate(DateUtil.format(entity.getCreateTime(),"yyyy-MM-dd"));
+            vo.setTitle(entity.getMainType());
+            vo.setSize(entity.getSize());
+            vo.setPrice(entity.getPrice());
+            TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObjectByName(entity.getMainType());
+            if(brandSeriesEntity != null){
+                vo.setImg(brandSeriesEntity.getSeriesIcon());
+            }
+            String labels = entity.getLabels();
+            List<String> images = new ArrayList<>();
+            if(StringUtil.isNoneBlank(labels)){
+                String[] imgList = labels.split(",");
+                for(String str:imgList){
+                    images.add(str);
+                }
+            }
+            vo.setLabels(images);
+            supplyList.add(vo);
+        }
+
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        data.setMessage("查询成功");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("supplyList",supplyList);
+        data.setData(jsonObject);
         return data;
     }
 }

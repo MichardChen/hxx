@@ -31,8 +31,17 @@ public class TBrandSeriesEntity implements Serializable {
 	private Integer updateBy;
 	
 	private int flg;
-	
-	
+
+	private String seriesIcon;
+
+	public String getSeriesIcon() {
+		return seriesIcon;
+	}
+
+	public void setSeriesIcon(String seriesIcon) {
+		this.seriesIcon = seriesIcon;
+	}
+
 	public int getFlg() {
 		return flg;
 	}

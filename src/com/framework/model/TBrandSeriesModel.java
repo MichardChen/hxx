@@ -9,10 +9,18 @@ public class TBrandSeriesModel implements Serializable{
 	private Integer brandId;
 	//
 	private String carSerial;
+	private String brandIcon;
 	
 	private int flg;
-	
-	
+
+	public String getBrandIcon() {
+		return brandIcon;
+	}
+
+	public void setBrandIcon(String brandIcon) {
+		this.brandIcon = brandIcon;
+	}
+
 	public int getFlg() {
 		return flg;
 	}

@@ -29,7 +29,7 @@ var vm = new Vue({
 			
 			var brandId = $("#brandId").val();
 			if(!$("#brand").val()){
-				alert("请输入品牌");
+				alert("请输入种类名称");
 				return;
 			}
 			if(!$("#word").val()){
@@ -46,7 +46,7 @@ var vm = new Vue({
 				
 				var fileObj = document.getElementById("uFile").files[0];
 				if(!fileObj){
-					alert("请选择车标");
+					alert("请选择Logo");
 					return;
 				}
 				var formFile = new FormData();

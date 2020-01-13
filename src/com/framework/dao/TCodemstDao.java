@@ -18,4 +18,6 @@ public interface TCodemstDao extends BaseDao<TCodemstEntity> {
 	public TCodemstEntity queryByCode(@Param("code")String code);
 	
 	public List<TCodemstEntity> queryByCodeList(@Param("pcode")String pcode);
+
+	public List<String> queryNamesByPcode(@Param("pcode")String pcode);
 }

@@ -157,7 +157,7 @@ public interface Constants {
 		public static final String DOCUMENT = "D:\\upload\\document\\";
 		public static final String IMG = "D:\\upload\\img\\";
 	}*/
-	
+
 	public static interface FILE_HOST {
 		public static final String DOCUMENT = "/var/www/html/file/";
 		public static final String IMG = "/var/www/html/img/";
@@ -375,6 +375,52 @@ public interface Constants {
 		public static final String GONGYINGLIAN = "240004";
 		/**农村合作社*/
 		public static final String NONGCUNHZS = "240005";
+	}
+
+	/**
+	 * 普通保险
+	 */
+	public static interface INSURANCE_TYPE{
+
+		/**普通保险*/
+		public static final String LYD = "250001";
+	}
+
+	public static interface FISH_TYPE{
+
+		public static final String RUAN = "260001";
+
+		public static final String YOUTI = "260002";
+
+		public static final String MIAO = "260003";
+
+		public static final String CHENGPIN = "260004";
+	}
+
+	public static interface ORDER_TYPE{
+		//求购
+		public static final String BUY = "270001";
+		//供应
+		public static final String SUPPLY = "270002";
+		//自行添加
+		public static final String ADD = "270003";
+	}
+
+	public static interface ORDER_STUTUS{
+		//待审核
+		public static final String STAY_REVIEW = "280001";
+		//审核通过
+		public static final String PASS = "280002";
+		//审核失败
+		public static final String FAIL = "280003";
+		//待支付
+		public static final String STAY_PAY = "280004";
+		//已支付
+		public static final String PAYED = "280005";
+		//待收货
+		public static final String STAY_RECEIVE= "280006";
+		//已收货
+		public static final String RECEIVED= "280007";
 	}
 
 }

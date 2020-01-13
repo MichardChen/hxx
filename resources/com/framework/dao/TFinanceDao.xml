@@ -12,6 +12,9 @@
 		<if test="status != null and status != ''">
 			and status=#{status}
 		</if>
+		<if test="typeCd != null and typeCd != ''">
+			and type_cd=#{typeCd}
+		</if>
 		order by create_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
@@ -37,7 +40,10 @@
 			`update_time`, 
 			`desc_url`, 
 			`status`, 
-			`title`
+			`title`,
+			`content`,
+			`labels`,
+			`type_cd`
 		)
 		values
 		(
@@ -53,7 +59,10 @@
 			#{updateTime}, 
 			#{descUrl}, 
 			#{status}, 
-			#{title}
+			#{title},
+		 	#{content},
+		 	#{labels},
+			#{typeCd}
 		)
 	</insert>
 	 
@@ -72,7 +81,10 @@
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
 			<if test="descUrl != null">`desc_url` = #{descUrl}, </if>
 			<if test="status != null">`status` = #{status}, </if>
-			<if test="title != null">`title` = #{title}</if>
+			<if test="title != null">`title` = #{title},</if>
+			<if test="content != null">`content` = #{content},</if>
+			<if test="labels != null">`labels` = #{labels},</if>
+			<if test="type_cd != null">`type_cd` = #{typeCd}</if>
 		</set>
 		where id = #{id}
 	</update>

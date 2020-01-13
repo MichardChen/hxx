@@ -37,24 +37,32 @@ var vm = new Vue({
 				$("#brandId").val(r.tBrandSeries.brandId);
 				$("#carSerial").val(r.tBrandSeries.carSerial);
 				$("#flg").val(r.tBrandSeries.flg);
+                $("#icon").attr("href",r.tBrandSeries.brandIcon);
+                $("#icon").show();
 			});
 		},
 		saveOrUpdate : function(event) {
 			if (!$("#brandId").val()) {
-					alert("请选择汽车品牌");
+					alert("请选择生鲜种类名称");
 					return;
 			}
 			if (!$("#carSerial").val()) {
-					alert("请输入车系");
+					alert("请输入生鲜名称");
 					return;
 			}
+            var fileObj = document.getElementById("uFile").files[0];
+            if(!fileObj){
+                alert("请选择Logo");
+                return;
+            }
 			var brandSeriesId = $("#brandSeriesId").val();
 			if (brandSeriesId == null || brandSeriesId == "") {
 				var formFile = new FormData();
 				vm.tBrandSeries.brandId = $("#brandId").val();
 				vm.tBrandSeries.carSerial = $("#carSerial").val();
 				vm.tBrandSeries.flg = $("#flg").val();
-				formFile.append("tBrandSeries", JSON.stringify(vm.tBrandSeries));
+                formFile.append("uFile", fileObj);
+                formFile.append("tBrandSeries", JSON.stringify(vm.tBrandSeries));
 				var url = "../tbrandseries/save";
 				$.ajax({
 					type : "POST",
@@ -76,12 +84,14 @@ var vm = new Vue({
 				});
 			} else {
 				var url = "../tbrandseries/update";
+                var fileObj = document.getElementById("uFile").files[0];
 				vm.tBrandSeries.id = brandSeriesId;
 				vm.tBrandSeries.brandId = $("#brandId").val();
 				vm.tBrandSeries.carSerial = $("#carSerial").val();
 				vm.tBrandSeries.flg = $("#flg").val();
 				var formFile = new FormData();
-				formFile.append("tBrandSeries", JSON.stringify(vm.tBrandSeries));
+                formFile.append("uFile", fileObj);
+                formFile.append("tBrandSeries", JSON.stringify(vm.tBrandSeries));
 				$.ajax({
 					type : "POST",
 					url : url,
