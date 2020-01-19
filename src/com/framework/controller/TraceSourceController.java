@@ -91,7 +91,7 @@ public class TraceSourceController {
 		//生成html文件
 		String uuid = UUID.randomUUID().toString().replaceAll("-","");
 		String htmlContent = StringUtil.formatHTML(traceSource.getOrderNo(), traceSource.getContent());
-		String host = "F:\\var\\www\\html\\file\\mallProduct\\";
+		//String host = "F:\\var\\www\\html\\file\\mallProduct\\";
 //		PrintWriter pw = new PrintWriter(new OutputStreamWriter(
 //				new FileOutputStream(host + uuid + ".html"),"utf-8"),true);
 //		pw.println(htmlContent);
@@ -99,7 +99,7 @@ public class TraceSourceController {
 //		String contentUrl = host + uuid + ".html";
 		if(traceSource.getId() != null){
 			TraceSourceEntity entity = traceSourceService.queryObject(traceSource.getId());
-			uuid = entity.getContentUrl().substring(entity.getContentUrl().indexOf(/*Constants.HTTPS_HOST.TRACE_SOURCE*/host));
+			uuid = entity.getContentUrl().substring(entity.getContentUrl().indexOf(Constants.HTTPS_HOST.TRACE_SOURCE));
 		}
 		String contentUrl = Constants.HTTPS_HOST.TRACE_SOURCE + uuid + ".html";//访问url
 		String qrCodeUrl = Constants.HTTPS_HOST.TRACE_SOURCE + uuid + ".png";//二维码访问路径

@@ -58,4 +58,19 @@ public interface RestfulService {
     public ReturnData saveSupplyInfo(FishDTO dto);
 
     public ReturnData querySupplyList(FishDTO dto);
+
+    public ReturnData querySupplyDetail(FishDTO dto);
+
+    public ReturnData saveSupplyOrder(FishDTO dto);
+
+    public ReturnData saveBuyInfo(FishDTO dto);
+
+    public ReturnData queryBuyList(FishDTO dto);
+
+    public ReturnData queryBuyDetail(FishDTO dto);
+
+    public ReturnData queryMySupplyList(FishDTO dto);
+
+    public ReturnData queryMyBuyList(FishDTO dto);
+
 }

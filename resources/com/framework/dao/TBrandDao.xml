@@ -50,7 +50,8 @@
 			 a.id AS brandId,
 			 b.id AS seriesId,
 			 a.brand AS brandName,
-			 b.car_serial AS seriesName
+			 b.car_serial AS seriesName,
+		 	  b.series_icon AS logo
 		 FROM
 			 t_brand a
 				 INNER JOIN t_brand_series b ON a.id = b.brand_id

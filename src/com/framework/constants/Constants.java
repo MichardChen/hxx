@@ -4,7 +4,7 @@ package com.framework.constants;
  * 系统常量
  * 
  * @author Chen Dang
- * @date 2016年3月29日 上午8:45:58
+ * @date 2016年3月29日 上午8:45:58traceSource
  * @version 1.0
  * @Description:
  */
@@ -423,6 +423,11 @@ public interface Constants {
 		public static final String STAY_RECEIVE= "280006";
 		//已收货
 		public static final String RECEIVED= "280007";
+	}
+
+	public static interface ADVERTISEMENT_TYPE {
+		//待审核
+		public static final String BUY_DETAIL = "290001";
 	}
 
 }

@@ -1,6 +1,10 @@
 package com.framework.dao;
 
 import com.framework.entity.TFishBuyEntity;
+import com.framework.entity.TFishSupplyEntity;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -10,5 +14,6 @@ import com.framework.entity.TFishBuyEntity;
  * @date 2020-01-05 12:40:44
  */
 public interface TFishBuyDao extends BaseDao<TFishBuyEntity> {
-	
+
+    public List<TFishBuyEntity> queryBuyList(Map<String, Object> map);
 }

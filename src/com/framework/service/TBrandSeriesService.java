@@ -31,4 +31,6 @@ public interface TBrandSeriesService {
 	void deleteBatch(Integer[] ids);
 	
 	List<TBrandSeriesEntity> queryCarSeriesList(int brandId);
+
+	List<TBrandSeriesEntity> queryBrandSeriesList();
 }

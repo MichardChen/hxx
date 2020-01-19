@@ -367,10 +367,13 @@ public class AppRestAuthController extends RestfulController{
         FileService fs = new FileService();
         String logo = "";
         //多文件上传
-        for(MultipartFile file : imgFiles){
-            String url = fs.upload(file, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
-            logo = logo + "," + url;
+        if(imgFiles != null){
+            for(MultipartFile file : imgFiles){
+                String url = fs.upload(file, Constants.FILE_HOST.IMG, Constants.HOST.IMG);
+                logo = logo + "," + url;
+            }
         }
+
 
         if (StringUtil.isNoneBlank(logo)) {
             dto.setUrl(logo);
@@ -391,4 +394,89 @@ public class AppRestAuthController extends RestfulController{
         return;
     }
 
+    /**
+     * 供应详情
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/querySupplyDetail")
+    public void querySupplyDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.querySupplyDetail(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 下单
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/saveSupplyOrder")
+    public void saveSupplyOrder(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.saveSupplyOrder(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 发布求购
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/saveBuyInfo")
+    public void saveBuyInfo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        FishDTO dto = FishDTO.getInstance(request);
+        renderJson(restfulService.saveBuyInfo(dto), response);
+        return;
+    }
+
+    /**
+     * 求购列表
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/queryBuyList")
+    public void queryBuyList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.queryBuyList(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 求购详情
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/queryBuyDetail")
+    public void queryBuyDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.queryBuyDetail(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     *我的供应
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/queryMySupplyList")
+    public void queryMySupplyList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.queryMySupplyList(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 我的求购
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/queryMyBuyList")
+    public void queryMyBuyList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.queryMyBuyList(FishDTO.getInstance(request)), response);
+        return;
+    }
 }

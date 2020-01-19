@@ -114,6 +114,7 @@ public class TFishSupplyController {
 		vo.setUpdateMark(tFishSupply.getUpdateMark());
 		vo.setStatus(tFishSupply.getStatus());
 		String imgs = tFishSupply.getImg();
+		vo.setLabels(tFishSupply.getLabels());
 		List<String> images = new ArrayList<>();
 		if(StringUtil.isNoneBlank(imgs)){
 			String[] imgList = imgs.split(",");

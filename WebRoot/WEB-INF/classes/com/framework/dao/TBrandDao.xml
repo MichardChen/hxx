@@ -45,7 +45,20 @@
 			and brand like "%${queryBrand}%"
 		</if>
 	</select>
-	 
+	 <select id="queryAllBrandSeries" resultType="com.framework.restful.BrandSeriesVo">
+		 SELECT
+			 a.id AS brandId,
+			 b.id AS seriesId,
+			 a.brand AS brandName,
+			 b.car_serial AS seriesName,
+		 	  b.series_icon AS logo
+		 FROM
+			 t_brand a
+				 INNER JOIN t_brand_series b ON a.id = b.brand_id
+		 WHERE
+			 b.flg = 1
+		   AND a.flg =1
+	 </select>
 	<insert id="save" parameterType="com.framework.entity.TBrandEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into t_brand
 		(

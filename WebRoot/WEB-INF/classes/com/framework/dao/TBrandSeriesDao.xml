@@ -26,7 +26,12 @@
 		select * from t_brand_series 
 		where brand_id=#{brandId}
 	</select>
-	
+
+	<select id="queryBrandSeriesList" resultType="com.framework.entity.TBrandSeriesEntity">
+		select * from t_brand_series
+		where flg=1
+	</select>
+
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_brand_series 
 		where 1=1
@@ -44,7 +49,8 @@
 			`update_time`, 
 			`create_by`, 
 			`update_by`,
-			`flg`
+			`flg`,
+			`series_icon`
 		)
 		values
 		(
@@ -54,7 +60,8 @@
 			#{updateTime}, 
 			#{createBy}, 
 			#{updateBy},
-			#{flg}
+			#{flg},
+		 	#{seriesIcon}
 		)
 	</insert>
 	 
@@ -65,7 +72,8 @@
 			<if test="carSerial != null">`car_serial` = #{carSerial}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
 			<if test="flg != null">`flg` = #{flg}, </if>
-			<if test="updateBy != null">`update_by` = #{updateBy}</if>
+			<if test="updateBy != null">`update_by` = #{updateBy},</if>
+			<if test="seriesIcon != null">`series_icon` = #{seriesIcon}</if>
 		</set>
 		where id = #{id}
 	</update>

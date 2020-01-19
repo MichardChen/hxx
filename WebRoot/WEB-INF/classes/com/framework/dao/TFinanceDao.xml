@@ -41,7 +41,9 @@
 			`desc_url`, 
 			`status`, 
 			`title`,
-			`content`
+			`content`,
+			`labels`,
+			`type_cd`
 		)
 		values
 		(
@@ -58,7 +60,9 @@
 			#{descUrl}, 
 			#{status}, 
 			#{title},
-		 	#{content}
+		 	#{content},
+		 	#{labels},
+			#{typeCd}
 		)
 	</insert>
 	 
@@ -78,7 +82,9 @@
 			<if test="descUrl != null">`desc_url` = #{descUrl}, </if>
 			<if test="status != null">`status` = #{status}, </if>
 			<if test="title != null">`title` = #{title},</if>
-			<if test="content != null">`content` = #{content}</if>
+			<if test="content != null">`content` = #{content},</if>
+			<if test="labels != null">`labels` = #{labels},</if>
+			<if test="type_cd != null">`type_cd` = #{typeCd}</if>
 		</set>
 		where id = #{id}
 	</update>

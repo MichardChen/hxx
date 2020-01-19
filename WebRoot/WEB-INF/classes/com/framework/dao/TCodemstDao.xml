@@ -16,6 +16,9 @@
 	<select id="queryByCodeList" resultType="com.framework.entity.TCodemstEntity">
 		select * from t_codemst where pcode=#{pcode}
 	</select>
+	<select id="queryNamesByPcode" resultType="java.lang.String">
+		select name from t_codemst where pcode=#{pcode}
+	</select>
 	<select id="queryByCode" resultType="com.framework.entity.TCodemstEntity">
 		select * from t_codemst 
 		<if test="code != null and code != null">

@@ -72,6 +72,10 @@ public class RestfulServiceImpl implements RestfulService {
     CommonService commonService;
     @Autowired
     TBrandSeriesDao brandSeriesDao;
+    @Autowired
+    TFishOrderDao tFishOrderDao;
+    @Autowired
+    TAdvertisementDao tAdvertisementDao;
 
     /**
      * 首页接口
@@ -1165,11 +1169,11 @@ public class RestfulServiceImpl implements RestfulService {
 
         ReturnData data = new ReturnData();
         JSONObject json = new JSONObject();
-        if(Constants.PLATFORM.ANDROID.equals(dto.getPlatform())){
+       /* if(Constants.PLATFORM.ANDROID.equals(dto.getPlatform())){
             json.put("cityList", list);
             json.put("fishList", brandSeriesVos);
             json.put("fishTypeList", fishTypeList);
-        }else{
+        }else{*/
             //苹果
             //省市数据
             List<ParentVo> cityList = new ArrayList<>();
@@ -1201,40 +1205,42 @@ public class RestfulServiceImpl implements RestfulService {
                 cityList.add(entry.getValue());
             }
             //鱼类种类
-            List<ParentVo> fishList = new ArrayList<>();
-            Map<Integer,ParentVo> fishMap = new HashMap<>();
+            List<FishParentVo> fishList = new ArrayList<>();
+            Map<Integer,FishParentVo> fishMap = new HashMap<>();
             for(BrandSeriesVo vo : brandSeriesVos){
                 if(fishMap.containsKey(vo.getBrandId())){
                     //如果包含
-                    ParentVo parentVo = fishMap.get(vo.getBrandId());
-                    List<ChildVo> childVos = parentVo.getChilds();
-                    ChildVo childVo = new ChildVo();
+                    FishParentVo parentVo = fishMap.get(vo.getBrandId());
+                    List<FishChildVo> childVos = parentVo.getChilds();
+                    FishChildVo childVo = new FishChildVo();
                     childVo.setChildId(vo.getSeriesId());
                     childVo.setChildName(vo.getSeriesName());
+                    childVo.setLogo(vo.getLogo());
                     childVos.add(childVo);
                 }else{
                     //不包含
-                    ParentVo parentVo = new ParentVo();
+                    FishParentVo parentVo = new FishParentVo();
                     parentVo.setParentId(vo.getBrandId());
                     parentVo.setParentName(vo.getBrandName());
-                    List<ChildVo> childVos = new ArrayList<>();
-                    ChildVo childVo = new ChildVo();
+                    List<FishChildVo> childVos = new ArrayList<>();
+                    FishChildVo childVo = new FishChildVo();
                     childVo.setChildId(vo.getSeriesId());
                     childVo.setChildName(vo.getSeriesName());
+                    childVo.setLogo(vo.getLogo());
                     childVos.add(childVo);
                     parentVo.setChilds(childVos);
                     fishMap.put(vo.getBrandId(),parentVo);
                 }
             }
 
-            for(Map.Entry<Integer, ParentVo> entry : fishMap.entrySet()){
+            for(Map.Entry<Integer, FishParentVo> entry : fishMap.entrySet()){
                 fishList.add(entry.getValue());
             }
 
             json.put("cityList", cityList);
             json.put("fishList", fishList);
             json.put("fishTypeList", fishTypeList);
-        }
+        //}
 
         TCodemstEntity dataVersion = tCodemstDao.queryByCode("180002");
         if (dataVersion != null) {
@@ -1328,10 +1334,14 @@ public class RestfulServiceImpl implements RestfulService {
             SupplyListVo vo = new SupplyListVo();
             vo.setId(entity.getId());
             vo.setCity(entity.getCity());
+            TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObjectByName(entity.getProductType());
+            if(seriesEntity != null){
+                vo.setImg(seriesEntity.getSeriesIcon());
+            }
             vo.setCreateDate(DateUtil.format(entity.getCreateTime(),"yyyy-MM-dd"));
-            vo.setTitle(entity.getMainType());
+            vo.setTitle(entity.getProductType() + " " + entity.getMainType());
             vo.setSize(entity.getSize());
-            vo.setPrice(entity.getPrice());
+            vo.setPrice(entity.getPrice()+entity.getUnit());
             TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObjectByName(entity.getMainType());
             if(brandSeriesEntity != null){
                 vo.setImg(brandSeriesEntity.getSeriesIcon());
@@ -1352,6 +1362,373 @@ public class RestfulServiceImpl implements RestfulService {
         data.setMessage("查询成功");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("supplyList",supplyList);
+        data.setData(jsonObject);
+        return data;
+    }
+
+    @Override
+    public ReturnData querySupplyDetail(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        TFishSupplyEntity entity = supplyDao.queryObject(dto.getKey());
+        if(entity == null){
+            data.setMessage("对不起，该供应信息不存在");
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            return data;
+        }
+        SupplyDetailVo vo = new SupplyDetailVo();
+        vo.setId(entity.getId());
+        vo.setCity(entity.getCity());
+        vo.setCreateDate(DateUtil.format(entity.getCreateTime(),"yyyy-MM-dd"));
+        vo.setLatestTime(entity.getLatestTime());
+        vo.setTitle(entity.getProductType() + " " + entity.getMainType());
+        vo.setSize(entity.getSize());
+        vo.setWeight(entity.getWeight());
+        vo.setPrice(entity.getPrice()+entity.getUnit());
+        TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObjectByName(entity.getMainType());
+        if(brandSeriesEntity != null){
+            vo.setImg(brandSeriesEntity.getSeriesIcon());
+        }
+        String labels = entity.getLabels();
+        List<String> images = new ArrayList<>();
+        if(StringUtil.isNoneBlank(labels)){
+            String[] imgList = labels.split(",");
+            for(String str:imgList){
+                images.add(str);
+            }
+        }
+        vo.setLabels(images);
+        vo.setMark(entity.getMark());
+        TCodemstEntity kf = tCodemstDao.queryByCode("130001");
+        if(kf != null){
+            vo.setKfMobile(kf.getData2());
+            vo.setKfQQ(kf.getData3());
+        }
+        String entityImgs = entity.getImg();
+        List<String> imgs = new ArrayList<>();
+        if(StringUtil.isNoneBlank(entityImgs)){
+            String[] imgList = entityImgs.split(",");
+            for(String str:imgList){
+                imgs.add(str);
+            }
+        }
+        vo.setImgs(imgs);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("detailModel",vo);
+        data.setData(jsonObject);
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        data.setMessage("查询成功");
+        return data;
+    }
+
+    @Override
+    public ReturnData saveSupplyOrder(FishDTO dto) {
+
+        ReturnData data = new ReturnData();
+        Member member = memberDao.queryByMobile(dto.getMobile());
+        if (member == null) {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，此用户不存在");
+            return data;
+        }
+        TFishSupplyEntity supplyEntity = supplyDao.queryObject(dto.getKey());
+        if (supplyEntity == null) {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，此供应信息不存在");
+            return data;
+        }
+        TFishOrderEntity orderEntity = new TFishOrderEntity();
+        orderEntity.setCreateTime(DateUtil.getNowTimestamp());
+        orderEntity.setUpdateTime(DateUtil.getNowTimestamp());
+        orderEntity.setStatus(Constants.ORDER_STUTUS.STAY_REVIEW);
+        orderEntity.setMark(dto.getMark());
+        orderEntity.setInfoId(dto.getKey());
+        orderEntity.setOrderNo("GY"+getOrderIdByTime());
+        orderEntity.setToUserId(member.getId());
+        orderEntity.setFromUserId(supplyEntity.getMemberId());
+        orderEntity.setNeeds(dto.getNeeds());
+        orderEntity.setOrderTypeCd(Constants.ORDER_TYPE.SUPPLY);
+        orderEntity.setReceiveAddress(dto.getAddress());
+        orderEntity.setReceiveMobile(dto.getReceiveMobile());
+        orderEntity.setReceivePerson(dto.getReceivePerson());
+        int ret = tFishOrderDao.save(orderEntity);
+        if(ret == 0){
+            commonService.saveOrderStatus(0,orderEntity.getOrderNo()
+                    ,Constants.ORDER_TYPE.SUPPLY
+                    ,Constants.ORDER_STUTUS.STAY_REVIEW,"",orderEntity.toString());
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("下单失败，请联系客服处理");
+            return data;
+        }else{
+            data.setCode(Constants.STATUS_CODE.SUCCESS);
+            data.setMessage("下单成功，请等待客服联系您");
+            return data;
+        }
+    }
+
+    @Override
+    public ReturnData saveBuyInfo(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        Member member = memberDao.queryByMobile(dto.getMobile());
+        if (member == null) {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，此用户不存在");
+            return data;
+        }
+        if (!Constants.MEMBER_STATUS.REVIEW_PASS.equals(member.getStatus())) {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，您还未进行认证，请先认证资料");
+            return data;
+        }
+        TFishBuyEntity entity = new TFishBuyEntity();
+        entity.setOrderNo("QG"+getOrderIdByTime());
+        entity.setProductType(dto.getTypeCd());
+        entity.setMainType(dto.getMainType());
+        entity.setImg(dto.getUrl());
+        entity.setSize(dto.getSize());
+        entity.setUnit(dto.getUnit());
+        entity.setPrice(dto.getPrice());
+        entity.setWeight(dto.getBuy());
+        entity.setCreateTime(DateUtil.getNowTimestamp());
+        entity.setUpdateTime(DateUtil.getNowTimestamp());
+        entity.setProvice(dto.getProvince());
+        entity.setCity(dto.getCity());
+        entity.setMark(dto.getMark());
+        entity.setMemberId(member.getId());
+        entity.setLatestTime(dto.getLatestTime());
+        entity.setStatus(Constants.ORDER_STUTUS.STAY_REVIEW);
+        int ret = buyDao.save(entity);
+        if(ret != 0){
+            commonService.saveOrderStatus(0,entity.getOrderNo()
+                    ,Constants.ORDER_TYPE.BUY
+                    ,Constants.ORDER_STUTUS.STAY_REVIEW,"",entity.toString());
+
+            data.setCode(Constants.STATUS_CODE.SUCCESS);
+            data.setMessage("发布成功，待平台审核");
+            return data;
+        }else{
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("发布失败，请重新发布");
+            return data;
+        }
+    }
+
+    /**
+     * 求购列表
+     * @param dto
+     * @return
+     */
+    @Override
+    public ReturnData queryBuyList(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        Map<String, Object> map = new HashMap<>();
+        map.put("offset", (dto.getPageNum() - 1) * dto.getPageSize());
+        map.put("limit", dto.getPageSize());
+        map.put("mark",dto.getMark());
+        map.put("productType",dto.getTypeCd());
+        map.put("province",dto.getProvince());
+        map.put("city",dto.getCity());
+        map.put("mainType",dto.getMainType());
+        List<TFishBuyEntity> buyEntities = buyDao.queryBuyList(map);
+        List<BuyListVo> buyList = new ArrayList<>();
+
+        for(TFishBuyEntity entity : buyEntities){
+            BuyListVo vo = new BuyListVo();
+            vo.setId(entity.getId());
+            vo.setCity(entity.getCity());
+            TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObjectByName(entity.getProductType());
+            if(seriesEntity != null){
+                vo.setImg(seriesEntity.getSeriesIcon());
+            }
+            vo.setCreateDate(DateUtil.format(entity.getCreateTime(),"yyyy-MM-dd"));
+            vo.setTitle(entity.getProductType() + " " + entity.getMainType());
+            vo.setSize(entity.getSize());
+            vo.setPrice(entity.getPrice()+entity.getUnit());
+            TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObjectByName(entity.getMainType());
+            if(brandSeriesEntity != null){
+                vo.setImg(brandSeriesEntity.getSeriesIcon());
+            }
+            List<String> labelList = new ArrayList<>();
+            labelList.add(entity.getSize()+entity.getUnit());
+            labelList.add(entity.getWeight()+entity.getUnit());
+            vo.setLabels(labelList);
+            buyList.add(vo);
+        }
+
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        data.setMessage("查询成功");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("buyList",buyList);
+        data.setData(jsonObject);
+        return data;
+    }
+
+    @Override
+    public ReturnData queryBuyDetail(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        TFishBuyEntity entity = buyDao.queryObject(dto.getKey());
+        if(entity == null){
+            data.setMessage("对不起，该求购信息不存在");
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            return data;
+        }
+        BuyDetailVo vo = new BuyDetailVo();
+        vo.setId(entity.getId());
+        vo.setCity(entity.getCity());
+        vo.setCreateDate(DateUtil.format(entity.getCreateTime(),"yyyy-MM-dd"));
+        vo.setTitle(entity.getProductType() + " " + entity.getMainType());
+        vo.setSize(entity.getSize());
+        vo.setWeight(entity.getWeight());
+        vo.setPrice(entity.getPrice()+entity.getUnit());
+        TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObjectByName(entity.getMainType());
+        if(brandSeriesEntity != null){
+            vo.setImg(brandSeriesEntity.getSeriesIcon());
+        }
+        String labels = entity.getLabels();
+        List<String> labelList = new ArrayList<>();
+        labelList.add(entity.getSize()+entity.getUnit());
+        labelList.add(entity.getWeight()+entity.getUnit());
+        vo.setLabels(labelList);
+        vo.setMark(entity.getMark());
+        TCodemstEntity kf = tCodemstDao.queryByCode("130001");
+        if(kf != null){
+            vo.setKfMobile(kf.getData2());
+            vo.setKfQQ(kf.getData3());
+        }
+        //获取广告位
+        List<TAdvertisementEntity> adList = tAdvertisementDao.queryListByTypeCd(Constants.ADVERTISEMENT_TYPE.BUY_DETAIL);
+        List<String> imgs = new ArrayList<>();
+        for(TAdvertisementEntity advertisement : adList){
+            imgs.add(advertisement.getLogo());
+        }
+        vo.setImgs(imgs);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("detailModel",vo);
+        data.setData(jsonObject);
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        data.setMessage("查询成功");
+        return data;
+    }
+
+    @Override
+    public ReturnData queryMySupplyList(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        Member member = memberDao.queryByMobile(dto.getMobile());
+        if (member == null) {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，此用户不存在");
+            return data;
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("offset", (dto.getPageNum() - 1) * dto.getPageSize());
+        map.put("limit", dto.getPageSize());
+        map.put("mark",dto.getMark());
+        map.put("productType",dto.getTypeCd());
+        map.put("province",dto.getProvince());
+        map.put("city",dto.getCity());
+        map.put("mainType",dto.getMainType());
+        map.put("memberId",member.getId());
+        List<TFishSupplyEntity> supplyEntities = supplyDao.querySupplyList(map);
+        List<MySupplyListVo> supplyList = new ArrayList<>();
+
+        for(TFishSupplyEntity entity : supplyEntities){
+            MySupplyListVo vo = new MySupplyListVo();
+            vo.setId(entity.getId());
+            vo.setCity(entity.getCity());
+            TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObjectByName(entity.getProductType());
+            if(seriesEntity != null){
+                vo.setImg(seriesEntity.getSeriesIcon());
+            }
+            vo.setCreateDate(DateUtil.format(entity.getCreateTime(),"yyyy-MM-dd"));
+            vo.setTitle(entity.getProductType() + " " + entity.getMainType());
+            vo.setSize(entity.getSize());
+            vo.setPrice(entity.getPrice()+entity.getUnit());
+            TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObjectByName(entity.getMainType());
+            if(brandSeriesEntity != null){
+                vo.setImg(brandSeriesEntity.getSeriesIcon());
+            }
+            String labels = entity.getLabels();
+            List<String> images = new ArrayList<>();
+            if(StringUtil.isNoneBlank(labels)){
+                String[] imgList = labels.split(",");
+                for(String str:imgList){
+                    images.add(str);
+                }
+            }
+            vo.setLabels(images);
+            vo.setStatusCd(entity.getStatus());
+            if(StringUtil.isNoneBlank(entity.getStatus())){
+                TCodemstEntity status = tCodemstDao.queryByCode(entity.getStatus());
+                if(status != null){
+                    vo.setStatusName(status.getName());
+                }
+            }
+
+            supplyList.add(vo);
+        }
+
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        data.setMessage("查询成功");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("supplyList",supplyList);
+        data.setData(jsonObject);
+        return data;
+    }
+
+    @Override
+    public ReturnData queryMyBuyList(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        Member member = memberDao.queryByMobile(dto.getMobile());
+        if (member == null) {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，此用户不存在");
+            return data;
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("offset", (dto.getPageNum() - 1) * dto.getPageSize());
+        map.put("limit", dto.getPageSize());
+        map.put("mark",dto.getMark());
+        map.put("productType",dto.getTypeCd());
+        map.put("province",dto.getProvince());
+        map.put("city",dto.getCity());
+        map.put("mainType",dto.getMainType());
+        map.put("memberId",member.getId());
+        List<TFishBuyEntity> buyEntities = buyDao.queryBuyList(map);
+        List<MyBuyListVo> buyList = new ArrayList<>();
+
+        for(TFishBuyEntity entity : buyEntities){
+            MyBuyListVo vo = new MyBuyListVo();
+            vo.setId(entity.getId());
+            vo.setCity(entity.getCity());
+            TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObjectByName(entity.getProductType());
+            if(seriesEntity != null){
+                vo.setImg(seriesEntity.getSeriesIcon());
+            }
+            vo.setCreateDate(DateUtil.format(entity.getCreateTime(),"yyyy-MM-dd"));
+            vo.setTitle(entity.getProductType() + " " + entity.getMainType());
+            vo.setSize(entity.getSize());
+            vo.setPrice(entity.getPrice()+entity.getUnit());
+            TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObjectByName(entity.getMainType());
+            if(brandSeriesEntity != null){
+                vo.setImg(brandSeriesEntity.getSeriesIcon());
+            }
+            List<String> labelList = new ArrayList<>();
+            labelList.add(entity.getSize()+entity.getUnit());
+            labelList.add(entity.getWeight()+entity.getUnit());
+            vo.setLabels(labelList);
+            vo.setStatusCd(entity.getStatus());
+            if(StringUtil.isNoneBlank(entity.getStatus())){
+                TCodemstEntity status = tCodemstDao.queryByCode(entity.getStatus());
+                if(status != null){
+                    vo.setStatusName(status.getName());
+                }
+            }
+            buyList.add(vo);
+        }
+
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        data.setMessage("查询成功");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("buyList",buyList);
         data.setData(jsonObject);
         return data;
     }

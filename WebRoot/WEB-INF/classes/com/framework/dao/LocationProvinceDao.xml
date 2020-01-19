@@ -16,6 +16,21 @@
 	<select id="queryAllList" resultType="com.framework.entity.LocationCityEntity">
 		select * from location_province
 	</select>
+	<select id="queryAllProviceCity" resultType="com.framework.vo.ProvinceCityVo">
+		SELECT
+			a.id AS provinceId,
+			b.id AS cityId,
+			a.`name` AS provinceName,
+			b.`name` AS cityName
+		FROM
+			location_province a
+				INNER JOIN location_city b
+		WHERE
+			b.pid = a.id
+		ORDER BY
+			a.id ASC,
+			b.id ASC
+	</select>
  	<select id="queryTotal" resultType="int">
 		select count(*) from location_province 
 	</select>

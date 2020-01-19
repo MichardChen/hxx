@@ -12,6 +12,15 @@ public class BrandSeriesVo implements Serializable {
     private int seriesId;
     private String brandName;
     private String seriesName;
+    private String logo;
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
 
     public int getBrandId() {
         return brandId;

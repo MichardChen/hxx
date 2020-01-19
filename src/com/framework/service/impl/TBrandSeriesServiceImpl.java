@@ -61,4 +61,9 @@ public class TBrandSeriesServiceImpl implements TBrandSeriesService {
 	public TBrandSeriesEntity queryObjectByName(String name) {
 		return tBrandSeriesDao.queryObjectByName(name);
 	}
+
+	@Override
+	public List<TBrandSeriesEntity> queryBrandSeriesList() {
+		return tBrandSeriesDao.queryBrandSeriesList();
+	}
 }

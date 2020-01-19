@@ -13,7 +13,41 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+	<select id="queryBuyList" resultType="com.framework.entity.TFishBuyEntity">
+		select * from t_fish_buy where 1=1
+		<if test='mark != null and mark != "" and mark !="null"'>
+			and (product_type like concat('%', #{mark}, '%') or
+			main_type like concat('%', #{mark}, '%') or
+			size like concat('%', #{mark}, '%') or
+			unit like concat('%', #{mark}, '%') or
+			price like concat('%', #{mark}, '%') or
+			weight like concat('%', #{mark}, '%') or
+			create_time like concat('%', #{mark}, '%') or
+			provice like concat('%', #{mark}, '%') or
+			city like concat('%', #{mark}, '%') or
+			labels like concat('%', #{mark}, '%') or
+			latest_time like concat('%', #{mark}, '%'))
+		</if>
+		<if test='productType != null and productType != "" and productType != "null"'>
+			and product_type = #{productType}
+		</if>
+		<if test='province != null and province != "" and province != "null"'>
+			and provice = #{province}
+		</if>
+		<if test='city != null and city != "" and city != "null"'>
+			and city = #{city}
+		</if>
+		<if test='mainType != null and mainType != "" and mainType != "null"'>
+			and main_type = #{mainType}
+		</if>
+		<if test='memberId != null and memberId != 0'>
+			and member_id = #{memberId}
+		</if>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+
+	</select>
  	<select id="queryTotal" resultType="int">
 		select count(*) from t_fish_buy 
 	</select>

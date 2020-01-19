@@ -135,7 +135,14 @@
 		update t_member set `points` = `points` - #{points}
 		where id = #{memberId}
 	</update>
-
+	<update id="updateNickName">
+		update t_member set `nick_name` = #{nickName}
+		where id = #{memberId}
+	</update>
+	<update id="updateIcon">
+		update t_member set `icon` = #{icon}
+		where id = #{memberId}
+	</update>
 	<delete id="deleteBatch">
 		delete from t_member where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">

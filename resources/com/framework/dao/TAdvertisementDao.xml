@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TAdvertisementDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TAdvertisementEntity">
+		select * from t_advertisement where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TAdvertisementEntity">
+		select * from t_advertisement 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	<select id="queryListByTypeCd" resultType="com.framework.entity.TAdvertisementEntity">
+		select * from t_advertisement where type_cd = #{typeCd} and flg=1
+	</select>
+
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_advertisement 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TAdvertisementEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_advertisement
+		(
+			`type_cd`, 
+			`title`, 
+			`logo`, 
+			`content`, 
+			`content_url`, 
+			`real_url`, 
+			`create_time`, 
+			`update_time`, 
+			`create_by`, 
+			`update_by`, 
+			`mark`, 
+			`flg`
+		)
+		values
+		(
+			#{typeCd}, 
+			#{title}, 
+			#{logo}, 
+			#{content}, 
+			#{contentUrl}, 
+			#{realUrl}, 
+			#{createTime}, 
+			#{updateTime}, 
+			#{createBy}, 
+			#{updateBy}, 
+			#{mark}, 
+			#{flg}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TAdvertisementEntity">
+		update t_advertisement 
+		<set>
+			<if test="typeCd != null">`type_cd` = #{typeCd}, </if>
+			<if test="title != null">`title` = #{title}, </if>
+			<if test="logo != null">`logo` = #{logo}, </if>
+			<if test="content != null">`content` = #{content}, </if>
+			<if test="contentUrl != null">`content_url` = #{contentUrl}, </if>
+			<if test="realUrl != null">`real_url` = #{realUrl}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="mark != null">`mark` = #{mark}, </if>
+			<if test="flg != null">`flg` = #{flg}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_advertisement where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_advertisement where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -242,5 +242,14 @@ public class TBrandSeriesController {
 		List<TBrandSeriesEntity> tBrandSeries = tBrandSeriesService.queryCarSeriesList(id);
 		return R.ok().put("tBrandSeries", tBrandSeries);
 	}
+
+	@ResponseBody
+	@RequestMapping("/queryAllBrandSeries")
+	@RequiresPermissions("tbrandseries:list")
+	public R queryAllBrand() {
+		// 查询列表数据
+		List<TBrandSeriesEntity> tBrandList = tBrandSeriesService.queryBrandSeriesList();
+		return R.ok().put("tBrandSeriesList", tBrandList);
+	}
 	
 }
