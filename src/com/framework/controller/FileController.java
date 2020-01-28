@@ -16,7 +16,6 @@ import java.net.URLEncoder;
 @RestController
 @RequestMapping("/file")
 public class FileController {
-
     /**
      * 下载文件
      * @param filePath

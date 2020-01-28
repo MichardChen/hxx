@@ -91,6 +91,7 @@ public class TraceSourceController {
 		//生成html文件
  		String uuid = UUID.randomUUID().toString().replaceAll("-","");
 		String htmlContent = StringUtil.formatHTML(traceSource.getOrderNo(), traceSource.getContent());
+		//二维码地址不更新
 		if(traceSource.getId() != null){
 			TraceSourceEntity entity = traceSourceService.queryObject(traceSource.getId());
 			if(StringUtil.isNotBlank(entity.getContentUrl())){
