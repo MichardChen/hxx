@@ -8,6 +8,7 @@ $(function () {
 			{ label: '来源', name: 'orderTypeCd', width: 80 },
 			{ label: '内容', name: 'content', width: 80 },
 			{ label: '生成的网页url', name: 'contentUrl', width: 80, hidden: true},
+			{ label: '生成的二维码url', name: 'qrCodeUrl', width: 80, hidden: true},
 			{ label: '创建时间', name: 'createTime', width: 80 },
 			{ label: '更新时间', name: 'updateTime', width: 80 }
         ],
@@ -44,6 +45,16 @@ var vm = new Vue({
 		
 	},
 	methods: {
+		qrDownload: function(){
+			var id = getSelectedRow();
+			var grid = $("#jqGrid");
+			var qrCodeUrl = $("#jqGrid").jqGrid('getRowData', id).qrCodeUrl;
+			if(typeof qrCodeUrl !=="undefined" && qrCodeUrl){            // 获取图片地址
+				window.open("../file/download/img?filePath="+qrCodeUrl);
+			} else {
+				alert("未生成二维码！");
+			}
+		},
 		update: function (event) {
 			var id = getSelectedRow();
 			if(id == null){

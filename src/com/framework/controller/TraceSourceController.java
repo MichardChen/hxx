@@ -89,23 +89,18 @@ public class TraceSourceController {
 	 */
 	public void dealHtml(TraceSourceEntity traceSource) throws Exception{
 		//生成html文件
-		String uuid = UUID.randomUUID().toString().replaceAll("-","");
+ 		String uuid = UUID.randomUUID().toString().replaceAll("-","");
 		String htmlContent = StringUtil.formatHTML(traceSource.getOrderNo(), traceSource.getContent());
-		//String host = "F:\\var\\www\\html\\file\\mallProduct\\";
-//		PrintWriter pw = new PrintWriter(new OutputStreamWriter(
-//				new FileOutputStream(host + uuid + ".html"),"utf-8"),true);
-//		pw.println(htmlContent);
-//		pw.close();
-//		String contentUrl = host + uuid + ".html";
 		if(traceSource.getId() != null){
 			TraceSourceEntity entity = traceSourceService.queryObject(traceSource.getId());
-			uuid = entity.getContentUrl().substring(entity.getContentUrl().indexOf(Constants.HTTPS_HOST.TRACE_SOURCE));
+			if(StringUtil.isNotBlank(entity.getContentUrl())){
+				uuid = entity.getContentUrl().substring(Constants.HTTPS_HOST.TRACE_SOURCE.length(), entity.getContentUrl().length()-5);
+			}
 		}
 		String contentUrl = Constants.HTTPS_HOST.TRACE_SOURCE + uuid + ".html";//访问url
 		String qrCodeUrl = Constants.HTTPS_HOST.TRACE_SOURCE + uuid + ".png";//二维码访问路径
 		//生成二维码
 		boolean codeFlag = Zxing.orCode(contentUrl, Constants.HTTPS_FILE_HOST.TRACE_SOURCE + uuid + ".png");
-//		boolean codeFlag = Zxing.orCode(contentUrl, host + uuid + ".png");
 		PrintWriter pw = new PrintWriter(new OutputStreamWriter(
 				new FileOutputStream(Constants.HTTPS_FILE_HOST.TRACE_SOURCE + uuid + ".html"),"utf-8"),true);
 		pw.println(htmlContent);

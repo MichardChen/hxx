@@ -7,9 +7,18 @@
 <body>
 <div id="rrapp">
 	<div class="grid-btn">
-		<a class="btn btn-default" href="tracesource_add.html">新增</a>
-		<button type="button"  class="btn btn-default" @click="update">修改</button>
-		<button type="button" class="btn btn-default" @click="del">删除</button>
+		#if($shiro.hasPermission("tracesource:save"))
+		<a class="btn btn-success" href="tracesource_add.html"><i class="fa fa-plus" aria-hidden="true"></i> 新增</a>
+		#end
+		#if($shiro.hasPermission("tracesource:update"))
+		<button type="button"  class="btn btn-primary" @click="update"><i class="fa fa-pencil fa-fw"></i>修改</button>
+		#end
+		#if($shiro.hasPermission("tracesource:delete"))
+		<button type="button" class="btn btn-danger" @click="del"><i class="fa fa-trash-o fa-fw"></i>删除</button>
+		#end
+		#if($shiro.hasPermission("tracesource:download"))
+		<button type="button"  class="btn btn-primary" @click="qrDownload"><i class="fa fa-download" aria-hidden="true"></i>下载二维码</button>
+		#end
 	</div>
     <table id="jqGrid"></table>
     <div id="jqGridPager"></div>
