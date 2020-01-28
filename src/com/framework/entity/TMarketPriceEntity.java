@@ -36,6 +36,34 @@ public class TMarketPriceEntity implements Serializable {
 
 	private int flg;
 
+	private String img;
+	private String province;
+	private String city;
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
 	public int getFlg() {
 		return flg;
 	}

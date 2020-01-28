@@ -7,11 +7,12 @@
 <body>
 <div id="rrapp">
 	<div class="grid-btn">
-		<a class="btn btn-default" href="tmarketprice_add.html">新增</a>
+		<a class="btn btn-default" href="tfishorder_add.html">新增</a>
 		<button type="button"  class="btn btn-default" @click="update">修改</button>
 		<button type="button" class="btn btn-default" @click="del">删除</button>
 	</div>
 	<div class="grid-btn">
+		<input type="text" class="form-control" id="orderNo" style="display: inline-block;width: 150px;" placeholder="请输入订单编号"/>
 		发布时间&nbsp;<input class="Wdate"  id="date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})"/>
 		<button type="button" class="btn btn-info" @click="search">查询</button>
 	</div>
@@ -19,6 +20,6 @@
     <div id="jqGridPager"></div>
 </div>
 <script src="${rc.contextPath}/statics/My97DatePicker/WdatePicker.js?_${date.systemTime}"></script>
-<script src="${rc.contextPath}/js/tmarketprice/tmarketprice.js?_${date.systemTime}"></script>
+<script src="${rc.contextPath}/js/tfishorder/tfishorder.js?_${date.systemTime}"></script>
 </body>
 </html>

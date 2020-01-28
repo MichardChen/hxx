@@ -215,4 +215,30 @@ public class TFishBuyEntity implements Serializable {
 	public void setMemberId(Integer memberId) {
 		this.memberId = memberId;
 	}
+
+	@Override
+	public String toString() {
+		return "TFishBuyEntity{" +
+				"id=" + id +
+				", orderNo='" + orderNo + '\'' +
+				", productType='" + productType + '\'' +
+				", mainType='" + mainType + '\'' +
+				", size='" + size + '\'' +
+				", unit='" + unit + '\'' +
+				", price='" + price + '\'' +
+				", weight='" + weight + '\'' +
+				", createTime=" + createTime +
+				", updateTime=" + updateTime +
+				", provice='" + provice + '\'' +
+				", city='" + city + '\'' +
+				", latestTime='" + latestTime + '\'' +
+				", mark='" + mark + '\'' +
+				", img='" + img + '\'' +
+				", memberId=" + memberId +
+				", status='" + status + '\'' +
+				", updateMark='" + updateMark + '\'' +
+				", updateBy=" + updateBy +
+				", labels='" + labels + '\'' +
+				'}';
+	}
 }

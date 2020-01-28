@@ -8,7 +8,26 @@
 	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TMarketPriceEntity">
-		select * from t_market_price order by update_time desc,flg desc
+		select * from t_market_price where 1=1
+		<if test="createDate != null and createDate != ''">
+			and create_time like concat('%', #{createDate}, '%')
+		</if>
+		order by update_time desc,flg desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="queryPriceList" resultType="com.framework.vo.MarketPriceVo">
+		select brand_series,size,price,whendate,city from t_market_price
+		where flg=1
+		<if test="productType != null and productType != ''">
+			and brand_series=#{productType}
+		</if>
+		<if test="priceDate != null and priceDate != ''">
+			and whendate=#{priceDate}
+		</if>
+		order by update_time desc,flg desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -29,6 +48,9 @@
 			`update_time`, 
 			`update_by`,
 			`flg`,
+			`img`,
+			`province`,
+			`city`,
             `whendate`
 		)
 		values
@@ -41,6 +63,9 @@
 			#{updateTime}, 
 			#{updateBy},
 			#{flg},
+			#{img},
+			#{province},
+			#{city},
 		    #{whendate}
 		)
 	</insert>
@@ -56,6 +81,9 @@
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
             <if test="whendate != null">`whendate` = #{whendate}, </if>
 			<if test="flg != null">`flg` = #{flg}, </if>
+			<if test="img != null">`img` = #{img}, </if>
+			<if test="province != null">`province` = #{province}, </if>
+			<if test="city != null">`city` = #{city}, </if>
 			<if test="updateBy != null">`update_by` = #{updateBy}</if>
 		</set>
 		where id = #{id}

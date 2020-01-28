@@ -411,23 +411,35 @@ public interface Constants {
 	public static interface ORDER_STUTUS{
 		//待审核
 		public static final String STAY_REVIEW = "280001";
-		//审核通过
-		public static final String PASS = "280002";
 		//审核失败
-		public static final String FAIL = "280003";
+		public static final String FAIL = "280002";
+        //审核通过
+        public static final String PASS = "280003";
 		//待支付
 		public static final String STAY_PAY = "280004";
-		//已支付
-		public static final String PAYED = "280005";
-		//待收货
-		public static final String STAY_RECEIVE= "280006";
+		//已取消
+		public static final String CANCLED = "280005";
+		//待发货
+		public static final String STAY_SHIP = "280006";
+		//已发货
+		public static final String SHIPPED= "280007";
 		//已收货
-		public static final String RECEIVED= "280007";
+		public static final String RECEIVED= "280008";
 	}
 
 	public static interface ADVERTISEMENT_TYPE {
-		//待审核
+		//求购详情
 		public static final String BUY_DETAIL = "290001";
+		//买卖行情
+		public static final String MARKET_PRICE = "290002";
+	}
+
+	//支付方式
+	public static interface PAY_TYPE {
+		//银联支付
+		public static final String BUY_DETAIL = "300001";
+		//线下支付
+		public static final String MARKET_PRICE = "300002";
 	}
 
 }

@@ -27,12 +27,62 @@ var vm = new Vue({
             }
             $("#brandSeries").append(html);
         });
+        //获取省市区
+        $.get("../common/queryProvince", function(r){
+            //var r =eval('('+rr+')');
+            var list = r.provinceList;
+            if(r.code === 0){
+                var html = "";
+                for(var b in list){
+                    //向品牌下拉框添加品牌
+                    html += "<option value='" + list[b].id + "'>" +list[b].name + "</option>";
+                }
+                $("#provinceId").append(html);
+            }});
     },
 	methods: {
+        selectCity:function(){
+            var id=$("#provinceId").val();
+            if(id==""){
+                $("#cityId").empty();
+                $("#cityId").append("<option value=\"\">请选择城市</option>");
+            }else{
+                $.get("../common/queryCity/"+id, function(r){
+                    //var r = eval('('+rr+')');
+                    var list = r.cityList;
+                    if(r.code === 0){
+                        var html = "";
+                        for(var b in list){
+                            //向品牌下拉框添加品牌
+                            html += "<option value='" + list[b].id + "'>" +list[b].name + "</option>";
+                        }
+                        $("#cityId").empty();
+                        $("#cityId").append(html);
+                    }});
+            }
+        },
 		getInfo: function(id){
 			$.get("../tmarketprice/info/"+id, function(r){
                 vm.tMarketPrice = r.tMarketPrice;
+                $.get("../common/queryCity/"+r.tMarketPrice.province, function(dr){
+                    //var dr = eval('('+rr+')');
+                    var list = dr.cityList;
+                    if(dr.code === 0){
+                        var html = "";
+                        for(var b in list){
+                            //向品牌下拉框添加品牌
+                            if(list[b].id == r.tMarketPrice.city){
+                                html += "<option value='" + list[b].id + "' selected='selected'>" +list[b].name + "</option>";
+                            }else{
+                                html += "<option value='" + list[b].id + "'>" +list[b].name + "</option>";
+                            }
+                        }
+                        $("#cityId").empty();
+                        $("#cityId").append(html);
+                    }});
             });
+
+
 		},
 		saveOrUpdate: function (event) {
 			var url = vm.tMarketPrice.id == null ? "../tmarketprice/save" : "../tmarketprice/update";
@@ -52,7 +102,16 @@ var vm = new Vue({
                 alert("请选择行情日期");
                 return;
             }
+            if(!$("#provinceId").val()){
+                alert("请选择省份");
+                return;
+            }
+            if(!$("#cityId").val()){
+                alert("请选择城市");
+                return;
+            }
             vm.tMarketPrice.whendate = $("#date").val();
+            vm.tMarketPrice.city = $("#cityId").val();
 			$.ajax({
 				type: "POST",
 			    url: url,

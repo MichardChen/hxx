@@ -1,9 +1,12 @@
 package com.framework.dao;
 
 import com.framework.entity.TMarketPriceEntity;
+import com.framework.vo.MarketPriceVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -17,4 +20,6 @@ public interface TMarketPriceDao extends BaseDao<TMarketPriceEntity> {
     int updateFlgBatch(@Param("flg") int flg,@Param("updateTime") Date updateTime,@Param("updateBy") int updateBy,@Param("id") Object[] id);
 
     int updateFlg(@Param("flg") int flg,@Param("updateTime") Date updateTime,@Param("updateBy") int updateBy,@Param("id") int id);
+
+    List<MarketPriceVo> queryPriceList(Map<String, Object> map);
 }

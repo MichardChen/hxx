@@ -479,4 +479,28 @@ public class AppRestAuthController extends RestfulController{
         renderJson(restfulService.queryMyBuyList(FishDTO.getInstance(request)), response);
         return;
     }
+
+    /**
+     * 买卖行情
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/queryMarketPriceList")
+    public void queryMarketPriceList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.queryMarketPriceList(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 获取供应订单
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/getSupplyOrderList")
+    public void getSupplyOrderList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.getSupplyOrderList(FishDTO.getInstance(request)), response);
+        return;
+    }
 }

@@ -4,14 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.framework.dao.TBrandSeriesDao;
+import com.framework.entity.TBrandSeriesEntity;
 import com.framework.utils.DateUtil;
 import com.framework.utils.ShiroUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 import com.framework.entity.TMarketPriceEntity;
@@ -32,6 +31,8 @@ import com.framework.utils.R;
 public class TMarketPriceController {
 	@Autowired
 	private TMarketPriceService tMarketPriceService;
+	@Autowired
+	private TBrandSeriesDao tBrandSeriesDao;
 	
 	@RequestMapping("/tmarketprice.html")
 	public String list(){
@@ -49,11 +50,11 @@ public class TMarketPriceController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("tmarketprice:list")
-	public R list(Integer page, Integer limit){
+	public R list(Integer page, Integer limit, @RequestParam("date")String date){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
-		
+		map.put("createDate",date);
 		//查询列表数据
 		List<TMarketPriceEntity> tMarketPriceList = tMarketPriceService.queryList(map);
 		int total = tMarketPriceService.queryTotal(map);
@@ -87,6 +88,10 @@ public class TMarketPriceController {
 	    tMarketPrice.setCreateTime(DateUtil.getNowTimestamp());
 	    tMarketPrice.setUpdateBy(ShiroUtils.getUserId().intValue());
 	    tMarketPrice.setUpdateTime(DateUtil.getNowTimestamp());
+		TBrandSeriesEntity brandSeriesEntity = tBrandSeriesDao.queryObjectByName(tMarketPrice.getBrandSeries());
+		if(brandSeriesEntity != null){
+			tMarketPrice.setImg(brandSeriesEntity.getSeriesIcon());
+		}
 	    tMarketPrice.setFlg(1);
 		tMarketPriceService.save(tMarketPrice);
 		
@@ -103,6 +108,10 @@ public class TMarketPriceController {
 
         tMarketPrice.setUpdateBy(ShiroUtils.getUserId().intValue());
         tMarketPrice.setUpdateTime(DateUtil.getNowTimestamp());
+		TBrandSeriesEntity brandSeriesEntity = tBrandSeriesDao.queryObjectByName(tMarketPrice.getBrandSeries());
+		if(brandSeriesEntity != null){
+			tMarketPrice.setImg(brandSeriesEntity.getSeriesIcon());
+		}
 		tMarketPriceService.update(tMarketPrice);
 		
 		return R.ok();

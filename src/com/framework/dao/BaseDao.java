@@ -46,7 +46,7 @@ public interface BaseDao<T> {
 	int delete(Map<String, Object> map);
 
 	/**
-	 * 根据对象ID数组批量删除对象
+	 * 根据对象ID数组批量删除对象操作
 	 */
 	int deleteBatch(Object[] id);
 

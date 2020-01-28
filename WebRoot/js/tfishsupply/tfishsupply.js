@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../tfishsupply/list',
+        url: '../tfishsupply/list?orderNo=&date=',
         datatype: "json",
         colModel: [			
 			{ label: '订单号', name: 'orderNo', width: 80 },
@@ -45,6 +45,15 @@ var vm = new Vue({
 		
 	},
 	methods: {
+        search:function(event){
+            var orderNo = $("#orderNo").val();
+            var date = $("#date").val();
+            $("#jqGrid").jqGrid('setGridParam',{
+                url:"../tfishsupply/list",
+                postData:{'orderNo':orderNo,'date':date}, //发送数据
+                page:1
+            }).trigger("reloadGrid");
+        },
 		update: function (event) {
 			var id = getSelectedRow();
 			if(id == null){

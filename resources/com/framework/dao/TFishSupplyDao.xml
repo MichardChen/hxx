@@ -8,7 +8,14 @@
 	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TFishSupplyEntity">
-		select * from t_fish_supply 
+		select * from t_fish_supply where 1=1
+		<if test="orderNo != null and orderNo != ''">
+			and order_no = #{orderNo}
+		</if>
+		<if test="createDate != null and createDate != ''">
+			and create_time like concat('%', #{createDate}, '%')
+		</if>
+		order by create_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -42,6 +49,9 @@
 		</if>
 		<if test='memberId != null and memberId != 0'>
 			and member_id = #{memberId}
+		</if>
+		<if test='status != null and status != "null" and status != ""'>
+			and status = #{status}
 		</if>
 
 		<if test="offset != null and limit != null">

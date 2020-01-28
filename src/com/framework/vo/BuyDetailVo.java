@@ -20,25 +20,9 @@ public class BuyDetailVo implements Serializable {
     private String mark;
     private String kfQQ;
     private String kfMobile;
-    private List<String> imgs;
+    private List<CarouselVo> imgs;
     private String latestTime;
     private String weight;
-
-    public String getWeight() {
-        return weight;
-    }
-
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }
-
-    public String getLatestTime() {
-        return latestTime;
-    }
-
-    public void setLatestTime(String latestTime) {
-        this.latestTime = latestTime;
-    }
 
     public int getId() {
         return id;
@@ -128,11 +112,27 @@ public class BuyDetailVo implements Serializable {
         this.kfMobile = kfMobile;
     }
 
-    public List<String> getImgs() {
+    public List<CarouselVo> getImgs() {
         return imgs;
     }
 
-    public void setImgs(List<String> imgs) {
+    public void setImgs(List<CarouselVo> imgs) {
         this.imgs = imgs;
+    }
+
+    public String getLatestTime() {
+        return latestTime;
+    }
+
+    public void setLatestTime(String latestTime) {
+        this.latestTime = latestTime;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
     }
 }

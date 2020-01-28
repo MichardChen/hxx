@@ -76,6 +76,12 @@ public class RestfulServiceImpl implements RestfulService {
     TFishOrderDao tFishOrderDao;
     @Autowired
     TAdvertisementDao tAdvertisementDao;
+    @Autowired
+    TMarketPriceDao tMarketPriceDao;
+    @Autowired
+    LocationCityDao cityDao;
+    @Autowired
+    TFishOrderDao orderDao;
 
     /**
      * 首页接口
@@ -1327,6 +1333,7 @@ public class RestfulServiceImpl implements RestfulService {
         map.put("province",dto.getProvince());
         map.put("city",dto.getCity());
         map.put("mainType",dto.getMainType());
+        map.put("status",Constants.ORDER_STUTUS.PASS);
         List<TFishSupplyEntity> supplyEntities = supplyDao.querySupplyList(map);
         List<SupplyListVo> supplyList = new ArrayList<>();
 
@@ -1439,10 +1446,10 @@ public class RestfulServiceImpl implements RestfulService {
         TFishOrderEntity orderEntity = new TFishOrderEntity();
         orderEntity.setCreateTime(DateUtil.getNowTimestamp());
         orderEntity.setUpdateTime(DateUtil.getNowTimestamp());
-        orderEntity.setStatus(Constants.ORDER_STUTUS.STAY_REVIEW);
+        orderEntity.setStatus(Constants.ORDER_STUTUS.STAY_PAY);
         orderEntity.setMark(dto.getMark());
         orderEntity.setInfoId(dto.getKey());
-        orderEntity.setOrderNo("GY"+getOrderIdByTime());
+        orderEntity.setOrderNo("T"+getOrderIdByTime());
         orderEntity.setToUserId(member.getId());
         orderEntity.setFromUserId(supplyEntity.getMemberId());
         orderEntity.setNeeds(dto.getNeeds());
@@ -1452,13 +1459,13 @@ public class RestfulServiceImpl implements RestfulService {
         orderEntity.setReceivePerson(dto.getReceivePerson());
         int ret = tFishOrderDao.save(orderEntity);
         if(ret == 0){
-            commonService.saveOrderStatus(0,orderEntity.getOrderNo()
-                    ,Constants.ORDER_TYPE.SUPPLY
-                    ,Constants.ORDER_STUTUS.STAY_REVIEW,"",orderEntity.toString());
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("下单失败，请联系客服处理");
             return data;
         }else{
+            commonService.saveOrderStatus(0,orderEntity.getOrderNo()
+                    ,Constants.ORDER_TYPE.SUPPLY
+                    ,Constants.ORDER_STUTUS.STAY_PAY,"供应下单",orderEntity.toString());
             data.setCode(Constants.STATUS_CODE.SUCCESS);
             data.setMessage("下单成功，请等待客服联系您");
             return data;
@@ -1528,6 +1535,7 @@ public class RestfulServiceImpl implements RestfulService {
         map.put("province",dto.getProvince());
         map.put("city",dto.getCity());
         map.put("mainType",dto.getMainType());
+        map.put("status",Constants.ORDER_STUTUS.PASS);
         List<TFishBuyEntity> buyEntities = buyDao.queryBuyList(map);
         List<BuyListVo> buyList = new ArrayList<>();
 
@@ -1596,9 +1604,12 @@ public class RestfulServiceImpl implements RestfulService {
         }
         //获取广告位
         List<TAdvertisementEntity> adList = tAdvertisementDao.queryListByTypeCd(Constants.ADVERTISEMENT_TYPE.BUY_DETAIL);
-        List<String> imgs = new ArrayList<>();
+        List<CarouselVo> imgs = new ArrayList<>();
         for(TAdvertisementEntity advertisement : adList){
-            imgs.add(advertisement.getLogo());
+            CarouselVo carouselVo = new CarouselVo();
+            carouselVo.setImgUrl(advertisement.getLogo());
+            carouselVo.setLinkUrl(advertisement.getRealUrl());
+            imgs.add(carouselVo);
         }
         vo.setImgs(imgs);
         JSONObject jsonObject = new JSONObject();
@@ -1730,6 +1741,97 @@ public class RestfulServiceImpl implements RestfulService {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("buyList",buyList);
         data.setData(jsonObject);
+        return data;
+    }
+
+    @Override
+    public ReturnData queryMarketPriceList(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        Map<String, Object> map = new HashMap<>();
+        map.put("offset", (dto.getPageNum() - 1) * dto.getPageSize());
+        map.put("limit", dto.getPageSize());
+        map.put("productType",dto.getTypeCd());
+        map.put("priceDate",dto.getLatestTime());
+        List<MarketPriceVo> list = tMarketPriceDao.queryPriceList(map);
+        for(MarketPriceVo vo : list){
+            LocationCityEntity cityEntity = cityDao.queryObject(StringUtil.toInteger(vo.getCity()));
+            if(cityEntity != null){
+                vo.setCity(cityEntity.getName());
+            }
+            //获取图片
+            TBrandSeriesEntity seriesEntity = brandSeriesDao.queryObjectByName(vo.getBrandSeries());
+            if(seriesEntity != null){
+                vo.setImg(seriesEntity.getSeriesIcon());
+            }
+        }
+        //获取广告位
+        List<TAdvertisementEntity> adList = tAdvertisementDao.queryListByTypeCd(Constants.ADVERTISEMENT_TYPE.MARKET_PRICE);
+        List<CarouselVo> imgs = new ArrayList<>();
+        for(TAdvertisementEntity advertisement : adList){
+            CarouselVo vo = new CarouselVo();
+            vo.setImgUrl(advertisement.getLogo());
+            vo.setLinkUrl(advertisement.getRealUrl());
+            imgs.add(vo);
+        }
+
+        data.setMessage("查询成功");
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        JSONObject jsonObject =  new JSONObject();
+        jsonObject.put("marketPriceList",list);
+        jsonObject.put("carouselList",imgs);
+        //查询客服
+        TCodemstEntity kf = tCodemstDao.queryByCode("130001");
+        if(kf != null){
+            jsonObject.put("kfMobile",list);
+        }
+        data.setData(jsonObject);
+        return data;
+    }
+
+    @Override
+    public ReturnData getSupplyOrderList(FishDTO dto) {
+        ReturnData data = new ReturnData();
+        Member member = memberDao.queryByMobile(dto.getMobile());
+        if (member == null) {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，此用户不存在");
+            return data;
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("offset", (dto.getPageNum() - 1) * dto.getPageSize());
+        map.put("limit", dto.getPageSize());
+        map.put("status",dto.getStatus());
+        map.put("toUserId",member.getId());
+
+        List<TFishOrderEntity> list = orderDao.queryList(map);
+        List<SupplyOrderListVo> orderList = new ArrayList<>();
+        for(TFishOrderEntity orderEntity : list){
+            SupplyOrderListVo vo = new SupplyOrderListVo();
+            vo.setOrderNo(orderEntity.getOrderNo());
+            vo.setOrderTime(DateUtil.format(orderEntity.getCreateTime(),"yyyy-MM-dd"));
+            vo.setMark(orderEntity.getMark());
+            if(Constants.ORDER_TYPE.SUPPLY.equals(orderEntity.getOrderTypeCd())){
+                //供应订单
+                TFishSupplyEntity supplyEntity = supplyDao.queryObject(orderEntity.getInfoId());
+                if(supplyEntity != null){
+                    vo.setWeight(supplyEntity.getWeight());
+                    vo.setSize(supplyEntity.getSize());
+                    vo.setPrice(supplyEntity.getPrice()+supplyEntity.getUnit());
+                    TBrandSeriesEntity brandSeriesEntity = brandSeriesDao.queryObjectByName(supplyEntity.getProductType());
+                    if(brandSeriesEntity != null){
+                        vo.setTitle(brandSeriesEntity.getCarSerial());
+                        vo.setImg(brandSeriesEntity.getSeriesIcon());
+                    }
+                }
+            }
+
+            orderList.add(vo);
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("orderList",orderList);
+        data.setData(jsonObject);
+        data.setCode(Constants.STATUS_CODE.SUCCESS);
+        data.setMessage("查询成功");
         return data;
     }
 }

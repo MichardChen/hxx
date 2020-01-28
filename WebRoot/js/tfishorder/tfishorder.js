@@ -1,23 +1,16 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../tmarketprice/list?date=',
+        url: '../tfishorder/list?orderNo=&date=',
         datatype: "json",
         colModel: [			
-			{ label: '品类', name: 'brandSeries', width: 80 },
-            { label: '日期', name: 'whendate', width: 80 },
-			{ label: '规格', name: 'size', width: 80 },
-			{ label: '价格', name: 'price', width: 80 },
-            { label: '状态', name: 'flg', width: 80,formatter:function (value) {
-					if(value == 1){
-						return "正常状态";
-					}else if(value == 0){
-						return "删除状态";
-					}else{
-						return "未知状态";
-					}
-                } },
-			{ label: '创建时间', name: 'createTime', width: 80 },
-			{ label: '更新时间', name: 'updateTime', width: 80 }
+			{ label: '订单编号', name: 'orderNo', width: 150 },
+			{ label: '订单类型', name: 'orderTypeCd', width: 70 },
+			{ label: '卖家', name: 'fromUserId', width: 90 },
+			{ label: '买家', name: 'toUserId', width: 90 },
+			{ label: '预付款', name: 'firstPay', width: 40 },
+			{ label: '尾款', name: 'secondPay', width: 40 },
+			{ label: '订单状态', name: 'status', width: 40 },
+			{ label: '下单时间', name: 'createTime', width: 80 }
         ],
 		viewrecords: true,
         height: 400,
@@ -53,10 +46,11 @@ var vm = new Vue({
 	},
 	methods: {
         search:function(event){
+            var orderNo = $("#orderNo").val();
             var date = $("#date").val();
             $("#jqGrid").jqGrid('setGridParam',{
-                url:"../tmarketprice/list",
-                postData:{'date':date}, //发送数据
+                url:"../tfishorder/list",
+                postData:{'orderNo':orderNo,'date':date}, //发送数据
                 page:1
             }).trigger("reloadGrid");
         },
@@ -66,7 +60,7 @@ var vm = new Vue({
 				return ;
 			}
 			
-			location.href = "tmarketprice_add.html?id="+id;
+			location.href = "tfishorder_add.html?id="+id;
 		},
 		del: function (event) {
 			var ids = getSelectedRows();
@@ -77,7 +71,7 @@ var vm = new Vue({
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: "../tmarketprice/delete",
+				    url: "../tfishorder/delete",
 				    data: JSON.stringify(ids),
 				    success: function(r){
 						if(r.code == 0){

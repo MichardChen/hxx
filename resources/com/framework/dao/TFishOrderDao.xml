@@ -8,10 +8,24 @@
 	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TFishOrderEntity">
-		select * from t_fish_order 
+		select * from t_fish_order where 1=1
+		<if test="status != null and status != ''">
+			and status = #{status}
+		</if>
+		<if test="orderNo != null and orderNo != ''">
+			and order_no = #{orderNo}
+		</if>
+		<if test="createDate != null and createDate != ''">
+			and create_time like concat('%', #{createDate}, '%')
+		</if>
+		<if test="toUserId != null and toUserId != '' and toUserId != 0">
+			and to_user_id = #{toUserId}
+		</if>
+		order by create_time desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
+
 	</select>
 	
  	<select id="queryTotal" resultType="int">
@@ -35,7 +49,11 @@
 			`needs`, 
 			`status`, 
 			`create_time`, 
-			`update_time`
+			`update_time`,
+			`update_by`,
+			`first_pay_type`,
+			`second_pay_type`
+
 		)
 		values
 		(
@@ -53,7 +71,10 @@
 			#{needs}, 
 			#{status}, 
 			#{createTime}, 
-			#{updateTime}
+			#{updateTime},
+			#{updateBy},
+			#{firstPayType},
+			#{secondPayType}
 		)
 	</insert>
 	 
@@ -74,6 +95,9 @@
 			<if test="needs != null">`needs` = #{needs}, </if>
 			<if test="status != null">`status` = #{status}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="createTime != null">`update_by` = #{updateBy}, </if>
+			<if test="createTime != null">`first_pay_type` = #{firstPayType}, </if>
+			<if test="createTime != null">`second_pay_type` = #{secondPayType}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}</if>
 		</set>
 		where id = #{id}

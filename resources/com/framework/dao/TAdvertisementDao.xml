@@ -35,7 +35,7 @@
 			`update_time`, 
 			`create_by`, 
 			`update_by`, 
-			`mark`, 
+			`mark`,
 			`flg`
 		)
 		values
@@ -50,7 +50,7 @@
 			#{updateTime}, 
 			#{createBy}, 
 			#{updateBy}, 
-			#{mark}, 
+			#{mark},
 			#{flg}
 		)
 	</insert>

@@ -15,10 +15,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,11 +65,12 @@ public class TFishSupplyController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("tfishsupply:list")
-	public R list(Integer page, Integer limit){
+	public R list(Integer page, Integer limit,@RequestParam("orderNo")String orderNo, @RequestParam("date")String date){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
-		
+		map.put("orderNo",orderNo);
+		map.put("createDate",date);
 		//查询列表数据
 		List<TFishSupplyEntity> tFishSupplyList = tFishSupplyService.queryList(map);
 		int total = tFishSupplyService.queryTotal(map);
@@ -155,7 +153,7 @@ public class TFishSupplyController {
 											tFishSupply.getOrderNo()
 											,Constants.ORDER_TYPE.SUPPLY
 											,tFishSupply.getStatus()
-											,"后台审核,审核状态为"+tFishSupply.getStatus(),"");
+											,"后台审核,审核状态为"+tFishSupply.getStatus(),tFishSupply.toString());
 		}
 		return R.ok();
 	}

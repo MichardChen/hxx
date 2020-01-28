@@ -49,6 +49,12 @@ public class TFishOrderEntity implements Serializable {
 	//
 	private Date updateTime;
 
+	private int updateBy;
+
+	private String firstPayType;
+
+	private String secondPayType;
+
 	/**
 	 * 设置：
 	 */
@@ -243,4 +249,27 @@ public class TFishOrderEntity implements Serializable {
 	}
 
 
+	public int getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(int updateBy) {
+		this.updateBy = updateBy;
+	}
+
+	public String getFirstPayType() {
+		return firstPayType;
+	}
+
+	public void setFirstPayType(String firstPayType) {
+		this.firstPayType = firstPayType;
+	}
+
+	public String getSecondPayType() {
+		return secondPayType;
+	}
+
+	public void setSecondPayType(String secondPayType) {
+		this.secondPayType = secondPayType;
+	}
 }

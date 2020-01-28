@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+	<style>
+		.ptop{
+			padding-top: 7px;
+		}
+	</style>
+#parse("sys/header.html")
+</head>
+<body>
+<div class="panel panel-default" id="rrapp" v-cloak>
+	<div class="panel-heading">{{title}}</div>
+	<form class="form-horizontal">
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">订单号</div>
+		   	<div class="col-sm-10 ptop">
+				{{tFishOrder.orderNo}}
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label"> 订单类型</div>
+		   	<div class="col-sm-10 ptop">
+				<select  class="form-control" v-model="tFishOrder.orderTypeCd">
+					<option value="270001">求购订单</option>
+					<option value="270002">供应订单</option>
+					<option value="270003">录入订单</option>
+				</select>
+		    </div>
+		</div>
+		<!--<div class="form-group">
+		   	<div class="col-sm-2 control-label"></div>
+		   	<div class="col-sm-10 ptop">
+		      <input type="text" class="form-control" v-model="tFishOrder.infoId" placeholder=""/>
+		    </div>
+		</div>-->
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">卖家</div>
+		   	<div class="col-sm-10 ptop">
+				{{tFishOrder.fromUserId}}
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">买家</div>
+		   	<div class="col-sm-10 ptop">
+				{{tFishOrder.toUserId}}
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">预付款</div>
+		   	<div class="col-sm-10 ptop">
+		      <input type="number" class="form-control" v-model="tFishOrder.firstPay" placeholder="请输入预付款"/>
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-2 control-label">付款方式</div>
+			<div class="col-sm-10 ptop">
+				<select  class="form-control" v-model="tFishOrder.firstPayType">
+					<option value="300001">银联支付</option>
+					<option value="300002">线下支付</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">尾款</div>
+		   	<div class="col-sm-10 ptop">
+		      <input type="number" class="form-control" v-model="tFishOrder.secondPay" placeholder="请输入尾款"/>
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-2 control-label">付款方式</div>
+			<div class="col-sm-10 ptop">
+				<select  class="form-control" v-model="tFishOrder.secondPayType">
+					<option value="300001">银联支付</option>
+					<option value="300002">线下支付</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">物流收货地址</div>
+		   	<div class="col-sm-10 ptop">
+		      <input type="text" class="form-control" v-model="tFishOrder.receiveAddress" placeholder="请输入收货地"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">物流收货人</div>
+		   	<div class="col-sm-10 ptop">
+		      <input type="text" class="form-control" v-model="tFishOrder.receivePerson" placeholder="请输入收货人"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">物流收货人电话</div>
+		   	<div class="col-sm-10 ptop">
+		      <input type="text" class="form-control" v-model="tFishOrder.receiveMobile" placeholder="请输入收货人电话"/>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">备注</div>
+		   	<div class="col-sm-10 ptop">
+				{{tFishOrder.mark}}
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">供应量</div>
+		   	<div class="col-sm-10 ptop">
+				{{tFishOrder.needs}}
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">订单状态</div>
+		   	<div class="col-sm-10 ptop">
+				<select  class="form-control" v-model="tFishOrder.status">
+					<option value="280004">待支付</option>
+					<option value="280005">已取消</option>
+					<option value="280006">待发货</option>
+					<option value="280007">已发货</option>
+					<option value="280008">已收货</option>
+				</select>
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">下单时间</div>
+		   	<div class="col-sm-10 ptop">
+				{{tFishOrder.createTime}}
+		    </div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-2 control-label">最近一次操作时间</div>
+		   	<div class="col-sm-10 ptop">
+				{{tFishOrder.updateTime}}
+		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-2 control-label"></div> 
+			<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+			&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="back" value="返回"/>
+		</div>
+	</form>
+</div>
+
+<script src="${rc.contextPath}/js/tfishorder/tfishorder_add.js?_${date.systemTime}"></script>
+</body>
+</html>

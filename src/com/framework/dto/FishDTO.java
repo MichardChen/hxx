@@ -49,6 +49,7 @@ public class FishDTO implements Serializable {
     private int adminId;
     private String needs;
     private String buy;
+    private String status;
 
 
     public static FishDTO getInstance(HttpServletRequest request) throws Exception{
@@ -125,7 +126,16 @@ public class FishDTO implements Serializable {
         }
         dto.setTypeCd(request.getParameter("typeCd"));
         dto.setLatestTime(request.getParameter("latestTime"));
+        dto.setStatus(request.getParameter("status"));
          return dto;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getBuy() {

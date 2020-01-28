@@ -5,16 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.framework.constants.Constants;
 import com.framework.dao.*;
 import com.framework.entity.*;
+import com.framework.service.CommonService;
+import com.framework.utils.ShiroUtils;
 import com.framework.utils.StringUtil;
 import com.framework.vo.TFishBuyVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 import com.framework.service.TFishBuyService;
@@ -44,6 +44,8 @@ public class TFishBuyController {
 	private TCodemstDao codemstDao;
 	@Autowired
 	private TBrandSeriesDao tBrandSeriesDao;
+	@Autowired
+	CommonService commonService;
 	
 	@RequestMapping("/tfishbuy.html")
 	public String list(){
@@ -61,11 +63,12 @@ public class TFishBuyController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("tfishbuy:list")
-	public R list(Integer page, Integer limit){
+	public R list(Integer page, Integer limit, @RequestParam("orderNo")String orderNo, @RequestParam("date")String date){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
-		
+        map.put("orderNo",orderNo);
+        map.put("createDate",date);
 		//查询列表数据
 		List<TFishBuyEntity> tFishBuyList = tFishBuyService.queryList(map);
 		int total = tFishBuyService.queryTotal(map);
@@ -141,7 +144,13 @@ public class TFishBuyController {
 	@RequiresPermissions("tfishbuy:update")
 	public R update(@RequestBody TFishBuyEntity tFishBuy){
 		tFishBuyService.update(tFishBuy);
-		
+		if(StringUtil.isNoneBlank(tFishBuy.getStatus())){
+			commonService.saveOrderStatus(ShiroUtils.getUserId().intValue(),
+					tFishBuy.getOrderNo()
+					,Constants.ORDER_TYPE.BUY
+					,tFishBuy.getStatus()
+					,"后台审核,审核状态为"+tFishBuy.getStatus(),tFishBuy.toString());
+		}
 		return R.ok();
 	}
 	

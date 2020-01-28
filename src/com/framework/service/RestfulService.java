@@ -73,4 +73,8 @@ public interface RestfulService {
 
     public ReturnData queryMyBuyList(FishDTO dto);
 
+    public ReturnData queryMarketPriceList(FishDTO dto);
+
+    public ReturnData getSupplyOrderList(FishDTO dto);
+
 }
