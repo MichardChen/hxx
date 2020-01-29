@@ -99,7 +99,6 @@ public class TraceSourceController {
 			}
 		}
 		String contentUrl = Constants.HTTPS_HOST.TRACE_SOURCE + uuid + ".html";//访问url
-		String qrCodeUrl = Constants.HTTPS_HOST.TRACE_SOURCE + uuid + ".png";//二维码访问路径
 		//生成二维码
 		boolean codeFlag = Zxing.orCode(contentUrl, Constants.HTTPS_FILE_HOST.TRACE_SOURCE + uuid + ".png");
 		PrintWriter pw = new PrintWriter(new OutputStreamWriter(
@@ -109,7 +108,7 @@ public class TraceSourceController {
 		//html访问路径
 		traceSource.setContentUrl(contentUrl);
 		//二维码访问路径
-		traceSource.setQrCodeUrl(Constants.HTTPS_HOST.TRACE_SOURCE + uuid + ".png");
+		traceSource.setQrCodeUrl(Constants.HTTPS_FILE_HOST.TRACE_SOURCE + uuid + ".png");
 	}
 
 	/**
