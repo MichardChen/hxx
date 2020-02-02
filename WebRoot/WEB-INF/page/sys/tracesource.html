@@ -20,6 +20,15 @@
 		<button type="button"  class="btn btn-primary" @click="qrDownload"><i class="fa fa-download" aria-hidden="true"></i>下载二维码</button>
 		#end
 	</div>
+	<div class="grid-btn">
+		订单号：<input type="text" class="form-control" style="width: 150px;display: inline-block;" v-model="orderNo" @keyup.enter="query" placeholder="请输入订单号">
+		来源：<select class="form-control" style="width: 250px;display: inline-block;" v-model="orderTypeCd">
+		<option value="270001" >求购订单表</option>
+		<option value="270002">供应订单表</option>
+		<option value="270003">自行添加的数据,与订单无关</option>
+	</select>
+		<button type="button" class="btn btn-info" @click="query"><i class="fa fa-search" aria-hidden="true"></i>查询</button>
+	</div>
     <table id="jqGrid"></table>
     <div id="jqGridPager"></div>
 </div>

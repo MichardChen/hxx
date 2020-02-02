@@ -35,17 +35,17 @@ public class TraceSourceController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("tracesource:list")
-	public R list(Integer page, Integer limit){
+	public R list(Integer page, Integer limit, String orderTypeCd,String orderNo){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
+        map.put("orderTypeCd", orderTypeCd);
+        map.put("orderNo", orderNo);
 
 		//查询列表数据
 		List<TraceSourceEntity> tTraceSourceList = traceSourceService.queryList(map);
 		int total = traceSourceService.queryTotal(map);
-
 		PageUtils pageUtil = new PageUtils(tTraceSourceList, total, limit, page);
-
 		return R.ok().put("page", pageUtil);
 	}
 

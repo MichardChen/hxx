@@ -4,9 +4,22 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', width: 50, key: true, hidden: true},
-			{ label: '订单号', name: 'orderNo', width: 80 },
-			{ label: '来源', name: 'orderTypeCd', width: 80 },
-			{ label: '内容', name: 'content', width: 80 },
+			{ label: '订单号', name: 'orderNo', width:150 },
+			{ label: '来源', name: 'orderTypeCd', width: 200,
+				formatter: function(cellvalue, options, rowObject){
+					if(typeof cellvalue!=undefined && cellvalue){
+						if(cellvalue == "270001"){
+							return "求购订单表";
+						}else if(cellvalue == "270002"){
+							return "供应订单表";
+						}else if(cellvalue == "270003"){
+							return "自行添加的数据,与订单无关";
+						}
+					}
+					return "";
+				}
+			},
+			{ label: '内容', name: 'content', width: 80, hidden: true },
 			{ label: '生成的网页url', name: 'contentUrl', width: 80, hidden: true},
 			{ label: '生成的二维码url', name: 'qrCodeUrl', width: 80, hidden: true},
 			{ label: '创建时间', name: 'createTime', width: 80 },
@@ -42,9 +55,16 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
-		
+		orderTypeCd: null,
+		orderNo: null
 	},
 	methods: {
+		query:function(){
+			$("#jqGrid").jqGrid('setGridParam',{
+				postData:{'orderTypeCd': vm.orderTypeCd,'orderNo':vm.orderNo},
+				page:1
+			}).trigger("reloadGrid");
+		},
 		qrDownload: function(){
 			var id = getSelectedRow();
 			var grid = $("#jqGrid");
