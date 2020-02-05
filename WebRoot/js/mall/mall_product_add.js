@@ -27,7 +27,14 @@ var vm = new Vue({
 			"detailLogo": null,
 			"logos": null,
 			"createTime": null,
-			"updateTime": null
+			"updateTime": null,
+			"price": null,
+			"quality": null,
+			"needPoints": null,
+			"status": null,
+			"productTypeCd": null,
+			"userTypeCd": null,
+			"productDetail": null
 		},
 		validField: {
 			productTitle: '用户名不能为空',
@@ -78,13 +85,11 @@ var vm = new Vue({
     		});
 		},
 		saveOrUpdate: function (event) {
-			// $('#form_mall_product').data('bootstrapValidator').validate();
-			// var flag = $("#form_mall_product").data("bootstrapValidator").isValid();
+			vm.mallProduct.productDetail = $("#productDetail").val();
 			if(!validNotEmpty()){
 				return false;
 			}
 			var url = vm.mallProduct.id == null ? "../mall/save" : "../mall/update";
-			vm.mallProduct.productDetail = $("#productDetail").val();
 			var detailLogoObj = document.getElementById("detailLogoInput").files[0];
 			var logosObj = document.getElementById("logos").files[0];
 			var formFile = new FormData();
