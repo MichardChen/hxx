@@ -55,9 +55,8 @@ public class Zxing {
             Path file = new File(path).toPath();
             MatrixToImageWriter.writeToPath(bitMatrix, format, file);
             //插入logo
-            String insertPicPath = Zxing.class.getClassLoader().getResource("/").getPath();
-            //insertPicPath = insertPicPath.substring(1, insertPicPath.indexOf("WEB-INF"));
-            insertPicPath = "/var/www/html/constants/picture/qrCode_head_portrait.png";
+            String insertPicPath = "//var//www//html//constants//picture//qrCode_head_portrait.png";
+            System.out.println(insertPicPath);
             addImageWeatermark(path, insertPicPath, -1, -1, 1);
             return true;
         } catch (Exception e) {
