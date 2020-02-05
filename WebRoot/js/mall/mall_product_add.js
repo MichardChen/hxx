@@ -149,7 +149,7 @@ function sendFile(files, editor, $editable) {
 			processData: false,
 			// 成功时调用方法，后端返回json数据
 			success: function (data) {
-				var temp = eval('('+data+')');
+				var temp = data;
 				if(typeof editor!=undefined && editor){
 					vm.mallProduct[editor] = temp.data.imgUrl;
 				} else {

@@ -99,7 +99,7 @@ function sendFile(files, editor) {
 			processData: false,
 			// 成功时调用方法，后端返回json数据
 			success: function (data) {
-				var temp = eval('('+data+')');
+				var temp = data;
 				$('.summernote').summernote('insertImage',temp.data.imgUrl);
 			},
 			// ajax请求失败时处理
