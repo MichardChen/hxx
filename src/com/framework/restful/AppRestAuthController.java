@@ -202,6 +202,18 @@ public class AppRestAuthController extends RestfulController{
     }
 
     /**
+     * 积分记录
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/getPointRecords")
+    public void getPointRecords(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.getPointRecords(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
      * 兑换记录详情
      * @param request
      * @param response
@@ -501,6 +513,54 @@ public class AppRestAuthController extends RestfulController{
     @PostMapping("/getSupplyOrderList")
     public void getSupplyOrderList(HttpServletRequest request, HttpServletResponse response) throws Exception {
         renderJson(restfulService.getSupplyOrderList(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 供应订单详情
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/getSupplyOrderDetail")
+    public void getSupplyOrderDetail(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.getSupplyOrderDetail(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 取消订单
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/cancleOrder")
+    public void cancleOrder(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.cancleOrder(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 已线下付款接口
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/setOutlinePay")
+    public void setOutlinePay(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.setOutlinePay(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 确认收货
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/confirmReceived")
+    public void confirmReceived(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.confirmReceived(FishDTO.getInstance(request)), response);
         return;
     }
 }

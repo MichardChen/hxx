@@ -6,6 +6,9 @@
 	<select id="queryObject" resultType="com.framework.entity.TFishOrderEntity">
 		select * from t_fish_order where id = #{value}
 	</select>
+	<select id="queryOrderByOrderNo" resultType="com.framework.entity.TFishOrderEntity">
+		select * from t_fish_order where order_no = #{orderNo}
+	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TFishOrderEntity">
 		select * from t_fish_order where 1=1
@@ -52,8 +55,9 @@
 			`update_time`,
 			`update_by`,
 			`first_pay_type`,
-			`second_pay_type`
-
+			`second_pay_type`,
+			`logistics_no`,
+			`logistics_info`
 		)
 		values
 		(
@@ -74,7 +78,9 @@
 			#{updateTime},
 			#{updateBy},
 			#{firstPayType},
-			#{secondPayType}
+			#{secondPayType},
+			#{logisticsNo},
+			#{logisticsInfo}
 		)
 	</insert>
 	 
@@ -98,11 +104,32 @@
 			<if test="createTime != null">`update_by` = #{updateBy}, </if>
 			<if test="createTime != null">`first_pay_type` = #{firstPayType}, </if>
 			<if test="createTime != null">`second_pay_type` = #{secondPayType}, </if>
-			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+			<if test="updateTime != null">`update_time` = #{updateTime},</if>
+			<if test="logisticsNo != null">`logistics_no` = #{logisticsNo},</if>
+			<if test="logisticsInfo != null">`logistics_info` = #{logisticsInfo}</if>
 		</set>
 		where id = #{id}
 	</update>
-	
+	<update id="updateOrderStatus">
+		update t_fish_order
+		<set>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where order_no = #{orderNo}
+	</update>
+	<update id="updatePayType">
+		update t_fish_order
+		  <set>
+			  <if test="flg == '0'">
+				  `first_pay_type` = #{payType},
+			  </if>
+			  <if test="flg == '1'">
+				  `second_pay_type` = #{payType},
+			  </if>
+			  <if test="status != null">`status` = #{status}</if>
+		  </set>
+			where order_no = #{orderNo}
+	</update>
 	<delete id="delete">
 		delete from t_fish_order where id = #{value}
 	</delete>

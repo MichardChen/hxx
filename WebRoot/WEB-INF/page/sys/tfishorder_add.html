@@ -96,6 +96,18 @@
 		    </div>
 		</div>
 		<div class="form-group">
+			<div class="col-sm-2 control-label">物流信息</div>
+			<div class="col-sm-10 ptop">
+				<input type="text" class="form-control" v-model="tFishOrder.logisticsInfo" placeholder="请输入物流信息,如中通快递"/>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-2 control-label">物流单号</div>
+			<div class="col-sm-10 ptop">
+				<input type="text" class="form-control" v-model="tFishOrder.logisticsNo" placeholder="请输入物流单号"/>
+			</div>
+		</div>
+		<div class="form-group">
 		   	<div class="col-sm-2 control-label">备注</div>
 		   	<div class="col-sm-10 ptop">
 				{{tFishOrder.mark}}
@@ -116,6 +128,7 @@
 					<option value="280006">待发货</option>
 					<option value="280007">已发货</option>
 					<option value="280008">已收货</option>
+					<option value="280009">已完成</option>
 				</select>
 		    </div>
 		</div>

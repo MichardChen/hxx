@@ -35,6 +35,8 @@ public interface RestfulService {
 
     public ReturnData getExchangeRecords(FishDTO dto);
 
+    public ReturnData getPointRecords(FishDTO dto);
+
     public ReturnData getExchangeDetail(FishDTO dto);
 
     public ReturnData modifyNickName(FishDTO dto);
@@ -76,5 +78,13 @@ public interface RestfulService {
     public ReturnData queryMarketPriceList(FishDTO dto);
 
     public ReturnData getSupplyOrderList(FishDTO dto);
+
+    public ReturnData getSupplyOrderDetail(FishDTO dto);
+
+    public ReturnData cancleOrder(FishDTO dto);
+
+    public ReturnData setOutlinePay(FishDTO dto);
+
+    public ReturnData confirmReceived(FishDTO dto);
 
 }

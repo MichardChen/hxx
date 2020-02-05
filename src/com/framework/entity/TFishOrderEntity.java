@@ -55,6 +55,26 @@ public class TFishOrderEntity implements Serializable {
 
 	private String secondPayType;
 
+	private String logisticsNo;
+
+	private String logisticsInfo;
+
+	public String getLogisticsNo() {
+		return logisticsNo;
+	}
+
+	public void setLogisticsNo(String logisticsNo) {
+		this.logisticsNo = logisticsNo;
+	}
+
+	public String getLogisticsInfo() {
+		return logisticsInfo;
+	}
+
+	public void setLogisticsInfo(String logisticsInfo) {
+		this.logisticsInfo = logisticsInfo;
+	}
+
 	/**
 	 * 设置：
 	 */

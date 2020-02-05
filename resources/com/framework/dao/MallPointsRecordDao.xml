@@ -3,7 +3,8 @@
 <mapper namespace="com.framework.dao.MallPointsRecordDao">
 
     <select id="queryList" resultType="com.framework.entity.MallPointsRecord">
-        select * from mall_points_record
+        select * from mall_points_record where 1=1
+        and user_id = #{userId}
         order by id desc
         <if test="offset != null and limit != null">
             limit #{offset}, #{limit}

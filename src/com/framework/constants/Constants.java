@@ -166,7 +166,7 @@ public interface Constants {
 
 	//Linux服务器地址
 	public static interface HOST {
-		public static final String DOCUMENT = "http://47.105.184.157/file/";
+		public static final String DOCUMENT = "http://47.105.184.157/file/document/";
 		public static final String IMG = "http://47.105.184.157/img/";
 		public static final String ICON = "http://47.105.184.157/icon/";
 	}
@@ -205,6 +205,7 @@ public interface Constants {
 	public static interface CAROUSEL_TYPE {
 		//首页轮播图
 		public static final String INDEX_CAROUSEL = "040001";
+		public static final String DEFAULT_ICON = "040002";
 	}
 
 	// 车型
@@ -269,12 +270,7 @@ public interface Constants {
 	//文档类型
 	public static interface DOCUMENT_ABOUTUS{
 		public static final String ABOUTUS = "120001";
-		public static final String JOINUS = "120002";
-		public static final String SERVICE_ITEM = "120003";
-		public static final String ABOUT_SALEAFTER = "120004";
-		public static final String CONTACT_US = "120005";
-		public static final String BUYCART_PRODUCE = "120003";
-		public static final String PCODE = "120000";
+		public static final String HELP_CENTER = "120002";
 	}
 
 	public static interface APP_VERSION{
@@ -425,6 +421,8 @@ public interface Constants {
 		public static final String SHIPPED= "280007";
 		//已收货
 		public static final String RECEIVED= "280008";
+		//完成
+		public static final String COMPLETE= "280009";
 	}
 
 	public static interface ADVERTISEMENT_TYPE {
@@ -437,9 +435,9 @@ public interface Constants {
 	//支付方式
 	public static interface PAY_TYPE {
 		//银联支付
-		public static final String BUY_DETAIL = "300001";
+		public static final String YL_PAY = "300001";
 		//线下支付
-		public static final String MARKET_PRICE = "300002";
+		public static final String OUTLINE_PAY = "300002";
 	}
 
 }

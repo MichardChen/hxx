@@ -124,6 +124,7 @@ public class TFinanceController {
 			model.setStatus(tFinance.getStatus());
 			model.setContent(tFinance.getContent());
 			model.setTypeCd(tFinance.getTypeCd());
+			model.setLabels(tFinance.getLabels());
 		}
 		return R.ok().put("tFinance", model);
 	}
