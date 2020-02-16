@@ -3,12 +3,11 @@ $(function () {
         url: '../tfishorder/list?orderNo=&date=',
         datatype: "json",
         colModel: [			
-			{ label: '订单编号', name: 'orderNo', width: 150 },
+			{ label: '订单编号', name: 'orderNo', width: 120 },
 			{ label: '订单类型', name: 'orderTypeCd', width: 70 },
+            { label: '品类', name: 'productType', width: 40 },
 			{ label: '卖家', name: 'fromUserId', width: 90 },
 			{ label: '买家', name: 'toUserId', width: 90 },
-			{ label: '预付款', name: 'firstPay', width: 40 },
-			{ label: '尾款', name: 'secondPay', width: 40 },
 			{ label: '订单状态', name: 'status', width: 40 },
 			{ label: '下单时间', name: 'createTime', width: 80 }
         ],

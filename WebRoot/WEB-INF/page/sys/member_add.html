@@ -23,10 +23,10 @@
 			<label class="control-label col-sm-1">性别</label>
 			<div class="col-sm-4">
 				<label class="radio-inline">
-					<input type="radio" name="sex" value="0" v-model="member.sex" disabled/> 女
+					<input type="radio" name="sex" value="0" v-model="member.sex"/> 女
 				</label>
 				<label class="radio-inline">
-					<input type="radio" name="sex" value="1" v-model="member.sex" disabled/> 男
+					<input type="radio" name="sex" value="1" v-model="member.sex"/> 男
 				</label>
 			</div>
 			<label class="control-label col-sm-1">身份证号</label>
@@ -39,8 +39,8 @@
 			<div class="col-sm-4">
 				<input class="form-control" v-model="member.mobile" type="text" placeholder="请输入注册号码" readOnly="true"/>
 			</div>
-			<label class="control-label col-sm-1">账号金额</label>
-			<div class="col-sm-4">
+			<label class="control-label col-sm-1" style="display: none;">账号金额</label>
+			<div class="col-sm-4" style="display: none;">
 				<input class="form-control" type="text" v-model="member.moneys" placeholder="请输入账号金额" readOnly="true"/>
 			</div>
 		</div>
@@ -49,8 +49,8 @@
 			<div class="col-sm-4">
 				<input class="form-control" v-model="member.points" type="text" readOnly="true"/>
 			</div>
-			<label class="control-label col-sm-1">用户等级</label>
-			<div class="col-sm-4">
+			<label class="control-label col-sm-1" style="display: none;">用户等级</label>
+			<div class="col-sm-4" style="display: none;">
 				<input class="form-control" type="text" v-model="member.memberGradeCd" />
 			</div>
 		</div>
@@ -64,24 +64,24 @@
 					<option value="150004">审核失败</option>
 				</select>
 			</div>
-			<label class="control-label col-sm-1">熟识程度</label>
-			<div class="col-sm-4">
+			<label class="control-label col-sm-1" style="display: none;">熟识程度</label>
+			<div class="col-sm-4" style="display: none;">
 				<input class="form-control" type="text" v-model="member.familiarity" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="control-label col-sm-1">QQ</label>
 			<div class="col-sm-4">
-				<input class="form-control" v-model="member.qq" type="text" readOnly="true"/>
+				<input class="form-control" v-model="member.qq" type="text"/>
 			</div>
 			<label class="control-label col-sm-1">微信</label>
 			<div class="col-sm-4">
-				<input class="form-control" type="text" v-model="member.wx" readOnly="true"/>
+				<input class="form-control" type="text" v-model="member.wx"/>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="control-label col-sm-1">角色等级</label>
-			<div class="col-sm-4">
+			<label class="control-label col-sm-1" style="display: none;">角色等级</label>
+			<div class="col-sm-4" style="display: none;">
 				<input class="form-control" type="text" v-model="member.roleCd" />
 			</div>
 			<label class="control-label col-sm-1">用户类型</label>

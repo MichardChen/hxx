@@ -7,6 +7,21 @@ $(function () {
 			{ label: '用户名', name: 'name', width: 75 },
 			{ label: '昵称', name: 'nickName', width: 90 },
 			{ label: '手机号', name: 'mobile', width: 100 },
+            { label: '认证状态', name: 'status', width: 100,
+                formatter: function(cellvalue, options, rowObject){
+                    if(typeof cellvalue!=undefined && cellvalue){
+                        if(cellvalue == "150001"){
+                            return "未认证";
+                        }else if(cellvalue == "150002"){
+                            return "待审核";
+                        }else if(cellvalue == "150003"){
+                            return "审核通过";
+                        }else if(cellvalue == "150004"){
+                            return "审核失败";
+                        }
+                    }
+                    return "";
+                }},
 			{ label: '创建时间', name: 'createTime', width: 80}                   
         ],
 		viewrecords: true,

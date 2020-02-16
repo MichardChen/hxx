@@ -140,8 +140,12 @@ public class RestfulServiceImpl implements RestfulService {
         //查询文档
         String[] code1 = new String[]{Constants.DOCUMENT_ABOUTUS.ABOUTUS};
         String[] code2 = new String[]{Constants.DOCUMENT_ABOUTUS.HELP_CENTER};
+        String[] userabout = new String[]{Constants.DOCUMENT_ABOUTUS.USER_ABOUT};
+
         List<TDocumentEntity> aboutUs = tDocumentDao.queryDocumentByTypeCd(code1);
         List<TDocumentEntity> helpcenter = tDocumentDao.queryDocumentByTypeCd(code2);
+        List<TDocumentEntity> useraboutList = tDocumentDao.queryDocumentByTypeCd(userabout);
+
         if(aboutUs.size() != 0){
             TDocumentEntity about = aboutUs.get(0);
             jsonObject.put("aboutUsUrl",about.getDescUrl());
@@ -154,6 +158,14 @@ public class RestfulServiceImpl implements RestfulService {
         }else{
             jsonObject.put("helpCenterUrl","");
         }
+
+        if(useraboutList.size() != 0){
+            TDocumentEntity entity = useraboutList.get(0);
+            jsonObject.put("useraboutUrl",entity.getDescUrl());
+        }else{
+            jsonObject.put("useraboutUrl","");
+        }
+
 
         ReturnData data = new ReturnData();
         data.setCode(Constants.STATUS_CODE.SUCCESS);
@@ -279,8 +291,8 @@ public class RestfulServiceImpl implements RestfulService {
             return data;
         }
         //判断有没有
-        //String code = VertifyUtil.getVertifyCode();
-        String code = "8396";
+        String code = VertifyUtil.getVertifyCode();
+        //String code = "8396";
         TVertifyCodeEntity vc = vertifyCodeDao.queryCodeByMobile(mobile, dto.getShortMsgTypeCd());
         if (vc != null) {
             Timestamp expireTime = vc.getExpireTime();
@@ -669,6 +681,7 @@ public class RestfulServiceImpl implements RestfulService {
         Map<String, Object> map = new HashMap<>();
         map.put("offset", (dto.getPageNum() - 1) * dto.getPageSize());
         map.put("limit", dto.getPageSize());
+        map.put("status",Constants.MALL_STATUS.NORMAL);
         List<MallProduct> list = mallProductDao.queryList(map);
         MallProductVo vo = null;
         List<MallProductVo> mallProductList = new ArrayList<>();
@@ -715,7 +728,15 @@ public class RestfulServiceImpl implements RestfulService {
         JSONObject object = new JSONObject();
         object.put("productDetail", product);
         //获取发货时间及快递相关
-        object.put("expressRelateUrl", "https://www.sf-express.com/cn/sc/");
+        String[] express = new String[]{Constants.DOCUMENT_ABOUTUS.EXPRESS};
+        List<TDocumentEntity> expressList = tDocumentDao.queryDocumentByTypeCd(express);
+        if(expressList.size() != 0){
+            TDocumentEntity entity = expressList.get(0);
+            object.put("expressRelateUrl", entity.getDescUrl());
+        }else{
+            object.put("expressRelateUrl", "");
+        }
+
         data.setData(object);
         data.setCode(Constants.STATUS_CODE.SUCCESS);
         data.setMessage("查询成功");
@@ -1518,16 +1539,26 @@ public class RestfulServiceImpl implements RestfulService {
             data.setMessage("对不起，此用户不存在");
             return data;
         }
+        if (!Constants.MEMBER_STATUS.REVIEW_PASS.equals(member.getStatus())) {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，您还未进行认证，请先认证资料");
+            return data;
+        }
         TFishSupplyEntity supplyEntity = supplyDao.queryObject(dto.getKey());
         if (supplyEntity == null) {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("对不起，此供应信息不存在");
             return data;
         }
+        if(supplyEntity.getMemberId() == member.getId()){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起，这是您发布的供应，不能下单");
+            return data;
+        }
         TFishOrderEntity orderEntity = new TFishOrderEntity();
         orderEntity.setCreateTime(DateUtil.getNowTimestamp());
         orderEntity.setUpdateTime(DateUtil.getNowTimestamp());
-        orderEntity.setStatus(Constants.ORDER_STUTUS.STAY_PAY);
+        orderEntity.setStatus(Constants.ORDER_STUTUS.STAY_REVIEW);
         orderEntity.setMark(dto.getMark());
         orderEntity.setInfoId(dto.getKey());
         orderEntity.setOrderNo("T" + getOrderIdByTime());
@@ -1546,7 +1577,7 @@ public class RestfulServiceImpl implements RestfulService {
         } else {
             commonService.saveOrderStatus(0, orderEntity.getOrderNo()
                     , Constants.ORDER_TYPE.SUPPLY
-                    , Constants.ORDER_STUTUS.STAY_PAY, "供应下单", orderEntity.toString());
+                    , Constants.ORDER_STUTUS.STAY_REVIEW, "供应下单", orderEntity.toString());
             data.setCode(Constants.STATUS_CODE.SUCCESS);
             data.setMessage("下单成功，请等待客服联系您");
             return data;
@@ -1638,8 +1669,8 @@ public class RestfulServiceImpl implements RestfulService {
                 vo.setImg(brandSeriesEntity.getSeriesIcon());
             }
             List<String> labelList = new ArrayList<>();
-            labelList.add(entity.getSize() + entity.getUnit());
-            labelList.add(entity.getWeight() + entity.getUnit());
+            labelList.add(entity.getSize());
+            labelList.add(entity.getWeight());
             vo.setLabels(labelList);
             buyList.add(vo);
         }
@@ -1675,8 +1706,8 @@ public class RestfulServiceImpl implements RestfulService {
         }
         String labels = entity.getLabels();
         List<String> labelList = new ArrayList<>();
-        labelList.add(entity.getSize() + entity.getUnit());
-        labelList.add(entity.getWeight() + entity.getUnit());
+        labelList.add(entity.getSize());
+        labelList.add(entity.getWeight());
         vo.setLabels(labelList);
         vo.setMark(entity.getMark());
         TCodemstEntity kf = tCodemstDao.queryByCode("130001");
@@ -1805,8 +1836,8 @@ public class RestfulServiceImpl implements RestfulService {
                 vo.setImg(brandSeriesEntity.getSeriesIcon());
             }
             List<String> labelList = new ArrayList<>();
-            labelList.add(entity.getSize() + entity.getUnit());
-            labelList.add(entity.getWeight() + entity.getUnit());
+            labelList.add(entity.getSize());
+            labelList.add(entity.getWeight());
             vo.setLabels(labelList);
             vo.setStatusCd(entity.getStatus());
             if (StringUtil.isNoneBlank(entity.getStatus())) {
@@ -1972,6 +2003,7 @@ public class RestfulServiceImpl implements RestfulService {
             orderInfo.setStatus(codemstEntity.getName());
             orderInfo.setStatusCd(orderEntity.getStatus());
         }
+        orderInfo.setFailReason(orderEntity.getReason());
         orderInfo.setFirstPay(StringUtil.toString(orderEntity.getFirstPay()) + "元");
         orderInfo.setSecondPay(StringUtil.toString(orderEntity.getSecondPay()) + "元");
         BigDecimal all = new BigDecimal("0");
@@ -2132,7 +2164,13 @@ public class RestfulServiceImpl implements RestfulService {
             return data;
         }
 
+
         if("0".equals(flg)){
+            if(orderEntity.getFirstPay() == null){
+                data.setCode(Constants.STATUS_CODE.SUCCESS);
+                data.setMessage("操作失败，待平台设置预付款再操作，谢谢");
+                return data;
+            }
             int ret = orderDao.updatePayType(orderNo, flg, Constants.PAY_TYPE.OUTLINE_PAY, Constants.ORDER_STUTUS.STAY_SHIP);
             if (ret != 0) {
                 //更新为待发货
@@ -2150,6 +2188,11 @@ public class RestfulServiceImpl implements RestfulService {
         }
 
         if("1".equals(flg)){
+            if(orderEntity.getSecondPay() == null){
+                data.setCode(Constants.STATUS_CODE.SUCCESS);
+                data.setMessage("操作失败，待平台设置尾款再操作，谢谢");
+                return data;
+            }
             int ret = orderDao.updatePayType(orderNo, flg, Constants.PAY_TYPE.OUTLINE_PAY, Constants.ORDER_STUTUS.COMPLETE);
             if (ret != 0) {
                 //更新为待发货

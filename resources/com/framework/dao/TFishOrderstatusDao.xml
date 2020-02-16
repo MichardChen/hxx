@@ -7,7 +7,7 @@
 		select * from t_fish_orderstatus where id = #{value}
 	</select>
 	<select id="queryByOrderNo"  resultType="com.framework.entity.TFishOrderstatusEntity">
-		select * from t_fish_orderstatus where order_no = #{orderNo} and status = #{status}
+		select * from t_fish_orderstatus where order_no = #{orderNo} and status = #{status} order by create_time desc limit 1
 	</select>
 	<select id="queryList" resultType="com.framework.entity.TFishOrderstatusEntity">
 		select * from t_fish_orderstatus 
