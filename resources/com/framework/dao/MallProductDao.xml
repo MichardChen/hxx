@@ -85,7 +85,7 @@
         </if>
 		<if test="price != null">
             and price = #{price}
-        </if
+        </if>
 	</select>
 
     <select id="queryObject" resultType="com.framework.entity.MallProduct">
