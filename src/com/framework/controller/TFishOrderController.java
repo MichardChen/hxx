@@ -15,6 +15,7 @@ import com.framework.entity.TFishSupplyEntity;
 import com.framework.service.CommonService;
 import com.framework.utils.*;
 import com.framework.vo.AdminOrderListVo;
+import com.framework.vo.report.OrderReportVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -176,5 +177,48 @@ public class TFishOrderController {
 		
 		return R.ok();
 	}
-	
+
+
+	/**
+	 * 获取报表统计数据
+	 */
+	@ResponseBody
+	@RequestMapping("/getReportData")
+	@RequiresPermissions("order:type:report:list")
+	public R getReportData(@RequestParam("startDate")String startDate, @RequestParam("endDate")String endDate){
+		Map<String, Object> result = new HashMap<>();
+		//根据product_type分类统计有多少订单量
+		List<OrderReportVo> typeCount = tFishOrderService.getOrderCountByType(startDate, endDate);
+		//根据product_type分类统计订单总金额(预付款+尾款)
+		List<OrderReportVo> typeAmount = tFishOrderService.getOrderAmountByType(startDate, endDate);
+		//查询各个订单状态下的订单数量
+		List<OrderReportVo> statusCount = tFishOrderService.getOrderCountByStatus(startDate, endDate);
+		//处理查询的报表数据返回给前端
+		dealReportResult(result, "typeCount", typeCount);
+		dealReportResult(result, "typeAmount", typeAmount);
+		dealReportResult(result, "statusCount", statusCount);
+		return R.ok().put("result", result);
+	}
+
+	/**
+	 * 处理查询的报表数据返回给前端
+	 * @param result 最终结果map
+	 * @param key 前端报表的取值key
+	 * @param queryList 查询到的结果集
+	 */
+	public void dealReportResult(Map<String, Object> result, String key, List<OrderReportVo> queryList){
+		result.put(key, null);
+		if(queryList != null && queryList.size()>0){
+			ArrayList<String> nameList = new ArrayList<>();
+			ArrayList<String> valueList = new ArrayList<>();
+			for(OrderReportVo item: queryList){
+				nameList.add(StringUtil.isBlank(item.getName())?item.getCode():item.getName());
+				valueList.add(StringUtil.isBlank(item.getValue())?null:item.getValue());
+			}
+			Map<String, Object> queryMap = new HashMap<>();
+			queryMap.put("xAxis", nameList);
+			queryMap.put("series", valueList);
+			result.put(key, queryMap);
+		}
+	}
 }

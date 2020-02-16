@@ -144,4 +144,46 @@
 		</foreach>
 	</delete>
 
+	<!-- 根据product_type分类统计有多少订单量 -->
+	<select id="getOrderCountByType" resultType="com.framework.vo.report.OrderReportVo">
+		select t.order_type_cd as code,c.`name` as name,sum(t.needs) as value from t_fish_order t
+		left JOIN t_codemst c on c.`code`=t.order_type_cd where 1=1
+		<if test="startDate != null and startDate != ''">
+			AND t.create_time <![CDATA[>=]]> #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			AND t.create_time <![CDATA[<=]]>#{endDate}
+		</if>
+		group by t.order_type_cd,c.`name`
+		order by t.order_type_cd desc
+	</select>
+
+	<!-- 根据product_type分类统计订单总金额(预付款+尾款) -->
+	<select id="getOrderAmountByType" resultType="com.framework.vo.report.OrderReportVo">
+		select t.order_type_cd as code,c.`name` as name,sum(t.first_pay+t.second_pay) as value from t_fish_order t
+		left JOIN t_codemst c on c.`code`=t.order_type_cd where 1=1
+		<if test="startDate != null and startDate != ''">
+			AND t.create_time <![CDATA[>=]]> #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			AND t.create_time <![CDATA[<=]]>#{endDate}
+		</if>
+		group by t.order_type_cd,c.`name`
+		order by t.order_type_cd desc
+	</select>
+
+	<!-- 查询各个订单状态下的订单数量 -->
+	<select id="getOrderCountByStatus" resultType="com.framework.vo.report.OrderReportVo">
+		select t.`status` as code,c.`name` as name,sum(t.needs) as value from t_fish_order t
+		left JOIN t_codemst c on c.`code`=t.`status` where 1=1
+		<if test="startDate != null and startDate != ''">
+			AND t.create_time <![CDATA[>=]]> #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			AND t.create_time <![CDATA[<=]]>#{endDate}
+		</if>
+		group by t.`status`,c.`name`
+		order by t.`status` desc
+	</select>
+
 </mapper>

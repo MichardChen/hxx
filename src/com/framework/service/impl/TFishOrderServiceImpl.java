@@ -1,5 +1,6 @@
 package com.framework.service.impl;
 
+import com.framework.vo.report.OrderReportVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,5 +52,38 @@ public class TFishOrderServiceImpl implements TFishOrderService {
 	public void deleteBatch(Integer[] ids){
 		tFishOrderDao.deleteBatch(ids);
 	}
-	
+
+	/**
+	 * 根据product_type分类统计有多少订单量
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	@Override
+	public List<OrderReportVo> getOrderCountByType(String startDate, String endDate) {
+		return tFishOrderDao.getOrderCountByType(startDate, endDate);
+	}
+
+	/**
+	 * 根据product_type分类统计订单总金额(预付款+尾款)
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	@Override
+	public List<OrderReportVo> getOrderAmountByType(String startDate, String endDate) {
+		return tFishOrderDao.getOrderAmountByType(startDate, endDate);
+	}
+
+	/**
+	 * 查询各个订单状态下的订单数量
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	@Override
+	public List<OrderReportVo> getOrderCountByStatus(String startDate, String endDate) {
+		return tFishOrderDao.getOrderCountByStatus(startDate, endDate);
+	}
+
 }

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>订单数据统计</title>
+	#parse("sys/header.html")
+	<!-- 引入 echarts.js -->
+	<script src="${rc.contextPath}/statics/libs/echarts.min.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="order_type_report_count_amount" style="width: 600px;height:400px; padding: 10px"></div>
+<div id="order_type_report_status_count" style="width: 600px;height:400px; padding: 10px"></div>
+<script type="text/javascript">
+	// 基于准备好的dom，初始化echarts实例，订单分类数量统计
+	var order_type_report_count_chart = echarts.init(document.getElementById('order_type_report_count_amount'));
+	// 指定图表的配置项和数据
+	var param = {
+		"startDate": null,
+		"endDate": null
+	}
+	$.ajax({
+		type: "POST",
+		url: "../tfishorder/getReportData",
+		data: param,
+		success: function(r){
+			if(r.code == 0){
+				console.log(r);
+				var order_type_report_count_option = {
+					title: {
+						text: '订单分类统计图'
+					},
+					tooltip: {},
+					legend: {
+						data:['数量统计', '金额统计']
+					},
+					xAxis: {
+						data: r.result.typeCount.xAxis
+					},
+					yAxis: {},
+					series: [{
+						name: '数量统计',
+						type: 'line',
+						data: r.result.typeCount.series
+					}, {
+						name: '金额统计',
+						type: 'line',
+						data: r.result.typeAmount.series
+					}]
+				};
+				// 使用刚指定的配置项和数据显示图表。
+				order_type_report_count_chart.setOption(order_type_report_count_option);
+
+				// 基于准备好的dom，初始化echarts实例，订单状态下的订单数量
+				var order_type_report_status_count_chart = echarts.init(document.getElementById('order_type_report_status_count'));
+				// 指定图表的配置项和数据
+				var order_type_report_status_count_option = {
+					title: {
+						text: '订单各状态数量统计图'
+					},
+					tooltip: {},
+					legend: {
+						data:['订单状态']
+					},
+					xAxis: {
+						data: r.result.statusCount.xAxis
+					},
+					yAxis: {},
+					series: [{
+						name: '订单状态',
+						type: 'line',
+						data: r.result.statusCount.series
+					}]
+				};
+				// 使用刚指定的配置项和数据显示图表。
+				order_type_report_status_count_chart.setOption(order_type_report_status_count_option);
+			}else{
+				alert(r.msg);
+			}
+		}
+	});
+</script>
+</body>
+</html>
