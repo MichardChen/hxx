@@ -22,7 +22,7 @@
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label"> 订单类型</div>
 		   	<div class="col-sm-10 ptop">
-				<select  class="form-control" v-model="tFishOrder.orderTypeCd">
+				<select  class="form-control" v-model="tFishOrder.orderTypeCd" disabled>
 					<option value="270001">求购订单</option>
 					<option value="270002">供应订单</option>
 					<option value="270003">录入订单</option>
@@ -36,27 +36,33 @@
 		    </div>
 		</div>-->
 		<div class="form-group">
+			<div class="col-sm-2 control-label">供应信息</div>
+			<div class="col-sm-10 ptop">
+				{{supplyInfo}}
+			</div>
+		</div>
+		<div class="form-group">
 		   	<div class="col-sm-2 control-label">卖家</div>
 		   	<div class="col-sm-10 ptop">
-				{{tFishOrder.fromUserId}}
+				{{fromUser}}
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">买家</div>
 		   	<div class="col-sm-10 ptop">
-				{{tFishOrder.toUserId}}
+				{{toUser}}
 		    </div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">预付款</div>
 		   	<div class="col-sm-10 ptop">
-		      <input type="number" class="form-control" v-model="tFishOrder.firstPay" placeholder="请输入预付款"/>
+		      <input type="number" class="form-control" v-model="tFishOrder.firstPay" id="firstPay" placeholder="请输入预付款" disabled/>
 		    </div>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-2 control-label">付款方式</div>
 			<div class="col-sm-10 ptop">
-				<select  class="form-control" v-model="tFishOrder.firstPayType">
+				<select  class="form-control" v-model="tFishOrder.firstPayType" disabled>
 					<option value="300001">银联支付</option>
 					<option value="300002">线下支付</option>
 				</select>
@@ -65,13 +71,13 @@
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">尾款</div>
 		   	<div class="col-sm-10 ptop">
-		      <input type="number" class="form-control" v-model="tFishOrder.secondPay" placeholder="请输入尾款"/>
+		      <input type="number" class="form-control" v-model="tFishOrder.secondPay" id="secondPay" placeholder="请输入尾款" disabled/>
 		    </div>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-2 control-label">付款方式</div>
 			<div class="col-sm-10 ptop">
-				<select  class="form-control" v-model="tFishOrder.secondPayType">
+				<select  class="form-control" v-model="tFishOrder.secondPayType" disabled>
 					<option value="300001">银联支付</option>
 					<option value="300002">线下支付</option>
 				</select>
@@ -98,13 +104,13 @@
 		<div class="form-group">
 			<div class="col-sm-2 control-label">物流信息</div>
 			<div class="col-sm-10 ptop">
-				<input type="text" class="form-control" v-model="tFishOrder.logisticsInfo" placeholder="请输入物流信息,如中通快递"/>
+				<input type="text" class="form-control" v-model="tFishOrder.logisticsInfo" id="logisticsInfo" placeholder="请输入物流信息,如中通快递" disabled/>
 			</div>
 		</div>
 		<div class="form-group">
 			<div class="col-sm-2 control-label">物流单号</div>
 			<div class="col-sm-10 ptop">
-				<input type="text" class="form-control" v-model="tFishOrder.logisticsNo" placeholder="请输入物流单号"/>
+				<input type="text" class="form-control" v-model="tFishOrder.logisticsNo" id="logisticsNo" placeholder="请输入物流单号" disabled/>
 			</div>
 		</div>
 		<div class="form-group">
@@ -122,7 +128,9 @@
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">订单状态</div>
 		   	<div class="col-sm-10 ptop">
-				<select  class="form-control" v-model="tFishOrder.status">
+				<select  class="form-control" v-model="tFishOrder.status" id="ostatus">
+					<option value="280001">待审核</option>
+					<option value="280002">审核失败</option>
 					<option value="280004">待支付</option>
 					<option value="280005">已取消</option>
 					<option value="280006">待发货</option>
@@ -131,6 +139,12 @@
 					<option value="280009">已完成</option>
 				</select>
 		    </div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-2 control-label">审核失败原因</div>
+			<div class="col-sm-10 ptop">
+				<input type="text" class="form-control" v-model="tFishOrder.reason" id="reason" placeholder="请输入审核失败原因" disabled/>
+			</div>
 		</div>
 		<div class="form-group">
 		   	<div class="col-sm-2 control-label">下单时间</div>

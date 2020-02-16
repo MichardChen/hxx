@@ -271,6 +271,8 @@ public interface Constants {
 	public static interface DOCUMENT_ABOUTUS{
 		public static final String ABOUTUS = "120001";
 		public static final String HELP_CENTER = "120002";
+		public static final String USER_ABOUT = "120003";
+		public static final String EXPRESS = "120004";
 	}
 
 	public static interface APP_VERSION{
@@ -423,6 +425,8 @@ public interface Constants {
 		public static final String RECEIVED= "280008";
 		//完成
 		public static final String COMPLETE= "280009";
+		//下架
+		public static final String UNDER_CARRIAGE= "280010";
 	}
 
 	public static interface ADVERTISEMENT_TYPE {

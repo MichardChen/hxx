@@ -59,6 +59,16 @@ public class TFishOrderEntity implements Serializable {
 
 	private String logisticsInfo;
 
+	private String reason;
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
 	public String getLogisticsNo() {
 		return logisticsNo;
 	}

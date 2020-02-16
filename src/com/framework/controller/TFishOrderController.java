@@ -5,10 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.framework.constants.Constants;
 import com.framework.dao.MemberDao;
 import com.framework.dao.TCodemstDao;
+import com.framework.dao.TFishSupplyDao;
 import com.framework.entity.Member;
 import com.framework.entity.TCodemstEntity;
+import com.framework.entity.TFishSupplyEntity;
+import com.framework.service.CommonService;
 import com.framework.utils.*;
 import com.framework.vo.AdminOrderListVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -36,6 +40,10 @@ public class TFishOrderController {
 	private MemberDao memberDao;
 	@Autowired
 	private TCodemstDao codemstDao;
+	@Autowired
+	private CommonService commonService;
+	@Autowired
+	private TFishSupplyDao supplyDao;
 
 	@RequestMapping("/tfishorder.html")
 	public String list(){
@@ -70,14 +78,22 @@ public class TFishOrderController {
 			vo.setFirstPay(StringUtil.toString(entity.getFirstPay()));
 			vo.setSecondPay(StringUtil.toString(entity.getSecondPay()));
 			Member fromUser = memberDao.queryObject(entity.getFromUserId());
-			vo.setFromUserId(fromUser == null ? "" : fromUser.getNickName() + fromUser.getMobile());
+			vo.setFromUserId(fromUser == null ? "" : StringUtil.isBlank(fromUser.getNickName()) ? fromUser.getMobile() : fromUser.getNickName() + fromUser.getMobile());
 			Member toUser = memberDao.queryObject(entity.getToUserId());
-			vo.setToUserId(toUser == null ? "" : toUser.getNickName() + toUser.getMobile());
+			vo.setToUserId(toUser == null ? "" : StringUtil.isBlank(toUser.getNickName()) ? toUser.getMobile() : toUser.getNickName() + toUser.getMobile());
 			TCodemstEntity status = codemstDao.queryByCode(entity.getStatus());
 			vo.setStatus(status == null ? "" : status.getName());
 			TCodemstEntity orderType = codemstDao.queryByCode(entity.getOrderTypeCd());
 			vo.setOrderTypeCd(orderType == null ? "" : orderType.getName());
 			vo.setId(entity.getId());
+
+			if(Constants.ORDER_TYPE.SUPPLY.equals(entity.getOrderTypeCd())){
+				TFishSupplyEntity supplyEntity = supplyDao.queryObject(entity.getInfoId());
+				if(supplyEntity != null){
+					vo.setProductType(supplyEntity.getProductType());
+				}
+			}
+
 			listVos.add(vo);
 
 		}
@@ -97,8 +113,28 @@ public class TFishOrderController {
 	@RequiresPermissions("tfishorder:info")
 	public R info(@PathVariable("id") Integer id){
 		TFishOrderEntity tFishOrder = tFishOrderService.queryObject(id);
-		
-		return R.ok().put("tFishOrder", tFishOrder);
+		Member fromUser = memberDao.queryObject(tFishOrder.getFromUserId());
+		Member toUser = memberDao.queryObject(tFishOrder.getToUserId());
+		String fromUserName = fromUser == null ? "" : StringUtil.isBlank(fromUser.getNickName()) ? fromUser.getMobile() : fromUser.getNickName() + fromUser.getMobile();
+		String toUserName = toUser == null ? "" : StringUtil.isBlank(toUser.getNickName()) ? toUser.getMobile() : toUser.getNickName() + toUser.getMobile();
+
+		String supplyInfo = "";
+		if(tFishOrder != null){
+			if(Constants.ORDER_TYPE.SUPPLY.equals(tFishOrder.getOrderTypeCd())){
+				TFishSupplyEntity supplyEntity = supplyDao.queryObject(tFishOrder.getInfoId());
+				if(supplyEntity != null){
+					supplyInfo = "供应订单号："+supplyEntity.getOrderNo()+",供应信息："
+							+supplyEntity.getProductType()+" "+supplyEntity.getMainType()+"  "
+							+"规格："+supplyEntity.getSize()+" 价格：" + supplyEntity.getPrice() + supplyEntity.getUnit()+"  "+ "供应量："+
+							supplyEntity.getWeight()+"  "+" 供应地："+supplyEntity.getProvice()+supplyEntity.getCity();
+				}
+			}
+
+		}
+		return R.ok().put("tFishOrder", tFishOrder)
+				.put("fromUser",fromUserName)
+				.put("toUser",toUserName)
+				.put("supplyInfo",supplyInfo);
 	}
 	
 	/**
@@ -123,7 +159,9 @@ public class TFishOrderController {
 		tFishOrder.setUpdateTime(DateUtil.getNowTimestamp());
 		tFishOrder.setUpdateBy(ShiroUtils.getUserId().intValue());
 		tFishOrderService.update(tFishOrder);
-		
+		commonService.saveOrderStatus(ShiroUtils.getUserId().intValue(), tFishOrder.getOrderNo()
+				, Constants.ORDER_TYPE.SUPPLY
+				, tFishOrder.getStatus(), "后台操作订单，更新状态为："+tFishOrder.getStatus(), tFishOrder.toString());
 		return R.ok();
 	}
 	

@@ -17,6 +17,15 @@ public class AdminOrderListVo implements Serializable {
     private String status;
     private String createTime;
     private int id;
+    private String productType;
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
 
     public int getId() {
         return id;

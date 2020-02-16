@@ -121,6 +121,10 @@
 			<if test="businessImg != null">`business_img` = #{businessImg}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
 			<if test="status != null">`status` = #{status}, </if>
+			<if test="sex != null">`sex` = #{sex}, </if>
+			<if test="qq != null">`qq` = #{qq}, </if>
+			<if test="wx != null">`wx` = #{wx}, </if>
+			<if test="userTypeCd != null">`user_type_cd` = #{userTypeCd}, </if>
 			<if test="memberGradeCd != null">`member_grade_cd` = #{memberGradeCd}, </if>
 		</set>
 		where id = #{id} or mobile = #{mobile}

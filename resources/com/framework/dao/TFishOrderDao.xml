@@ -57,6 +57,7 @@
 			`first_pay_type`,
 			`second_pay_type`,
 			`logistics_no`,
+			`reason`,
 			`logistics_info`
 		)
 		values
@@ -80,6 +81,7 @@
 			#{firstPayType},
 			#{secondPayType},
 			#{logisticsNo},
+			#{reason},
 			#{logisticsInfo}
 		)
 	</insert>
@@ -106,6 +108,7 @@
 			<if test="createTime != null">`second_pay_type` = #{secondPayType}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime},</if>
 			<if test="logisticsNo != null">`logistics_no` = #{logisticsNo},</if>
+			<if test="reason != null">`reason` = #{reason},</if>
 			<if test="logisticsInfo != null">`logistics_info` = #{logisticsInfo}</if>
 		</set>
 		where id = #{id}
@@ -120,10 +123,10 @@
 	<update id="updatePayType">
 		update t_fish_order
 		  <set>
-			  <if test="flg == '0'">
+			  <if test='flg == "0"'>
 				  `first_pay_type` = #{payType},
 			  </if>
-			  <if test="flg == '1'">
+			  <if test='flg == "1"'>
 				  `second_pay_type` = #{payType},
 			  </if>
 			  <if test="status != null">`status` = #{status}</if>
