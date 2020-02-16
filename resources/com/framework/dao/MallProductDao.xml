@@ -76,7 +76,16 @@
     </update>
 
     <select id="queryTotal" resultType="int">
-		select count(*) from mall_products
+		select count(*) from mall_products where 1=1
+        <if test="productTitle != null and productTitle.trim() != ''">
+            and product_title like concat('%', #{productTitle}, '%')
+        </if>
+        <if test="status != null and status.trim() != ''">
+            and status = #{status}
+        </if>
+		<if test="price != null">
+            and price = #{price}
+        </if
 	</select>
 
     <select id="queryObject" resultType="com.framework.entity.MallProduct">
