@@ -185,7 +185,7 @@ public class TFishOrderController {
 	@ResponseBody
 	@RequestMapping("/getReportData")
 	@RequiresPermissions("order:type:report:list")
-	public R getReportData(@RequestParam("startDate")String startDate, @RequestParam("endDate")String endDate){
+	public R getReportData(@RequestParam(value = "startDate", required = false)String startDate, @RequestParam(value = "endDate", required = false)String endDate){
 		Map<String, Object> result = new HashMap<>();
 		//根据product_type分类统计有多少订单量
 		List<OrderReportVo> typeCount = tFishOrderService.getOrderCountByType(startDate, endDate);

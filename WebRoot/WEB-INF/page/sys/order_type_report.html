@@ -21,6 +21,8 @@
 	$.ajax({
 		type: "POST",
 		url: "../tfishorder/getReportData",
+		contentType : 'application/x-www-form-urlencoded',
+		dataType:'json',
 		data: param,
 		success: function(r){
 			if(r.code == 0){
