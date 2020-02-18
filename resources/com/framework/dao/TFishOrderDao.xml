@@ -146,16 +146,17 @@
 
 	<!-- 根据product_type分类统计有多少订单量 -->
 	<select id="getOrderCountByType" resultType="com.framework.vo.report.OrderReportVo">
-		select t.order_type_cd as code,c.`name` as name,sum(t.needs) as value from t_fish_order t
-		left JOIN t_codemst c on c.`code`=t.order_type_cd where 1=1
+		select t.order_type_cd as code,c.`name` as name,count(*) as value,
+			DATE_FORMAT(t.create_time,'%Y-%m-%d') as time from t_fish_order t
+			left JOIN t_codemst c on c.`code`=t.order_type_cd where 1=1
 		<if test="startDate != null and startDate != ''">
 			AND t.create_time <![CDATA[>=]]> #{startDate}
 		</if>
 		<if test="endDate != null and endDate != ''">
 			AND t.create_time <![CDATA[<=]]>#{endDate}
 		</if>
-		group by t.order_type_cd,c.`name`
-		order by t.order_type_cd desc
+		group by t.order_type_cd,c.`name`,DATE_FORMAT(t.create_time,'%Y-%m-%d')
+		order by t.order_type_cd,DATE_FORMAT(t.create_time,'%Y-%m-%d') asc
 	</select>
 
 	<!-- 根据product_type分类统计订单总金额(预付款+尾款) -->
@@ -174,7 +175,7 @@
 
 	<!-- 查询各个订单状态下的订单数量 -->
 	<select id="getOrderCountByStatus" resultType="com.framework.vo.report.OrderReportVo">
-		select t.`status` as code,c.`name` as name,sum(t.needs) as value from t_fish_order t
+		select t.`status` as code,c.`name` as name,count(*) as value from t_fish_order t
 		left JOIN t_codemst c on c.`code`=t.`status` where 1=1
 		<if test="startDate != null and startDate != ''">
 			AND t.create_time <![CDATA[>=]]> #{startDate}

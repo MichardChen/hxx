@@ -18,6 +18,18 @@ public class OrderReportVo {
      * 值
      */
     private String value;
+    /**
+     * 时间串
+     */
+    private String time;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     public String getName() {
         return name;
