@@ -8,18 +8,18 @@
 <div id="rrapp">
 	<div class="grid-btn">
 		#if($shiro.hasPermission("sys:user:save"))
-		<a class="btn btn-default" href="user_add.html">新增</a>
+		<a class="btn btn-success" href="user_add.html"><i class="fa fa-plus" aria-hidden="true"></i>新增</a>
 		#end
 		#if($shiro.hasPermission("sys:user:update"))
-		<button type="button"  class="btn btn-default" @click="update">修改</button>
+		<button type="button"  class="btn btn-primary" @click="update"><i class="fa fa-pencil fa-fw"></i>修改</button>
 		#end
 		#if($shiro.hasPermission("sys:user:delete"))
-		<button type="button" class="btn btn-default" @click="del">删除</button>
+		<button type="button" class="btn btn-danger" @click="del"><i class="fa fa-trash-o fa-fw"></i>删除</button>
 		#end
 	</div>
 	<div class="grid-btn">
 		用户名&nbsp;<input type="text" class="form-control" id="queryName" style="width: 150px;display: inline-block;" placeholder="请输入搜索用户名"/>
-		<button type="button" class="btn btn-info" @click="search">查询</button>
+		<button type="button" class="btn btn-info" @click="search"><i class="fa fa-search" aria-hidden="true"></i>查询</button>
 	</div>
     <table id="jqGrid"></table>
     <div id="jqGridPager"></div>

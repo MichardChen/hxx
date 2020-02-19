@@ -8,12 +8,12 @@
 <div id="rrapp">
 	<div class="grid-btn">
 		<!-- <a class="btn btn-default" href="tfinancecommit_add.html">新增</a> -->
-		<button type="button"  class="btn btn-default" @click="update">修改</button>
+		<button type="button"  class="btn btn-primary" @click="update"><i class="fa fa-pencil fa-fw"></i>修改</button>
 	<!-- 	<button type="button" class="btn btn-default" @click="del">删除</button> -->
 	</div>
 	<div class="grid-btn">
 		申请时间&nbsp;<input class="Wdate"  id="date" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true})"/>
-		<button type="button" class="btn btn-info" @click="search">查询</button>
+		<button type="button" class="btn btn-info" @click="search"><i class="fa fa-search" aria-hidden="true"></i>查询</button>
 	</div>
     <table id="jqGrid"></table>
     <div id="jqGridPager"></div>
