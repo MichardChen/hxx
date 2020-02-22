@@ -37,7 +37,7 @@
 		</div>
 	</div>
 	<div class='col-sm-3'>
-		<input type="button" class="btn btn-success" onclick="loadData()" value="查询" style="margin-top:25px;"/>
+		<button type="button" class="btn btn-info" onclick="loadData()" style="margin-top:25px;"><i class="fa fa-search" aria-hidden="true"></i>查询</button>
 		<input type="button" class="btn btn-primary" onclick="reset()" value="重置" style="margin-top:25px;"/>
 	</div>
 </div>
@@ -72,18 +72,28 @@
 			data: param,
 			success: function(r){
 				if(r.code == 0){
-					console.log(r);
 					//根据product_type分类统计有多少订单量
 					// 基于准备好的dom，初始化echarts实例，订单状态下的订单数量
 					if(r.result.typeCount.series){
 						for(var i=0; i<r.result.typeCount.series.length;i++){
-							r.result.typeCount.series[i].itemStyle={ normal: {label : {show: true}}};
+							r.result.typeCount.series[i].itemStyle ={ normal: {label : {show: true}}};
+							// r.result.typeCount.series[i].label= { normal: { formatter: '{b}:{c}笔'}};
 						}
 					}
 					var order_type_report_count_chart = echarts.init(document.getElementById('order_type_report_count'));
 					var order_type_report_count_option = {
 						title: {
 							text: '订单分类数量统计图'
+						},
+						toolbox: {
+							show: true,
+							feature: {
+								saveAsImage: {
+									show:true,
+									excludeComponents :['toolbox'],
+									pixelRatio: 2
+								}
+							}
 						},
 						//用formatter回调函数显示单项数据内容
 						tooltip: {
@@ -92,15 +102,11 @@
 								var color = params.color;//图例颜色
 								var htmlStr ='<div>';
 								htmlStr += params.name + '<br/>';//x轴的名称
-
 								//为了保证和原来的效果一样，这里自己实现了一个点的效果
 								htmlStr += '<span style="margin-right:5px;display:inline-block;width:10px;height:10px;border-radius:5px;background-color:'+color+';"></span>';
-
 								//添加一个汉字，这里你可以格式你的数字或者自定义文本内容
 								htmlStr += params.seriesName + '：'+params.value + '笔';
-
 								htmlStr += '</div>';
-
 								return htmlStr;
 							}
 						},
@@ -125,15 +131,34 @@
 
 					//根据product_type分类统计订单总金额(预付款+尾款)
 					// 基于准备好的dom，初始化echarts实例，订单分类数量统计
+					if(r.result.typeAmount.series){
+						for(var i=0; i<r.result.typeAmount.series.length;i++){
+							r.result.typeAmount.series[i].itemStyle={ normal: {label : {show: true}}};
+							// r.result.typeAmount.series[i].label= { normal: { formatter: '{b}:{c}元'}};
+						}
+					}
 					var order_type_report_amount_chart = echarts.init(document.getElementById('order_type_report_amount'));
 					var order_type_report_amount_option = {
 						title: {
 							text: '订单分类总金额统计图'
 						},
 						//用formatter回调函数显示单项数据内容
-						tooltip: {},
+						tooltip: {
+							trigger: 'item',
+							formatter: function (params) {
+								var color = params.color;//图例颜色
+								var htmlStr ='<div>';
+								htmlStr += params.name + '<br/>';//x轴的名称
+								//为了保证和原来的效果一样，这里自己实现了一个点的效果
+								htmlStr += '<span style="margin-right:5px;display:inline-block;width:10px;height:10px;border-radius:5px;background-color:'+color+';"></span>';
+								//添加一个汉字，这里你可以格式你的数字或者自定义文本内容
+								htmlStr += params.seriesName + '：'+params.value;
+								htmlStr += '</div>';
+								return htmlStr;
+							}
+						},
 						legend: {
-							data:['金额统计']
+							data: r.result.typeAmount.yAxis
 						},
 						xAxis: {
 							data: r.result.typeAmount.xAxis
@@ -146,11 +171,7 @@
 								}
 							}
 						},
-						series: [ {
-							name: '金额统计',
-							type: 'line',
-							data: r.result.typeAmount.series
-						}]
+						series: r.result.typeAmount.series
 					};
 					// 使用刚指定的配置项和数据显示图表。
 					order_type_report_amount_chart.setOption(order_type_report_amount_option);
@@ -181,8 +202,21 @@
 							name: '订单状态',
 							type: 'line',
 							data: r.result.statusCount.series,
-							itemStyle : { normal: {label : {show: true}}}
-						}]
+							itemStyle : { normal: {label : {show: true}}},
+							label: { normal: { formatter: '{b}:{c}笔'}}
+						}],
+						toolbox: {
+							show: true,
+							right:30,
+							itenGap:20,
+							feature: {
+								saveAsImage: {
+									show: true,
+									excludeComponents: ['toolbox'],
+									pixelRatio: 2
+								}
+							}
+						}
 					};
 					// 使用刚指定的配置项和数据显示图表。
 					order_type_report_status_count_chart.setOption(order_type_report_status_count_option);

@@ -197,7 +197,7 @@ public class TFishOrderController {
 		List<OrderReportVo> statusCount = tFishOrderService.getOrderCountByStatus(startDate, endDate);
 		//处理查询的报表数据返回给前端
 		dealTypeCountReportResult(result, "typeCount", typeCount);
-		dealReportResult(result, "typeAmount", typeAmount);
+		dealTypeCountReportResult(result, "typeAmount", typeAmount);
 		dealReportResult(result, "statusCount", statusCount);
 		return R.ok().put("result", result);
 	}
