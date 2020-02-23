@@ -281,7 +281,7 @@ public class TFishOrderController {
 		if(ReportConstants.ORDER_EXPORT_TYPE.GROUP_BY_TYPE_COUNT.equalsIgnoreCase(type)){
 			return new String[] {"序号","订单类型","下单时间","订单数量"};
 		}else if(ReportConstants.ORDER_EXPORT_TYPE.GROUP_BY_TYPE_AMOUNT.equalsIgnoreCase(type)){
-			return new String[] {"序号","订单类型","下单时间","订单数量"};
+			return new String[] {"序号","订单类型","下单时间","订单金额"};
 		} else {
 			return new String[] {"序号","订单状态","订单数量"};
 		}
