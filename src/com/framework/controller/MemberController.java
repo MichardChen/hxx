@@ -1,16 +1,16 @@
 package com.framework.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.framework.utils.*;
+import com.framework.vo.report.OrderReportVo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.framework.entity.Member;
 import com.framework.entity.SysMenuEntity;
@@ -18,9 +18,6 @@ import com.framework.service.MemberService;
 import com.framework.service.SysMenuService;
 import com.framework.service.SysUserService;
 import com.framework.utils.Constant.MenuType;
-import com.framework.utils.PageUtils;
-import com.framework.utils.R;
-import com.framework.utils.RRException;
 
 /**
  * 系统菜单
@@ -192,4 +189,20 @@ public class MemberController extends AbstractController {
 			return;
 		}
 	}
+
+	/**
+	 * 获取报表统计数据
+	 */
+	@ResponseBody
+	@RequestMapping("/getReportData")
+	@RequiresPermissions("member:report:list")
+	public R getReportData(@RequestParam(value = "startDate", required = false)String startDate, @RequestParam(value = "endDate", required = false)String endDate){
+		Map<String, Object> result = new HashMap<>();
+		//获取每天注册人数
+		List<OrderReportVo> registerCount = memberService.getRegisterCountByDate(startDate, endDate);
+		//处理查询的报表数据返回给前端
+		DealEchatsDataUtils.dealUniqueLineReportResult(result, "registerCount", registerCount);
+		return R.ok().put("result", result);
+	}
+
 }

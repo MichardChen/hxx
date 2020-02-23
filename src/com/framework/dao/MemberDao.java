@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.framework.entity.Member;
+import com.framework.vo.report.OrderReportVo;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -53,5 +54,13 @@ public interface MemberDao extends BaseDao<Member> {
 	 * @return
 	 */
 	int updateIcon(@Param("icon")String icon,@Param("memberId")int memberId);
+
+	/**
+	 * 获取每天注册人数
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	List<OrderReportVo> getRegisterCountByDate(@Param("startDate")String startDate, @Param("endDate")String endDate);
 
 }

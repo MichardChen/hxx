@@ -3,6 +3,8 @@ package com.framework.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import com.framework.vo.report.OrderReportVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +51,16 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public Member queryByMobile(String mobile) {
 		return memberDao.queryByMobile(mobile);
+	}
+
+	/**
+	 * 获取每天注册人数
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	@Override
+	public List<OrderReportVo> getRegisterCountByDate(String startDate, String endDate) {
+		return memberDao.getRegisterCountByDate(startDate, endDate);
 	}
 }

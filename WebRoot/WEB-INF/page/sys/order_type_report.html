@@ -58,6 +58,7 @@
 	function reset(){
 		$('#startDate').val(null);
 		$('#endDate').val(null);
+		loadData();
 	}
 	//加载数据
 	function loadData() {
@@ -75,7 +76,7 @@
 				if(r.code == 0){
 					//根据product_type分类统计有多少订单量
 					// 基于准备好的dom，初始化echarts实例，订单状态下的订单数量
-					if(r.result.typeCount.series){
+					if(r.result.typeCount && r.result.typeCount.series){
 						for(var i=0; i<r.result.typeCount.series.length;i++){
 							r.result.typeCount.series[i].itemStyle ={ normal: {label : {show: true}}};
 							// r.result.typeCount.series[i].label= { normal: { formatter: '{b}:{c}笔'}};
@@ -84,7 +85,7 @@
 					var order_type_report_count_chart = echarts.init(document.getElementById('order_type_report_count'));
 					var order_type_report_count_option = {
 						title: {
-							text: '订单分类数量统计图'
+							text: '订单分类数量统计图'+ (r.result.typeCount?"":"(暂无数据)")
 						},
 						toolbox: {
 							show: true,
@@ -112,10 +113,10 @@
 							}
 						},
 						legend: {
-							data: r.result.typeCount.yAxis
+							data: (r.result.typeCount?r.result.typeCount.yAxis:[])
 						},
 						xAxis: {
-							data: r.result.typeCount.xAxis
+							data: (r.result.typeCount?r.result.typeCount.xAxis:[])
 						},
 						yAxis: {},
 						itemStyle : {
@@ -125,14 +126,15 @@
 								}
 							}
 						},
-						series: r.result.typeCount.series
+						series: (r.result.typeCount?r.result.typeCount.series:[])
 					};
 					// 使用刚指定的配置项和数据显示图表。
+					order_type_report_count_chart.clear();
 					order_type_report_count_chart.setOption(order_type_report_count_option);
 
 					//根据product_type分类统计订单总金额(预付款+尾款)
 					// 基于准备好的dom，初始化echarts实例，订单分类数量统计
-					if(r.result.typeAmount.series){
+					if(r.result.typeAmount && r.result.typeAmount.series){
 						for(var i=0; i<r.result.typeAmount.series.length;i++){
 							r.result.typeAmount.series[i].itemStyle={ normal: {label : {show: true}}};
 							// r.result.typeAmount.series[i].label= { normal: { formatter: '{b}:{c}元'}};
@@ -141,7 +143,7 @@
 					var order_type_report_amount_chart = echarts.init(document.getElementById('order_type_report_amount'));
 					var order_type_report_amount_option = {
 						title: {
-							text: '订单分类总金额统计图'
+							text: '订单分类总金额统计图'+ (r.result.typeAmount?"":"(暂无数据)")
 						},
 						//用formatter回调函数显示单项数据内容
 						tooltip: {
@@ -159,10 +161,10 @@
 							}
 						},
 						legend: {
-							data: r.result.typeAmount.yAxis
+							data: (r.result.typeAmount?r.result.typeAmount.yAxis:[])
 						},
 						xAxis: {
-							data: r.result.typeAmount.xAxis
+							data: (r.result.typeAmount?r.result.typeAmount.xAxis:[])
 						},
 						yAxis: {},
 						itemStyle : {
@@ -172,9 +174,10 @@
 								}
 							}
 						},
-						series: r.result.typeAmount.series
+						series: (r.result.typeAmount?r.result.typeAmount.series:[])
 					};
 					// 使用刚指定的配置项和数据显示图表。
+					order_type_report_amount_chart.clear();
 					order_type_report_amount_chart.setOption(order_type_report_amount_option);
 
 					// 基于准备好的dom，初始化echarts实例，订单状态下的订单数量
@@ -182,14 +185,14 @@
 					// 指定图表的配置项和数据
 					var order_type_report_status_count_option = {
 						title: {
-							text: '订单各状态数量统计图'
+							text: '订单各状态数量统计图'+ (r.result.statusCount?"":"(暂无数据)")
 						},
 						tooltip: {},
 						legend: {
 							data:['订单状态']
 						},
 						xAxis: {
-							data: r.result.statusCount.xAxis
+							data: (r.result.statusCount?r.result.statusCount.xAxis:[])
 						},
 						yAxis: {},
 						itemStyle : {
@@ -199,13 +202,13 @@
 								}
 							}
 						},
-						series: [{
+						series: (r.result.statusCount?[{
 							name: '订单状态',
 							type: 'line',
 							data: r.result.statusCount.series,
 							itemStyle : { normal: {label : {show: true}}},
 							label: { normal: { formatter: '{b}:{c}笔'}}
-						}],
+						}]:[]),
 						toolbox: {
 							show: true,
 							right:30,
@@ -220,6 +223,7 @@
 						}
 					};
 					// 使用刚指定的配置项和数据显示图表。
+					order_type_report_status_count_chart.clear();
 					order_type_report_status_count_chart.setOption(order_type_report_status_count_option);
 				}else{
 					alert(r.msg);
