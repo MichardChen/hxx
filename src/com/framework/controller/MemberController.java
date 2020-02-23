@@ -1,12 +1,17 @@
 package com.framework.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.framework.constants.ReportConstants;
 import com.framework.utils.*;
 import com.framework.vo.report.OrderReportVo;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +23,9 @@ import com.framework.service.MemberService;
 import com.framework.service.SysMenuService;
 import com.framework.service.SysUserService;
 import com.framework.utils.Constant.MenuType;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 系统菜单
@@ -205,4 +213,98 @@ public class MemberController extends AbstractController {
 		return R.ok().put("result", result);
 	}
 
+	/**
+	 * 订单报表数据导出
+	 * @param request
+	 * @param response
+	 * @param startDate
+	 * @param endDate
+	 * @param type
+	 * @throws RowsExceededException
+	 * @throws WriteException
+	 * @throws IOException
+	 */
+	@RequestMapping("/exportExcel")
+	@RequiresPermissions("member:report:list")
+	public void exportExcel(HttpServletRequest request, HttpServletResponse response,
+							@RequestParam(value = "startDate", required = false)String startDate,
+							@RequestParam(value = "endDate", required = false)String endDate,
+							@RequestParam(value = "type", required = false)String type)
+			throws RowsExceededException, WriteException, IOException {
+		String fileName = getExcelFileName(type, startDate, endDate);
+		//设置表格标题行
+		String[] headers = getExcelHeader(type);
+		List<Object[]> dataList = new ArrayList<Object[]>();
+		getExportExcelData(dataList, type,headers.length, startDate, endDate);
+		//使用流将数据导出
+		OutputStream out = null;
+		try {
+			//防止中文乱码
+			String headStr = "attachment; filename=\"" + new String(fileName.getBytes("gb2312"), "ISO8859-1" ) + "\"";
+			response.setContentType("octets/stream");
+			response.setContentType("APPLICATION/OCTET-STREAM");
+			response.setHeader("Content-Disposition", headStr);
+			out = response.getOutputStream();
+			ExportExcelSeedBack ex = new ExportExcelSeedBack(fileName, headers, dataList);//没有标题
+			ex.export(out);
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 获取excel的标题行
+	 * @param type
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public String getExcelFileName(String type, String startDate, String endDate){
+		StringBuffer name = new StringBuffer();
+		name.append("每日注册用户数量统计");
+		name.append(".xls");
+		return name.toString();
+	}
+
+	/**
+	 * 获取excel的标题行
+	 * @param type
+	 * @return
+	 */
+	public String[] getExcelHeader(String type){
+		return new String[] {"序号","注册时间", "用户数量"};
+	}
+
+	/**
+	 * 获取导出的excel中的行数据
+	 * @param dataList
+	 * @param type
+	 * @param cellLength
+	 * @param startDate
+	 * @param endDate
+	 */
+	public void getExportExcelData(List<Object[]> dataList, String type, int cellLength, String startDate, String endDate){
+		//获取每天注册人数
+		List<OrderReportVo> registerCount = memberService.getRegisterCountByDate(startDate, endDate);
+		getExportExcelReportRegisterCountList(dataList, registerCount, cellLength);
+	}
+
+	/**
+	 * 获取 获取每天注册人数 导出excel数据
+	 * @param dataList
+	 * @param grouppList
+	 * @param cellLength
+	 */
+	public void getExportExcelReportRegisterCountList(List<Object[]> dataList, List<OrderReportVo> grouppList, int cellLength){
+		Object[] objs = null;
+		for (int i = 0; i < grouppList.size(); i++) {
+			objs = new Object[cellLength];
+			objs[0] = 0;//设置序号,在工具类中会出现
+			objs[1] = grouppList.get(i).getName();
+			objs[2] = grouppList.get(i).getValue();
+			dataList.add(objs);//数据添加到excel表格
+		}
+	}
 }
