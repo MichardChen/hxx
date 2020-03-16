@@ -1,4 +1,5 @@
 //生成菜单
+var login_userInfo = null;
 var menuItem = Vue.extend({
 	name: 'menu-item',
 	props:{item:{}},
@@ -43,37 +44,8 @@ var vm = new Vue({
 		getUser: function(){
 			$.getJSON("sys/user/info?_"+$.now(), function(r){
 				vm.user = r.user;
-				$("#welcome-userName").text("欢迎"+r.user.username);
-			});
-		},
-		updatePassword: function(){
-			layer.open({
-				type: 1,
-				skin: 'layui-layer-molv',
-				title: "修改密码",
-				area: ['550px', '270px'],
-				shadeClose: false,
-				content: jQuery("#passwordLayer"),
-				btn: ['修改','取消'],
-				btn1: function (index) {
-					var data = "password="+vm.password+"&newPassword="+vm.newPassword;
-					$.ajax({
-						type: "POST",
-					    url: "sys/user/password",
-					    data: data,
-					    dataType: "json",
-					    success: function(result){
-							if(result.code == 0){
-								layer.close(index);
-								layer.alert('修改成功', function(index){
-									location.reload();
-								});
-							}else{
-								layer.alert(result.msg);
-							}
-						}
-					});
-	            }
+                login_userInfo = r.user;
+				$("#welcome-userName").text("欢迎您，"+r.user.username);
 			});
 		}
 	},
@@ -89,7 +61,39 @@ var vm = new Vue({
 	}
 });
 
-
+function updatePassword(){
+    $("#user_modify_name_label").text(login_userInfo.username);
+    layer.open({
+        type: 1,
+        skin: 'layui-layer-molv',
+        title: "修改密码",
+        area: ['550px', '270px'],
+        shadeClose: false,
+        content: jQuery("#passwordLayer"),
+        btn: ['修改','取消'],
+        btn1: function (index) {
+            var pwd = $("#user_modify_password").val();
+            var new_pwd = $("#user_modify_newPassword").val();
+            var data = "password="+pwd+"&newPassword="+new_pwd;
+            $.ajax({
+                type: "POST",
+                url: "sys/user/password",
+                data: data,
+                dataType: "json",
+                success: function(result){
+                    if(result.code == 0){
+                        layer.close(index);
+                        layer.alert('修改成功', function(index){
+                            location.reload();
+                        });
+                    }else{
+                        layer.alert(result.msg);
+                    }
+                }
+            });
+        }
+    });
+}
 
 function routerList(router, menuList){
 	for(var key in menuList){

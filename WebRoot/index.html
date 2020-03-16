@@ -28,9 +28,7 @@
     <div class="layui-header header header-demo">
         <div class="layui-main">
             <div class="admin-login-box">
-                <a class="logo" style="left: 0;" href="#">
-                    <span style="font-size: 22px;">后台管理</span>
-                </a>
+                <span style="font-size: 22px;">后台管理</span>
                 <div class="admin-side-toggle">
                     <i class="fa fa-bars" aria-hidden="true"></i>
                 </div>
@@ -40,17 +38,17 @@
                     <div id="welcome-userName"></div>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">清除缓存</a>
+                    <a href="javascript:;" onclick="updatePassword()"><i class="fa fa-lock"></i> &nbsp;修改密码</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">浏览网站</a>
+                    <a href="logout"><i class="fa fa-sign-out"></i> &nbsp;退出系统</a>
                 </li>
-                <li class="layui-nav-item" id="video1">
+                <!--<li class="layui-nav-item" id="video1">
                     <a href="javascript:;">视频</a>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="admin-header-user">
-                        <!--<img src="images/0.jpg" />-->
+                        &lt;!&ndash;<img src="images/0.jpg" />&ndash;&gt;
                         <span>beginner</span>
                     </a>
                     <dl class="layui-nav-child">
@@ -69,7 +67,7 @@
                             <a href="login.html"><i class="fa fa-sign-out" aria-hidden="true"></i> 注销</a>
                         </dd>
                     </dl>
-                </li>
+                </li>-->
             </ul><!--
             <ul class="layui-nav admin-header-item-mobile">
                 <li class="layui-nav-item">
@@ -91,7 +89,7 @@
             </ul>
             <div class="layui-tab-content" style="min-height: 150px; padding: 5px 0 0 0;">
                 <div class="layui-tab-item layui-show">
-                    <iframe src="main.html"></iframe>
+                    <iframe src="main.html?v="+new Date()></iframe>
                 </div>
             </div>
         </div>
@@ -122,18 +120,18 @@
         <div class="form-group">
             <div class="form-group">
                 <div class="col-sm-2 control-label">账号</div>
-                <span class="label label-success" style="vertical-align: bottom;">{{user.username}}</span>
+                <span class="label label-success" style="vertical-align: bottom;" id="user_modify_name_label"/>
             </div>
             <div class="form-group">
                 <div class="col-sm-2 control-label">原密码</div>
                 <div class="col-sm-10">
-                    <input type="password" class="form-control" v-model="password" placeholder="原密码"/>
+                    <input type="password" class="form-control" id="user_modify_password" placeholder="原密码"/>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-2 control-label">新密码</div>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="newPassword" placeholder="新密码"/>
+                    <input type="text" class="form-control" id="user_modify_newPassword" placeholder="新密码"/>
                 </div>
             </div>
         </div>
