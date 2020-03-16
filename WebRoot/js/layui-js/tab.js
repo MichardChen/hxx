@@ -78,7 +78,7 @@ layui.define(['element', 'common'], function(exports) {
 		var tabIndex = that.exists(data.title);
 		if(tabIndex === -1) {
 			globalTabIdIndex++;
-			var content = '<iframe src="' + data.href + '" data-id="' + globalTabIdIndex + '" style="width: 100%"></iframe>';
+			var content = '<iframe src="' + data.href + '" data-id="' + globalTabIdIndex + '" style="width: 100%; padding: 5px 10px 5px;"></iframe>';
 			var title = '';
 			if(data.icon !== undefined) {
 				if(data.icon.indexOf('fa-') !== -1) {
