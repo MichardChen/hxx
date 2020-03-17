@@ -13,12 +13,12 @@
 .site-content{width: 899px; min-height: 900px; padding: 20px 0 10px 20px;}
 
 /* 头部 */
-.header{height: 65px; border-bottom: 1px solid #404553;  background-color: #393D49; color: #fff;}
+.header{height: 70px; border-bottom: 1px solid #404553;  background-color: #393D49; color: #fff;}
 .logo{position: absolute; left: 0; top: 18px;}
 .logo img{width: 82px; height: 31px;}
 
 .header .layui-nav{position: absolute; right: 0; top: 0; padding: 0; background: none;}
-.header .layui-nav .layui-nav-item{margin: 0 20px; line-height: 66px;}
+.header .layui-nav .layui-nav-item{margin: 0 15px; line-height: 66px;}
 
 .menu{position: absolute; right: 0; top: 0; line-height: 65px;}
 .menu a{display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
@@ -29,11 +29,11 @@
 
 .header-index{background-color: #080018; border: none;}
 
-.layui-layout-admin .header-demo{border-bottom-color: #1AA094; background-color: #fff;}
+.layui-layout-admin .header-demo{border-bottom-color: #1AA094; background-color: #367fa9;}
 .header-demo .logo{left: 40px;}
 .header-demo .layui-nav{top: 0;}
-.header-demo .layui-nav .layui-nav-item{margin: 0 10px; line-height: 70px;}
-.header-demo .layui-nav .layui-nav-item a{color: #999;}
+.header-demo .layui-nav .layui-nav-item{margin: 0 10px; line-height: 65px;}
+.header-demo .layui-nav .layui-nav-item a{color: white;}
 .header-demo .layui-nav .layui-this{background-color: #f2f2f2;}
 .header-demo .layui-nav .layui-nav-item a:hover, 
 .header-demo .layui-nav .layui-this a{color: #000;}
@@ -327,7 +327,8 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 .admin-main {margin: 15px;}
 
 .admin-side-toggle{
-	position: absolute; cursor: pointer;
+	position: absolute;
+    cursor: pointer;
     z-index: 19940201;
     left: 200px;
     color: white;
@@ -338,6 +339,19 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
     line-height: 30px;
     top: 25%;
 }
+
+.admin-side-user-welcome{
+    position: absolute; cursor: pointer;
+    z-index: 19940201;
+    left: 250px;
+    color: white;
+    width: 300px;
+    height: 30px;
+    line-height: 30px;
+    top: 25%;
+    text-align: left;
+}
+
 .admin-side-toggle:hover{
 	background-color: #5FB878;
 }
@@ -346,7 +360,8 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
     height: 70px;
     position: relative;
     text-align: center;
-    color: black;
+    color: #fff;
+    font-weight: 700;
     line-height: 70px;
 }
 
