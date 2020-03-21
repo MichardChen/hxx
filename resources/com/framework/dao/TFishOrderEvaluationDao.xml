@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.framework.dao.TFishOrderEvaluationDao">
+
+	<select id="queryObject" resultType="com.framework.entity.TFishOrderEvaluationEntity">
+		select * from t_fish_order_evaluation where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.framework.entity.TFishOrderEvaluationEntity">
+		select * from t_fish_order_evaluation 
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="queryOrderEvaluateList" resultType="com.framework.entity.TFishOrderEvaluationEntity">
+		select * from t_fish_order_evaluation where 1=1
+		<if test="orderNo != null and orderNo != ''">
+			and order_no = #{orderNo}
+		</if>
+		<if test="flg != null and flg != ''">
+			and flg = #{flg}
+		</if>
+		order by create_time desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_fish_order_evaluation 
+	</select>
+	 
+	<insert id="save" parameterType="com.framework.entity.TFishOrderEvaluationEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_fish_order_evaluation
+		(
+			`order_no`, 
+			`order_type_cd`, 
+			`evaluation`, 
+			`points`, 
+			`create_time`, 
+			`create_by`, 
+			`update_time`, 
+			`update_by`, 
+			`flg`
+		)
+		values
+		(
+			#{orderNo}, 
+			#{orderTypeCd}, 
+			#{evaluation}, 
+			#{points}, 
+			#{createTime}, 
+			#{createBy}, 
+			#{updateTime}, 
+			#{updateBy}, 
+			#{flg}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.framework.entity.TFishOrderEvaluationEntity">
+		update t_fish_order_evaluation 
+		<set>
+			<if test="orderNo != null">`order_no` = #{orderNo}, </if>
+			<if test="orderTypeCd != null">`order_type_cd` = #{orderTypeCd}, </if>
+			<if test="evaluation != null">`evaluation` = #{evaluation}, </if>
+			<if test="points != null">`points` = #{points}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="flg != null">`flg` = #{flg}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_fish_order_evaluation where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_fish_order_evaluation where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

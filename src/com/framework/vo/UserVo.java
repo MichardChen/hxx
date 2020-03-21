@@ -15,6 +15,15 @@ public class UserVo {
     private String status;
     private String memberGradeCd;
     private String statusName;
+    private int point;
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
+    }
 
     public String getStatusName() {
         return statusName;

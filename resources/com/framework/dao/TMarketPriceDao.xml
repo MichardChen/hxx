@@ -27,6 +27,12 @@
 		<if test="priceDate != null and priceDate != ''">
 			and whendate=#{priceDate}
 		</if>
+		<if test="province != null and province != '' and province != 0">
+			and province=#{province}
+		</if>
+		<if test="city != null and city != '' and city != 0">
+			and city=#{city}
+		</if>
 		order by update_time desc,flg desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}

@@ -51,6 +51,7 @@ public class FishDTO implements Serializable {
     private String buy;
     private String status;
     private String orderNo;
+    private int point;
 
 
     public static FishDTO getInstance(HttpServletRequest request) throws Exception{
@@ -79,6 +80,7 @@ public class FishDTO implements Serializable {
         dto.setDeviceToken(request.getParameter("deviceToken"));
         dto.setProductId(StringUtil.toInteger(request.getParameter("productId")));
         dto.setProductNum(StringUtil.toInteger(request.getParameter("productNum")));
+        dto.setPoint(StringUtil.toInteger(request.getParameter("point")));
         if(StringUtil.isNoneBlank(request.getParameter("receivePerson"))){
             dto.setReceivePerson(new String(request.getParameter("receivePerson").getBytes("utf-8"), "utf-8"));
         }
@@ -130,6 +132,14 @@ public class FishDTO implements Serializable {
         dto.setStatus(request.getParameter("status"));
         dto.setOrderNo(request.getParameter("orderNo"));
          return dto;
+    }
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
     }
 
     public String getOrderNo() {

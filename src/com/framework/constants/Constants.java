@@ -10,7 +10,11 @@ package com.framework.constants;
  */
 public interface Constants {
 
-	public final static String SYSTEM_NAME = "56物流平台";
+	//正式服务器
+	public final static String SERVER_IP = "http://120.27.71.4";
+	//测试服务器
+	//public final static String SERVER_IP = "http://47.105.184.157";
+	public final static String SYSTEM_NAME = "渔伢子";
 
 	/**
 	 * 异常信息统一头信息<br>
@@ -166,22 +170,22 @@ public interface Constants {
 
 	//Linux服务器地址
 	public static interface HOST {
-		public static final String DOCUMENT = "http://47.105.184.157/file/document/";
-		public static final String IMG = "http://47.105.184.157/img/";
-		public static final String ICON = "http://47.105.184.157/icon/";
+		public static final String DOCUMENT = SERVER_IP+"/file/document/";
+		public static final String IMG = SERVER_IP+"/img/";
+		public static final String ICON = SERVER_IP+"/icon/";
 	}
 	
 	public static interface HTTPS_HOST {
-		public static final String DOCUMENT = "http://47.105.184.157/file/document/";
-		public static final String STORY = "http://47.105.184.157/file/story/";
-		public static final String NEWS = "http://47.105.184.157/file/news/";
-		public static final String MALL_PRODUCT = "http://47.105.184.157/file/mallProduct/";
-		public static final String FINANCE = "http://47.105.184.157/file/finance/";
-		public static final String TRACE_SOURCE = "http://47.105.184.157/file/tracesource/";
+		public static final String DOCUMENT = SERVER_IP+"/file/document/";
+		public static final String STORY = SERVER_IP+"/file/story/";
+		public static final String NEWS = SERVER_IP+"/file/news/";
+		public static final String MALL_PRODUCT = SERVER_IP+"/file/mallProduct/";
+		public static final String FINANCE = SERVER_IP+"/file/finance/";
+		public static final String TRACE_SOURCE = SERVER_IP+"/file/tracesource/";
 	}
 
 	public static interface HTTP_HOST {
-		public static final String DOCUMENT = "http://47.105.184.157/file/document/";
+		public static final String DOCUMENT = SERVER_IP+"/file/document/";
 	}
 	
 	public static interface HTTPS_FILE_HOST {

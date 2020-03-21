@@ -87,4 +87,8 @@ public interface RestfulService {
 
     public ReturnData confirmReceived(FishDTO dto);
 
+    public ReturnData queryBankInfo(FishDTO dto);
+
+    public ReturnData saveEvaluation(FishDTO dto);
+
 }

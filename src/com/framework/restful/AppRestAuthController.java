@@ -563,4 +563,28 @@ public class AppRestAuthController extends RestfulController{
         renderJson(restfulService.confirmReceived(FishDTO.getInstance(request)), response);
         return;
     }
+
+    /**
+     * 查看付款账户银行卡信息
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/queryBankInfo")
+    public void queryBankInfo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.queryBankInfo(FishDTO.getInstance(request)), response);
+        return;
+    }
+
+    /**
+     * 提交评价
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @PostMapping("/saveEvaluation")
+    public void saveEvaluation(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        renderJson(restfulService.saveEvaluation(FishDTO.getInstance(request)), response);
+        return;
+    }
 }

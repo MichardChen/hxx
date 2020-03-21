@@ -10,6 +10,7 @@ import com.framework.service.CommonService;
 import com.framework.service.RestfulService;
 import com.framework.utils.*;
 import com.framework.vo.*;
+import com.sun.org.apache.xerces.internal.dom.ElementNSImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +87,10 @@ public class RestfulServiceImpl implements RestfulService {
     TFishOrderstatusDao orderstatusDao;
     @Autowired
     TDocumentDao tDocumentDao;
+    @Autowired
+    BankCardDao bankCardDao;
+    @Autowired
+    TFishOrderEvaluationDao evaluationDao;
 
     /**
      * 首页接口
@@ -223,6 +228,7 @@ public class RestfulServiceImpl implements RestfulService {
         userVo.setHeaderImgUrl(member.getIcon());
         userVo.setMemberGradeCd(member.getMemberGradeCd());
         userVo.setStatus(member.getStatus());
+        userVo.setPoint(member.getPoints());
         TCodemstEntity status = tCodemstDao.queryByCode(member.getStatus());
         if(status != null){
             userVo.setStatusName(status.getName());
@@ -1521,8 +1527,34 @@ public class RestfulServiceImpl implements RestfulService {
             }
         }
         vo.setImgs(imgs);
+        //查询评价
+        List<EvaluateVo> evaluateList = new ArrayList<>();
+        Map<String,Object> map = new HashMap();
+        map.put("limit",0);
+        map.put("pageSize",5);
+        map.put("flg",1);
+        map.put("orderNo",dto.getOrderNo());
+        List<TFishOrderEvaluationEntity> list = evaluationDao.queryList(map);
+        EvaluateVo evalVo = null;
+        for(TFishOrderEvaluationEntity evaluate : list){
+            evalVo = new EvaluateVo();
+            evalVo.setPoint(evaluate.getPoints());
+            evalVo.setMark(evaluate.getEvaluation());
+            if(StringUtil.equals(Constants.ORDER_TYPE.SUPPLY,evaluate.getOrderTypeCd())){
+                TFishOrderEntity orderEntity = orderDao.queryOrderByOrderNo(evaluate.getOrderNo());
+                if(orderEntity != null){
+                    Member member = memberDao.queryObject(orderEntity.getToUserId());
+                    if(member != null){
+                        evalVo.setIcon(member.getIcon());
+                    }
+                }
+            }
+            evaluateList.add(evalVo);
+        }
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("detailModel", vo);
+        jsonObject.put("evaluateList",evaluateList);
         data.setData(jsonObject);
         data.setCode(Constants.STATUS_CODE.SUCCESS);
         data.setMessage("查询成功");
@@ -1865,6 +1897,8 @@ public class RestfulServiceImpl implements RestfulService {
         map.put("limit", dto.getPageSize());
         map.put("productType", dto.getTypeCd());
         map.put("priceDate", dto.getLatestTime());
+        map.put("province",dto.getProvince());
+        map.put("city",dto.getCity());
         List<MarketPriceVo> list = tMarketPriceDao.queryPriceList(map);
         for (MarketPriceVo vo : list) {
             LocationCityEntity cityEntity = cityDao.queryObject(StringUtil.toInteger(vo.getCity()));
@@ -2257,6 +2291,63 @@ public class RestfulServiceImpl implements RestfulService {
         } else {
             data.setCode(Constants.STATUS_CODE.FAIL);
             data.setMessage("确认失败");
+        }
+        return data;
+    }
+
+    /**
+     * 查看付款银行卡信息
+     * @param dto
+     * @return
+     */
+    @Override
+    public ReturnData queryBankInfo(FishDTO dto) {
+        BankCardEntity bank = bankCardDao.queryAvailableCard(1);
+        BankCardVo cardVo = new BankCardVo();
+        ReturnData data = new ReturnData();
+        if(bank != null){
+            cardVo.setBank(bank.getBank());
+            cardVo.setBankNo(bank.getBankNo());
+            cardVo.setBankOpen(bank.getBankOpen());
+            cardVo.setBankOwner(bank.getBankOwner());
+            cardVo.setMark(bank.getMark());
+            data.setCode(Constants.STATUS_CODE.SUCCESS);
+            data.setMessage("查询成功");
+        }else {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("平台暂未提供收款账户");
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("bankCard",cardVo);
+        data.setData(jsonObject);
+        return data;
+    }
+
+    @Override
+    public ReturnData saveEvaluation(FishDTO dto) {
+
+        ReturnData data = new ReturnData();
+        TFishOrderEntity order = orderDao.queryOrderByOrderNo(dto.getOrderNo());
+        if(!StringUtil.equals(order.getStatus(),Constants.ORDER_STUTUS.COMPLETE)){
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("对不起,此订单还未完成,不能评价");
+            return data;
+        }
+        TFishOrderEvaluationEntity entity = new TFishOrderEvaluationEntity();
+        entity.setCreateTime(DateUtil.getNowTimestamp());
+        entity.setUpdateTime(DateUtil.getNowTimestamp());
+        entity.setEvaluation(dto.getMark());
+        entity.setFlg(1);
+        entity.setOrderNo(dto.getOrderNo());
+        entity.setOrderTypeCd(Constants.ORDER_TYPE.SUPPLY);
+        entity.setPoints(StringUtil.toString(dto.getPoint()));
+        int ret = evaluationDao.save(entity);
+        if(ret != 0){
+            data.setCode(Constants.STATUS_CODE.SUCCESS);
+            data.setMessage("提交成功,谢谢您的评价");
+        }else {
+            data.setCode(Constants.STATUS_CODE.FAIL);
+            data.setMessage("评价失败");
         }
         return data;
     }
