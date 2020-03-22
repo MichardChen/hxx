@@ -11,7 +11,7 @@ $(function () {
 			{ label: '产品名称', name: 'productTitle', width: 200 },
 			{ label: '状态', name: 'status', width: 70,
 				formatter: function(cellvalue, options, rowObject){
-					if(typeof cellvalue !=="undefined" && cellvalue){
+					if(typeof cellvalue !=="undefined"){
 						if(cellvalue == "200001"){
 							return "待审核";
 						} else if(cellvalue == "200002"){

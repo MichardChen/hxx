@@ -1,31 +1,31 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../mall/list',
+        url: '../bankcard/list',
         datatype: "json",
         colModel: [			
-			{ label: 'ID', name: 'id', width: 45, key: true, hidden: true},
-			{ label: '产品名称', name: 'productTitle', width: 280 },
-			{ label: '价格', name: 'price', width: 75 },
-			{ label: '所需兑换积分', name: 'needPoints', width: 90 },
-			{ label: '库存', name: 'quality', width: 75 },
-			{ label: '状态', name: 'status', width: 75,
+			{ label: 'id', name: 'id', width: 50, key: true, hidden: true },
+			{ label: '卡号', name: 'bankNo', width: 160 },
+			{ label: '开户行', name: 'bankOpen', width: 180 },
+			{ label: '银行', name: 'bank', width: 160 },
+			{ label: '开户人', name: 'bankOwner', width: 80 },
+			{ label: '创建时间', name: 'createTime', width: 130 },
+			{ label: '创建人', name: 'createBy', width: 80 },
+			{ label: '修改时间', name: 'updateTime', width: 80, hidden: true },
+			{ label: '修改人', name: 'updateBy', width: 80, hidden: true },
+			{ label: '备注', name: 'mark', width: 80, hidden: true},
+			{ label: '是否有效', name: 'flg', width: 80 ,
 				formatter: function(cellvalue, options, rowObject){
 					if(typeof cellvalue!=undefined){
-						if(cellvalue == "220001"){
-							return "正常";
-						}else if(cellvalue == "220002"){
-							return "已下架";
+						if(cellvalue == 0){
+							return "失效";
+						}else if(cellvalue == 1){
+							return "有效";
 						}
 					}
 					return "";
 				}
-			},
-			// { label: '产品类型', name: 'productTypeCd', width: 100 },
-			{ label: '详情url', name: 'productDetailUrl', width: 80, hidden: true},
-			{ label: '创建时间', name: 'createTime', width: 120}
-		],
-		// shrinkToFit: false,
-		// autoScroll: true,
+			}
+        ],
 		viewrecords: true,
         height: 400,
         rowNum: 10,
@@ -56,28 +56,33 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
-		productTitle: null,
-		price: null,
-		status: null
+		bankNo: null,
+		bankOpen: null,
+		bank: null,
+		bankOwner: null,
+		createBy: null,
+		flg: null
 	},
 	methods: {
 		update: function (event) {
-			var mallId = getSelectedRow();
-			if(mallId == null){
+			var id = getSelectedRow();
+			if(id == null){
 				return ;
 			}
-			location.href = "mall_product_add.html?mallId="+mallId;
+			
+			location.href = "bankcard_add.html?id="+id;
 		},
 		del: function (event) {
-			var mallId = getSelectedRows();
-			if(mallId == null){
+			var ids = getSelectedRows();
+			if(ids == null){
 				return ;
 			}
+			
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: "../mall/delete",
-				    data: JSON.stringify(mallId),
+				    url: "../bankcard/disable",
+				    data: JSON.stringify(ids),
 				    success: function(r){
 						if(r.code == 0){
 							alert('操作成功', function(index){
@@ -90,17 +95,18 @@ var vm = new Vue({
 				});
 			});
 		},
-		offLoading: function (event) {
-			var mallId = getSelectedRows();
-			if(mallId == null){
+		enable: function (event) {
+			var ids = getSelectedRows();
+			if(ids == null){
 				return ;
 			}
-			confirm('确定要下架改商品吗？', function(){
+
+			confirm('确定要启用选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-					url: "../mall/off",
-					data: JSON.stringify(mallId[0]),
-					success: function(r){
+				    url: "../bankcard/enable",
+				    data: JSON.stringify(ids),
+				    success: function(r){
 						if(r.code == 0){
 							alert('操作成功', function(index){
 								$("#jqGrid").trigger("reloadGrid");
@@ -112,20 +118,18 @@ var vm = new Vue({
 				});
 			});
 		},
-		show:function(event){
-			var rowKey = getSelectedRow();
-			if(rowKey == null){
-				return ;
-			}
-			var rowData = $( "#jqGrid" ).getRowData(rowKey);
-			debugger
-			window.open(rowData.productDetailUrl);
-		},
 		query:function(){
 			$("#jqGrid").jqGrid('setGridParam',{
-                postData:{'productTitle': vm.productTitle,'price':vm.price, 'status': vm.status},
-                page:1 
-            }).trigger("reloadGrid");
+				postData:{
+					'bankNo': vm.bankNo,
+					'bankOpen':vm.bankOpen,
+					'bank': vm.bank,
+					'bankOwner': vm.bankOwner,
+					'createBy': vm.createBy,
+					'flg': vm.flg
+				},
+				page:1
+			}).trigger("reloadGrid");
 		}
 	}
 });

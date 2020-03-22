@@ -13,4 +13,14 @@ import org.apache.ibatis.annotations.Param;
 public interface BankCardDao extends BaseDao<BankCardEntity> {
 
     BankCardEntity queryAvailableCard(@Param("flg")int flg);
+
+    /**
+     * 根据对象ID数组批量启用银行卡
+     */
+    int enable(Object[] id);
+
+    /**
+     * 根据对象ID数组批量禁用银行卡
+     */
+    int disable(Object[] id);
 }

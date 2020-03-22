@@ -8,14 +8,50 @@
 	</select>
 
 	<select id="queryList" resultType="com.framework.entity.BankCardEntity">
-		select * from bank_card 
+		select * from bank_card where 1=1
+		<if test="bankNo != null and bankNo.trim() != ''">
+			and bank_no like concat('%', #{bankNo}, '%')
+		</if>
+		<if test="bankOpen != null and bankOpen.trim() != ''">
+			and bank_open like concat('%', #{bankOpen}, '%')
+		</if>
+		<if test="bank != null and bank.trim() != ''">
+			and bank like concat('%', #{bank}, '%')
+		</if>
+		<if test="bankOwner != null and bankOwner.trim() != ''">
+			and bank_owner like concat('%', #{bankOwner}, '%')
+		</if>
+		<if test="createBy != null and createBy.trim() != ''">
+			and create_by like concat('%', #{createBy}, '%')
+		</if>
+		<if test="flg != null and flg.trim() != ''">
+			and flg = #{flg}
+		</if>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from bank_card 
+		select count(*) from bank_card where 1=1
+		<if test="bankNo != null and bankNo.trim() != ''">
+			and bank_no like concat('%', #{bankNo}, '%')
+		</if>
+		<if test="bankOpen != null and bankOpen.trim() != ''">
+			and bank_open like concat('%', #{bankOpen}, '%')
+		</if>
+		<if test="bank != null and bank.trim() != ''">
+			and bank like concat('%', #{bank}, '%')
+		</if>
+		<if test="bankOwner != null and bankOwner.trim() != ''">
+			and bank_owner like concat('%', #{bankOwner}, '%')
+		</if>
+		<if test="createBy != null and createBy.trim() != ''">
+			and create_by like concat('%', #{createBy}, '%')
+		</if>
+		<if test="flg != null and flg.trim() != ''">
+			and flg = #{flg}
+		</if>
 	</select>
 	 
 	<insert id="save" parameterType="com.framework.entity.BankCardEntity" useGeneratedKeys="true" keyProperty="id">
@@ -74,7 +110,30 @@
 			#{id}
 		</foreach>
 	</delete>
+
 	<select id="queryAvailableCard" resultType="com.framework.entity.BankCardEntity">
 		select * from bank_card where flg = #{flg} order by create_time desc limit 1
 	</select>
+
+	<update id="enable">
+		update bank_card
+		<set>
+			flg = 1
+		</set>
+		where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+
+	<update id="disable">
+		update bank_card
+		<set>
+			flg = 0
+		</set>
+		where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
 </mapper>
