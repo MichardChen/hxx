@@ -15,4 +15,14 @@ import java.util.Map;
 public interface TFishOrderEvaluationDao extends BaseDao<TFishOrderEvaluationEntity> {
 
     List<TFishOrderEvaluationEntity> queryOrderEvaluateList(Map<String,Object> map);
+
+    /**
+     * 根据对象ID数组审核通过对象操作
+     */
+    int auditPass(Object[] id);
+
+    /**
+     * 根据对象ID数组审核不过对象操作
+     */
+    int auditFail(Object[] id);
 }

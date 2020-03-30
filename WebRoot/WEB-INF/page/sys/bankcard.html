@@ -14,7 +14,7 @@
 		<button type="button"  class="btn btn-primary" @click="update"><i class="fa fa-pencil fa-fw"></i>修改</button>
 		#end
 		#if($shiro.hasPermission("bankcard:enable"))
-		<button type="button" class="btn btn-success" @click="enable">启用</button>
+		<button type="button" class="btn btn-success" @click="enable"><i class="fa fa-check-square" aria-hidden="true"></i> 启用</button>
 		#end
 		#if($shiro.hasPermission("bankcard:delete"))
 		<button type="button" class="btn btn-danger" @click="del"><i class="fa fa-trash-o fa-fw"></i>删除</button>

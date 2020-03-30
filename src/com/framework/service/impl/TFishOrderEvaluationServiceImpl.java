@@ -46,10 +46,20 @@ public class TFishOrderEvaluationServiceImpl implements TFishOrderEvaluationServ
 	public void delete(Integer id){
 		tFishOrderEvaluationDao.delete(id);
 	}
-	
+
+	@Override
+	public void auditPass(Integer[] ids) {
+		tFishOrderEvaluationDao.auditPass(ids);
+	}
+
 	@Override
 	public void deleteBatch(Integer[] ids){
 		tFishOrderEvaluationDao.deleteBatch(ids);
 	}
-	
+
+	@Override
+	public void auditFail(Integer[] ids) {
+		tFishOrderEvaluationDao.auditFail(ids);
+	}
+
 }

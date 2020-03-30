@@ -6,6 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.framework.dao.MemberDao;
+import com.framework.dao.SysUserDao;
+import com.framework.entity.Member;
+import com.framework.entity.SysUserEntity;
+import com.framework.service.impl.SysUserRoleServiceImpl;
+import com.framework.utils.ShiroUtils;
+import com.framework.utils.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +40,8 @@ import com.framework.utils.R;
 public class BankCardController {
 	@Autowired
 	private BankCardService bankCardService;
+	@Autowired
+	private SysUserDao sysUserDao;
 
 	/**
 	 * 列表
@@ -55,7 +64,18 @@ public class BankCardController {
 		//查询列表数据
 		List<BankCardEntity> bankCardList = bankCardService.queryList(map);
 		int total = bankCardService.queryTotal(map);
-		
+		if(bankCardList != null && bankCardList.size()>0){
+			for(BankCardEntity item: bankCardList){
+				if(item.getCreateBy() != null){
+					SysUserEntity createUser = sysUserDao.queryObject(item.getCreateBy());
+					item.setCreateUserName(createUser == null ? "" : StringUtil.isBlank(createUser.getUsername()) ? "" : createUser.getUsername());
+				}
+				if(item.getUpdateBy() != null){
+					SysUserEntity modifyUser = sysUserDao.queryObject(item.getUpdateBy());
+					item.setModifyUserName(modifyUser == null ? "" : StringUtil.isBlank(modifyUser.getUsername()) ? "" : modifyUser.getUsername());
+				}
+			}
+		}
 		PageUtils pageUtil = new PageUtils(bankCardList, total, limit, page);
 		
 		return R.ok().put("page", pageUtil);
@@ -70,7 +90,6 @@ public class BankCardController {
 	@RequiresPermissions("bankcard:info")
 	public R info(@PathVariable("id") Integer id){
 		BankCardEntity bankCard = bankCardService.queryObject(id);
-		
 		return R.ok().put("bankCard", bankCard);
 	}
 	
@@ -83,8 +102,8 @@ public class BankCardController {
 	public R save(@RequestBody BankCardEntity bankCard){
 		bankCard.setCreateTime(new Date());
 		bankCard.setUpdateTime(new Date());
+		bankCard.setCreateBy(ShiroUtils.getUserEntity().getUserId().intValue());
 		bankCardService.save(bankCard);
-		
 		return R.ok();
 	}
 	
@@ -96,8 +115,8 @@ public class BankCardController {
 	@RequiresPermissions("bankcard:update")
 	public R update(@RequestBody BankCardEntity bankCard){
 		bankCard.setUpdateTime(new Date());
+		bankCard.setUpdateBy(ShiroUtils.getUserEntity().getUserId().intValue());
 		bankCardService.update(bankCard);
-		
 		return R.ok();
 	}
 	

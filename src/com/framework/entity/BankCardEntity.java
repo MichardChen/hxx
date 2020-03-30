@@ -38,6 +38,26 @@ public class BankCardEntity implements Serializable {
 	//
 	private Integer flg;
 
+	private String createUserName;
+
+	private String modifyUserName;
+
+	public String getCreateUserName() {
+		return createUserName;
+	}
+
+	public void setCreateUserName(String createUserName) {
+		this.createUserName = createUserName;
+	}
+
+	public String getModifyUserName() {
+		return modifyUserName;
+	}
+
+	public void setModifyUserName(String modifyUserName) {
+		this.modifyUserName = modifyUserName;
+	}
+
 	/**
 	 * 设置：
 	 */

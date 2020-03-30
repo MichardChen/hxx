@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.framework.dao.TCodemstDao;
+import com.framework.entity.TCodemstEntity;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +31,8 @@ import com.framework.utils.R;
 @RequestMapping("tfishorderevaluation")
 public class TFishOrderEvaluationController {
 	@Autowired
+	private TCodemstDao codemstDao;
+	@Autowired
 	private TFishOrderEvaluationService tFishOrderEvaluationService;
 	
 	/**
@@ -37,15 +41,23 @@ public class TFishOrderEvaluationController {
 	@ResponseBody
 	@RequestMapping("/list")
 	@RequiresPermissions("tfishorderevaluation:list")
-	public R list(Integer page, Integer limit){
+	public R list(Integer page, Integer limit, String orderNo,String orderTypeCd, String flg){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
-		
+		map.put("orderNo", orderNo);
+		map.put("orderTypeCd", orderTypeCd);
+		map.put("flg", flg);
+
 		//查询列表数据
 		List<TFishOrderEvaluationEntity> tFishOrderEvaluationList = tFishOrderEvaluationService.queryList(map);
 		int total = tFishOrderEvaluationService.queryTotal(map);
-		
+		if(tFishOrderEvaluationList != null && tFishOrderEvaluationList.size()>0){
+			for(TFishOrderEvaluationEntity item: tFishOrderEvaluationList){
+				TCodemstEntity orderType = codemstDao.queryByCode(item.getOrderTypeCd());
+				item.setOrderTypeCd(orderType == null ? "" : orderType.getName());
+			}
+		}
 		PageUtils pageUtil = new PageUtils(tFishOrderEvaluationList, total, limit, page);
 		
 		return R.ok().put("page", pageUtil);
@@ -97,6 +109,28 @@ public class TFishOrderEvaluationController {
 	public R delete(@RequestBody Integer[] ids){
 		tFishOrderEvaluationService.deleteBatch(ids);
 		
+		return R.ok();
+	}
+
+	/**
+	 * 审核通过
+	 */
+	@ResponseBody
+	@RequestMapping("/auditPass")
+	@RequiresPermissions("tfishorderevaluation:audit:pass")
+	public R auditPass(@RequestBody Integer[] ids){
+		tFishOrderEvaluationService.auditPass(ids);
+		return R.ok();
+	}
+
+	/**
+	 * 审核不过
+	 */
+	@ResponseBody
+	@RequestMapping("/auditFail")
+	@RequiresPermissions("tfishorderevaluation:audit:fail")
+	public R auditFail(@RequestBody Integer[] ids){
+		tFishOrderEvaluationService.auditFail(ids);
 		return R.ok();
 	}
 	

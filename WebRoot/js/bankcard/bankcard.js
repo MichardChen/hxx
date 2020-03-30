@@ -9,9 +9,9 @@ $(function () {
 			{ label: '银行', name: 'bank', width: 160 },
 			{ label: '开户人', name: 'bankOwner', width: 80 },
 			{ label: '创建时间', name: 'createTime', width: 130 },
-			{ label: '创建人', name: 'createBy', width: 80 },
+			{ label: '创建人', name: 'createUserName', width: 80 },
 			{ label: '修改时间', name: 'updateTime', width: 80, hidden: true },
-			{ label: '修改人', name: 'updateBy', width: 80, hidden: true },
+			{ label: '修改人', name: 'modifyUserName', width: 80, hidden: true },
 			{ label: '备注', name: 'mark', width: 80, hidden: true},
 			{ label: '是否有效', name: 'flg', width: 80 ,
 				formatter: function(cellvalue, options, rowObject){

@@ -8,7 +8,16 @@
 	</select>
 
 	<select id="queryList" resultType="com.framework.entity.TFishOrderEvaluationEntity">
-		select * from t_fish_order_evaluation 
+		select * from t_fish_order_evaluation where 1=1
+		<if test="orderNo != null and orderNo != ''">
+			and order_no = #{orderNo}
+		</if>
+		<if test="orderTypeCd != null and orderTypeCd != ''">
+			and order_type_cd = #{orderTypeCd}
+		</if>
+		<if test="flg != null and flg != ''">
+			and flg = #{flg}
+		</if>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -29,7 +38,16 @@
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from t_fish_order_evaluation 
+		select count(*) from t_fish_order_evaluation where 1=1
+		<if test="orderNo != null and orderNo != ''">
+			and order_no = #{orderNo}
+		</if>
+		<if test="orderTypeCd != null and orderTypeCd != ''">
+			and order_type_cd = #{orderTypeCd}
+		</if>
+		<if test="flg != null and flg != ''">
+			and flg = #{flg}
+		</if>
 	</select>
 	 
 	<insert id="save" parameterType="com.framework.entity.TFishOrderEvaluationEntity" useGeneratedKeys="true" keyProperty="id">
@@ -85,5 +103,27 @@
 			#{id}
 		</foreach>
 	</delete>
+
+	<update id="auditPass">
+		update t_fish_order_evaluation
+		<set>
+			`flg` = 1
+		</set>
+		where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+
+	<update id="auditFail">
+		update t_fish_order_evaluation
+		<set>
+			`flg` = 2
+		</set>
+		 where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
 
 </mapper>

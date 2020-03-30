@@ -26,5 +26,9 @@ public interface TFishOrderEvaluationService {
 	
 	void delete(Integer id);
 	
+	void auditPass(Integer[] ids);
+
 	void deleteBatch(Integer[] ids);
+
+	void auditFail(Integer[] ids);
 }

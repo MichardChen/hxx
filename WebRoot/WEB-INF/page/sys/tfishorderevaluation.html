@@ -7,9 +7,26 @@
 <body>
 <div id="rrapp">
 	<div class="grid-btn">
-		<a class="btn btn-default" href="tfishorderevaluation_add.html">新增</a>
-		<button type="button"  class="btn btn-default" @click="update">修改</button>
-		<button type="button" class="btn btn-default" @click="del">删除</button>
+		#if($shiro.hasPermission("tfishorderevaluation:audit:pass"))
+		<button type="button"  class="btn btn-success" @click="auditPass"><i class="fa fa-check-square" aria-hidden="true"></i> 审核通过</button>
+		#end
+		#if($shiro.hasPermission("tfishorderevaluation:audit:fail"))
+		<button type="button" class="btn btn-danger" @click="auditFail"><i class="fa fa-window-close" aria-hidden="true"></i> 审核不过</button>
+		#end
+	</div>
+	<div class="grid-btn">
+		订单编号：<input type="text" class="form-control" style="width: 150px;display: inline-block;" v-model="orderNo" @keyup.enter="query" placeholder="请输入订单编号">
+		订单类型：<select class="form-control" style="width: 120px;display: inline-block;" v-model="orderTypeCd">
+		<option value="270001">求购订单</option>
+		<option value="270002">供应订单</option>
+		<option value="270003">自行添加</option>
+		</select>
+		审核状态：<select class="form-control" style="width: 120px;display: inline-block;" v-model="flg">
+		<option value="0">待审核</option>
+		<option value="1">审核通过</option>
+		<option value="2">审核失败</option>
+		</select>
+		<button type="button" class="btn btn-info" @click="query"><i class="fa fa-search" aria-hidden="true"></i>查询</button>
 	</div>
     <table id="jqGrid"></table>
     <div id="jqGridPager"></div>
